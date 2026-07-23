@@ -65,7 +65,7 @@ Microbiome, metaproteomic, metabolomic, and ARG analyses were performed **separa
 4. **Functional analysis**
    - Metaproteomic analysis<sup>*</sup>
      - Functional characterization of microbial proteins.
-     - Protein–protein interaction and functional enrichment analyses of human proteins using STRING (version 12.0) (https://string-          db.org/).  
+     - Protein–protein interaction and functional enrichment analyses of human proteins using STRING (version 12.0) (https://string-db.org/).  
    - Targeted metabolomic analysis (SCFA quantification): acetate, propionate, and butyrate.  
 5. **Associations between clinical outcomes and microbiome composition**
    - Associations between microbial community composition and clinical parameters.
@@ -74,7 +74,7 @@ Microbiome, metaproteomic, metabolomic, and ARG analyses were performed **separa
    - Molecular typing using MLST and cgMLST.
    - Phylogenetic and pairwise genomic variant analyses.
    - Assessment of lineage persistence and replacement.
-   - Characterization of variants in genes associated with chronic infection, virulence, biofilm formation, and antimicrobial               resistance.
+   - Characterization of variants in genes associated with chronic infection, virulence, biofilm formation, and antimicrobial resistance.
    - Analysis of antimicrobial resistance genes and β-lactamase variants.
 
 \* Due to GitHub file size limitations, the raw metaproteomic tables (proteins, peptides, and functions) could not be uploaded. This repository includes filtered versions of these files for reproducibility purposes. If you require access to the original raw files, please contact me at **natalia.baston.paz@gmail.com**.

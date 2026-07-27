@@ -1,0 +1,4394 @@
+---
+title: "cf_clinical_variables_thesis"
+author: "Natalia Bastón-Paz"
+date: '2026'
+output: html_document
+---
+
+# Set up
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+require("knitr")
+opts_knit$set(root.dir = "C:/RProjects/cf_clinical_variables_thesis")
+```
+
+# Clean environments
+```{# r Clean environments, message=FALSE, warning=FALSE}
+rm(list = ls())
+```
+
+## General introduction
+
+Cystic fibrosis (CF) is a genetic disorder caused by pathogenic variants in the CFTR (Cystic Fibrosis Transmembrane Conductance Regulator) gene. CFTR dysfunction leads to impaired ion transport and the production of thick mucus, primarily affecting the lungs and gastrointestinal tract. People with CF (pwCF) commonly develop chronic airway infections and gastrointestinal complications.
+
+In recent years, CFTR modulator therapies—particularly the triple combination elexacaftor-tezacaftor-ivacaftor (ETI) have markedly improved clinical outcomes, especially respiratory function and nutritional status.
+
+In this script, we analyze clinical variables from 35 people with CF (6–66 years) assessed before treatment (T0) and after 12 months of ETI (T12).
+
+*Main question:*
+
+-   *Have clinical variables changed after one year of ETI treatment?*
+
+## Libraries
+```{r Libraries, message=FALSE, warning=FALSE}
+library(here)
+library(readr)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(ggdist)
+library(purrr)
+library(stringr)
+library(patchwork)
+library(ggpubr)
+library(ggridges)
+library(ppcor)
+library(lme4)
+library(lmerTest)
+library(grid)
+library(stringr)
+library(forcats)
+library(scales)
+library(gtools)
+library(emmeans)
+library(tibble)
+library(broom.mixed)
+library(ggbreak)
+library(cowplot)
+library(lme4)
+library(lmerTest)
+library(rlang)
+```
+
+## Directories
+```{r Create directory, message=FALSE, warning=FALSE}
+dir.create(here("results"), showWarnings = FALSE)
+```
+
+
+# ------------------------------------------------------------------------------
+# DEMOGRAPHICS
+# ------------------------------------------------------------------------------
+
+### Load in the data
+```{r Load in data lung function, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+df_demo <- read_delim(here("data", "only_demographics_all.csv"))
+```
+
+### Funtion to export statistics
+```{r Statistics, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+df_base <- df_demo %>%
+  dplyr::mutate(Time = factor(Time, levels = c("T0","T12"))) %>%
+  dplyr::group_by(PatientID) %>%
+  dplyr::filter(dplyr::n_distinct(Time) == 2) %>%   
+  dplyr::ungroup() %>%
+  dplyr::filter(Time == "T0")                       
+
+n_patients <- dplyr::n_distinct(df_base$PatientID)
+
+
+fmt_n_pct <- function(x, n_total) {
+  n <- sum(!is.na(x))
+  if (n == 0) return(NA_character_)
+  tb <- table(x, useNA = "no")
+  out <- paste0(names(tb), ": ", as.integer(tb), " (", round(100*as.integer(tb)/n_total, 1), "%)")
+  paste(out, collapse = "; ")
+}
+
+fmt_mean_sd <- function(x) {
+  x <- x[!is.na(x)]
+  if (length(x) == 0) return(NA_character_)
+  sprintf("%.1f ± %.1f", mean(x), stats::sd(x))
+}
+
+fmt_median_iqr <- function(x) {
+  x <- x[!is.na(x)]
+  if (length(x) == 0) return(NA_character_)
+  q <- stats::quantile(x, c(0.25, 0.5, 0.75))
+  sprintf("%.1f [%.1f–%.1f]", q[2], q[1], q[3])
+}
+
+# Normality test (Age at T0; one value per patient)
+age_vec <- df_base$Age
+age_vec <- age_vec[!is.na(age_vec)]
+
+if (length(age_vec) >= 3) {
+  shapiro_age <- shapiro.test(age_vec)
+  shapiro_p_age <- unname(shapiro_age$p.value)
+  age_is_normal <- shapiro_p_age >= 0.05
+} else {
+  shapiro_age <- NULL
+  shapiro_p_age <- NA_real_
+  age_is_normal <- NA
+}
+
+cat("\n=== Normality test (Age, T0) ===\n")
+cat("n =", length(age_vec), "\n")
+
+if (!is.null(shapiro_age)) {
+  print(shapiro_age)
+  if (isTRUE(age_is_normal)) {
+    cat("Age distribution: Normal (p =", round(shapiro_p_age, 4), ")\n")
+  } else {
+    cat("Age distribution: Not normal (p =", round(shapiro_p_age, 4), ")\n")
+  }
+} else {
+  cat("Not enough values for Shapiro test (n < 3)\n")
+}
+
+
+baseline_stats <- tibble::tibble(
+  variable = c(
+    "N (paired patients)",
+    "Age (years), Shapiro–Wilk p-value",
+    "Age (years), mean ± SD",
+    "Age (years), median [IQR]",
+    "AgeGroup, n (%)",
+    "Sex, n (%)",
+    "MutationGroup, n (%)",
+    "Mutation1, n (%)",
+    "Mutation2, n (%)",
+    "PI, n (%)",
+    "CFLD, n (%)",
+    "CFRD, n (%)",
+    "coeliac_disease, n (%)",
+    "colon_carcinoma, n (%)",
+    "mCFTRGroup, n (%)"
+  ),
+  value = c(
+    as.character(n_patients),
+    ifelse(is.na(shapiro_p_age), NA_character_, signif(shapiro_p_age, 4)),
+    fmt_mean_sd(df_base$Age),
+    fmt_median_iqr(df_base$Age),
+    fmt_n_pct(df_base$AgeGroup, n_patients),
+    fmt_n_pct(df_base$Sex, n_patients),
+    fmt_n_pct(df_base$MutationGroup, n_patients),
+    fmt_n_pct(df_base$Mutation1, n_patients),
+    fmt_n_pct(df_base$Mutation2, n_patients),
+    fmt_n_pct(df_base$PI, n_patients),
+    fmt_n_pct(df_base$CFLD, n_patients),
+    fmt_n_pct(df_base$CFRD, n_patients),
+    fmt_n_pct(df_base$coeliac_disease, n_patients),
+    fmt_n_pct(df_base$colon_carcinoma, n_patients),
+    fmt_n_pct(df_base$mCFTRGroup, n_patients)
+  )
+)
+
+baseline_stats
+
+if (!dir.exists(here::here("results"))) dir.create(here::here("results"))
+readr::write_excel_csv(baseline_stats, here::here("results", "baseline_characteristics_T0.csv"))
+```
+
+# ------------------------------------------------------------------------------
+# ADVERSE EVENTS
+# ------------------------------------------------------------------------------
+
+### Load in the data
+```{r , echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+df_ae <- read_delim(here("data", "adv_events.csv"))
+```
+
+### Clean the table and prepare data
+```{r Clean the table and prepare data, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# Clean the table
+df_ae_clean_ae <- df_ae %>%
+  mutate(
+    Adv_events = trimws(Adv_events),
+    Which_AE = na_if(trimws(Which_AE), "NA"),
+    Which_AE = na_if(Which_AE, ""),
+    AgeGroup = factor(AgeGroup, levels = c("pediatric", "adult"))
+  )
+
+# Denominator: unique patients per age group
+denom_ae <- df_ae_clean_ae %>%
+  distinct(PatientID, AgeGroup) %>%
+  count(AgeGroup, name = "n_total_ae")
+
+# Numerator: unique patients with each side effect in each age group
+summary_ae <- df_ae_clean_ae %>%
+  filter(Adv_events == "Yes", !is.na(Which_AE)) %>%
+  distinct(PatientID, AgeGroup, Which_AE) %>%
+  count(AgeGroup, Which_AE, name = "n_patients_ae") %>%
+  complete(AgeGroup, Which_AE, fill = list(n_patients_ae = 0)) %>%
+  left_join(denom_ae, by = "AgeGroup") %>%
+  mutate(percent_ae = 100 * n_patients_ae / n_total_ae)
+
+# Order side effects by total frequency
+order_ae <- summary_ae %>%
+  group_by(Which_AE) %>%
+  summarise(total_n_ae = sum(n_patients_ae), .groups = "drop") %>%
+  arrange(desc(total_n_ae)) %>%
+  pull(Which_AE)
+
+summary_ae <- summary_ae %>%
+  mutate(
+    Which_AE = factor(Which_AE, levels = order_ae),
+    Which_AE_label = str_replace_all(as.character(Which_AE), "_", " "),
+    Which_AE_label = str_to_title(Which_AE_label)
+  )
+```
+
+#### Export results
+```{r Export results, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+summary_ae_export <- summary_ae %>%
+  dplyr::select(
+    AgeGroup,
+    Which_AE,
+    Which_AE_label,
+    n_patients_ae,
+    n_total_ae,
+    percent_ae
+  ) %>%
+  dplyr::arrange(Which_AE, AgeGroup)
+
+readr::write_csv(
+  summary_ae_export,
+  here("results", "adv_events_summary_ae_export.csv")
+)
+```
+
+### Plot
+```{r Plot, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+p_ae <- ggplot(
+  summary_ae,
+  aes(
+    x = fct_reorder(Which_AE_label, n_patients_ae, .fun = sum),
+    y = percent_ae,
+    fill = AgeGroup
+  )
+) +
+  geom_col(
+    position = position_dodge2(width = 0.8, preserve = "single"),
+    width = 0.7,
+    color = "black",
+    linewidth = 0.25
+  ) +
+  geom_text(
+    aes(label = ifelse(n_patients_ae == 0, "", paste0(n_patients_ae, "/", n_total_ae))),
+    position = position_dodge2(width = 0.8, preserve = "single"),
+    hjust = -0.15,
+    size = 3
+  ) +
+  scale_fill_manual(
+    values = c(
+      "pediatric" = "#d3d4e0",  
+      "adult"     = "#999ab1"   
+    )
+  ) +
+  scale_y_continuous(
+    limits = c(0, max(summary_ae$percent_ae) * 1.20),
+    labels = label_number(suffix = "%"),
+    expand = expansion(mult = c(0, 0.05))
+  ) +
+  coord_flip() +
+  labs(
+    title = "Adverse events reported after ETI initiation",
+    x = "Adverse event",
+    y = "Participants with adverse events (%)",
+    fill = "Age group"
+  ) +
+  theme_classic() +
+  theme(
+    axis.text.y = element_text(size = 11),
+    plot.title = element_text(face = "plain"),
+    legend.title = element_text(face = "plain"),
+    legend.text = element_text(face = "plain"),
+    panel.grid.major = element_line(color = "grey85", linewidth = 0.4),
+    panel.grid.minor = element_line(color = "grey92", linewidth = 0.25)
+  )
+
+p_ae
+
+ggsave(here("results","adv_events.svg"), p_ae, width = 8, height = 5, bg = "white")
+```
+
+
+# ------------------------------------------------------------------------------
+# ANTIBIOTICS
+# ------------------------------------------------------------------------------
+
+### Load in the data
+```{r Load in data ATB, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+df_atb <- read_delim(here("data", "ATB.csv"))
+```
+
+### Prepare the data
+```{r Prepare data, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+df_atb$Time <- factor(df_atb$Time, levels = c("T0", "T12"))
+
+vars_atb <- c("ATB_inh_oral", "ATB_azi")
+
+df_wide <- df_atb %>%
+  dplyr::select(PatientID, Time, dplyr::all_of(vars_atb)) %>%
+  tidyr::pivot_wider(
+    id_cols = PatientID,
+    names_from = Time,
+    values_from = dplyr::all_of(vars_atb),
+    names_sep = "."
+  )
+```
+
+### Function exact McNemar
+```{r Function exact McNemar, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+mcnemar_exact_result <- function(data, varname) {
+  
+  col_t0  <- paste0(varname, ".T0")
+  col_t12 <- paste0(varname, ".T12")
+  
+  x_t0  <- data[[col_t0]]
+  x_t12 <- data[[col_t12]]
+  
+  keep <- complete.cases(x_t0, x_t12)
+  x_t0  <- x_t0[keep]
+  x_t12 <- x_t12[keep]
+  
+  tab <- table(
+    factor(x_t0, levels = c(0, 1)),
+    factor(x_t12, levels = c(0, 1)),
+    dnn = c("T0", "T12")
+  )
+  
+  b <- unname(tab["1", "0"])   # yes in T0, no in T12
+  c <- unname(tab["0", "1"])   # no in T0, yes in T12
+  
+  p_exact <- if ((b + c) == 0) 1 else binom.test(b, b + c, p = 0.5)$p.value
+  
+  data.frame(
+    variable  = varname,
+    n         = sum(keep),
+    T0_yes    = sum(x_t0 == 1),
+    T12_yes   = sum(x_t12 == 1),
+    yes_yes   = unname(tab["1", "1"]),
+    yes_no    = b,
+    no_yes    = c,
+    no_no     = unname(tab["0", "0"]),
+    p_exact   = p_exact
+  )
+}
+```
+
+#### Run function exact McNemar
+```{r Run function, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+results_atb <- dplyr::bind_rows(
+  mcnemar_exact_result(df_wide, "ATB_inh_oral"),
+  mcnemar_exact_result(df_wide, "ATB_azi")
+)
+
+results_atb$p_holm <- p.adjust(results_atb$p_exact, method = "holm")
+
+results_atb <- results_atb %>%
+  dplyr::mutate(
+    variable_label = dplyr::recode(
+      variable,
+      "ATB_inh_oral" = "Inhaled/oral antibiotics",
+      "ATB_azi"      = "Azithromycin"
+    ),
+    label_stats = paste0(
+      "Holm p = ", signif(p_holm, 3),
+      "\nYes→No = ", yes_no,
+      "\nNo→Yes = ", no_yes
+    )
+  )
+
+results_atb
+
+results_atb_export <- results_atb %>%
+  dplyr::mutate(
+    T0_pct = round(100 * T0_yes / n, 1),
+    T12_pct = round(100 * T12_yes / n, 1),
+    T0_n_pct = paste0(T0_yes, "/", n, " (", T0_pct, "%)"),
+    T12_n_pct = paste0(T12_yes, "/", n, " (", T12_pct, "%)")
+  ) %>%
+  dplyr::select(
+    variable_label,
+    n,
+    T0_n_pct,
+    T12_n_pct,
+    yes_yes,
+    yes_no,
+    no_yes,
+    no_no,
+    p_exact,
+    p_holm
+  )
+
+readr::write_csv(results_atb_export, here::here("results", "ATB_T0_vs_T12_stats_HOLM.csv"))
+```
+
+### Prepare data for plot
+```{r Data for plot, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+plot_df_atb <- df_atb %>%
+  dplyr::select(PatientID, Time, dplyr::all_of(vars_atb)) %>%
+  tidyr::pivot_longer(
+    cols = dplyr::all_of(vars_atb),
+    names_to = "variable",
+    values_to = "value"
+  ) %>%
+  dplyr::group_by(variable, Time) %>%
+  dplyr::summarise(
+    n_yes   = sum(value == 1, na.rm = TRUE),
+    n_total = sum(!is.na(value)),
+    prop    = n_yes / n_total,
+    .groups = "drop"
+  ) %>%
+  dplyr::mutate(
+    variable_label = dplyr::recode(
+      variable,
+      "ATB_inh_oral" = "Inhaled/oral antibiotics",
+      "ATB_azi"      = "Azithromycin"
+    )
+  )
+
+ann_df_atb <- results_atb %>%
+  dplyr::select(variable_label, label_stats) %>%
+  dplyr::mutate(
+    x = 1.5,
+    y = 1.08
+  )
+```
+
+#### Plot
+```{r Plot, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+p_atb <- ggplot(plot_df_atb, aes(x = Time, y = prop, fill = Time)) +
+  geom_col(width = 0.65, color = "black") +
+  geom_text(
+    aes(label = paste0(n_yes, "/", n_total)),
+    vjust = -0.35,
+    size = 4
+  ) +
+  geom_text(
+    data = ann_df_atb,
+    aes(x = x, y = y, label = label_stats),
+    inherit.aes = FALSE,
+    size = 3.5,
+    lineheight = 1.05
+  ) +
+  facet_wrap(~ variable_label, nrow = 1) +
+  scale_fill_manual(values = c("T0" = "#9EC1CF", "T12" = "#F9A1BC")) +
+  scale_y_continuous(
+    labels = scales::percent_format(accuracy = 1),
+    limits = c(0, 1.18),
+    expand = expansion(mult = c(0, 0))
+  ) +
+  labs(
+    x = NULL,
+    y = "% participants exposed"
+  ) +
+  theme_bw(base_size = 12) +
+  theme(
+    legend.position = "none",
+    strip.background = element_blank(),
+    panel.grid.major = element_line(color = "grey80", linewidth = 0.5),
+    panel.grid.minor = element_line(color = "grey90", linewidth = 0.3)
+  )
+
+p_atb
+
+ggsave(filename = here("results", "ATB_T0_vs_T12_plot_separate.svg"),
+       plot = p_atb, width = 8, height = 4.5, dpi = 300)
+
+
+p_atb <- ggplot(plot_df_atb, aes(x = Time, y = prop, fill = Time)) +
+  geom_col(width = 0.65, color = "black") +
+  geom_text(
+    aes(label = paste0(n_yes, "/", n_total)),
+    vjust = -0.35,
+    size = 4
+  ) +
+  geom_text(
+    data = ann_df_atb,
+    aes(x = x, y = y, label = label_stats),
+    inherit.aes = FALSE,
+    size = 3.5,
+    lineheight = 1.05
+  ) +
+  facet_wrap(~ variable_label, nrow = 1) +
+  scale_fill_manual(values = c("T0" = "#9EC1CF", "T12" = "#F9A1BC")) +
+  scale_y_continuous(
+    labels = scales::percent_format(accuracy = 1),
+    limits = c(0, 1.18),
+    expand = expansion(mult = c(0, 0))
+  ) +
+  labs(
+    x = NULL,
+    y = "% participants exposed"
+  ) +
+  theme_classic(base_size = 12) +
+  theme(
+    legend.position = "none",
+    strip.background = element_blank(),
+    panel.grid.major = element_line(color = "grey85", linewidth = 0.5),
+    panel.grid.minor = element_line(color = "grey92", linewidth = 0.3)
+  )
+
+p_atb
+
+ggsave(filename = here("results", "ATB_T0_vs_T12_plot_join.svg"),
+       plot = p_atb, width = 8, height = 4.5, dpi = 300)
+```
+
+#### HOLM vs FDR
+```{r Check Holm vs FDR, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+results_atb <- dplyr::bind_rows(
+  mcnemar_exact_result(df_wide, "ATB_inh_oral"),
+  mcnemar_exact_result(df_wide, "ATB_azi")
+)
+
+results_atb$p_fdr <- p.adjust(results_atb$p_exact, method = "fdr")
+
+results_atb <- results_atb %>%
+  dplyr::mutate(
+    variable_label = dplyr::recode(
+      variable,
+      "ATB_inh_oral" = "Inhaled/oral antibiotics",
+      "ATB_azi"      = "Azithromycin"
+    ),
+    label_stats = paste0(
+      "FDR p = ", signif(p_fdr, 3),
+      "\nYes→No = ", yes_no,
+      "\nNo→Yes = ", no_yes
+    )
+  )
+
+results_atb
+
+results_atb_export <- results_atb %>%
+  dplyr::mutate(
+    T0_pct = round(100 * T0_yes / n, 1),
+    T12_pct = round(100 * T12_yes / n, 1),
+    T0_n_pct = paste0(T0_yes, "/", n, " (", T0_pct, "%)"),
+    T12_n_pct = paste0(T12_yes, "/", n, " (", T12_pct, "%)")
+  ) %>%
+  dplyr::select(
+    variable_label,
+    n,
+    T0_n_pct,
+    T12_n_pct,
+    yes_yes,
+    yes_no,
+    no_yes,
+    no_no,
+    p_exact,
+    p_fdr
+  )
+
+readr::write_csv(results_atb_export, here::here("results", "ATB_T0_vs_T12_stats_FDR.csv"))
+```
+
+```{r Export results, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+results_atb <- dplyr::bind_rows(
+  mcnemar_exact_result(df_wide, "ATB_inh_oral"),
+  mcnemar_exact_result(df_wide, "ATB_azi")
+)
+
+results_atb$p_holm <- p.adjust(results_atb$p_exact, method = "holm")
+results_atb$p_fdr  <- p.adjust(results_atb$p_exact, method = "fdr")
+
+results_atb <- results_atb %>%
+  dplyr::mutate(
+    variable_label = dplyr::recode(
+      variable,
+      "ATB_inh_oral" = "Inhaled/oral antibiotics",
+      "ATB_azi"      = "Azithromycin"
+    ),
+    T0_pct = round(100 * T0_yes / n, 1),
+    T12_pct = round(100 * T12_yes / n, 1),
+    T0_n_pct = paste0(T0_yes, "/", n, " (", T0_pct, "%)"),
+    T12_n_pct = paste0(T12_yes, "/", n, " (", T12_pct, "%)"),
+    label_stats_holm = paste0(
+      "Holm p = ", signif(p_holm, 3),
+      "\nYes→No = ", yes_no,
+      "\nNo→Yes = ", no_yes
+    ),
+    label_stats_fdr = paste0(
+      "FDR p = ", signif(p_fdr, 3),
+      "\nYes→No = ", yes_no,
+      "\nNo→Yes = ", no_yes
+    )
+  )
+
+results_atb_export <- results_atb %>%
+  dplyr::select(
+    variable,
+    variable_label,
+    n,
+    T0_yes,
+    T12_yes,
+    T0_n_pct,
+    T12_n_pct,
+    yes_yes,
+    yes_no,
+    no_yes,
+    no_no,
+    p_exact,
+    p_holm,
+    p_fdr
+  )
+
+readr::write_csv(
+  results_atb_export,
+  here::here("results", "ATB_T0_vs_T12_stats_Holm_and_FDR.csv")
+)
+
+results_atb_export
+```
+
+
+# ------------------------------------------------------------------------------
+# CULTURES
+# ------------------------------------------------------------------------------
+## Dynamics of P. aeruginosa and S. aureus sputum counts
+# ------------------------------------------------------------------------------
+
+### Load the data
+```{r Load the data, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+df <- read_delim(here("data", "cultures_simple.csv"))
+```
+
+### Prepare data
+```{r Prepare data, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+df <- df %>%
+  mutate(across(where(is.character), ~ trimws(.))) %>%
+  filter(
+    !is.na(PatientID),
+    !(PatientID %in% c("ONLY PAE", "ONLY SAE", "Pae + Sau a T0"))
+  )
+
+cols_counts <- c("Pae_T0","Pae_T12","Sau_T0","Sau_T12")
+df <- df %>%
+  mutate(across(
+    any_of(cols_counts) & where(is.character),
+    ~ suppressWarnings(as.numeric(.))
+  ))
+
+df <- df %>%
+  mutate(
+    Pae_any = (coalesce(Pae_T0, 0) > 0 | coalesce(Pae_T12, 0) > 0),
+    Sau_any = (coalesce(Sau_T0, 0) > 0 | coalesce(Sau_T12, 0) > 0)
+  )
+
+# Create vectors
+only_Pae     <- df %>% filter(Pae_any & !Sau_any) %>% pull(PatientID)
+only_Sau     <- df %>% filter(Sau_any & !Pae_any) %>% pull(PatientID)
+Pae_and_Sau  <- df %>% filter(Pae_any &  Sau_any) %>% pull(PatientID)
+
+only_Pae; only_Sau; Pae_and_Sau
+```
+
+#### Only Pae
+```{r only_Pae, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+pae_only <- df %>%
+  dplyr::filter(PatientID %in% only_Pae) %>%
+  dplyr::select(PatientID, Pae_T0, Pae_T12) %>%
+  dplyr::filter(!is.na(Pae_T0), !is.na(Pae_T12)) %>%
+  dplyr::mutate(change = dplyr::case_when(
+    Pae_T12 > Pae_T0 ~ "up",
+    Pae_T12 < Pae_T0 ~ "down",
+    TRUE             ~ "no_change"
+  ))
+
+tab_pae <- pae_only %>%
+  dplyr::count(change) %>%
+  dplyr::mutate(n_total = sum(n),
+                pct = round(100 * n / n_total, 1))
+
+tab_pae
+
+pae_up_ids   <- pae_only %>% dplyr::filter(change == "up") %>% dplyr::pull(PatientID)
+pae_down_ids <- pae_only %>% dplyr::filter(change == "down") %>% dplyr::pull(PatientID)
+pae_same_ids <- pae_only %>% dplyr::filter(change == "no_change") %>% dplyr::pull(PatientID)
+
+pae_up_ids; pae_down_ids; pae_same_ids
+```
+
+#### Only Sau
+```{r only_Sau, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+sau_only <- df %>%
+  dplyr::filter(PatientID %in% only_Sau) %>%
+  dplyr::select(PatientID, Sau_T0, Sau_T12) %>%
+  dplyr::filter(!is.na(Sau_T0), !is.na(Sau_T12)) %>%
+  dplyr::mutate(change = dplyr::case_when(
+    Sau_T12 > Sau_T0 ~ "up",
+    Sau_T12 < Sau_T0 ~ "down",
+    TRUE             ~ "no_change"
+  ))
+
+tab_sau <- sau_only %>%
+  dplyr::count(change) %>%
+  dplyr::mutate(n_total = sum(n),
+                pct = round(100 * n / n_total, 1))
+
+tab_sau
+
+sau_up_ids   <- sau_only %>% dplyr::filter(change == "up") %>% dplyr::pull(PatientID)
+sau_down_ids <- sau_only %>% dplyr::filter(change == "down") %>% dplyr::pull(PatientID)
+sau_same_ids <- sau_only %>% dplyr::filter(change == "no_change") %>% dplyr::pull(PatientID)
+
+sau_up_ids; sau_down_ids; sau_same_ids
+```
+
+#### Pae and Sau
+```{r Pae_and_Sau, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+both <- df %>%
+  filter(PatientID %in% Pae_and_Sau)
+
+# Classify changes by pathogen
+pae_changes <- both %>%
+  dplyr::mutate(change_pae = case_when(
+    Pae_T12 > Pae_T0 ~ "UP Pae",
+    Pae_T12 < Pae_T0 ~ "DOWN Pae",
+    TRUE ~ "NOCHANGE Pae"
+  )) %>%
+  dplyr::select(PatientID, change_pae)
+
+sau_changes <- both %>%
+  dplyr::mutate(change_sau = case_when(
+    Sau_T12 > Sau_T0 ~ "UP Sau",
+    Sau_T12 < Sau_T0 ~ "DOWN Sau",
+    TRUE ~ "NOCHANGE Sau"
+  )) %>%
+  dplyr::select(PatientID, change_sau)
+
+
+combo <- pae_changes %>%
+  left_join(sau_changes, by = "PatientID") %>%
+  mutate(combo = paste(change_pae, "+", change_sau))
+
+
+summary_combo <- combo %>%
+  group_by(combo) %>%
+  summarise(
+    n = n(),
+    pacientes = paste(PatientID, collapse = ", "),
+    .groups = "drop"
+  )
+
+combo
+summary_combo
+```
+
+### Normality and statistics
+#### Only Pae
+```{r Normality only_Pae, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+df_pae <- df %>%
+  filter(PatientID %in% only_Pae) %>%
+  transmute(PatientID, T0 = Pae_T0, T12 = Pae_T12) %>%
+  filter(!is.na(T0), !is.na(T12)) %>%
+  mutate(delta = T12 - T0,
+         dir   = case_when(T12 > T0 ~ "up",
+                           T12 < T0 ~ "down",
+                           TRUE     ~ "no_change"))
+
+sw_all <- shapiro.test(df_pae$delta)
+
+if (sw_all$p.value > 0.05) {
+  test_all <- t.test(df_pae$T12, df_pae$T0, paired = TRUE)
+  method_all <- "paired t-test"
+} else {
+  test_all <- wilcox.test(df_pae$T12, df_pae$T0, paired = TRUE, exact = FALSE)
+  method_all <- "Wilcoxon signed-rank"
+}
+
+df_pae_up   <- df_pae %>% filter(dir == "up")
+df_pae_down <- df_pae %>% filter(dir == "down")
+
+# UP
+if (nrow(df_pae_up) >= 3) {
+  sw_up <- shapiro.test(df_pae_up$delta)
+  if (sw_up$p.value > 0.05) {
+    test_up <- t.test(df_pae_up$T12, df_pae_up$T0, paired = TRUE)
+    method_up <- "paired t-test"
+  } else {
+    test_up <- wilcox.test(df_pae_up$T12, df_pae_up$T0, paired = TRUE, exact = FALSE)
+    method_up <- "Wilcoxon signed-rank"
+  }
+} else {
+  sw_up <- list(p.value = NA)
+  test_up <- list(statistic = NA, p.value = NA)
+  method_up <- "insufficient pairs (<3)"
+}
+
+# DOWN
+if (nrow(df_pae_down) >= 3) {
+  sw_down <- shapiro.test(df_pae_down$delta)
+  if (sw_down$p.value > 0.05) {
+    test_down <- t.test(df_pae_down$T12, df_pae_down$T0, paired = TRUE)
+    method_down <- "paired t-test"
+  } else {
+    test_down <- wilcox.test(df_pae_down$T12, df_pae_down$T0, paired = TRUE, exact = FALSE)
+    method_down <- "Wilcoxon signed-rank"
+  }
+} else {
+  sw_down <- list(p.value = NA)
+  test_down <- list(statistic = NA, p.value = NA)
+  method_down <- "insufficient pairs (<3)"
+}
+
+res_pae <- tibble::tibble(
+  group = c("only_Pae (ALL)", "only_Pae (UP)", "only_Pae (DOWN)"),
+  n     = c(nrow(df_pae), nrow(df_pae_up), nrow(df_pae_down)),
+  shapiro_p = c(sw_all$p.value, sw_up$p.value, sw_down$p.value),
+  test      = c(method_all, method_up, method_down),
+  stat      = c(unname(test_all$statistic), unname(test_up$statistic), unname(test_down$statistic)),
+  p_value   = c(test_all$p.value, test_up$p.value, test_down$p.value),
+  mean_delta   = c(mean(df_pae$delta), mean(df_pae_up$delta), mean(df_pae_down$delta)),
+  median_delta = c(median(df_pae$delta), median(df_pae_up$delta), median(df_pae_down$delta))
+)
+
+res_pae
+
+readr::write_csv(res_pae, here::here("results", "stats_only_Pae.csv"))
+```
+
+#### Only Sau
+```{r Normality only_Sau, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+df_sau <- df %>%
+  filter(PatientID %in% only_Sau) %>%
+  transmute(PatientID, T0 = Sau_T0, T12 = Sau_T12) %>%
+  filter(!is.na(T0), !is.na(T12)) %>%
+  mutate(delta = T12 - T0,
+         dir   = case_when(T12 > T0 ~ "up",
+                           T12 < T0 ~ "down",
+                           TRUE     ~ "no_change"))
+
+sw_all_sau <- shapiro.test(df_sau$delta)
+
+if (sw_all_sau$p.value > 0.05) {
+  test_all_sau <- t.test(df_sau$T12, df_sau$T0, paired = TRUE)
+  method_all_sau <- "paired t-test"
+} else {
+  test_all_sau <- wilcox.test(df_sau$T12, df_sau$T0, paired = TRUE, exact = FALSE)
+  method_all_sau <- "Wilcoxon signed-rank"
+}
+
+df_sau_up   <- df_sau %>% filter(dir == "up")
+df_sau_down <- df_sau %>% filter(dir == "down")
+
+# UP
+if (nrow(df_sau_up) >= 3) {
+  sw_up_sau <- shapiro.test(df_sau_up$delta)
+  if (sw_up_sau$p.value > 0.05) {
+    test_up_sau <- t.test(df_sau_up$T12, df_sau_up$T0, paired = TRUE)
+    method_up_sau <- "paired t-test"
+  } else {
+    test_up_sau <- wilcox.test(df_sau_up$T12, df_sau_up$T0, paired = TRUE, exact = FALSE)
+    method_up_sau <- "Wilcoxon signed-rank"
+  }
+} else {
+  sw_up_sau <- list(p.value = NA)
+  test_up_sau <- list(statistic = NA, p.value = NA)
+  method_up_sau <- "insufficient pairs (<3)"
+}
+
+# DOWN
+if (nrow(df_sau_down) >= 3) {
+  sw_down_sau <- shapiro.test(df_sau_down$delta)
+  if (sw_down_sau$p.value > 0.05) {
+    test_down_sau <- t.test(df_sau_down$T12, df_sau_down$T0, paired = TRUE)
+    method_down_sau <- "paired t-test"
+  } else {
+    test_down_sau <- wilcox.test(df_sau_down$T12, df_sau_down$T0, paired = TRUE, exact = FALSE)
+    method_down_sau <- "Wilcoxon signed-rank"
+  }
+} else {
+  sw_down_sau <- list(p.value = NA)
+  test_down_sau <- list(statistic = NA, p.value = NA)
+  method_down_sau <- "insufficient pairs (<3)"
+}
+
+res_sau <- tibble::tibble(
+  group = c("only_Sau (ALL)", "only_Sau (UP)", "only_Sau (DOWN)"),
+  n     = c(nrow(df_sau), nrow(df_sau_up), nrow(df_sau_down)),
+  shapiro_p = c(sw_all_sau$p.value, sw_up_sau$p.value, sw_down_sau$p.value),
+  test      = c(method_all_sau, method_up_sau, method_down_sau),
+  stat      = c(unname(test_all_sau$statistic), unname(test_up_sau$statistic), unname(test_down_sau$statistic)),
+  p_value   = c(test_all_sau$p.value, test_up_sau$p.value, test_down_sau$p.value),
+  mean_delta   = c(mean(df_sau$delta), mean(df_sau_up$delta), mean(df_sau_down$delta)),
+  median_delta = c(median(df_sau$delta), median(df_sau_up$delta), median(df_sau_down$delta))
+)
+
+res_sau
+
+readr::write_csv(res_sau, here::here("results", "stats_only_Sau.csv"))
+```
+
+### Function for plots
+```{r Function for plots, echo=TRUE, results='hide', message=FALSE, warning=FALSE}}
+# 1) Data preparation: reshape counts and annotate subgroups
+df_plot <- df %>%
+  pivot_longer(
+    cols = c(Pae_T0, Pae_T12, Sau_T0, Sau_T12),
+    names_to = c("bug", "Time"), names_sep = "_", values_to = "count"
+  ) %>%
+  mutate(
+    bug  = recode(bug, Pae = "Pae", Sau = "Sau"),
+    Time = factor(Time, levels = c("T0","T12")),
+    subgroup = case_when(
+      PatientID %in% only_Pae    ~ "only_Pae",
+      PatientID %in% only_Sau    ~ "only_Sau",
+      PatientID %in% Pae_and_Sau ~ "Pae_and_Sau",
+      TRUE ~ NA_character_
+    )
+  ) %>%
+  filter(!is.na(subgroup))
+
+pae_dir <- df %>%
+  filter(PatientID %in% only_Pae) %>%
+  transmute(PatientID,
+            change = case_when(Pae_T12 > Pae_T0 ~ "up", Pae_T12 < Pae_T0 ~ "down", TRUE ~ "no_change"))
+
+sau_dir <- df %>%
+  filter(PatientID %in% only_Sau) %>%
+  transmute(PatientID,
+            change = case_when(Sau_T12 > Sau_T0 ~ "up", Sau_T12 < Sau_T0 ~ "down", TRUE ~ "no_change"))
+
+long_only_pae_dir <- df_plot %>% filter(subgroup == "only_Pae", bug == "Pae") %>% left_join(pae_dir, by = "PatientID")
+long_only_sau_dir <- df_plot %>% filter(subgroup == "only_Sau", bug == "Sau") %>% left_join(sau_dir, by = "PatientID")
+
+# 2) Define aesthetics
+time_colors <- c("T0" = "#9EC1CF", "T12" = "#F9A1BC")
+
+# 3) Function
+create_dot_plot <- function(data, p_value, y_label, title, shape = 21) {
+  
+  if (is.null(data) || nrow(data) < 2) {
+    cat("Skipping plot for '", title, "' due to empty data.\n", sep = "")
+    return(NULL)
+  }
+  
+  d_paired <- data %>% 
+    mutate(
+      Time = factor(Time, levels = c("T0", "T12")),
+      x    = as.numeric(Time),
+      count_log10p = log10(count + 1)
+    )
+  
+  y_max <- max(d_paired$count_log10p, na.rm = TRUE)
+  y_limit <- y_max * 1.25
+  
+  p_label <- if (is.null(p_value) || is.na(p_value) || !is.finite(p_value)) {
+    "p=N/A"
+  } else if (p_value < 0.001) {
+    "p<0.001"
+  } else {
+    paste0("p=", signif(p_value, 3))
+  }
+  
+  p_y_pos <- y_max * 1.10
+  
+  p <- ggplot(d_paired, aes(x = x, y = count_log10p, group = PatientID)) +
+    geom_line(color = "grey40", alpha = 0.5, linetype = "dashed", linewidth = 0.5) +
+    geom_point(aes(fill = Time),
+               shape = shape, size = 3, stroke = 0.5,
+               color = "black", alpha = 0.8) +
+    
+    annotate("segment",
+             x = 1, xend = 2,
+             y = p_y_pos, yend = p_y_pos,
+             linewidth = 0.5) +
+    annotate("text",
+             x = 1.5,
+             y = p_y_pos + 0.05 * y_max,
+             label = p_label, size = 4) +
+    
+    scale_x_continuous(
+      breaks = c(1, 2),
+      labels = c("T0", "T12"),
+      limits = c(0.5, 2.5)
+    ) +
+    scale_y_continuous(
+      breaks = pretty(c(0, y_max), n = 5),
+      limits = c(0, y_limit)
+    ) +
+    scale_fill_manual(values = time_colors, name = "Time") +
+    labs(x = NULL, y = y_label, title = title) +
+    theme_minimal(base_size = 12) +
+    theme(panel.grid.minor = element_blank())
+  
+  return(p)
+}
+```
+
+##### Plots
+```{r Plots, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+p_pae_all  <- res_pae$p_value[res_pae$group == "only_Pae (ALL)"]
+p_pae_up   <- res_pae$p_value[res_pae$group == "only_Pae (UP)"]
+p_pae_down <- res_pae$p_value[res_pae$group == "only_Pae (DOWN)"]
+p_sau_all  <- res_sau$p_value[res_sau$group == "only_Sau (ALL)"]
+p_sau_up   <- res_sau$p_value[res_sau$group == "only_Sau (UP)"]
+p_sau_down <- res_sau$p_value[res_sau$group == "only_Sau (DOWN)"]
+
+p_pae_all_dot  <- create_dot_plot(long_only_pae_dir, p_pae_all,
+                                  "Log10 (Pae CFU/mL + 1)", "Only Pae - ALL")
+p_pae_up_dot   <- create_dot_plot(
+  filter(long_only_pae_dir, change == "up"),
+  p_pae_up, "", "Only Pae - UP"
+)
+p_pae_down_dot <- create_dot_plot(
+  filter(long_only_pae_dir, change == "down"),
+  p_pae_down, "", "Only Pae - DOWN"
+)
+
+p_sau_all_dot  <- create_dot_plot(long_only_sau_dir, p_sau_all,
+                                  "Log10 (Sau CFU/mL + 1)", "Only Sau - ALL",
+                                  shape = 24)
+p_sau_up_dot   <- create_dot_plot(
+  filter(long_only_sau_dir, change == "up"),
+  p_sau_up, "", "Only Sau - UP",
+  shape = 24
+)
+p_sau_down_dot <- create_dot_plot(
+  filter(long_only_sau_dir, change == "down"),
+  p_sau_down, "", "Only Sau - DOWN",
+  shape = 24
+)
+
+
+pae_dot_row <- p_pae_all_dot + p_pae_up_dot + p_pae_down_dot +
+  plot_layout(nrow = 1, guides = "collect") &
+  theme(legend.position = "bottom")
+
+sau_dot_row <- p_sau_all_dot + p_sau_up_dot + p_sau_down_dot +
+  plot_layout(nrow = 1, guides = "collect") &
+  theme(legend.position = "bottom")
+
+pae_sau_all_row <- p_pae_all_dot + p_sau_all_dot +
+  plot_layout(nrow = 1, guides = "collect") &
+  theme(legend.position = "bottom")
+
+
+print(pae_dot_row)
+print(sau_dot_row)
+print(pae_sau_all_row)
+
+ggsave(here::here("results", "Pae_only.svg"), pae_dot_row,
+       device = "svg", width = 10, height = 6, dpi = 300)
+ggsave(here::here("results", "Sau_only.svg"), sau_dot_row,
+       device = "svg", width = 10, height = 6, dpi = 300)
+ggsave(here::here("results", "Pae_Sau_all_only.svg"), pae_sau_all_row,
+       device = "svg", width = 10, height = 6, dpi = 300)
+```
+
+##### Panel plot Pae and Sau
+```{r Panel plot Pae and Sau, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+panel_pae_sau <- (pae_dot_row) / (sau_dot_row) +
+  plot_layout(guides = "collect") & theme(legend.position = "bottom")
+
+panel_pae_sau <- panel_pae_sau + plot_annotation(tag_levels = "A")
+
+ggsave(here("results","panel_pae_sau.svg"), panel_pae_sau, width = 8, height = 8, bg = "white")
+```
+
+
+#### Co-colonization Pae + Sau
+```{r Co-colonization Pae and Sau, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+df_both_plot <- df_plot %>%
+  dplyr::filter(subgroup == "Pae_and_Sau") %>%
+  dplyr::left_join(
+    combo %>% dplyr::select(PatientID, combo),
+    by = "PatientID"
+  ) %>%
+  dplyr::mutate(
+    Time = factor(Time, levels = c("T0", "T12")),
+    bug  = factor(bug,  levels = c("Pae", "Sau")),
+    facet_lab = paste0(PatientID, "\n", combo)
+  )
+
+y_max_both <- max(df_both_plot$count, na.rm = TRUE)
+```
+
+##### Plots
+```{r Plots co-colonization Pae and Sau, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+time_colors <- c(
+  "T0"  = "#9EC1CF",
+  "T12" = "#F9A1BC"
+)
+
+df_both_plot2 <- df_both_plot %>%
+  mutate(
+    count_log10p = log10(count + 1)
+  )
+
+y_max_both <- max(df_both_plot2$count_log10p, na.rm = TRUE)
+
+p_both <- ggplot(
+  df_both_plot2,
+  aes(
+    x      = Time,
+    y      = count_log10p,
+    group  = interaction(PatientID, bug),
+    colour = Time,
+    fill   = Time,
+    shape  = bug
+  )
+) +
+
+  geom_line(
+    aes(group = interaction(PatientID, bug)),
+    linetype    = "dashed",
+    colour      = "grey60",
+    linewidth   = 0.4,
+    alpha       = 0.7,
+    show.legend = FALSE
+  ) +
+
+  geom_point(
+    size   = 3,
+    stroke = 0.5
+  ) +
+
+  geom_point(
+    aes(shape = bug),
+    size        = 3,
+    stroke      = 0.6,
+    colour      = "black",
+    fill        = NA,
+    show.legend = FALSE
+  ) +
+  facet_wrap(~ facet_lab, ncol = 3) +
+  
+  scale_colour_manual(
+    name   = "Time",
+    values = time_colors,
+    breaks = c("T0", "T12"),
+    labels = c("T0", "T12")
+  ) +
+  scale_fill_manual(
+    values = time_colors,
+    guide  = "none"
+  ) +
+  scale_shape_manual(
+    values = c(Pae = 21, Sau = 24),
+    name   = "Pathogen"
+  ) +
+  scale_y_continuous(
+    breaks = pretty(c(0, y_max_both), n = 5),
+    limits = c(0, y_max_both * 1.3)
+  ) +
+
+  guides(
+    colour = guide_legend(
+      order = 1,
+      override.aes = list(
+        shape  = 21,
+        size   = 3,
+        stroke = 0.6,
+        colour = "black",
+        fill   = time_colors
+      )
+    ),
+    shape = guide_legend(
+      order = 2,
+      override.aes = list(
+        size   = 3,
+        stroke = 0.6,
+        colour = "black",
+        fill   = "white"
+      )
+    )
+  ) +
+  
+  labs(
+    title = "Co-colonization by P. aeruginosa and S. aureus",
+    x     = "Time",
+    y     = "log10(P. aeruginosa + S. aureus CFU/mL + 1)"
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(
+    panel.grid.minor = element_blank(),
+    strip.text.x     = element_text(face = "plain"),
+    legend.position  = "right"
+  )
+
+print(p_both)
+
+ggsave(
+  here::here("results", "Pae_Sau_cocolonization.svg"),
+  p_both,
+  device = "svg",
+  width  = 8,
+  height = 8,
+  dpi    = 300
+)
+```
+
+# ---------------------------------------------------------------
+## Association between ppFEV1 changes and P. aeruginosa dynamics
+# ---------------------------------------------------------------
+
+### Load in data
+```{r Load in data, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+data_Pae <- read_delim(here("data", "only_Pae_ppFEV1.csv"))
+```
+
+### Create categorical variables
+```{r Create categorical variables, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+analysis_data_Pae <- data_Pae %>%
+  mutate(
+    # Variable 1: P. aeruginosa change (Pae Increases vs. Does Not Increase)
+    pae_change = factor(case_when(
+      Pae_direction == "up"                   ~ "Pae Increases",
+      Pae_direction %in% c("down", "neutral") ~ "Pae Does Not Increase",
+      TRUE                                    ~ NA_character_
+    )),
+    
+    # Variable 2: FEV1 change (Improves vs. Does Not Improve)
+    fev1_improvement = factor(ifelse(ppFEV1_T12 > ppFEV1_T0, "Improves", "Does Not Improve"))
+  )
+
+# Create the contingency table
+contingency_table_Pae <- table(analysis_data_Pae$pae_change, analysis_data_Pae$fev1_improvement)
+
+print("Contingency Table:")
+print(contingency_table_Pae)
+```
+
+### Perform Fisher's test
+```{r Fisher test, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+fisher_test_result_Pae <- fisher.test(contingency_table_Pae)
+
+# Print the results
+print("Fisher's Exact Test Results:")
+print(fisher_test_result_Pae)
+```
+
+### Normality test and statistics
+```{r Shapiro-Wilk, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+# Filter for patients with a decrease in P. aeruginosa (ONLY 1 INCREASED)
+patients_down_Pae <- data_Pae %>%
+  filter(Pae_direction == "down")
+
+# Calculate the differences between T12 and T0 (the normality test for a paired analysis is performed on these differences).
+differences_Pae <- patients_down_Pae$ppFEV1_T12 - patients_down_Pae$ppFEV1_T0
+
+# Perform the Shapiro-Wilk normality test on the differences
+shapiro_result_Pae <- shapiro.test(differences_Pae)
+
+cat("--- Shapiro-Wilk Normality Test Result ---\n")
+print(shapiro_result_Pae)
+cat("\n")
+
+if (shapiro_result_Pae$p.value > 0.05) {
+  
+  cat("Data appear to be normally distributed (p > 0.05).\n")
+  cat("--- Running Paired t-test ---\n")
+  
+  final_test_Pae <- t.test(patients_down_Pae$ppFEV1_T12, 
+                         patients_down_Pae$ppFEV1_T0, 
+                         paired = TRUE, 
+                         alternative = "greater")
+  
+} else {
+  
+  cat("Data do not appear to be normally distributed (p <= 0.05).\n")
+  cat("--- Running Paired Wilcoxon Signed-Rank Test ---\n")
+  
+  final_test_Pae <- wilcox.test(patients_down_Pae$ppFEV1_T12, 
+                              patients_down_Pae$ppFEV1_T0, 
+                              paired = TRUE, 
+                              alternative = "greater")
+}
+
+cat("\n--- Final Statistical Test Result ---\n")
+print(final_test_Pae)
+```
+
+### Save the results
+```{r Save the results, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+readr::write_csv(tibble::tibble(test = final_test_Pae$method,
+                                statistic = unname(final_test_Pae$statistic),
+                                p_value = final_test_Pae$p.value,
+                                n = length(differences_Pae)),
+                 here::here("results", "ppFEV1_Pae_down_stats.csv"))
+```
+
+# ---------------------------------------------------------------
+## Association between ppFEV1 changes and S. aureus dynamics
+# ---------------------------------------------------------------
+
+#### Load in data
+```{r Load in data, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+data_Sau <- read_delim(here("data", "only_Sau_ppFEV1.csv"))
+```
+
+### Create categorical variables
+```{r Create categorical variables, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+analysis_data_Sau <- data_Sau %>%
+  mutate(
+    # Variable 1: S. aureus change (Aureus Increases vs. Does Not Increase)
+    sau_change = factor(case_when(
+      Sau_direction == "up"                   ~ "Aureus Increases",
+      Sau_direction %in% c("down", "neutral") ~ "Aureus Does Not Increase",
+      TRUE                                    ~ NA_character_
+    )),
+    
+    # Variable 2: FEV1 change (Improves vs. Does Not Improve)
+    fev1_improvement = factor(ifelse(ppFEV1_T12 > ppFEV1_T0, "Improves", "Does Not Improve"))
+  )
+
+# Create the contingency table
+contingency_table_Sau <- table(analysis_data_Sau$sau_change, analysis_data_Sau$fev1_improvement)
+
+# Print the table to verify it's correct
+print("Contingency Table:")
+print(contingency_table_Sau)
+```
+
+### Perform Fisher's test
+```{r Fisher test, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+fisher_test_result_Sau <- fisher.test(contingency_table_Sau)
+
+print("Fisher's Exact Test Results:")
+print(fisher_test_result_Sau)
+```
+
+### Normality test and statistics
+```{r Shapiro-Wilk, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+# Filter for patients with an increase in S. aureus
+patients_up_Sau <- data_Sau %>%
+  filter(Sau_direction == "up")
+
+# Calculate the differences between T12 and T0 (the normality test for a paired analysis is performed on these differences).
+differences_Sau <- patients_up_Sau$ppFEV1_T12 - patients_up_Sau$ppFEV1_T0
+
+# Perform the Shapiro-Wilk normality test on the differences
+shapiro_result_Sau <- shapiro.test(differences_Sau)
+
+cat("--- Shapiro-Wilk Normality Test Result ---\n")
+print(shapiro_result_Sau)
+cat("\n")
+if (shapiro_result_Sau$p.value > 0.05) {
+  
+  cat("Data appear to be normally distributed (p > 0.05).\n")
+  cat("--- Running Paired t-test ---\n")
+  
+  final_test_Sau <- t.test(patients_up_Sau$ppFEV1_T12, 
+                         patients_up_Sau$ppFEV1_T0, 
+                         paired = TRUE, 
+                         alternative = "greater")
+  
+} else {
+  
+  cat("Data do not appear to be normally distributed (p <= 0.05).\n")
+  cat("--- Running Paired Wilcoxon Signed-Rank Test ---\n")
+  
+  final_test_Sau <- wilcox.test(patients_up_Sau$ppFEV1_T12, 
+                              patients_up_Sau$ppFEV1_T0, 
+                              paired = TRUE, 
+                              alternative = "greater")
+}
+
+cat("\n--- Final Statistical Test Result ---\n")
+print(final_test_Sau)
+```
+
+### Save the results
+```{r Save the results, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+readr::write_csv(tibble::tibble(test = final_test_Sau$method,
+                                statistic = unname(final_test_Sau$statistic),
+                                p_value = final_test_Sau$p.value,
+                                n = length(differences_Sau)),
+                 here::here("results", "ppFEV1_Sau_up_stats.csv"))
+```
+
+
+# ------------------------------------------------------------------------------
+# GLOBAL LUNG FUNCTION
+# ------------------------------------------------------------------------------
+
+### Load in the data
+```{r Load in data lung function, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+df_lung <- read_delim(here("data", "lung_function.csv"))
+```
+
+### Change names of lung function group
+```{r Change names of lung function groups, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+df_lung <- df_lung %>%
+  dplyr::mutate(
+    group_label = dplyr::case_when(
+      group == 1 ~ "NM→NM",
+      group == 2 ~ "MS→MS",
+      group == 3 ~ "MS→NM",
+      TRUE ~ NA_character_
+    )
+  )
+```
+
+
+### Filter data by time
+```{r Filter data by time lung function, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+data_lung_T0  <- subset(df_lung, Time == "T0")
+data_lung_T12 <- subset(df_lung, Time == "T12")
+```
+
+### Function for statistic test
+```{r Function for statistic test based on shapiro results lung function, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+auto_paired_test_lung <- function(df,
+                                  id_col   = "PatientID",
+                                  time_col = "Time",
+                                  value_col = "ppFEV1",
+                                  levels   = c("T0","T12")) {
+  stopifnot(all(c(id_col, time_col, value_col) %in% names(df)))
+  
+  dfw <- df[, c(id_col, time_col, value_col)]
+  dfw <- tidyr::pivot_wider(
+    dfw,
+    names_from  = !!rlang::sym(time_col),
+    values_from = !!rlang::sym(value_col)
+  )
+  if (!all(levels %in% names(dfw))) {
+    stop("No columns found ", paste(levels, collapse = " and "), " after pivot_wider().")
+  }
+  dfw <- dfw[stats::complete.cases(dfw[, levels]), ]
+  
+  x0   <- dfw[[levels[1]]]
+  x12  <- dfw[[levels[2]]]
+  diff <- x12 - x0
+  n    <- length(diff)
+  if (n < 3) stop("Very few valid pairs (n < 3).")
+  
+  sh     <- shapiro.test(diff)
+  normal <- sh$p.value >= 0.05
+  
+  if (normal) {
+    tt <- t.test(x12, x0, paired = TRUE)
+    
+    mean_diff <- mean(diff, na.rm = TRUE)
+    sd_diff   <- stats::sd(diff, na.rm = TRUE)
+    d_paired  <- mean_diff / sd_diff
+    
+    mean_T0  <- mean(x0,  na.rm = TRUE); sd_T0  <- stats::sd(x0,  na.rm = TRUE)
+    mean_T12 <- mean(x12, na.rm = TRUE); sd_T12 <- stats::sd(x12, na.rm = TRUE)
+    
+    cat("\n=== Auto test (", value_col, ") ===\n", sep = "")
+    cat("Normality of differences: Normal (Shapiro p =", round(sh$p.value, 4), ")\n")
+    cat("Chosen test: Paired t-test\n")
+    cat("n =", n, "| t =", round(tt$statistic, 4), "| p =", signif(tt$p.value, 4), "\n")
+    cat("T0:   mean ± SD = ", round(mean_T0, 3), " ± ", round(sd_T0, 3), "\n", sep = "")
+    cat("T12:  mean ± SD = ", round(mean_T12, 3), " ± ", round(sd_T12, 3), "\n", sep = "")
+    cat("Mean difference (T12−T0) =", round(mean_diff, 3),
+    " | 95% CI [", round(tt$conf.int[1], 3), ", ", round(tt$conf.int[2], 3), "]\n", sep = "")
+    cat("Effect size (Cohen's d paired) =", round(d_paired, 3), "\n")
+    
+    invisible(list(
+      variable = value_col,
+      method = "paired_t",
+      n = n,
+      shapiro = sh,
+      test = tt,
+      group_summary = list(
+        T0  = c(mean = mean_T0, sd = sd_T0),
+        T12 = c(mean = mean_T12, sd = sd_T12)
+      ),
+      mean_diff = mean_diff,
+      ci = tt$conf.int,
+      effect_size = list(type = "cohen_d_paired", value = d_paired)
+    ))
+    
+  } else {
+    wt   <- wilcox.test(x0, x12, paired = TRUE, exact = FALSE, correct = FALSE)
+    V    <- as.numeric(wt$statistic)
+    r_rb <- 1 - (2 * V) / (n * (n + 1))
+    
+    med_T0   <- stats::median(x0,  na.rm = TRUE)
+    q1_T0    <- stats::quantile(x0,  0.25, na.rm = TRUE)
+    q3_T0    <- stats::quantile(x0,  0.75, na.rm = TRUE)
+    med_T12  <- stats::median(x12, na.rm = TRUE)
+    q1_T12   <- stats::quantile(x12, 0.25, na.rm = TRUE)
+    q3_T12   <- stats::quantile(x12, 0.75, na.rm = TRUE)
+    med_diff <- stats::median(diff, na.rm = TRUE)
+    
+    cat("\n=== Auto test (", value_col, ") ===\n", sep = "")
+    cat("Normality of differences: Not normal (Shapiro p =", round(sh$p.value, 4), ")\n")
+    cat("Chosen test: Wilcoxon signed-rank (paired)\n")
+    cat("n =", n, "| V =", V, "| p =", signif(wt$p.value, 4), "\n")
+    cat("T0:   median [IQR] = ", round(med_T0, 3), " [",
+        round(q1_T0, 3), "–", round(q3_T0, 3), "]\n", sep = "")
+    cat("T12:  median [IQR] = ", round(med_T12, 3), " [",
+        round(q1_T12, 3), "–", round(q3_T12, 3), "]\n", sep = "")
+    cat("Median difference (T12−T0) =", round(med_diff, 3), "\n")
+    cat("Effect size (rank-biserial r) =", round(r_rb, 3), "\n")
+    
+    invisible(list(
+      variable = value_col,
+      method = "wilcoxon_paired",
+      n = n,
+      shapiro = sh,
+      test = wt,
+      group_summary = list(
+        T0  = c(median = med_T0, Q1 = q1_T0, Q3 = q3_T0),
+        T12 = c(median = med_T12, Q1 = q1_T12, Q3 = q3_T12)
+      ),
+      median_diff = med_diff,
+      effect_size = list(type = "rank_biserial_r", value = r_rb, V = V)
+    ))
+  }
+}
+# Wrapper "safe": if n < 3, returns a valid res_obj object with p = NA instead of stopping
+auto_paired_test_lung_safe <- function(df,
+                                       id_col   = "PatientID",
+                                       time_col = "Time",
+                                       value_col = "ppFEV1",
+                                       levels   = c("T0","T12")) {
+  tryCatch(
+    auto_paired_test_lung(df,
+                          id_col = id_col,
+                          time_col = time_col,
+                          value_col = value_col,
+                          levels = levels),
+    error = function(e) {
+      if (grepl("Very few valid pairs", e$message) || grepl("n < 3", e$message)) {
+        list(
+          variable = value_col,
+          method   = "too_few_pairs",
+          n        = NA_integer_,
+          shapiro  = list(p.value = NA_real_),
+          test     = list(statistic = NA_real_, p.value = NA_real_),
+          effect_size = list(type = NA_character_, value = NA_real_)
+        )
+      } else {
+        stop(e)
+      }
+    }
+  )
+}
+```
+
+### Perform the statistical test
+#### For ppFEV1
+##### Global
+```{r Execute stats function lung function ppFEV1, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+res_ppFEV1 <- auto_paired_test_lung(df_lung, value_col = "ppFEV1")
+```
+##### By Sex
+###### Female
+```{r Execute stats function lung function ppFEV1 by female, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+res_ppFEV1_fem <- auto_paired_test_lung(
+  df_lung %>% dplyr::filter(Sex == "female"),
+  value_col = "ppFEV1"
+)
+```
+###### Male
+```{r Execute stats function lung function ppFEV1 by male, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+res_ppFEV1_mal <- auto_paired_test_lung(
+  df_lung %>% dplyr::filter(Sex == "male"),
+  value_col = "ppFEV1"
+)
+```
+##### By Age
+###### Adult
+```{r Execute stats function lung function ppFEV1 by adult, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+res_ppFEV1_adu <- auto_paired_test_lung(
+  df_lung %>% dplyr::filter(AgeGroup == "adult"),
+  value_col = "ppFEV1"
+)
+```
+###### Pediatric
+```{r Execute stats function lung function ppFEV1 by pediatric, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+res_ppFEV1_ped <- auto_paired_test_lung(
+  df_lung %>% dplyr::filter(AgeGroup == "pediatric"),
+  value_col = "ppFEV1"
+)
+```
+##### By lung function group
+###### NM-NM
+```{r Execute stats function lung function ppFEV1 by NMNM, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+res_ppFEV1_NMNM <- auto_paired_test_lung_safe(
+  df_lung %>% dplyr::filter(group_label == "NM→NM"),
+  value_col = "ppFEV1"
+)
+```
+###### MS-MS
+```{r Execute stats function lung function ppFEV1 by MSMS, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+res_ppFEV1_MSMS <- auto_paired_test_lung_safe(
+  df_lung %>% dplyr::filter(group_label == "MS→MS"),
+  value_col = "ppFEV1"
+)
+```
+###### MS-NM
+```{r Execute stats function lung function ppFEV1 by MSNM, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+res_ppFEV1_MSNM <- auto_paired_test_lung_safe(
+  df_lung %>% dplyr::filter(group_label == "MS→NM"),
+  value_col = "ppFEV1"
+)
+```
+
+#### For ppFVC
+##### Global
+```{r Execute stats function lung function ppFVC, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+res_ppFVC  <- auto_paired_test_lung(df_lung, value_col = "ppFVC")
+```
+##### By Sex
+###### Female
+```{r Execute stats function lung function ppFEV1 by female, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+res_ppFVC_fem <- auto_paired_test_lung(
+  df_lung %>% dplyr::filter(Sex == "female"),
+  value_col = "ppFVC"
+)
+```
+###### Male
+```{r Execute stats function lung function ppFEV1 by male, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+res_ppFVC_mal <- auto_paired_test_lung(
+  df_lung %>% dplyr::filter(Sex == "male"),
+  value_col = "ppFVC"
+)
+```
+##### By Age
+###### Adult
+```{r Execute stats function lung function ppFEV1 by adult, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+res_ppFVC_adu <- auto_paired_test_lung(
+  df_lung %>% dplyr::filter(AgeGroup == "adult"),
+  value_col = "ppFVC"
+)
+```
+###### Pediatric
+```{r Execute stats function lung function ppFEV1 by pediatric, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+res_ppFVC_ped <- auto_paired_test_lung(
+  df_lung %>% dplyr::filter(AgeGroup == "pediatric"),
+  value_col = "ppFVC"
+)
+```
+##### By lung function group
+###### NM-NM
+```{r Execute stats function lung function ppFVC by NMNM, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+res_ppFVC_NMNM <- auto_paired_test_lung_safe(
+  df_lung %>% dplyr::filter(group_label == "NM→NM"),
+  value_col = "ppFVC"
+)
+```
+###### MS-MS
+```{r Execute stats function lung function ppFVC by MSMS, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+res_ppFVC_MSMS <- auto_paired_test_lung_safe(
+  df_lung %>% dplyr::filter(group_label == "MS→MS"),
+  value_col = "ppFVC"
+)
+```
+###### MS-NM
+```{r Execute stats function lung function ppFVC by MSNM, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+res_ppFVC_MSNM <- auto_paired_test_lung_safe(
+  df_lung %>% dplyr::filter(group_label == "MS→NM"),
+  value_col = "ppFVC"
+)
+```
+#### For FEV1/FVC
+##### Global
+```{r Execute stats function lung function FEV1_FVC, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+res_ratio  <- auto_paired_test_lung(df_lung, value_col = "FEV1_FVC")
+```
+##### By Sex
+###### Female
+```{r Execute stats function lung function ppFEV1 by female, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+res_ratio_fem <- auto_paired_test_lung(
+  df_lung %>% dplyr::filter(Sex == "female"),
+  value_col = "FEV1_FVC"
+)
+```
+###### Male
+```{r Execute stats function lung function ppFEV1 by male, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+res_ratio_mal <- auto_paired_test_lung(
+  df_lung %>% dplyr::filter(Sex == "male"),
+  value_col = "FEV1_FVC"
+)
+```
+##### By Age
+###### Adult
+```{r Execute stats function lung function ppFEV1 by adult, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+res_ratio_adu <- auto_paired_test_lung(
+  df_lung %>% dplyr::filter(AgeGroup == "adult"),
+  value_col = "FEV1_FVC"
+)
+```
+###### Pediatric
+```{r Execute stats function lung function ppFEV1 by pediatric, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+res_ratio_ped <- auto_paired_test_lung(
+  df_lung %>% dplyr::filter(AgeGroup == "pediatric"),
+  value_col = "FEV1_FVC"
+)
+```
+##### By lung function group
+###### NM-NM
+```{r Execute stats function lung function FEV1_FVC by NMNM, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+res_ratio_NMNM <- auto_paired_test_lung_safe(
+  df_lung %>% dplyr::filter(group_label == "NM→NM"),
+  value_col = "FEV1_FVC"
+)
+```
+###### MS-MS
+```{r Execute stats function lung function FEV1_FVC by MSMS, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+res_ratio_MSMS <- auto_paired_test_lung_safe(
+  df_lung %>% dplyr::filter(group_label == "MS→MS"),
+  value_col = "FEV1_FVC"
+)
+```
+###### MS-NM
+```{r Execute stats function lung function FEV1_FVC by MSNM, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+res_ratio_MSNM <- auto_paired_test_lung_safe(
+  df_lung %>% dplyr::filter(group_label == "MS→NM"),
+  value_col = "FEV1_FVC"
+)
+```
+
+### Females vs Males
+```{r LMER fem vs mal, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+model_sex <- lmer(ppFEV1 ~ Time * Sex + (1 | PatientID), data = df_lung)
+anova_sex <- as.data.frame(anova(model_sex))
+anova_sex$term <- rownames(anova_sex)
+anova_sex <- anova_sex[, c("term", setdiff(names(anova_sex), "term"))]
+
+write.csv(anova_sex, "Results/lmer_ppFEV1_Time_Sex_ANOVA.csv", row.names = FALSE)
+capture.output(summary(model_sex), file = "Results/lmer_ppFEV1_Time_Sex_summary.txt")
+```
+
+### Adults vs Pediatrics
+```{r LMER adu vs ped, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+model_age <- lmer(ppFEV1 ~ Time * AgeGroup + (1 | PatientID), data = df_lung)
+anova_age <- as.data.frame(anova(model_age))
+anova_age$term <- rownames(anova_age)
+anova_age <- anova_age[, c("term", setdiff(names(anova_age), "term"))]
+
+write.csv(anova_age, "Results/lmer_ppFEV1_Time_AgeGroup_ANOVA.csv", row.names = FALSE)
+capture.output(summary(model_age), file = "Results/lmer_ppFEV1_Time_AgeGroup_summary.txt")
+```
+
+### Function for plot
+```{r Function plots, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+make_paired_plot <- function(df, value_var, res_obj, y_lab, outfile) {
+  stopifnot(all(c("PatientID","Time", value_var) %in% names(df)))
+  
+  d <- df %>%
+    mutate(Time = factor(Time, levels = c("T0","T12"))) %>%
+    group_by(PatientID) %>% filter(n_distinct(Time) == 2) %>% ungroup() %>%
+    mutate(x = as.numeric(Time))
+  
+  col_box   <- c("T0" = "#9EC1CF", "T12" = "#F9A1BC")
+  col_point <- c("T0" = "#D6E9F5", "T12" = "#FCD6E0")
+  
+  d <- d %>%
+    mutate(
+      fill_box   = col_box[Time],
+      fill_point = col_point[Time]
+    )
+  
+  p_val   <- res_obj$test$p.value
+  p_label <- ifelse(p_val < 0.001, "p < 0.001", paste0("p = ", signif(p_val, 3)))
+  
+  y_max    <- max(d[[value_var]], na.rm = TRUE) * 1.05
+  p_values <- data.frame(x = 1, xend = 2, y = y_max, label = p_label)
+  
+  p <- ggplot() +
+    stat_slab(
+      data = d %>% filter(Time == "T0"),
+      aes(x = x, y = .data[[value_var]], fill = fill_box),
+      side = "left", alpha = 0.5, adjust = 0.6, show.legend = FALSE
+    ) +
+    stat_slab(
+      data = d %>% filter(Time == "T12"),
+      aes(x = x, y = .data[[value_var]], fill = fill_box),
+      side = "right", alpha = 0.5, adjust = 0.6, show.legend = FALSE
+    ) +
+    geom_boxplot(
+      data = d,
+      aes(x = x, y = .data[[value_var]], fill = fill_box),
+      width = 0.5, outlier.shape = NA,
+      color = "black", alpha = 0.9, show.legend = TRUE
+    ) +
+    geom_point(
+      data = d,
+      aes(x = x, y = .data[[value_var]], fill = fill_point),
+      shape = 21, size = 3, stroke = 0.3, color = "black",
+      show.legend = FALSE
+    ) +
+    geom_line(
+      data = d,
+      aes(x = x, y = .data[[value_var]], group = PatientID),
+      color = "grey40", alpha = 0.4, linetype = "dashed", linewidth = 0.4
+    ) +
+    geom_segment(
+      data = p_values,
+      aes(x = x, xend = xend, y = y, yend = y),
+      color = "black", linewidth = 0.5
+    ) +
+    geom_text(
+      data = p_values,
+      aes(x = (x + xend) / 2, y = y * 1.02, label = label),
+      size = 4
+    ) +
+    scale_x_continuous(breaks = c(1, 2), labels = c("T0", "T12")) +
+    scale_fill_identity(guide = "legend", name = "Time",
+                        breaks = col_box, labels = names(col_box)) +
+    labs(x = NULL, y = y_lab) +
+    theme_minimal(base_size = 14) +
+    theme(legend.position = "right",
+          axis.text.x = element_text(size = 14))
+  
+  if (!dir.exists(here("results"))) dir.create(here("results"))
+  ggsave(here("results", outfile), p, width = 8, height = 6, units = "in", dpi = 300)
+  
+  invisible(p)
+}
+```
+
+### Function for polished panel plots
+```{r Function for polish panel plots echo=TRUE, results='show', message=FALSE, warning=FALSE}
+polish_panel_plot <- function(p) {
+  p +
+    theme(
+      legend.position = "bottom",
+      plot.margin = margin(5.5, 5.5, 5.5, 5.5),
+      axis.title.y = element_text(margin = margin(r = 6))
+    )
+}
+```
+
+
+#### Panel plots
+```{r Panel plots lung function, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+p_ppFEV1 <- polish_panel_plot(
+  make_paired_plot(df_lung, "ppFEV1", res_ppFEV1, "ppFEV1 (%)", "lung_ppFEV1.svg")
+)
+
+p_ppFVC <- polish_panel_plot(
+  make_paired_plot(df_lung, "ppFVC", res_ppFVC, "ppFVC (%)", "lung_ppFVC.svg")
+)
+
+p_ratio <- polish_panel_plot(
+  make_paired_plot(df_lung, "FEV1_FVC", res_ratio, "FEV1/FVC", "lung_FEV1_FVC.svg")
+)
+
+panel_lung <- p_ppFEV1 | p_ppFVC | p_ratio
+
+panel_lung <- panel_lung + plot_layout(guides = "collect") &
+  theme(legend.position = "bottom")
+
+ggsave(here("results","lung_function_panel.svg"),
+       panel_lung, width = 12, height = 5, bg = "white")
+
+# By Sex
+## Female
+p_ppFEV1_fem <- polish_panel_plot(
+  make_paired_plot(df_lung, "ppFEV1", res_ppFEV1_fem, "ppFEV1 (%) - Females", "lung_ppFEV1_fem.svg")
+)
+
+p_ppFVC_fem <- polish_panel_plot(
+  make_paired_plot(df_lung, "ppFVC", res_ppFVC_fem, "ppFVC (%) - Females", "lung_ppFVC_fem.svg")
+)
+
+p_ratio_fem <- polish_panel_plot(
+  make_paired_plot(df_lung, "FEV1_FVC", res_ratio_fem, "FEV1/FVC - Females", "lung_FEV1_FVC_fem.svg")
+)
+
+panel_lung_fem <- p_ppFEV1_fem | p_ppFVC_fem | p_ratio_fem
+
+panel_lung_fem <- panel_lung_fem + plot_layout(guides = "collect") &
+  theme(legend.position = "bottom")
+
+ggsave(here("results","lung_function_female_panel.svg"),
+       panel_lung_fem, width = 12, height = 5, bg = "white")
+
+## Male
+p_ppFEV1_mal <- polish_panel_plot(
+  make_paired_plot(df_lung, "ppFEV1", res_ppFEV1_mal, "ppFEV1 (%) - Males", "lung_ppFEV1_mal.svg")
+)
+
+p_ppFVC_mal <- polish_panel_plot(
+  make_paired_plot(df_lung, "ppFVC", res_ppFVC_mal, "ppFVC (%) - Males", "lung_ppFVC_mal.svg")
+)
+
+p_ratio_mal <- polish_panel_plot(
+  make_paired_plot(df_lung, "FEV1_FVC", res_ratio_mal, "FEV1/FVC - Males", "lung_FEV1_FVC_mal.svg")
+)
+
+panel_lung_mal <- p_ppFEV1_mal | p_ppFVC_mal | p_ratio_mal
+
+panel_lung_mal <- panel_lung_mal + plot_layout(guides = "collect") &
+  theme(legend.position = "bottom")
+
+ggsave(here("results","lung_function_male_panel.svg"),
+       panel_lung_mal, width = 12, height = 5, bg = "white")
+
+# By Age
+## Adult
+p_ppFEV1_adu <- polish_panel_plot(
+  make_paired_plot(df_lung, "ppFEV1", res_ppFEV1_adu, "ppFEV1 (%) - Adults", "lung_ppFEV1_adu.svg")
+)
+
+p_ppFVC_adu <- polish_panel_plot(
+  make_paired_plot(df_lung, "ppFVC", res_ppFVC_adu, "ppFVC (%) - Adults", "lung_ppFVC_adu.svg")
+)
+
+p_ratio_adu <- polish_panel_plot(
+  make_paired_plot(df_lung, "FEV1_FVC", res_ratio_adu, "FEV1/FVC - Adults", "lung_FEV1_FVC_adu.svg")
+)
+
+panel_lung_adu <- p_ppFEV1_adu | p_ppFVC_adu | p_ratio_adu
+
+panel_lung_adu <- panel_lung_adu + plot_layout(guides = "collect") &
+  theme(legend.position = "bottom")
+
+ggsave(here("results","lung_function_adult_panel.svg"),
+       panel_lung_adu, width = 12, height = 5, bg = "white")
+
+## Pediatrics
+p_ppFEV1_ped <- polish_panel_plot(
+  make_paired_plot(df_lung, "ppFEV1", res_ppFEV1_ped, "ppFEV1 (%) - Pediatrics", "lung_ppFEV1_ped.svg")
+)
+
+p_ppFVC_ped <- polish_panel_plot(
+  make_paired_plot(df_lung, "ppFVC", res_ppFVC_ped, "ppFVC (%) - Pediatrics", "lung_ppFVC_ped.svg")
+)
+
+p_ratio_ped <- polish_panel_plot(
+  make_paired_plot(df_lung, "FEV1_FVC", res_ratio_ped, "FEV1/FVC - Pediatrics", "lung_FEV1_FVC_ped.svg")
+)
+
+panel_lung_ped <- p_ppFEV1_ped | p_ppFVC_ped | p_ratio_ped
+
+panel_lung_ped <- panel_lung_ped + plot_layout(guides = "collect") &
+  theme(legend.position = "bottom")
+
+ggsave(here("results","lung_function_pediatric_panel.svg"),
+       panel_lung_ped, width = 12, height = 5, bg = "white")
+
+# By lung function group
+## NM-NM
+p_ppFEV1_NMNM <- polish_panel_plot(
+  make_paired_plot(df_lung %>% dplyr::filter(group_label == "NM→NM"), "ppFEV1", res_ppFEV1_NMNM, "ppFEV1 (%) - NM→NM", "lung_ppFEV1_NMNM.svg")
+)
+
+p_ppFVC_NMNM <- polish_panel_plot(
+  make_paired_plot(df_lung %>% dplyr::filter(group_label == "NM→NM"), "ppFVC", res_ppFVC_NMNM, "ppFVC (%) - NM→NM", "lung_ppFVC_NMNM.svg")
+)
+
+p_ratio_NMNM <- polish_panel_plot(
+  make_paired_plot(df_lung %>% dplyr::filter(group_label == "NM→NM"), "FEV1_FVC", res_ratio_NMNM, "FEV1/FVC - NM→NM", "lung_FEV1_FVC_NMNM.svg")
+)
+
+panel_lung_NMNM <- p_ppFEV1_NMNM | p_ppFVC_NMNM | p_ratio_NMNM
+
+panel_lung_NMNM <- panel_lung_NMNM + plot_layout(guides = "collect") &
+  theme(legend.position = "bottom")
+
+ggsave(here("results", "lung_function_panel_NMNM.svg"), panel_lung_NMNM, width = 12, height = 5, bg = "white")
+
+## MS-MS
+p_ppFEV1_MSMS <- polish_panel_plot(
+  make_paired_plot(df_lung %>% dplyr::filter(group_label == "MS→MS"), "ppFEV1", res_ppFEV1_MSMS, "ppFEV1 (%) - MS→MS", "lung_ppFEV1_MSMS.svg")
+)
+
+p_ppFVC_MSMS <- polish_panel_plot(
+  make_paired_plot(df_lung %>% dplyr::filter(group_label == "MS→MS"), "ppFVC", res_ppFVC_MSMS, "ppFVC (%) - MS→MS", "lung_ppFVC_MSMS.svg")
+)
+
+p_ratio_MSMS <- polish_panel_plot(
+  make_paired_plot(df_lung %>% dplyr::filter(group_label == "MS→MS"), "FEV1_FVC", res_ratio_MSMS, "FEV1/FVC - MS→MS", "lung_FEV1_FVC_MSMS.svg")
+)
+
+panel_lung_MSMS <- p_ppFEV1_MSMS | p_ppFVC_MSMS | p_ratio_MSMS
+
+panel_lung_MSMS <- panel_lung_MSMS + plot_layout(guides = "collect") &
+  theme(legend.position = "bottom")
+
+ggsave(here("results", "lung_function_panel_MSMS.svg"), panel_lung_MSMS, width = 12, height = 5, bg = "white")
+
+## MS-NM
+p_ppFEV1_MSNM <- polish_panel_plot(
+  make_paired_plot(df_lung %>% dplyr::filter(group_label == "MS→NM"), "ppFEV1", res_ppFEV1_MSNM, "ppFEV1 (%) - MS→NM", "lung_ppFEV1_MSNM.svg")
+)
+
+p_ppFVC_MSNM <- polish_panel_plot(
+  make_paired_plot(df_lung %>% dplyr::filter(group_label == "MS→NM"), "ppFVC", res_ppFVC_MSNM, "ppFVC (%) - MS→MS", "lung_ppFVC_MSNM.svg")
+)
+
+p_ratio_MSNM <- polish_panel_plot(
+  make_paired_plot(df_lung %>% dplyr::filter(group_label == "MS→NM"), "FEV1_FVC", res_ratio_MSNM, "FEV1/FVC - MS→NM", "lung_FEV1_FVC_MSNM.svg")
+)
+
+panel_lung_MSNM <- p_ppFEV1_MSNM | p_ppFVC_MSNM | p_ratio_MSNM
+
+panel_lung_MSNM <- panel_lung_MSNM + plot_layout(guides = "collect") &
+  theme(legend.position = "bottom")
+
+ggsave(here("results", "lung_function_panel_MSNM.svg"), panel_lung_MSNM, width = 12, height = 5, bg = "white")
+```
+
+### Function plot with shapes for each trajectory
+```{r Plots lung function general colored by groups WITH SHAPES, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+make_paired_plot_transcolored <- function(df, value_var, res_obj, y_lab, outfile) {
+  stopifnot(all(c("PatientID", "Time", value_var, "group_label") %in% names(df)))
+  
+  d <- df %>%
+    dplyr::mutate(Time = factor(Time, levels = c("T0", "T12"))) %>%
+    dplyr::group_by(PatientID) %>%
+    dplyr::filter(dplyr::n_distinct(Time) == 2) %>%
+    dplyr::ungroup() %>%
+    dplyr::mutate(x = as.numeric(Time))
+  
+  p_val   <- res_obj$test$p.value
+  p_label <- ifelse(p_val < 0.001, "p < 0.001", paste0("p = ", signif(p_val, 3)))
+  
+  y_max    <- max(d[[value_var]], na.rm = TRUE) * 1.05
+  p_values <- data.frame(x = 1, xend = 2, y = y_max, label = p_label)
+  
+  p <- ggplot() +
+    ggdist::stat_slab(
+      data = d %>% dplyr::filter(Time == "T0"),
+      aes(x = x, y = .data[[value_var]], fill = Time),
+      side = "left", alpha = 0.5, adjust = 0.6, show.legend = FALSE
+    ) +
+    ggdist::stat_slab(
+      data = d %>% dplyr::filter(Time == "T12"),
+      aes(x = x, y = .data[[value_var]], fill = Time),
+      side = "right", alpha = 0.5, adjust = 0.6, show.legend = FALSE
+    ) +
+    geom_boxplot(
+      data = d,
+      aes(x = x, y = .data[[value_var]], fill = Time),
+      width = 0.5, outlier.shape = NA,
+      color = "black", alpha = 0.9
+    ) +
+    scale_fill_manual(values = c("T0" = "#9EC1CF", "T12" = "#F9A1BC"), name = "Time") +
+    ggnewscale::new_scale_fill() +
+    geom_point(
+      data = d %>% dplyr::filter(!is.na(group_label)),
+      aes(x = x, y = .data[[value_var]], fill = Time, shape = group_label),
+      size = 3, stroke = 0.5, color = "black"
+    ) +
+    scale_fill_manual(values = c("T0" = "#D6E9F5", "T12" = "#FCD6E0"), guide = "none") +
+    scale_shape_manual(
+      values = c("NM→NM" = 21, "MS→MS" = 24, "MS→NM" = 22),
+      name = "Trajectory"
+    ) +
+    geom_line(
+      data = d,
+      aes(x = x, y = .data[[value_var]], group = PatientID),
+      color = "grey40", alpha = 0.4, linetype = "dashed", linewidth = 0.4
+    ) +
+    geom_segment(
+      data = p_values,
+      aes(x = x, xend = xend, y = y, yend = y),
+      color = "black", linewidth = 0.5
+    ) +
+    geom_text(
+      data = p_values,
+      aes(x = (x + xend) / 2, y = y * 1.02, label = label),
+      size = 4
+    ) +
+    scale_x_continuous(breaks = c(1, 2), labels = c("T0", "T12")) +
+    labs(x = NULL, y = y_lab) +
+    theme_minimal(base_size = 14) +
+    theme(
+      legend.position = "right",
+      axis.text.x = element_text(size = 14)
+    )
+  
+  if (!dir.exists(here("results"))) dir.create(here("results"))
+  ggsave(here("results", outfile), p, width = 8, height = 6, units = "in", dpi = 300)
+  
+  invisible(p)
+}
+```
+
+#### Plot global trajectories
+```{r Panel plots lung function trajectories, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+p_ppFEV1_trajec <- polish_panel_plot(
+  make_paired_plot_transcolored(df_lung, "ppFEV1", res_ppFEV1, "ppFEV1 (%)", "lung_ppFEV1_groups_all_shapes.svg")
+)
+
+p_ppFVC_trajec <- polish_panel_plot(
+  make_paired_plot_transcolored(df_lung, "ppFVC",    res_ppFVC,  "ppFVC (%)",  "lung_ppFVC_groups_all_shapes.svg")
+)
+
+p_ratio_trajec <- polish_panel_plot(
+  make_paired_plot_transcolored(df_lung, "FEV1_FVC", res_ratio,  "FEV1/FVC",   "lung_FEV1FVC_groups_all_shapes.svg")
+)
+```
+
+### Function to save stats lung 1
+```{r Fuction to save stats results lung 1, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# === Export: lung function (ppFEV1, ppFVC, FEV1/FVC) ===
+.build_row_lung <- function(df, value_col, res_obj, subgroup_label = "global",
+                            fisher_tab = NULL, cutoff = NA_real_, p_fdr = NA_real_,
+                            high_lbl = NULL, low_lbl = NULL) {
+  stopifnot(all(c("PatientID","Time", value_col) %in% names(df)))
+  is_t <- identical(res_obj$method, "paired_t")
+
+  paired <- df %>%
+    dplyr::select(PatientID, Time, !!rlang::sym(value_col)) %>%
+    tidyr::pivot_wider(names_from = Time, values_from = !!rlang::sym(value_col)) %>%
+    dplyr::filter(stats::complete.cases(T0, T12))
+
+  mean_T0  <- mean(paired$T0)
+  sd_T0    <- sd(paired$T0)
+  mean_T12 <- mean(paired$T12)
+  sd_T12   <- sd(paired$T12)
+
+  med_T0 <- median(paired$T0)
+  q1_T0  <- as.numeric(quantile(paired$T0, 0.25))
+  q3_T0  <- as.numeric(quantile(paired$T0, 0.75))
+
+  med_T12 <- median(paired$T12)
+  q1_T12  <- as.numeric(quantile(paired$T12, 0.25))
+  q3_T12  <- as.numeric(quantile(paired$T12, 0.75))
+
+  fmt_group_T0  <- if (is_t) sprintf("%.3f ± %.3f", mean_T0, sd_T0) else sprintf("%.3f [%0.3f-%0.3f]", med_T0, q1_T0, q3_T0)
+  fmt_group_T12 <- if (is_t) sprintf("%.3f ± %.3f", mean_T12, sd_T12) else sprintf("%.3f [%0.3f-%0.3f]", med_T12, q1_T12, q3_T12)
+
+  if (!is.null(fisher_tab)) {
+    fisher_res <- fisher.test(fisher_tab, conf.int = TRUE)
+
+    tab_ha <- fisher_tab + 0.5
+    a <- tab_ha[high_lbl, "T0"]
+    b <- tab_ha[high_lbl, "T12"]
+    c <- tab_ha[low_lbl, "T0"]
+    d <- tab_ha[low_lbl, "T12"]
+
+    or_ha   <- (a * d) / (b * c)
+    se_log  <- sqrt(1/a + 1/b + 1/c + 1/d)
+    ci_low  <- exp(log(or_ha) - 1.96 * se_log)
+    ci_high <- exp(log(or_ha) + 1.96 * se_log)
+
+    fisher_p       <- as.numeric(fisher_res$p.value)
+    fisher_or      <- if (!is.null(fisher_res$estimate)) as.numeric(fisher_res$estimate) else NA_real_
+    fisher_ci_low  <- if (!is.null(fisher_res$conf.int)) fisher_res$conf.int[1] else NA_real_
+    fisher_ci_high <- if (!is.null(fisher_res$conf.int)) fisher_res$conf.int[2] else NA_real_
+  } else {
+    fisher_p <- fisher_or <- fisher_ci_low <- fisher_ci_high <- NA_real_
+    or_ha <- ci_low <- ci_high <- NA_real_
+  }
+
+  tibble::tibble(
+    subgroup      = subgroup_label,
+    variable      = res_obj$variable,
+    method        = res_obj$method,
+    n_pairs       = res_obj$n,
+    shapiro_p     = unname(res_obj$shapiro$p.value),
+    stat          = unname(res_obj$test$statistic),
+    p_value       = res_obj$test$p.value,
+    group_T0      = fmt_group_T0,
+    group_T12     = fmt_group_T12,
+    mean_T0       = mean_T0,
+    sd_T0         = sd_T0,
+    median_T0     = med_T0,
+    q1_T0         = q1_T0,
+    q3_T0         = q3_T0,
+    min_T0        = min(paired$T0),
+    max_T0        = max(paired$T0),
+    range_T0      = max(paired$T0) - min(paired$T0),
+    mean_T12      = mean_T12,
+    sd_T12        = sd_T12,
+    median_T12    = med_T12,
+    q1_T12        = q1_T12,
+    q3_T12        = q3_T12,
+    min_T12       = min(paired$T12),
+    max_T12       = max(paired$T12),
+    range_T12     = max(paired$T12) - min(paired$T12),
+    diff_estimate = if (is_t) res_obj$mean_diff else res_obj$median_diff,
+    ci_low        = if (is_t) res_obj$ci[1] else NA_real_,
+    ci_high       = if (is_t) res_obj$ci[2] else NA_real_,
+    effect_type   = res_obj$effect_size$type,
+    effect_value  = res_obj$effect_size$value,
+    fisher_p      = fisher_p,
+    fisher_or     = fisher_or,
+    fisher_ci_low = fisher_ci_low,
+    fisher_ci_high= fisher_ci_high,
+    or_ha         = or_ha,
+    or_ha_ci_low  = if (!is.null(fisher_tab)) ci_low else NA_real_,
+    or_ha_ci_high = if (!is.null(fisher_tab)) ci_high else NA_real_,
+    cutoff_used   = cutoff
+  )
+}
+```
+
+### Function to save stats lung groups 2
+```{r Fuction to save stats results lung groups 2, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+.build_row_lung_grp <- function(df, value_col, res_obj, subgroup_label) {
+  stopifnot(all(c("PatientID", "Time", value_col) %in% names(df)))
+  is_t <- identical(res_obj$method, "paired_t")
+
+  paired <- df %>%
+    dplyr::select(PatientID, Time, !!rlang::sym(value_col)) %>%
+    tidyr::pivot_wider(names_from = Time, values_from = !!rlang::sym(value_col)) %>%
+    dplyr::filter(stats::complete.cases(T0, T12))
+
+  mean_T0  <- mean(paired$T0)
+  sd_T0    <- sd(paired$T0)
+  mean_T12 <- mean(paired$T12)
+  sd_T12   <- sd(paired$T12)
+
+  med_T0 <- median(paired$T0)
+  q1_T0  <- as.numeric(quantile(paired$T0, 0.25))
+  q3_T0  <- as.numeric(quantile(paired$T0, 0.75))
+
+  med_T12 <- median(paired$T12)
+  q1_T12  <- as.numeric(quantile(paired$T12, 0.25))
+  q3_T12  <- as.numeric(quantile(paired$T12, 0.75))
+
+  fmt_group_T0  <- if (is_t) sprintf("%.3f ± %.3f", mean_T0, sd_T0) else sprintf("%.3f [%0.3f-%0.3f]", med_T0, q1_T0, q3_T0)
+  fmt_group_T12 <- if (is_t) sprintf("%.3f ± %.3f", mean_T12, sd_T12) else sprintf("%.3f [%0.3f-%0.3f]", med_T12, q1_T12, q3_T12)
+
+  tibble::tibble(
+    subgroup      = subgroup_label,
+    variable      = res_obj$variable,
+    method        = res_obj$method,
+    n_pairs       = res_obj$n,
+    shapiro_p     = unname(res_obj$shapiro$p.value),
+    stat          = unname(res_obj$test$statistic),
+    p_value       = res_obj$test$p.value,
+    group_T0      = fmt_group_T0,
+    group_T12     = fmt_group_T12,
+    diff_estimate = if (is_t) res_obj$mean_diff else res_obj$median_diff,
+    ci_low        = if (is_t) res_obj$ci[1] else NA_real_,
+    ci_high       = if (is_t) res_obj$ci[2] else NA_real_,
+    effect_type   = res_obj$effect_size$type,
+    effect_value  = res_obj$effect_size$value
+  )
+}
+```
+
+### Save stats results ALL
+```{r Save stats results lung function, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# === Save stats results ALL ===
+
+row_ppFEV1 <- .build_row_lung(
+  df_lung, "ppFEV1", res_ppFEV1,
+  subgroup_label = "global",
+  fisher_tab = NULL,
+  cutoff     = NA_real_,
+  high_lbl   = "normal-mild_ppFEV1",
+  low_lbl    = "moderate-severe_ppFEV1"
+)
+
+row_ppFVC  <- .build_row_lung(df_lung, "ppFVC", res_ppFVC, subgroup_label = "global")
+row_ratio  <- .build_row_lung(df_lung, "FEV1_FVC", res_ratio, subgroup_label = "global")
+
+row_ppFEV1_fem <- .build_row_lung(df_lung %>% dplyr::filter(Sex == "female"), "ppFEV1", res_ppFEV1_fem, subgroup_label = "female")
+row_ppFVC_fem  <- .build_row_lung(df_lung %>% dplyr::filter(Sex == "female"), "ppFVC", res_ppFVC_fem, subgroup_label = "female")
+row_ratio_fem  <- .build_row_lung(df_lung %>% dplyr::filter(Sex == "female"), "FEV1_FVC", res_ratio_fem, subgroup_label = "female")
+
+row_ppFEV1_mal <- .build_row_lung(df_lung %>% dplyr::filter(Sex == "male"), "ppFEV1", res_ppFEV1_mal, subgroup_label = "male")
+row_ppFVC_mal  <- .build_row_lung(df_lung %>% dplyr::filter(Sex == "male"), "ppFVC", res_ppFVC_mal, subgroup_label = "male")
+row_ratio_mal  <- .build_row_lung(df_lung %>% dplyr::filter(Sex == "male"), "FEV1_FVC", res_ratio_mal, subgroup_label = "male")
+
+row_ppFEV1_adu <- .build_row_lung(df_lung %>% dplyr::filter(AgeGroup == "adult"), "ppFEV1", res_ppFEV1_adu, subgroup_label = "adult")
+row_ppFVC_adu  <- .build_row_lung(df_lung %>% dplyr::filter(AgeGroup == "adult"), "ppFVC", res_ppFVC_adu, subgroup_label = "adult")
+row_ratio_adu  <- .build_row_lung(df_lung %>% dplyr::filter(AgeGroup == "adult"), "FEV1_FVC", res_ratio_adu, subgroup_label = "adult")
+
+row_ppFEV1_ped <- .build_row_lung(df_lung %>% dplyr::filter(AgeGroup == "pediatric"), "ppFEV1", res_ppFEV1_ped, subgroup_label = "pediatric")
+row_ppFVC_ped  <- .build_row_lung(df_lung %>% dplyr::filter(AgeGroup == "pediatric"), "ppFVC", res_ppFVC_ped, subgroup_label = "pediatric")
+row_ratio_ped  <- .build_row_lung(df_lung %>% dplyr::filter(AgeGroup == "pediatric"), "FEV1_FVC", res_ratio_ped, subgroup_label = "pediatric")
+
+row_ppFEV1_NMNM <- .build_row_lung_grp(df_lung %>% dplyr::filter(group_label == "NM→NM"), "ppFEV1", res_ppFEV1_NMNM, "NM→NM")
+row_ppFVC_NMNM  <- .build_row_lung_grp(df_lung %>% dplyr::filter(group_label == "NM→NM"), "ppFVC", res_ppFVC_NMNM, "NM→NM")
+row_ratio_NMNM  <- .build_row_lung_grp(df_lung %>% dplyr::filter(group_label == "NM→NM"), "FEV1_FVC", res_ratio_NMNM, "NM→NM")
+
+row_ppFEV1_MSMS <- .build_row_lung_grp(df_lung %>% dplyr::filter(group_label == "MS→MS"), "ppFEV1", res_ppFEV1_MSMS, "MS→MS")
+row_ppFVC_MSMS  <- .build_row_lung_grp(df_lung %>% dplyr::filter(group_label == "MS→MS"), "ppFVC", res_ppFVC_MSMS, "MS→MS")
+row_ratio_MSMS  <- .build_row_lung_grp(df_lung %>% dplyr::filter(group_label == "MS→MS"), "FEV1_FVC", res_ratio_MSMS, "MS→MS")
+
+row_ppFEV1_MSNM <- .build_row_lung_grp(df_lung %>% dplyr::filter(group_label == "MS→NM"), "ppFEV1", res_ppFEV1_MSNM, "MS→NM")
+row_ppFVC_MSNM  <- .build_row_lung_grp(df_lung %>% dplyr::filter(group_label == "MS→NM"), "ppFVC", res_ppFVC_MSNM, "MS→NM")
+row_ratio_MSNM  <- .build_row_lung_grp(df_lung %>% dplyr::filter(group_label == "MS→NM"), "FEV1_FVC", res_ratio_MSNM, "MS→NM")
+
+lung_stats <- dplyr::bind_rows(
+  row_ppFEV1, row_ppFVC, row_ratio,
+  row_ppFEV1_fem, row_ppFVC_fem, row_ratio_fem,
+  row_ppFEV1_mal, row_ppFVC_mal, row_ratio_mal,
+  row_ppFEV1_adu, row_ppFVC_adu, row_ratio_adu,
+  row_ppFEV1_ped, row_ppFVC_ped, row_ratio_ped,
+  row_ppFEV1_NMNM, row_ppFVC_NMNM, row_ratio_NMNM,
+  row_ppFEV1_MSMS, row_ppFVC_MSMS, row_ratio_MSMS,
+  row_ppFEV1_MSNM, row_ppFVC_MSNM, row_ratio_MSNM
+)
+
+lung_stats$p_fdr <- p.adjust(lung_stats$p_value, method = "BH")
+
+if (!dir.exists(here("results"))) dir.create(here("results"))
+readr::write_excel_csv(lung_stats, here("results", "lung_function_stats_complete_all.csv"))
+```
+
+
+### Save stats results of interest
+```{r Save stats results lung function, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# === Export: lung function (ppFEV1, ppFVC, FEV1/FVC) ===
+
+# === Save stats results of interest ===
+
+row_ppFEV1 <- .build_row_lung(
+  df_lung, "ppFEV1", res_ppFEV1,
+  subgroup_label = "global",
+  fisher_tab = NULL,
+  cutoff     = NA_real_,
+  high_lbl   = "normal-mild_ppFEV1",
+  low_lbl    = "moderate-severe_ppFEV1"
+)
+
+row_ppFVC  <- .build_row_lung(df_lung, "ppFVC", res_ppFVC, subgroup_label = "global")
+row_ratio  <- .build_row_lung(df_lung, "FEV1_FVC", res_ratio, subgroup_label = "global")
+
+row_ppFEV1_fem <- .build_row_lung(df_lung %>% dplyr::filter(Sex == "female"), "ppFEV1", res_ppFEV1_fem, subgroup_label = "female")
+row_ppFVC_fem  <- .build_row_lung(df_lung %>% dplyr::filter(Sex == "female"), "ppFVC", res_ppFVC_fem, subgroup_label = "female")
+row_ratio_fem  <- .build_row_lung(df_lung %>% dplyr::filter(Sex == "female"), "FEV1_FVC", res_ratio_fem, subgroup_label = "female")
+
+row_ppFEV1_mal <- .build_row_lung(df_lung %>% dplyr::filter(Sex == "male"), "ppFEV1", res_ppFEV1_mal, subgroup_label = "male")
+row_ppFVC_mal  <- .build_row_lung(df_lung %>% dplyr::filter(Sex == "male"), "ppFVC", res_ppFVC_mal, subgroup_label = "male")
+row_ratio_mal  <- .build_row_lung(df_lung %>% dplyr::filter(Sex == "male"), "FEV1_FVC", res_ratio_mal, subgroup_label = "male")
+
+row_ppFEV1_adu <- .build_row_lung(df_lung %>% dplyr::filter(AgeGroup == "adult"), "ppFEV1", res_ppFEV1_adu, subgroup_label = "adult")
+row_ppFVC_adu  <- .build_row_lung(df_lung %>% dplyr::filter(AgeGroup == "adult"), "ppFVC", res_ppFVC_adu, subgroup_label = "adult")
+row_ratio_adu  <- .build_row_lung(df_lung %>% dplyr::filter(AgeGroup == "adult"), "FEV1_FVC", res_ratio_adu, subgroup_label = "adult")
+
+row_ppFEV1_ped <- .build_row_lung(df_lung %>% dplyr::filter(AgeGroup == "pediatric"), "ppFEV1", res_ppFEV1_ped, subgroup_label = "pediatric")
+row_ppFVC_ped  <- .build_row_lung(df_lung %>% dplyr::filter(AgeGroup == "pediatric"), "ppFVC", res_ppFVC_ped, subgroup_label = "pediatric")
+row_ratio_ped  <- .build_row_lung(df_lung %>% dplyr::filter(AgeGroup == "pediatric"), "FEV1_FVC", res_ratio_ped, subgroup_label = "pediatric")
+
+lung_stats <- dplyr::bind_rows(
+  row_ppFEV1, row_ppFVC, row_ratio,
+  row_ppFEV1_fem, row_ppFVC_fem, row_ratio_fem,
+  row_ppFEV1_mal, row_ppFVC_mal, row_ratio_mal,
+  row_ppFEV1_adu, row_ppFVC_adu, row_ratio_adu,
+  row_ppFEV1_ped, row_ppFVC_ped, row_ratio_ped
+)
+
+lung_stats$p_fdr <- p.adjust(lung_stats$p_value, method = "BH")
+
+if (!dir.exists(here("results"))) dir.create(here("results"))
+readr::write_excel_csv(lung_stats, here("results", "lung_function_stats_complete_without_lunggroups.csv"))
+```
+
+
+# ------------------------------------------------------------------------------
+# TRANSAMINASES
+# ------------------------------------------------------------------------------
+
+### Load in the data
+```{r Load in data trans, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+df_trans <- read_delim(here("data", "transaminases.csv"))
+```
+
+### Descriptive statistics
+```{r Descriptive stats, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+range(df_trans$ALT, na.rm = TRUE)
+min_val <- min(df_trans$ALT, na.rm = TRUE)
+max_val <- max(df_trans$ALT, na.rm = TRUE)
+
+range(df_trans$AST, na.rm = TRUE)
+min_val <- min(df_trans$AST, na.rm = TRUE)
+max_val <- max(df_trans$AST, na.rm = TRUE)
+
+range(df_trans$GGT, na.rm = TRUE)
+min_val <- min(df_trans$GGT, na.rm = TRUE)
+max_val <- max(df_trans$GGT, na.rm = TRUE)
+```
+
+### Filter data by time
+```{r Filter data by time trans, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+data_trans_T0 <- subset(df_trans, Time == "T0")
+data_trans_T12 <- subset(df_trans, Time == "T12")
+```
+
+### Function for statistic test
+```{r Function for statistic test based on shapiro results trans, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+auto_paired_test_trans <- function(df,
+                                   id_col   = "PatientID",
+                                   time_col = "Time",
+                                   value_col = "ALT",
+                                   levels   = c("T0","T12")) {
+  stopifnot(all(c(id_col, time_col, value_col) %in% names(df)))
+  
+  dfw <- df[, c(id_col, time_col, value_col)]
+  dfw <- tidyr::pivot_wider(
+    dfw,
+    names_from  = !!rlang::sym(time_col),
+    values_from = !!rlang::sym(value_col)
+  )
+  if (!all(levels %in% names(dfw))) {
+    stop("No columns found ", paste(levels, collapse = " and "), " after pivot_wider().")
+  }
+  dfw <- dfw[stats::complete.cases(dfw[, levels]), ]
+  
+  x0   <- dfw[[levels[1]]]
+  x12  <- dfw[[levels[2]]]
+  diff <- x12 - x0
+  n    <- length(diff)
+  if (n < 3) stop("Very few valid pairs (n < 3).")
+  
+  sh     <- shapiro.test(diff)
+  normal <- sh$p.value >= 0.05
+  
+  if (normal) {
+    tt        <- t.test(x12, x0, paired = TRUE)
+    mean_diff <- mean(diff, na.rm = TRUE)
+    sd_diff   <- stats::sd(diff, na.rm = TRUE)
+    d_paired  <- mean_diff / sd_diff
+    
+    mean_T0  <- mean(x0,  na.rm = TRUE); sd_T0  <- stats::sd(x0,  na.rm = TRUE)
+    mean_T12 <- mean(x12, na.rm = TRUE); sd_T12 <- stats::sd(x12, na.rm = TRUE)
+    
+    cat("\n=== Auto test (", value_col, ") ===\n", sep = "")
+    cat("Normality of differences: Normal (Shapiro p =", round(sh$p.value, 4), ")\n")
+    cat("Chosen test: Paired t-test\n")
+    cat("n =", n, "| t =", round(tt$statistic, 4), "| p =", signif(tt$p.value, 4), "\n")
+    cat("T0:   mean ± SD = ", round(mean_T0, 3), " ± ", round(sd_T0, 3), "\n", sep = "")
+    cat("T12:  mean ± SD = ", round(mean_T12, 3), " ± ", round(sd_T12, 3), "\n", sep = "")
+    cat("Mean difference (T12−T0) =", round(mean_diff, 3),
+        " | 95% CI [", round(tt$conf.int[1], 3), ", ", round(tt$conf.int[2], 3), "]\n", sep = "")
+    cat("Effect size (Cohen's d paired) =", round(d_paired, 3), "\n")
+    
+    invisible(list(
+      variable = value_col,
+      method = "paired_t",
+      n = n,
+      shapiro = sh,
+      test = tt,
+      group_summary = list(
+        T0  = c(mean = mean_T0, sd = sd_T0),
+        T12 = c(mean = mean_T12, sd = sd_T12)
+      ),
+      mean_diff = mean_diff,
+      ci = tt$conf.int,
+      effect_size = list(type = "cohen_d_paired", value = d_paired)
+    ))
+    
+  } else {
+    wt   <- wilcox.test(x0, x12, paired = TRUE, exact = FALSE, correct = FALSE)
+    V    <- as.numeric(wt$statistic)
+    r_rb <- 1 - (2 * V) / (n * (n + 1))
+    
+    med_T0   <- stats::median(x0,  na.rm = TRUE)
+    q1_T0    <- stats::quantile(x0,  0.25, na.rm = TRUE)
+    q3_T0    <- stats::quantile(x0,  0.75, na.rm = TRUE)
+    med_T12  <- stats::median(x12, na.rm = TRUE)
+    q1_T12   <- stats::quantile(x12, 0.25, na.rm = TRUE)
+    q3_T12   <- stats::quantile(x12, 0.75, na.rm = TRUE)
+    med_diff <- stats::median(diff, na.rm = TRUE)
+    
+    cat("\n=== Auto test (", value_col, ") ===\n", sep = "")
+    cat("Normality of differences: Not normal (Shapiro p =", round(sh$p.value, 4), ")\n")
+    cat("Chosen test: Wilcoxon signed-rank (paired)\n")
+    cat("n =", n, "| V =", V, "| p =", signif(wt$p.value, 4), "\n")
+    cat("T0:   median [IQR] = ", round(med_T0, 3), " [",
+        round(q1_T0, 3), "–", round(q3_T0, 3), "]\n", sep = "")
+    cat("T12:  median [IQR] = ", round(med_T12, 3), " [",
+        round(q1_T12, 3), "–", round(q3_T12, 3), "]\n", sep = "")
+    cat("Median difference (T12−T0) =", round(med_diff, 3), "\n")
+    cat("Effect size (rank-biserial r) =", round(r_rb, 3), "\n")
+    
+    invisible(list(
+      variable = value_col,
+      method = "wilcoxon_paired",
+      n = n,
+      shapiro = sh,
+      test = wt,
+      group_summary = list(
+        T0  = c(median = med_T0, Q1 = q1_T0, Q3 = q3_T0),
+        T12 = c(median = med_T12, Q1 = q1_T12, Q3 = q3_T12)
+      ),
+      median_diff = med_diff,
+      effect_size = list(type = "rank_biserial_r", value = r_rb, V = V)
+    ))
+  }
+}
+# Wrapper "safe": if n < 3, returns a valid res_obj object with p = NA instead of stopping
+auto_paired_test_trans_safe <- function(df,
+                                       id_col   = "PatientID",
+                                       time_col = "Time",
+                                       value_col = "ALT",
+                                       levels   = c("T0","T12")) {
+  tryCatch(
+    auto_paired_test_trans(df,
+                          id_col = id_col,
+                          time_col = time_col,
+                          value_col = value_col,
+                          levels = levels),
+    error = function(e) {
+      if (grepl("Very few valid pairs", e$message) || grepl("n < 3", e$message)) {
+        list(
+          variable = value_col,
+          method   = "too_few_pairs",
+          n        = NA_integer_,
+          shapiro  = list(p.value = NA_real_),
+          test     = list(statistic = NA_real_, p.value = NA_real_),
+          effect_size = list(type = NA_character_, value = NA_real_)
+        )
+      } else {
+        stop(e)
+      }
+    }
+  )
+}
+```
+
+### Perform statistical test
+#### ALT
+```{r Execute stats function trans, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+res_ALT <- auto_paired_test_trans(df_trans, value_col = "ALT")
+```
+#### AST
+```{r Execute stats function trans, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+res_AST <- auto_paired_test_trans(df_trans, value_col = "AST")
+```
+#### GGT
+```{r Execute stats function trans, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+res_GGT <- auto_paired_test_trans(df_trans, value_col = "GGT")
+```
+
+#### Panel plots
+```{r Panel plots trans, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+p_ALT <- polish_panel_plot(
+  make_paired_plot(df_trans, "ALT", res_ALT, "ALT (U/L)", "trans_ALT.svg")
+)
+
+p_AST <- polish_panel_plot(
+  make_paired_plot(df_trans, "AST", res_AST, "AST (U/L)", "trans_AST.svg")
+)
+
+p_GGT <- polish_panel_plot(
+  make_paired_plot(df_trans, "GGT", res_GGT, "GGT (U/L)", "trans_GGT.svg")
+)
+
+
+panel_trans <- p_ALT | p_AST | p_GGT
+
+
+panel_trans <- panel_trans + plot_layout(guides = "collect") &
+  theme(legend.position = "bottom")
+
+ggsave(here("results","transaminases_panel.svg"),
+       panel_trans, width = 12, height = 5, bg = "white")
+```
+
+
+#### Manual transformed y-axis plot function with explicit raincloud
+```{r Function break y axis trans, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+compress_y_axis <- function(y, break_at = 80, top_actual = 300,
+                            top_plot = 120, gap = 7) {
+  
+  ifelse(
+    y <= break_at,
+    y,
+    break_at + gap +
+      ((y - break_at) / (top_actual - break_at)) *
+      (top_plot - break_at - gap)
+  )
+}
+
+
+make_half_violin_data <- function(d, y_var = "y_plot",
+                                  cloud_width = 0.45,
+                                  adjust = 0.6,
+                                  n = 512) {
+  
+  out <- lapply(split(d, d$Time), function(dd) {
+    
+    vals <- dd[[y_var]]
+    vals <- vals[is.finite(vals)]
+    
+    if (length(unique(vals)) < 2) {
+      return(NULL)
+    }
+    
+    dens <- stats::density(
+      vals,
+      adjust = adjust,
+      from = min(vals, na.rm = TRUE),
+      to = max(vals, na.rm = TRUE),
+      n = n
+    )
+    
+    dens_scaled <- dens$y / max(dens$y, na.rm = TRUE) * cloud_width
+    
+    time_value <- as.character(unique(dd$Time)[1])
+    x0 <- unique(dd$x)[1]
+    fill_box <- unique(dd$fill_box)[1]
+    
+    # T0 cloud goes to the left, T12 cloud goes to the right
+    side <- ifelse(time_value == "T0", -1, 1)
+    
+    curve_x <- x0 + side * dens_scaled
+    
+    tibble::tibble(
+      Time = time_value,
+      fill_box = fill_box,
+      x_poly = c(rep(x0, length(dens$x)), rev(curve_x)),
+      y_poly = c(dens$x, rev(dens$x))
+    )
+  })
+  
+  dplyr::bind_rows(out)
+}
+
+
+make_paired_plot_transformed <- function(df, value_var, res_obj, y_lab,
+                                         break_axis = FALSE,
+                                         break_at = 80,
+                                         top_actual = 300,
+                                         top_plot = 120,
+                                         gap = 7,
+                                         y_breaks_actual = c(0, 20, 40, 60, 80),
+                                         show_p = TRUE,
+                                         show_legend = TRUE,
+                                         show_break_marks = TRUE) {
+  
+  stopifnot(all(c("PatientID", "Time", value_var) %in% names(df)))
+  
+  d <- df %>%
+    mutate(Time = factor(Time, levels = c("T0", "T12"))) %>%
+    group_by(PatientID) %>%
+    filter(n_distinct(Time) == 2) %>%
+    ungroup() %>%
+    mutate(x = as.numeric(Time))
+  
+  col_box   <- c("T0" = "#9EC1CF", "T12" = "#F9A1BC")
+  col_point <- c("T0" = "#D6E9F5", "T12" = "#FCD6E0")
+  
+  if (break_axis) {
+    d <- d %>%
+      mutate(
+        y_plot = compress_y_axis(
+          .data[[value_var]],
+          break_at = break_at,
+          top_actual = top_actual,
+          top_plot = top_plot,
+          gap = gap
+        )
+      )
+    
+    y_breaks_plot <- compress_y_axis(
+      y_breaks_actual,
+      break_at = break_at,
+      top_actual = top_actual,
+      top_plot = top_plot,
+      gap = gap
+    )
+    
+    y_limit_plot <- top_plot
+    
+  } else {
+    d <- d %>%
+      mutate(y_plot = .data[[value_var]])
+    
+    y_breaks_plot <- y_breaks_actual
+    y_limit_plot <- max(y_breaks_actual, na.rm = TRUE)
+  }
+  
+  d <- d %>%
+    mutate(
+      fill_box   = col_box[Time],
+      fill_point = col_point[Time]
+    )
+  
+  cloud_data <- make_half_violin_data(
+    d,
+    y_var = "y_plot",
+    cloud_width = 0.45,
+    adjust = 0.6
+  )
+  
+  p_val <- res_obj$test$p.value
+  p_label <- ifelse(
+    p_val < 0.001,
+    "p < 0.001",
+    paste0("p = ", signif(p_val, 3))
+  )
+  
+  p <- ggplot() +
+    geom_polygon(
+      data = cloud_data,
+      aes(x = x_poly, y = y_poly, group = Time, fill = fill_box),
+      alpha = 0.5,
+      color = NA,
+      show.legend = FALSE
+    ) +
+    geom_boxplot(
+      data = d,
+      aes(x = x, y = y_plot, fill = fill_box),
+      width = 0.5,
+      outlier.shape = NA,
+      color = "black",
+      alpha = 0.9,
+      show.legend = show_legend
+    ) +
+    geom_line(
+      data = d,
+      aes(x = x, y = y_plot, group = PatientID),
+      color = "grey40",
+      alpha = 0.4,
+      linetype = "dashed",
+      linewidth = 0.4
+    ) +
+    geom_point(
+      data = d,
+      aes(x = x, y = y_plot, fill = fill_point),
+      shape = 21,
+      size = 3,
+      stroke = 0.3,
+      color = "black",
+      show.legend = FALSE
+    ) +
+    scale_x_continuous(
+      breaks = c(1, 2),
+      labels = c("T0", "T12"),
+      limits = c(0.45, 2.55)
+    ) +
+    scale_y_continuous(
+      limits = c(0, y_limit_plot),
+      breaks = y_breaks_plot,
+      labels = y_breaks_actual,
+      expand = expansion(mult = c(0.02, 0.03))
+    ) +
+    scale_fill_identity(
+      guide = "legend",
+      name = "Time",
+      breaks = unname(col_box),
+      labels = names(col_box)
+    ) +
+    labs(x = NULL, y = y_lab) +
+    theme_minimal(base_size = 14) +
+    theme(
+      legend.position = ifelse(show_legend, "bottom", "none"),
+      axis.text.x = element_text(size = 14)
+    )
+  
+  if (show_p) {
+    p <- p +
+      annotate(
+        "segment",
+        x = 1,
+        xend = 2,
+        y = 76,
+        yend = 76,
+        linewidth = 0.5
+      ) +
+      annotate(
+        "text",
+        x = 1.5,
+        y = 78,
+        label = p_label,
+        size = 4
+      )
+  }
+  
+  if (break_axis && show_break_marks) {
+    p <- p +
+      annotate(
+        "segment",
+        x = 0.60,
+        xend = 0.65,
+        y = break_at + 1.5,
+        yend = break_at + 4.5,
+        linewidth = 0.6
+      ) +
+      annotate(
+        "segment",
+        x = 0.69,
+        xend = 0.74,
+        y = break_at + 1.5,
+        yend = break_at + 4.5,
+        linewidth = 0.6
+      )
+  }
+  
+  p
+}
+```
+
+#### Transaminases transformed y-axis plots
+```{r Plots break y axis trans, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+p_ALT_y <- make_paired_plot_transformed(
+  df_trans,
+  value_var = "ALT",
+  res_obj = res_ALT,
+  y_lab = "ALT (U/L)",
+  break_axis = TRUE,
+  break_at = 80,
+  top_actual = 300,
+  top_plot = 120,
+  gap = 7,
+  y_breaks_actual = c(0, 20, 40, 60, 80, 100, 200, 300),
+  show_p = TRUE,
+  show_legend = FALSE
+)
+
+p_AST_y <- make_paired_plot_transformed(
+  df_trans,
+  value_var = "AST",
+  res_obj = res_AST,
+  y_lab = "AST (U/L)",
+  break_axis = FALSE,
+  y_breaks_actual = c(0, 20, 40, 60, 80),
+  show_p = TRUE,
+  show_legend = FALSE
+)
+
+p_GGT_y <- make_paired_plot_transformed(
+  df_trans,
+  value_var = "GGT",
+  res_obj = res_GGT,
+  y_lab = "GGT (U/L)",
+  break_axis = TRUE,
+  break_at = 80,
+  top_actual = 620,
+  top_plot = 120,
+  gap = 7,
+  y_breaks_actual = c(0, 20, 40, 60, 80, 100, 300, 600),
+  show_p = TRUE,
+  show_legend = FALSE
+)
+```
+
+#### Panel and legend
+```{r Panel plots break y axis trans, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+legend_plot <- make_paired_plot_transformed(
+  df_trans,
+  value_var = "ALT",
+  res_obj = res_ALT,
+  y_lab = "ALT (U/L)",
+  break_axis = TRUE,
+  break_at = 80,
+  top_actual = 300,
+  top_plot = 120,
+  gap = 7,
+  y_breaks_actual = c(0, 20, 40, 60, 80, 100, 200, 300),
+  show_p = FALSE,
+  show_legend = TRUE
+)
+
+legend <- cowplot::get_legend(legend_plot)
+
+panel_trans <- (p_ALT_y | p_AST_y | p_GGT_y) /
+  cowplot::ggdraw(legend) +
+  plot_layout(heights = c(1, 0.12))
+
+ggsave(
+  here("results", "transaminases_panel_transformed_axis_raincloud.svg"),
+  plot = panel_trans, width = 12, height = 6, bg = "white")
+```
+
+
+### Save stats results
+```{r Save stats results trans, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# === Export: ALT, AST, GGT ===
+.build_row_trans <- function(df, value_col, res_obj, p_fdr = NA_real_) {
+  stopifnot(all(c("PatientID","Time", value_col) %in% names(df)))
+  is_t <- identical(res_obj$method, "paired_t")
+
+  paired <- df %>%
+    dplyr::select(PatientID, Time, !!rlang::sym(value_col)) %>%
+    tidyr::pivot_wider(names_from = Time, values_from = !!rlang::sym(value_col)) %>%
+    dplyr::filter(stats::complete.cases(T0, T12))
+
+  mean_T0  <- mean(paired$T0);  sd_T0  <- sd(paired$T0)
+  mean_T12 <- mean(paired$T12); sd_T12 <- sd(paired$T12)
+
+  med_T0 <- median(paired$T0)
+  q1_T0  <- as.numeric(quantile(paired$T0,  0.25))
+  q3_T0  <- as.numeric(quantile(paired$T0,  0.75))
+
+  med_T12 <- median(paired$T12)
+  q1_T12  <- as.numeric(quantile(paired$T12, 0.25))
+  q3_T12  <- as.numeric(quantile(paired$T12, 0.75))
+
+  fmt_group_T0  <- if (is_t) sprintf("%.3f ± %.3f", mean_T0, sd_T0)  else sprintf("%.3f [%0.3f-%0.3f]", med_T0,  q1_T0,  q3_T0)
+  fmt_group_T12 <- if (is_t) sprintf("%.3f ± %.3f", mean_T12, sd_T12) else sprintf("%.3f [%0.3f-%0.3f]", med_T12, q1_T12, q3_T12)
+
+  tibble::tibble(
+    variable      = res_obj$variable,
+    method        = res_obj$method,
+    n_pairs       = res_obj$n,
+    shapiro_p     = unname(res_obj$shapiro$p.value),
+    stat          = unname(res_obj$test$statistic),
+    p_value       = res_obj$test$p.value,
+    group_T0      = fmt_group_T0,
+    group_T12     = fmt_group_T12,
+    mean_T0  = mean_T0,
+    sd_T0    = sd_T0,
+    median_T0= med_T0,
+    q1_T0    = q1_T0,
+    q3_T0    = q3_T0,
+    min_T0   = min(paired$T0),
+    max_T0   = max(paired$T0),
+    range_T0 = max(paired$T0) - min(paired$T0),
+    mean_T12   = mean_T12,
+    sd_T12     = sd_T12,
+    median_T12 = med_T12,
+    q1_T12     = q1_T12,
+    q3_T12     = q3_T12,
+    min_T12    = min(paired$T12),
+    max_T12    = max(paired$T12),
+    range_T12  = max(paired$T12) - min(paired$T12),
+    diff_estimate = if (is_t) res_obj$mean_diff else res_obj$median_diff,
+    ci_low        = if (is_t) res_obj$ci[1] else NA_real_,
+    ci_high       = if (is_t) res_obj$ci[2] else NA_real_,
+    effect_type   = res_obj$effect_size$type,
+    effect_value  = res_obj$effect_size$value
+  )
+}
+
+row_ALT <- .build_row_trans(df_trans, "ALT", res_ALT)
+row_AST <- .build_row_trans(df_trans, "AST", res_AST)
+row_GGT <- .build_row_trans(df_trans, "GGT", res_GGT)
+
+trans_stats <- dplyr::bind_rows(row_ALT, row_AST, row_GGT)
+
+trans_stats$p_fdr <- p.adjust(trans_stats$p_value, method = "BH")
+
+if (!dir.exists(here("results"))) dir.create(here("results"))
+readr::write_excel_csv(trans_stats, here("results", "transaminases_stats.csv"))
+```
+
+
+# ------------------------------------------------------------------------------
+# CALPROTECTIN
+# ------------------------------------------------------------------------------
+
+### Load in the data
+```{r Load in data calpro, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+df_calpro <- read_delim(here("data", "calprotectin.csv"))
+```
+
+### Filter data by time
+```{r Filter data by time calpro, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+data_calpro_T0 <- subset(df_calpro, Time == "T0")
+data_calpro_T12 <- subset(df_calpro, Time == "T12")
+```
+
+### Function for statistic test
+```{r Function for statistic test based on shapiro results calpro, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+auto_paired_test_calpro <- function(df,
+                                    id_col   = "PatientID",
+                                    time_col = "Time",
+                                    value_col = "Calprotectin",
+                                    levels   = c("T0","T12")) {
+  stopifnot(all(c(id_col, time_col, value_col) %in% names(df)))
+  
+  dfw <- df[, c(id_col, time_col, value_col)]
+  dfw <- tidyr::pivot_wider(
+    dfw,
+    names_from  = !!rlang::sym(time_col),
+    values_from = !!rlang::sym(value_col)
+  )
+  if (!all(levels %in% names(dfw))) {
+    stop("No columns found ", paste(levels, collapse = " and "), " after pivot_wider().")
+  }
+  dfw <- dfw[stats::complete.cases(dfw[, levels]), ]
+  
+  x0   <- dfw[[levels[1]]]
+  x12  <- dfw[[levels[2]]]
+  diff <- x12 - x0
+  n    <- length(diff)
+  if (n < 3) stop("Very few valid pairs (n < 3).")
+  
+  sh     <- shapiro.test(diff)
+  normal <- sh$p.value >= 0.05
+  
+  if (normal) {
+    tt        <- t.test(x12, x0, paired = TRUE)
+    mean_diff <- mean(diff, na.rm = TRUE)
+    sd_diff   <- stats::sd(diff, na.rm = TRUE)
+    d_paired  <- mean_diff / sd_diff
+    
+    mean_T0  <- mean(x0,  na.rm = TRUE); sd_T0  <- stats::sd(x0,  na.rm = TRUE)
+    mean_T12 <- mean(x12, na.rm = TRUE); sd_T12 <- stats::sd(x12, na.rm = TRUE)
+    
+    cat("\n=== Auto test (", value_col, ") ===\n", sep = "")
+    cat("Normality of differences: Normal (Shapiro p =", round(sh$p.value, 4), ")\n")
+    cat("Chosen test: Paired t-test\n")
+    cat("n =", n, "| t =", round(tt$statistic, 4), "| p =", signif(tt$p.value, 4), "\n")
+    cat("T0:   mean ± SD = ", round(mean_T0, 3), " ± ", round(sd_T0, 3), "\n", sep = "")
+    cat("T12:  mean ± SD = ", round(mean_T12, 3), " ± ", round(sd_T12, 3), "\n", sep = "")
+    cat("Mean difference (T12−T0) =", round(mean_diff, 3),
+        " | 95% CI [", round(tt$conf.int[1], 3), ", ", round(tt$conf.int[2], 3), "]\n", sep = "")
+    cat("Effect size (Cohen's d paired) =", round(d_paired, 3), "\n")
+    
+    invisible(list(variable = value_col, method = "paired_t",
+                   n = n, shapiro = sh, test = tt,
+                   group_summary = list(
+                     T0  = c(mean = mean_T0, sd = sd_T0),
+                     T12 = c(mean = mean_T12, sd = sd_T12)
+                   ),
+                   mean_diff = mean_diff, ci = tt$conf.int,
+                   effect_size = list(type = "cohen_d_paired", value = d_paired)))
+    
+  } else {
+    wt   <- wilcox.test(x0, x12, paired = TRUE, exact = FALSE, correct = FALSE)
+    V    <- as.numeric(wt$statistic)
+    r_rb <- 1 - (2 * V) / (n * (n + 1))
+    
+    med_T0   <- stats::median(x0,  na.rm = TRUE)
+    q1_T0    <- stats::quantile(x0,  0.25, na.rm = TRUE)
+    q3_T0    <- stats::quantile(x0,  0.75, na.rm = TRUE)
+    med_T12  <- stats::median(x12, na.rm = TRUE)
+    q1_T12   <- stats::quantile(x12, 0.25, na.rm = TRUE)
+    q3_T12   <- stats::quantile(x12, 0.75, na.rm = TRUE)
+    med_diff <- stats::median(diff, na.rm = TRUE)
+    
+    cat("\n=== Auto test (", value_col, ") ===\n", sep = "")
+    cat("Normality of differences: Not normal (Shapiro p =", round(sh$p.value, 4), ")\n")
+    cat("Chosen test: Wilcoxon signed-rank (paired)\n")
+    cat("n =", n, "| V =", V, "| p =", signif(wt$p.value, 4), "\n")
+    cat("T0:   median [IQR] = ", round(med_T0, 3), " [",
+        round(q1_T0, 3), "–", round(q3_T0, 3), "]\n", sep = "")
+    cat("T12:  median [IQR] = ", round(med_T12, 3), " [",
+        round(q1_T12, 3), "–", round(q3_T12, 3), "]\n", sep = "")
+    cat("Median difference (T12−T0) =", round(med_diff, 3), "\n")
+    cat("Effect size (rank-biserial r) =", round(r_rb, 3), "\n")
+    
+    invisible(list(variable = value_col, method = "wilcoxon_paired",
+                   n = n, shapiro = sh, test = wt,
+                   group_summary = list(
+                     T0  = c(median = med_T0, Q1 = q1_T0, Q3 = q3_T0),
+                     T12 = c(median = med_T12, Q1 = q1_T12, Q3 = q3_T12)
+                   ),
+                   median_diff = med_diff,
+                   effect_size = list(type = "rank_biserial_r", value = r_rb, V = V)))
+  }
+}
+# Wrapper "safe": if n < 3, returns a valid res_obj object with p = NA instead of stopping
+auto_paired_test_calpro_safe <- function(df,
+                                       id_col   = "PatientID",
+                                       time_col = "Time",
+                                       value_col = "Calprotectin",
+                                       levels   = c("T0","T12")) {
+  tryCatch(
+    auto_paired_test_calpro(df,
+                          id_col = id_col,
+                          time_col = time_col,
+                          value_col = value_col,
+                          levels = levels),
+    error = function(e) {
+      if (grepl("Very few valid pairs", e$message) || grepl("n < 3", e$message)) {
+        list(
+          variable = value_col,
+          method   = "too_few_pairs",
+          n        = NA_integer_,
+          shapiro  = list(p.value = NA_real_),
+          test     = list(statistic = NA_real_, p.value = NA_real_),
+          effect_size = list(type = NA_character_, value = NA_real_)
+        )
+      } else {
+        stop(e)
+      }
+    }
+  )
+}
+```
+
+### Perform statistical test
+```{r Execute stats function calpro, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+res_calpro <- auto_paired_test_calpro(df_calpro, value_col = "Calprotectin")
+```
+
+### Run plots function
+```{r Execute plot calpro , echo=TRUE, results='show', message=FALSE, warning=FALSE}
+p_calpro <- polish_panel_plot(
+  make_paired_plot(df_calpro, "Calprotectin", res_calpro,
+                        "Fecal calprotectin (µg/g)", "calprotectin.svg")
+)
+```
+
+### Save stats results
+```{r Save stats results calpro , echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# === Export: calprotectin stats to CSV ===
+is_t <- identical(res_calpro$method, "paired_t")
+
+paired_calpro <- df_calpro %>%
+  dplyr::select(PatientID, Time, Calprotectin) %>%
+  tidyr::pivot_wider(names_from = Time, values_from = Calprotectin) %>%
+  dplyr::filter(stats::complete.cases(T0, T12))
+
+mean_T0 <- mean(paired_calpro$T0);  sd_T0 <- sd(paired_calpro$T0)
+mean_T12<- mean(paired_calpro$T12); sd_T12<- sd(paired_calpro$T12)
+
+med_T0 <- median(paired_calpro$T0);  q1_T0 <- as.numeric(quantile(paired_calpro$T0, 0.25))
+q3_T0  <- as.numeric(quantile(paired_calpro$T0, 0.75))
+med_T12<- median(paired_calpro$T12); q1_T12<- as.numeric(quantile(paired_calpro$T12,0.25))
+q3_T12 <- as.numeric(quantile(paired_calpro$T12,0.75))
+
+fmt_group_T0  <- if (is_t) {
+  sprintf("%.3f ± %.3f", mean_T0, sd_T0)
+} else {
+  sprintf("%.3f [%0.3f-%0.3f]", med_T0, q1_T0, q3_T0)
+}
+
+fmt_group_T12 <- if (is_t) {
+  sprintf("%.3f ± %.3f", mean_T12, sd_T12)
+} else {
+  sprintf("%.3f [%0.3f-%0.3f]", med_T12, q1_T12, q3_T12)
+}
+
+fisher_res <- fisher.test(table_calpro, conf.int = TRUE)
+
+row_calpro <- tibble::tibble(
+  variable   = res_calpro$variable,
+  method     = res_calpro$method,
+  n_pairs    = res_calpro$n,
+  shapiro_p  = unname(res_calpro$shapiro$p.value),
+  stat       = unname(res_calpro$test$statistic),
+  p_value    = res_calpro$test$p.value,
+  group_T0   = fmt_group_T0,
+  group_T12  = fmt_group_T12,
+  mean_T0    = mean_T0,
+  sd_T0      = sd_T0,
+  median_T0  = med_T0,
+  q1_T0      = q1_T0,
+  q3_T0      = q3_T0,
+  min_T0     = min(paired_calpro$T0),
+  max_T0     = max(paired_calpro$T0),
+  range_T0   = max(paired_calpro$T0) - min(paired_calpro$T0),
+  mean_T12   = mean_T12,
+  sd_T12     = sd_T12,
+  median_T12 = med_T12,
+  q1_T12     = q1_T12,
+  q3_T12     = q3_T12,
+  min_T12    = min(paired_calpro$T12),
+  max_T12    = max(paired_calpro$T12),
+  range_T12  = max(paired_calpro$T12) - min(paired_calpro$T12),
+  diff_estimate = if (is_t) res_calpro$mean_diff else res_calpro$median_diff,
+  ci_low        = if (is_t) res_calpro$ci[1] else NA_real_,
+  ci_high       = if (is_t) res_calpro$ci[2] else NA_real_,
+  effect_type   = res_calpro$effect_size$type,
+  effect_value  = res_calpro$effect_size$value,
+  fisher_p      = as.numeric(fisher_res$p.value),
+  fisher_or     = if (!is.null(fisher_res$estimate)) as.numeric(fisher_res$estimate) else NA_real_,
+  fisher_ci_low = if (!is.null(fisher_res$conf.int)) fisher_res$conf.int[1] else NA_real_,
+  fisher_ci_high= if (!is.null(fisher_res$conf.int)) fisher_res$conf.int[2] else NA_real_,
+  or_ha         = or_ha,
+  or_ha_ci_low  = ci_low,
+  or_ha_ci_high = ci_high,
+  cutoff_used   = cutoff_calpro
+)
+
+if (!dir.exists(here("results"))) dir.create(here("results"))
+
+readr::write_excel_csv(row_calpro, here("results", "calprotectin_stats.csv"))
+```
+
+
+# ------------------------------------------------------------------------------
+# ELASTASE
+# ------------------------------------------------------------------------------
+
+### Load in the data
+```{r Load in data elas, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+df_elas <- read_delim(here("data", "elastase.csv"))
+```
+
+### Filter data by time
+```{r Filter data by time elas, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+data_elas_T0 <- subset(df_elas, Time == "T0")
+data_elas_T12 <- subset(df_elas, Time == "T12")
+```
+
+### Function for statistic test
+```{r Function for statistic test based on shapiro results elas, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+auto_paired_test_elas <- function(df,
+                                  id_col   = "PatientID",
+                                  time_col = "Time",
+                                  value_col = "Elastase",
+                                  levels   = c("T0","T12")) {
+  stopifnot(all(c(id_col, time_col, value_col) %in% names(df)))
+  
+  dfw <- df[, c(id_col, time_col, value_col)]
+  dfw <- tidyr::pivot_wider(
+    dfw,
+    names_from  = !!rlang::sym(time_col),
+    values_from = !!rlang::sym(value_col)
+  )
+  if (!all(levels %in% names(dfw))) {
+    stop("No columns found ", paste(levels, collapse = " and "), " after pivot_wider().")
+  }
+  dfw <- dfw[stats::complete.cases(dfw[, levels]), ]
+  
+  x0   <- dfw[[levels[1]]]
+  x12  <- dfw[[levels[2]]]
+  diff <- x12 - x0
+  n    <- length(diff)
+  if (n < 3) stop("Very few valid pairs (n < 3).")
+  
+  sh     <- shapiro.test(diff)
+  normal <- sh$p.value >= 0.05
+  
+  if (normal) {
+    tt        <- t.test(x12, x0, paired = TRUE)
+    mean_diff <- mean(diff, na.rm = TRUE)
+    sd_diff   <- stats::sd(diff, na.rm = TRUE)
+    d_paired  <- mean_diff / sd_diff
+    
+    mean_T0  <- mean(x0,  na.rm = TRUE); sd_T0  <- stats::sd(x0,  na.rm = TRUE)
+    mean_T12 <- mean(x12, na.rm = TRUE); sd_T12 <- stats::sd(x12, na.rm = TRUE)
+    
+    cat("\n=== Auto test (", value_col, ") ===\n", sep = "")
+    cat("Normality of differences: Normal (Shapiro p =", round(sh$p.value, 4), ")\n")
+    cat("Chosen test: Paired t-test\n")
+    cat("n =", n, "| t =", round(tt$statistic, 4), "| p =", signif(tt$p.value, 4), "\n")
+    cat("T0:   mean ± SD = ", round(mean_T0, 3), " ± ", round(sd_T0, 3), "\n", sep = "")
+    cat("T12:  mean ± SD = ", round(mean_T12, 3), " ± ", round(sd_T12, 3), "\n", sep = "")
+    cat("Mean difference (T12−T0) =", round(mean_diff, 3),
+        " | 95% CI [", round(tt$conf.int[1], 3), ", ", round(tt$conf.int[2], 3), "]\n", sep = "")
+    cat("Effect size (Cohen's d paired) =", round(d_paired, 3), "\n")
+    
+    invisible(list(
+      variable = value_col,
+      method = "paired_t",
+      n = n,
+      shapiro = sh,
+      test = tt,
+      group_summary = list(
+        T0  = c(mean = mean_T0, sd = sd_T0),
+        T12 = c(mean = mean_T12, sd = sd_T12)
+      ),
+      mean_diff = mean_diff,
+      ci = tt$conf.int,
+      effect_size = list(type = "cohen_d_paired", value = d_paired)
+    ))
+    
+  } else {
+    wt   <- wilcox.test(x0, x12, paired = TRUE, exact = FALSE, correct = FALSE)
+    V    <- as.numeric(wt$statistic)
+    r_rb <- 1 - (2 * V) / (n * (n + 1))
+    
+    med_T0   <- stats::median(x0,  na.rm = TRUE)
+    q1_T0    <- stats::quantile(x0,  0.25, na.rm = TRUE)
+    q3_T0    <- stats::quantile(x0,  0.75, na.rm = TRUE)
+    med_T12  <- stats::median(x12, na.rm = TRUE)
+    q1_T12   <- stats::quantile(x12, 0.25, na.rm = TRUE)
+    q3_T12   <- stats::quantile(x12, 0.75, na.rm = TRUE)
+    med_diff <- stats::median(diff, na.rm = TRUE)
+    
+    cat("\n=== Auto test (", value_col, ") ===\n", sep = "")
+    cat("Normality of differences: Not normal (Shapiro p =", round(sh$p.value, 4), ")\n")
+    cat("Chosen test: Wilcoxon signed-rank (paired)\n")
+    cat("n =", n, "| V =", V, "| p =", signif(wt$p.value, 4), "\n")
+    cat("T0:   median [IQR] = ", round(med_T0, 3), " [",
+        round(q1_T0, 3), "–", round(q3_T0, 3), "]\n", sep = "")
+    cat("T12:  median [IQR] = ", round(med_T12, 3), " [",
+        round(q1_T12, 3), "–", round(q3_T12, 3), "]\n", sep = "")
+    cat("Median difference (T12−T0) =", round(med_diff, 3), "\n")
+    cat("Effect size (rank-biserial r) =", round(r_rb, 3), "\n")
+    
+    invisible(list(
+      variable = value_col,
+      method = "wilcoxon_paired",
+      n = n,
+      shapiro = sh,
+      test = wt,
+      group_summary = list(
+        T0  = c(median = med_T0, Q1 = q1_T0, Q3 = q3_T0),
+        T12 = c(median = med_T12, Q1 = q1_T12, Q3 = q3_T12)
+      ),
+      median_diff = med_diff,
+      effect_size = list(type = "rank_biserial_r", value = r_rb, V = V)
+    ))
+  }
+}
+# Wrapper "safe": if n < 3, returns a valid res_obj object with p = NA instead of stopping
+auto_paired_test_elas_safe <- function(df,
+                                       id_col   = "PatientID",
+                                       time_col = "Time",
+                                       value_col = "Elastase",
+                                       levels   = c("T0","T12")) {
+  tryCatch(
+    auto_paired_test_elas(df,
+                          id_col = id_col,
+                          time_col = time_col,
+                          value_col = value_col,
+                          levels = levels),
+    error = function(e) {
+      if (grepl("Very few valid pairs", e$message) || grepl("n < 3", e$message)) {
+        list(
+          variable = value_col,
+          method   = "too_few_pairs",
+          n        = NA_integer_,
+          shapiro  = list(p.value = NA_real_),
+          test     = list(statistic = NA_real_, p.value = NA_real_),
+          effect_size = list(type = NA_character_, value = NA_real_)
+        )
+      } else {
+        stop(e)
+      }
+    }
+  )
+}
+```
+
+### Perform statistical test
+#### Elastase
+```{r Execute stats function elas, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+res_elas <- auto_paired_test_elas(df_elas, value_col = "Elastase")
+```
+
+### Run plots function
+```{r Execute plot elas , echo=TRUE, results='show', message=FALSE, warning=FALSE}
+p_elas <- polish_panel_plot(
+  make_paired_plot(df_elas, "Elastase", res_elas,
+                        "Fecal elastase (µg/g)", "elastase.svg")
+)
+```
+
+### Save stats results
+```{r Save stats results elas , echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# === Export: elastase stats to CSV ===
+is_t <- identical(res_elas$method, "paired_t")
+
+paired_elas <- df_elas %>%
+  dplyr::select(PatientID, Time, Elastase) %>%
+  tidyr::pivot_wider(names_from = Time, values_from = Elastase) %>%
+  dplyr::filter(stats::complete.cases(T0, T12))
+
+mean_T0 <- mean(paired_elas$T0);  sd_T0 <- sd(paired_elas$T0)
+mean_T12<- mean(paired_elas$T12); sd_T12<- sd(paired_elas$T12)
+
+med_T0 <- median(paired_elas$T0);  q1_T0 <- as.numeric(quantile(paired_elas$T0, 0.25))
+q3_T0  <- as.numeric(quantile(paired_elas$T0, 0.75))
+med_T12<- median(paired_elas$T12); q1_T12<- as.numeric(quantile(paired_elas$T12,0.25))
+q3_T12 <- as.numeric(quantile(paired_elas$T12,0.75))
+
+fmt_group_T0  <- if (is_t) {
+  sprintf("%.3f ± %.3f", mean_T0, sd_T0)
+} else {
+  sprintf("%.3f [%0.3f-%0.3f]", med_T0, q1_T0, q3_T0)
+}
+
+fmt_group_T12 <- if (is_t) {
+  sprintf("%.3f ± %.3f", mean_T12, sd_T12)
+} else {
+  sprintf("%.3f [%0.3f-%0.3f]", med_T12, q1_T12, q3_T12)
+}
+
+fisher_res <- fisher.test(table_elas, conf.int = TRUE)
+
+row_elas <- tibble::tibble(
+  variable   = res_elas$variable,
+  method     = res_elas$method,
+  n_pairs    = res_elas$n,
+  shapiro_p  = unname(res_elas$shapiro$p.value),
+  stat       = unname(res_elas$test$statistic),
+  p_value    = res_elas$test$p.value,
+  group_T0   = fmt_group_T0,
+  group_T12  = fmt_group_T12,
+  mean_T0    = mean_T0,
+  sd_T0      = sd_T0,
+  median_T0  = med_T0,
+  q1_T0      = q1_T0,
+  q3_T0      = q3_T0,
+  min_T0     = min(paired_elas$T0),
+  max_T0     = max(paired_elas$T0),
+  range_T0   = max(paired_elas$T0) - min(paired_elas$T0),
+  mean_T12   = mean_T12,
+  sd_T12     = sd_T12,
+  median_T12 = med_T12,
+  q1_T12     = q1_T12,
+  q3_T12     = q3_T12,
+  min_T12    = min(paired_elas$T12),
+  max_T12    = max(paired_elas$T12),
+  range_T12  = max(paired_elas$T12) - min(paired_elas$T12),
+  diff_estimate = if (is_t) res_elas$mean_diff else res_elas$median_diff,
+  ci_low        = if (is_t) res_elas$ci[1] else NA_real_,
+  ci_high       = if (is_t) res_elas$ci[2] else NA_real_,
+  effect_type   = res_elas$effect_size$type,
+  effect_value  = res_elas$effect_size$value,
+  fisher_p      = as.numeric(fisher_res$p.value),
+  fisher_or     = if (!is.null(fisher_res$estimate)) as.numeric(fisher_res$estimate) else NA_real_,
+  fisher_ci_low = if (!is.null(fisher_res$conf.int)) fisher_res$conf.int[1] else NA_real_,
+  fisher_ci_high= if (!is.null(fisher_res$conf.int)) fisher_res$conf.int[2] else NA_real_,
+  or_ha         = or_ha,
+  or_ha_ci_low  = ci_low,
+  or_ha_ci_high = ci_high,
+  cutoff_used   = cutoff_elas
+)
+
+if (!dir.exists(here("results"))) dir.create(here("results"))
+
+readr::write_excel_csv(row_elas, here("results", "elastase_stats.csv"))
+```
+
+
+# ------------------------------------------------------------------------------
+# ANTHROPOMETRY ADULTS
+# ------------------------------------------------------------------------------
+
+### Load in the data
+```{r Load in data Z-scores, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+df_bmi <- read_delim(here("data", "BMI_adults.csv"))
+```
+
+### Filter data by time
+```{r Filter data by time Z-scores, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+data_bmi_T0  <- subset(df_bmi, Time == "T0")
+data_bmi_T12 <- subset(df_bmi, Time == "T12")
+```
+
+#### Function for statistic test
+```{r Function for statistic test based on shapiro results Z-scores, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+auto_paired_test_bmi <- function(df,
+                               id_col   = "PatientID",
+                               time_col = "Time",
+                               value_col = "BMI_kgm2",
+                               levels   = c("T0","T12")) {
+  stopifnot(all(c(id_col, time_col, value_col) %in% names(df)))
+  
+  dfw <- df[, c(id_col, time_col, value_col)]
+  dfw <- tidyr::pivot_wider(
+    dfw,
+    names_from  = !!rlang::sym(time_col),
+    values_from = !!rlang::sym(value_col)
+  )
+  if (!all(levels %in% names(dfw))) {
+    stop("No columns found ", paste(levels, collapse = " and "), " after pivot_wider().")
+  }
+  dfw <- dfw[stats::complete.cases(dfw[, levels]), ]
+  
+  x0   <- dfw[[levels[1]]]
+  x12  <- dfw[[levels[2]]]
+  diff <- x12 - x0
+  n    <- length(diff)
+  if (n < 3) stop("Very few valid pairs (n < 3).")
+  
+  sh     <- shapiro.test(diff)
+  normal <- sh$p.value >= 0.05
+  
+  if (normal) {
+    tt        <- t.test(x12, x0, paired = TRUE)
+    mean_diff <- mean(diff, na.rm = TRUE)
+    sd_diff   <- stats::sd(diff, na.rm = TRUE)
+    d_paired  <- mean_diff / sd_diff
+    
+    mean_T0  <- mean(x0,  na.rm = TRUE); sd_T0  <- stats::sd(x0,  na.rm = TRUE)
+    mean_T12 <- mean(x12, na.rm = TRUE); sd_T12 <- stats::sd(x12, na.rm = TRUE)
+    
+    cat("\n=== Auto test (", value_col, ") ===\n", sep = "")
+    cat("Normality of differences: Normal (Shapiro p =", round(sh$p.value, 4), ")\n")
+    cat("Chosen test: Paired t-test\n")
+    cat("n =", n, "| t =", round(tt$statistic, 4), "| p =", signif(tt$p.value, 4), "\n")
+    cat("T0:   mean ± SD = ", round(mean_T0, 3), " ± ", round(sd_T0, 3), "\n", sep = "")
+    cat("T12:  mean ± SD = ", round(mean_T12, 3), " ± ", round(sd_T12, 3), "\n", sep = "")
+    cat("Mean difference (T12−T0) =", round(mean_diff, 3),
+        " | 95% CI [", round(tt$conf.int[1], 3), ", ", round(tt$conf.int[2], 3), "]\n", sep = "")
+    cat("Effect size (Cohen's d paired) =", round(d_paired, 3), "\n")
+    
+    invisible(list(
+      variable = value_col,
+      method = "paired_t",
+      n = n,
+      shapiro = sh,
+      test = tt,
+      group_summary = list(
+        T0  = c(mean = mean_T0, sd = sd_T0),
+        T12 = c(mean = mean_T12, sd = sd_T12)
+      ),
+      mean_diff = mean_diff,
+      ci = tt$conf.int,
+      effect_size = list(type = "cohen_d_paired", value = d_paired)
+    ))
+    
+  } else {
+    wt   <- wilcox.test(x0, x12, paired = TRUE, exact = FALSE, correct = FALSE)
+    V    <- as.numeric(wt$statistic)
+    r_rb <- 1 - (2 * V) / (n * (n + 1))
+    
+    med_T0   <- stats::median(x0,  na.rm = TRUE)
+    q1_T0    <- stats::quantile(x0,  0.25, na.rm = TRUE)
+    q3_T0    <- stats::quantile(x0,  0.75, na.rm = TRUE)
+    med_T12  <- stats::median(x12, na.rm = TRUE)
+    q1_T12   <- stats::quantile(x12, 0.25, na.rm = TRUE)
+    q3_T12   <- stats::quantile(x12, 0.75, na.rm = TRUE)
+    med_diff <- stats::median(diff, na.rm = TRUE)
+    
+    cat("\n=== Auto test (", value_col, ") ===\n", sep = "")
+    cat("Normality of differences: Not normal (Shapiro p =", round(sh$p.value, 4), ")\n")
+    cat("Chosen test: Wilcoxon signed-rank (paired)\n")
+    cat("n =", n, "| V =", V, "| p =", signif(wt$p.value, 4), "\n")
+    cat("T0:   median [IQR] = ", round(med_T0, 3), " [",
+        round(q1_T0, 3), "–", round(q3_T0, 3), "]\n", sep = "")
+    cat("T12:  median [IQR] = ", round(med_T12, 3), " [",
+        round(q1_T12, 3), "–", round(q3_T12, 3), "]\n", sep = "")
+    cat("Median difference (T12−T0) =", round(med_diff, 3), "\n")
+    cat("Effect size (rank-biserial r) =", round(r_rb, 3), "\n")
+    
+    invisible(list(
+      variable = value_col,
+      method = "wilcoxon_paired",
+      n = n,
+      shapiro = sh,
+      test = wt,
+      group_summary = list(
+        T0  = c(median = med_T0, Q1 = q1_T0, Q3 = q3_T0),
+        T12 = c(median = med_T12, Q1 = q1_T12, Q3 = q3_T12)
+      ),
+      median_diff = med_diff,
+      effect_size = list(type = "rank_biserial_r", value = r_rb, V = V)
+    ))
+  }
+}
+# Wrapper "safe": if n < 3, returns a valid res_obj object with p = NA instead of stopping
+auto_paired_test_bmi_safe <- function(df,
+                                       id_col   = "PatientID",
+                                       time_col = "Time",
+                                       value_col = "BMI_kgm2",
+                                       levels   = c("T0","T12")) {
+  tryCatch(
+    auto_paired_test_bmi(df,
+                          id_col = id_col,
+                          time_col = time_col,
+                          value_col = value_col,
+                          levels = levels),
+    error = function(e) {
+      if (grepl("Very few valid pairs", e$message) || grepl("n < 3", e$message)) {
+        list(
+          variable = value_col,
+          method   = "too_few_pairs",
+          n        = NA_integer_,
+          shapiro  = list(p.value = NA_real_),
+          test     = list(statistic = NA_real_, p.value = NA_real_),
+          effect_size = list(type = NA_character_, value = NA_real_)
+        )
+      } else {
+        stop(e)
+      }
+    }
+  )
+}
+```
+
+### Perform the statistical test
+#### Weight
+```{r Execute stats function Z-scores, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+res_bmi_wt  <- auto_paired_test_bmi(df_bmi, value_col = "Weight_kg")
+```
+#### Height
+```{r Execute stats function Z-scores, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+res_bmi_ht  <- auto_paired_test_bmi(df_bmi, value_col = "Height_cm")
+```
+#### BMI
+```{r Execute stats function Z-scores, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+res_bmi_bmi <- auto_paired_test_bmi(df_bmi, value_col = "BMI_kgm2")
+```
+
+#### Panel plots
+```{r Panel plots Z-scores, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+p_bmi_wt <- polish_panel_plot(
+  make_paired_plot(df_bmi, "Weight_kg",
+                   res_bmi_wt, "Weight (kg)", "weight.svg")
+)
+
+p_bmi_ht <- polish_panel_plot(
+  make_paired_plot(df_bmi, "Height_cm",
+                   res_bmi_ht, "Height (cm)", "height.svg")
+)
+
+p_bmi_bmi <- polish_panel_plot(
+  make_paired_plot(df_bmi, "BMI_kgm2",
+                   res_bmi_bmi, "BMI (kg/m2)", "BMI.svg")
+)
+
+panel_bmi <- p_bmi_wt | p_bmi_ht | p_bmi_bmi
+
+panel_bmi <- panel_bmi + plot_layout(guides = "collect") &
+  theme(legend.position = "bottom")
+
+ggsave(here("results","zscore_adults_panel.svg"),
+       panel_bmi, width = 12, height = 5, bg = "white")
+```
+
+### Save stats results
+```{r Save stats results z_score, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# === Export: anthropometry (weight, height, BMI) ===
+
+.build_row_bmi <- function(df, value_col, res_obj, p_fdr = NA_real_) {
+  stopifnot(all(c("PatientID","Time", value_col) %in% names(df)))
+  is_t <- identical(res_obj$method, "paired_t")
+
+  paired <- df %>%
+    dplyr::select(PatientID, Time, !!rlang::sym(value_col)) %>%
+    tidyr::pivot_wider(names_from = Time, values_from = !!rlang::sym(value_col)) %>%
+    dplyr::filter(stats::complete.cases(T0, T12))
+
+  mean_T0  <- mean(paired$T0);  sd_T0  <- sd(paired$T0)
+  mean_T12 <- mean(paired$T12); sd_T12 <- sd(paired$T12)
+
+  med_T0 <- median(paired$T0)
+  q1_T0  <- as.numeric(quantile(paired$T0,  0.25))
+  q3_T0  <- as.numeric(quantile(paired$T0,  0.75))
+
+  med_T12 <- median(paired$T12)
+  q1_T12  <- as.numeric(quantile(paired$T12, 0.25))
+  q3_T12  <- as.numeric(quantile(paired$T12, 0.75))
+
+  fmt_group_T0  <- if (is_t) sprintf("%.3f ± %.3f", mean_T0, sd_T0)  else sprintf("%.3f [%0.3f-%0.3f]", med_T0,  q1_T0,  q3_T0)
+  fmt_group_T12 <- if (is_t) sprintf("%.3f ± %.3f", mean_T12, sd_T12) else sprintf("%.3f [%0.3f-%0.3f]", med_T12, q1_T12, q3_T12)
+
+  tibble::tibble(
+    variable      = res_obj$variable,
+    method        = res_obj$method,
+    n_pairs       = res_obj$n,
+    shapiro_p     = unname(res_obj$shapiro$p.value),
+    stat          = unname(res_obj$test$statistic),
+    p_value       = res_obj$test$p.value,
+    group_T0      = fmt_group_T0,
+    group_T12     = fmt_group_T12,
+    mean_T0  = mean_T0,
+    sd_T0    = sd_T0,
+    median_T0= med_T0,
+    q1_T0    = q1_T0,
+    q3_T0    = q3_T0,
+    min_T0   = min(paired$T0),
+    max_T0   = max(paired$T0),
+    range_T0 = max(paired$T0) - min(paired$T0),
+    mean_T12   = mean_T12,
+    sd_T12     = sd_T12,
+    median_T12 = med_T12,
+    q1_T12     = q1_T12,
+    q3_T12     = q3_T12,
+    min_T12    = min(paired$T12),
+    max_T12    = max(paired$T12),
+    range_T12  = max(paired$T12) - min(paired$T12),
+    diff_estimate = if (is_t) res_obj$mean_diff else res_obj$median_diff,
+    ci_low        = if (is_t) res_obj$ci[1] else NA_real_,
+    ci_high       = if (is_t) res_obj$ci[2] else NA_real_,
+    effect_type   = res_obj$effect_size$type,
+    effect_value  = res_obj$effect_size$value
+  )
+}
+
+row_bmi_wt <- .build_row_bmi(df_bmi, "Weight_kg", res_bmi_wt)
+row_bmi_ht <- .build_row_bmi(df_bmi, "Height_cm", res_bmi_ht)
+row_bmi_bmi <- .build_row_bmi(df_bmi, "BMI_kgm2", res_bmi_bmi)
+
+bmi_stats <- dplyr::bind_rows(row_bmi_wt, row_bmi_ht, row_bmi_bmi)
+
+bmi_stats$p_fdr <- p.adjust(bmi_stats$p_value, method = "BH")
+
+if (!dir.exists(here("results"))) dir.create(here("results"))
+readr::write_excel_csv(bmi_stats, here("results", "bmi_stats.csv"))
+```
+
+
+# ------------------------------------------------------------------------------
+# ANTHROPOMETRY PEDIATRICS
+# ------------------------------------------------------------------------------
+
+### Load in the data
+```{r Load in data Z-scores, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+df_z <- read_delim(here("data", "zscore.csv"))
+```
+
+### Filter data by time
+```{r Filter data by time Z-scores, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+data_z_T0  <- subset(df_z, Time == "T0")
+data_z_T12 <- subset(df_z, Time == "T12")
+```
+
+#### Function for statistic test
+```{r Function for statistic test based on shapiro results Z-scores, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+auto_paired_test_z <- function(df,
+                               id_col   = "PatientID",
+                               time_col = "Time",
+                               value_col = "SD_z_score_BMI_2010",
+                               levels   = c("T0","T12")) {
+  stopifnot(all(c(id_col, time_col, value_col) %in% names(df)))
+  
+  dfw <- df[, c(id_col, time_col, value_col)]
+  dfw <- tidyr::pivot_wider(
+    dfw,
+    names_from  = !!rlang::sym(time_col),
+    values_from = !!rlang::sym(value_col)
+  )
+  if (!all(levels %in% names(dfw))) {
+    stop("No columns found ", paste(levels, collapse = " and "), " after pivot_wider().")
+  }
+  dfw <- dfw[stats::complete.cases(dfw[, levels]), ]
+  
+  x0   <- dfw[[levels[1]]]
+  x12  <- dfw[[levels[2]]]
+  diff <- x12 - x0
+  n    <- length(diff)
+  if (n < 3) stop("Very few valid pairs (n < 3).")
+  
+  sh     <- shapiro.test(diff)
+  normal <- sh$p.value >= 0.05
+  
+  if (normal) {
+    tt        <- t.test(x12, x0, paired = TRUE)
+    mean_diff <- mean(diff, na.rm = TRUE)
+    sd_diff   <- stats::sd(diff, na.rm = TRUE)
+    d_paired  <- mean_diff / sd_diff
+    
+    mean_T0  <- mean(x0,  na.rm = TRUE); sd_T0  <- stats::sd(x0,  na.rm = TRUE)
+    mean_T12 <- mean(x12, na.rm = TRUE); sd_T12 <- stats::sd(x12, na.rm = TRUE)
+    
+    cat("\n=== Auto test (", value_col, ") ===\n", sep = "")
+    cat("Normality of differences: Normal (Shapiro p =", round(sh$p.value, 4), ")\n")
+    cat("Chosen test: Paired t-test\n")
+    cat("n =", n, "| t =", round(tt$statistic, 4), "| p =", signif(tt$p.value, 4), "\n")
+    cat("T0:   mean ± SD = ", round(mean_T0, 3), " ± ", round(sd_T0, 3), "\n", sep = "")
+    cat("T12:  mean ± SD = ", round(mean_T12, 3), " ± ", round(sd_T12, 3), "\n", sep = "")
+    cat("Mean difference (T12−T0) =", round(mean_diff, 3),
+        " | 95% CI [", round(tt$conf.int[1], 3), ", ", round(tt$conf.int[2], 3), "]\n", sep = "")
+    cat("Effect size (Cohen's d paired) =", round(d_paired, 3), "\n")
+    
+    invisible(list(
+      variable = value_col,
+      method = "paired_t",
+      n = n,
+      shapiro = sh,
+      test = tt,
+      group_summary = list(
+        T0  = c(mean = mean_T0, sd = sd_T0),
+        T12 = c(mean = mean_T12, sd = sd_T12)
+      ),
+      mean_diff = mean_diff,
+      ci = tt$conf.int,
+      effect_size = list(type = "cohen_d_paired", value = d_paired)
+    ))
+    
+  } else {
+    wt   <- wilcox.test(x0, x12, paired = TRUE, exact = FALSE, correct = FALSE)
+    V    <- as.numeric(wt$statistic)
+    r_rb <- 1 - (2 * V) / (n * (n + 1))
+    
+    med_T0   <- stats::median(x0,  na.rm = TRUE)
+    q1_T0    <- stats::quantile(x0,  0.25, na.rm = TRUE)
+    q3_T0    <- stats::quantile(x0,  0.75, na.rm = TRUE)
+    med_T12  <- stats::median(x12, na.rm = TRUE)
+    q1_T12   <- stats::quantile(x12, 0.25, na.rm = TRUE)
+    q3_T12   <- stats::quantile(x12, 0.75, na.rm = TRUE)
+    med_diff <- stats::median(diff, na.rm = TRUE)
+    
+    cat("\n=== Auto test (", value_col, ") ===\n", sep = "")
+    cat("Normality of differences: Not normal (Shapiro p =", round(sh$p.value, 4), ")\n")
+    cat("Chosen test: Wilcoxon signed-rank (paired)\n")
+    cat("n =", n, "| V =", V, "| p =", signif(wt$p.value, 4), "\n")
+    cat("T0:   median [IQR] = ", round(med_T0, 3), " [",
+        round(q1_T0, 3), "–", round(q3_T0, 3), "]\n", sep = "")
+    cat("T12:  median [IQR] = ", round(med_T12, 3), " [",
+        round(q1_T12, 3), "–", round(q3_T12, 3), "]\n", sep = "")
+    cat("Median difference (T12−T0) =", round(med_diff, 3), "\n")
+    cat("Effect size (rank-biserial r) =", round(r_rb, 3), "\n")
+    
+    invisible(list(
+      variable = value_col,
+      method = "wilcoxon_paired",
+      n = n,
+      shapiro = sh,
+      test = wt,
+      group_summary = list(
+        T0  = c(median = med_T0, Q1 = q1_T0, Q3 = q3_T0),
+        T12 = c(median = med_T12, Q1 = q1_T12, Q3 = q3_T12)
+      ),
+      median_diff = med_diff,
+      effect_size = list(type = "rank_biserial_r", value = r_rb, V = V)
+    ))
+  }
+}
+# Wrapper "safe": if n < 3, returns a valid res_obj object with p = NA instead of stopping
+auto_paired_test_z_safe <- function(df,
+                                       id_col   = "PatientID",
+                                       time_col = "Time",
+                                       value_col = "SD_z_score_BMI_2010",
+                                       levels   = c("T0","T12")) {
+  tryCatch(
+    auto_paired_test_z(df,
+                          id_col = id_col,
+                          time_col = time_col,
+                          value_col = value_col,
+                          levels = levels),
+    error = function(e) {
+      if (grepl("Very few valid pairs", e$message) || grepl("n < 3", e$message)) {
+        list(
+          variable = value_col,
+          method   = "too_few_pairs",
+          n        = NA_integer_,
+          shapiro  = list(p.value = NA_real_),
+          test     = list(statistic = NA_real_, p.value = NA_real_),
+          effect_size = list(type = NA_character_, value = NA_real_)
+        )
+      } else {
+        stop(e)
+      }
+    }
+  )
+}
+```
+
+### Perform the statistical test
+#### Weight
+```{r Execute stats function Z-scores, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+res_z_wt  <- auto_paired_test_z(df_z, value_col = "SD_z_score_weight_2010")
+```
+#### Height
+```{r Execute stats function Z-scores, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+res_z_ht  <- auto_paired_test_z(df_z, value_col = "SD_z_score_height_2010")
+```
+#### BMI z-score
+```{r Execute stats function Z-scores, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+res_z_bmi <- auto_paired_test_z(df_z, value_col = "SD_z_score_BMI_2010")
+```
+
+#### OPTIONAL: BMI increased/decreased
+```{r BMI increased or decreased Z-scores, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# Paired BMI z-score per patient
+paired_bmiz <- df_z %>%
+  dplyr::select(PatientID, Time, SD_z_score_BMI_2010) %>%
+  tidyr::pivot_wider(names_from = Time, values_from = SD_z_score_BMI_2010) %>%
+  dplyr::filter(stats::complete.cases(T0, T12)) %>%
+  dplyr::mutate(delta = T12 - T0)
+
+n_increase <- sum(paired_bmiz$delta > 0)
+n_decrease <- sum(paired_bmiz$delta < 0)
+n_nochange <- sum(paired_bmiz$delta == 0)
+n_total    <- nrow(paired_bmiz)
+
+cat("\n=== BMI z-score change (T12 - T0) ===\n")
+cat("Paired patients:", n_total, "\n")
+cat("Increased:", n_increase, "\n")
+cat("Decreased:", n_decrease, "\n")
+cat("No change:", n_nochange, "\n")
+
+# Paired BMI per patient
+paired_bmi <- df_z %>%
+  dplyr::select(PatientID, Time, SD_z_score_BMI_2010) %>%                 
+  tidyr::pivot_wider(names_from = Time, values_from = SD_z_score_BMI_2010) %>%
+  dplyr::filter(stats::complete.cases(T0, T12)) %>%
+  dplyr::mutate(delta = T12 - T0)
+
+n_increase <- sum(paired_bmi$delta > 0)
+n_decrease <- sum(paired_bmi$delta < 0)
+n_nochange <- sum(paired_bmi$delta == 0)
+n_total    <- nrow(paired_bmi)
+
+cat("\n=== BMI change (kg/m2): T12 - T0 ===\n")
+cat("Paired patients:", n_total, "\n")
+cat("Increased:", n_increase, "\n")
+cat("Decreased:", n_decrease, "\n")
+cat("No change:", n_nochange, "\n")
+
+# --- Create BMIz change groups (inc/dec) per patient ---
+paired_bmiz <- df_z %>%
+  dplyr::select(PatientID, Time, SD_z_score_BMI_2010) %>%
+  tidyr::pivot_wider(names_from = Time, values_from = SD_z_score_BMI_2010) %>%
+  dplyr::filter(stats::complete.cases(T0, T12)) %>%
+  dplyr::mutate(delta_bmiz = T12 - T0)
+
+bmiz_group <- paired_bmiz %>%
+  dplyr::mutate(
+    BMIz_group = dplyr::case_when(
+      delta_bmiz > 0 ~ "BMIz_inc",
+      delta_bmiz < 0 ~ "BMIz_dec",
+      TRUE           ~ "BMIz_nochange"
+    )
+  ) %>%
+  dplyr::select(PatientID, BMIz_group)
+
+print(table(bmiz_group$BMIz_group))
+
+# PatientID
+bmiz_ids_compact <- bmiz_group %>%
+  dplyr::arrange(BMIz_group, PatientID) %>%
+  dplyr::group_by(BMIz_group) %>%
+  dplyr::summarise(PatientIDs = paste(PatientID, collapse = ", "), .groups = "drop")
+
+print(bmiz_ids_compact, n = Inf)
+```
+
+#### Panel plots
+```{r Panel plots Z-scores, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+p_z_wt <- polish_panel_plot(
+  make_paired_plot(df_z, "SD_z_score_weight_2010",
+                   res_z_wt, "Weight z-score (2010)", "zscore_weight.svg")
+)
+
+p_z_ht <- polish_panel_plot(
+  make_paired_plot(df_z, "SD_z_score_height_2010",
+                   res_z_ht, "Height z-score (2010)", "zscore_height.svg")
+)
+
+p_z_bmi <- polish_panel_plot(
+  make_paired_plot(df_z, "SD_z_score_BMI_2010",
+                   res_z_bmi, "BMI z-score (Carrascosa 2010)", "zscore_BMI.svg")
+)
+
+panel_z <- p_z_wt | p_z_ht | p_z_bmi
+
+panel_z <- panel_z + plot_layout(guides = "collect") &
+  theme(legend.position = "bottom")
+
+ggsave(here("results","zscore_panel.svg"),
+       panel_z, width = 12, height = 5, bg = "white")
+```
+
+#### Alternative plot
+```{r Alternative plot Z-scores, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+# Set colors
+col_box   <- c("T0" = "#9EC1CF", "T12" = "#F9A1BC")
+col_point <- c("T0" = "#D6E9F5", "T12" = "#FCD6E0")
+
+# Long format
+z_long <- df_z %>%
+  dplyr::select(
+    PatientID, Time,
+    z_weight = SD_z_score_weight_2010,
+    z_height = SD_z_score_height_2010,
+    z_bmi    = SD_z_score_BMI_2010
+  ) %>%
+  tidyr::pivot_longer(cols = starts_with("z_"),
+                      names_to = "marker", values_to = "zscore") %>%
+  mutate(
+    marker = recode(marker,
+                    z_weight = "Weight z-score",
+                    z_height = "Height z-score",
+                    z_bmi    = "BMI z-score"),
+    marker = factor(marker, levels = c("Weight z-score","Height z-score","BMI z-score")),
+    Time   = factor(Time, levels = c("T0","T12"))
+  )
+
+# Explicit x positions (so paired lines work cleanly)
+offset <- 0.18
+z_long <- z_long %>%
+  mutate(
+    x0 = as.numeric(marker),
+    x  = x0 + ifelse(Time == "T0", -offset, +offset)
+  )
+
+# Median + IQR per timepoint (for the summary bars + diamond)
+summ_df <- z_long %>%
+  group_by(marker, Time, x) %>%
+  summarise(
+    med = median(zscore, na.rm = TRUE),
+    q1  = quantile(zscore, 0.25, na.rm = TRUE),
+    q3  = quantile(zscore, 0.75, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+# P-values
+pvals_df <- tibble::tibble(
+  marker = factor(c("Weight z-score","Height z-score","BMI z-score"),
+                  levels = levels(z_long$marker)),
+  p = c(res_z_wt$test$p.value, res_z_ht$test$p.value, res_z_bmi$test$p.value)
+)
+
+anno_df <- z_long %>%
+  group_by(marker) %>%
+  summarise(y = max(zscore, na.rm = TRUE) + 0.25, .groups = "drop") %>%
+  left_join(pvals_df, by = "marker") %>%
+  mutate(
+    x0 = as.numeric(marker),
+    x1 = x0 - offset,
+    x2 = x0 + offset,
+    p_label = paste0("p = ", format.pval(p, digits = 2, eps = 0.001))
+  )
+
+p_zscores_all <- ggplot() +
+  theme_bw(base_size = 14) +
+  theme(
+    panel.grid.major.x = element_line(color = "grey85", linewidth = 0.8),
+    panel.grid.major.y = element_line(color = "grey85", linewidth = 0.8),
+    panel.grid.minor.x = element_line(color = "grey92", linewidth = 0.6),
+    panel.grid.minor.y = element_blank(),
+    legend.position = "bottom"
+    ) +
+  geom_hline(yintercept = 0, linetype = "dashed", linewidth = 0.9, color = "grey55") +
+  geom_linerange(
+    data = summ_df,
+    aes(x = x, ymin = q1, ymax = q3, color = Time),
+    linewidth = 1.2, alpha = 0.95
+  ) +
+  geom_vline(
+    xintercept = c(0.5, 1.5, 2.5, 3.5),
+    color = "grey90",
+    linewidth = 0.8
+    ) +
+  geom_segment(
+    data = summ_df,
+    aes(x = x - 0.04, xend = x + 0.04, y = q1, yend = q1, color = Time),
+    linewidth = 1.5
+  ) +
+  geom_segment(
+    data = summ_df,
+    aes(x = x - 0.04, xend = x + 0.04, y = q3, yend = q3, color = Time),
+    linewidth = 1.5
+  ) +
+  geom_line(
+    data = z_long,
+    aes(x = x, y = zscore, group = interaction(PatientID, marker)),
+    color = "grey70", linetype = "dashed", linewidth = 0.8
+  ) +
+  geom_point(
+    data = z_long,
+    aes(x = x, y = zscore, fill = Time),
+    shape = 21, size = 3.0, color = "black", stroke = 0.6, alpha = 0.95
+  ) +
+  geom_point(
+    data = summ_df,
+    aes(x = x, y = med, color = Time),
+    shape = 23, size = 4.0, fill = "white", stroke = 1.0
+  ) +
+  geom_segment(
+    data = anno_df,
+    aes(x = x1, xend = x2, y = y, yend = y),
+    linewidth = 0.8, color = "black"
+  ) +
+  geom_text(
+    data = anno_df,
+    aes(x = x0, y = y + 0.08, label = p_label),
+    size = 4.2, color = "black"
+  ) +
+
+  scale_color_manual(values = col_box, guide = "none") +
+  scale_fill_manual(values = col_point, name = "Time") +
+  scale_x_continuous(
+    limits = c(0.5, 3.5),
+    breaks = 1:length(levels(z_long$marker)),
+    labels = levels(z_long$marker),
+    minor_breaks = sort(c(
+      1 - offset, 1 + offset,
+      2 - offset, 2 + offset,
+      3 - offset, 3 + offset,
+      1.5, 2.5))
+    ) +
+  labs(x = NULL, y = "z-score (SD units)")
+
+p_zscores_all
+
+ggplot2::ggsave(
+  here::here("results", "anthropometry_zscores_T0_T12_combined.svg"),
+  p_zscores_all, width = 9, height = 4.5, bg = "white"
+)
+```
+
+
+### Save stats results
+```{r Save stats results z_score, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# === Export: z-scores (weight, height, BMI) ===
+
+.build_row_z <- function(df, value_col, res_obj, fisher_tab = NULL, cutoff = NA_real_, p_fdr = NA_real_) {
+  stopifnot(all(c("PatientID","Time", value_col) %in% names(df)))
+  is_t <- identical(res_obj$method, "paired_t")
+
+  paired <- df %>%
+    dplyr::select(PatientID, Time, !!rlang::sym(value_col)) %>%
+    tidyr::pivot_wider(names_from = Time, values_from = !!rlang::sym(value_col)) %>%
+    dplyr::filter(stats::complete.cases(T0, T12))
+
+  mean_T0  <- mean(paired$T0);  sd_T0  <- sd(paired$T0)
+  mean_T12 <- mean(paired$T12); sd_T12 <- sd(paired$T12)
+
+  med_T0 <- median(paired$T0)
+  q1_T0  <- as.numeric(quantile(paired$T0,  0.25))
+  q3_T0  <- as.numeric(quantile(paired$T0,  0.75))
+
+  med_T12 <- median(paired$T12)
+  q1_T12  <- as.numeric(quantile(paired$T12, 0.25))
+  q3_T12  <- as.numeric(quantile(paired$T12, 0.75))
+
+  fmt_group_T0  <- if (is_t) sprintf("%.3f ± %.3f", mean_T0, sd_T0)  else sprintf("%.3f [%0.3f-%0.3f]", med_T0,  q1_T0,  q3_T0)
+  fmt_group_T12 <- if (is_t) sprintf("%.3f ± %.3f", mean_T12, sd_T12) else sprintf("%.3f [%0.3f-%0.3f]", med_T12, q1_T12, q3_T12)
+
+  if (!is.null(fisher_tab)) {
+    fisher_res <- fisher.test(fisher_tab, conf.int = TRUE)
+
+    tab_ha <- fisher_tab + 0.5
+
+    a <- tab_ha["high_BMIz","T0"];  b <- tab_ha["high_BMIz","T12"]
+    c <- tab_ha["low_BMIz","T0"];   d <- tab_ha["low_BMIz","T12"]
+
+    or_ha   <- (a*d) / (b*c)
+    se_log  <- sqrt(1/a + 1/b + 1/c + 1/d)
+    ci_low  <- exp(log(or_ha) - 1.96 * se_log)
+    ci_high <- exp(log(or_ha) + 1.96 * se_log)
+
+    fisher_p      <- as.numeric(fisher_res$p.value)
+    fisher_or     <- if (!is.null(fisher_res$estimate)) as.numeric(fisher_res$estimate) else NA_real_
+    fisher_ci_low <- if (!is.null(fisher_res$conf.int)) fisher_res$conf.int[1] else NA_real_
+    fisher_ci_high<- if (!is.null(fisher_res$conf.int)) fisher_res$conf.int[2] else NA_real_
+  } else {
+    fisher_p <- fisher_or <- fisher_ci_low <- fisher_ci_high <- NA_real_
+    or_ha <- ci_low <- ci_high <- NA_real_
+  }
+
+  tibble::tibble(
+    variable      = res_obj$variable,
+    method        = res_obj$method,
+    n_pairs       = res_obj$n,
+    shapiro_p     = unname(res_obj$shapiro$p.value),
+    stat          = unname(res_obj$test$statistic),
+    p_value       = res_obj$test$p.value,
+    group_T0      = fmt_group_T0,
+    group_T12     = fmt_group_T12,
+    mean_T0    = mean_T0,
+    sd_T0      = sd_T0,
+    median_T0  = med_T0,
+    q1_T0      = q1_T0,
+    q3_T0      = q3_T0,
+    min_T0     = min(paired$T0),
+    max_T0     = max(paired$T0),
+    range_T0   = max(paired$T0) - min(paired$T0),
+    mean_T12   = mean_T12,
+    sd_T12     = sd_T12,
+    median_T12 = med_T12,
+    q1_T12     = q1_T12,
+    q3_T12     = q3_T12,
+    min_T12    = min(paired$T12),
+    max_T12    = max(paired$T12),
+    range_T12  = max(paired$T12) - min(paired$T12),
+    diff_estimate = if (is_t) res_obj$mean_diff else res_obj$median_diff,
+    ci_low        = if (is_t) res_obj$ci[1] else NA_real_,
+    ci_high       = if (is_t) res_obj$ci[2] else NA_real_,
+    effect_type   = res_obj$effect_size$type,
+    effect_value  = res_obj$effect_size$value,
+    fisher_p      = fisher_p,
+    fisher_or     = fisher_or,
+    fisher_ci_low = fisher_ci_low,
+    fisher_ci_high= fisher_ci_high,
+    or_ha         = or_ha,
+    or_ha_ci_low  = if (!is.null(fisher_tab)) ci_low else NA_real_,
+    or_ha_ci_high = if (!is.null(fisher_tab)) ci_high else NA_real_,
+    cutoff_used   = cutoff
+  )
+}
+
+row_z_wt  <- .build_row_z(df_z, "SD_z_score_weight_2010",             res_z_wt)
+row_z_ht  <- .build_row_z(df_z, "SD_z_score_height_2010",             res_z_ht)
+row_z_bmi <- .build_row_z(df_z, "SD_z_score_BMI_2010",      res_z_bmi,
+                          fisher_tab = table_bmiz, cutoff = cutoff_z)
+
+z_scores_stats <- dplyr::bind_rows(row_z_wt, row_z_ht, row_z_bmi)
+
+z_scores_stats$p_fdr <- p.adjust(z_scores_stats$p_value, method = "BH")
+
+if (!dir.exists(here("results"))) dir.create(here("results"))
+readr::write_excel_csv(z_scores_stats, here("results", "Zscores_pediatrics_stats.csv"))
+```
+
+
+
+
+
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+# GLOBAL FDR
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+
+### Including ONLY of interest
+```{r Stats results FDR, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# 1) Put all your test objects in a single nested list (system -> variables -> res_object)
+clinical_tests <- list(
+  `Lung function` = list(
+    ppFEV1       = res_ppFEV1,
+    ppFVC        = res_ppFVC,
+    FEV1_FVC     = res_ratio,
+    ppFEV1_fem   = res_ppFEV1_fem,
+    ppFVC_fem    = res_ppFVC_fem,
+    FEV1_FVC_fem = res_ratio_fem,
+    ppFEV1_mal   = res_ppFEV1_mal,
+    ppFVC_mal    = res_ppFVC_mal,
+    FEV1_FVC_mal = res_ratio_mal,
+    ppFEV1_adu   = res_ppFEV1_adu,
+    ppFVC_adu    = res_ppFVC_adu,
+    FEV1_FVC_adu = res_ratio_adu,
+    ppFEV1_ped   = res_ppFEV1_ped,
+    ppFVC_ped    = res_ppFVC_ped,
+    FEV1_FVC_ped = res_ratio_ped
+  ),
+  `Transaminases` = list(
+    ALT = res_ALT,
+    AST = res_AST,
+    GGT = res_GGT
+  ),
+  `Intestinal inflammation` = list(
+    Calprotectin = res_calpro
+  ),
+  `Absorption markers` = list(
+    Elastase = res_elas
+  ),
+  `Anthropometry_BMI` = list(
+    Weight_kg = res_bmi_wt,
+    Height_cm = res_bmi_ht,
+    BMI_kgm2 = res_bmi_bmi
+  ),
+  `Anthropometry_zscore` = list(
+    SD_z_score_weight_2010 = res_z_wt,
+    SD_z_score_height_2010 = res_z_ht,
+    SD_z_score_BMI_2010 = res_z_bmi
+  )
+)
+
+# 2) Helper to extract p-value (adapt if your object structure differs)
+get_p <- function(x) x$test$p.value
+
+# 3) Build one table with all clinical p-values
+clinical_pvals <- purrr::imap_dfr(clinical_tests, \(tests, sys) {
+  tibble::tibble(
+    system   = sys,
+    variable = names(tests),
+    p_value  = purrr::map_dbl(tests, get_p)
+  )
+})
+
+# 4) Global BH-FDR across ALL clinical variables together
+clinical_pvals_globalFDR <- clinical_pvals %>%
+  dplyr::mutate(
+    p_fdr_global = p.adjust(p_value, method = "BH"),
+    signif_fdr   = p_fdr_global < 0.05
+  ) %>%
+  dplyr::arrange(p_fdr_global)
+
+print(clinical_pvals_globalFDR, n = Inf)
+
+# 5) Save
+if (!dir.exists(here::here("results"))) dir.create(here::here("results"))
+readr::write_excel_csv(clinical_pvals_globalFDR, here::here("results", "clinical_globalFDR_pvalues.csv"))
+```
+
+## Export table
+```{r Export final table, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# 0) Collect per-system result tables
+results_by_system <- list(
+  "Lung function"           = lung_stats,
+  "Transaminases"           = trans_stats,
+  "Intestinal inflammation" = row_calpro,
+  "Absorption markers"      = row_elas,
+  "Anthropometry_BMI"       = bmi_stats,
+  "Anthropometry_zscore"    = z_scores_stats
+)
+
+# 1) Build mega table (do NOT compute BH here)
+mega_tbl <- dplyr::bind_rows(results_by_system, .id = "system") %>%
+  dplyr::mutate(
+    system   = stringr::str_trim(system),
+    variable = stringr::str_trim(variable)
+  )
+
+# 2) Load the GLOBAL FDR table created in your "ONLY of interest" code
+global_fdr_tbl <- readr::read_csv(
+  here::here("results", "clinical_globalFDR_pvalues.csv"),
+  show_col_types = FALSE
+) %>%
+  dplyr::transmute(
+    system   = stringr::str_trim(system),
+    variable = stringr::str_trim(variable),
+    p_fdr_global
+  )
+
+# 3) Keep ONLY rows that exist in the global list + join global FDR + reorder column
+mega_tbl_final <- mega_tbl %>%
+  dplyr::semi_join(global_fdr_tbl, by = c("system", "variable")) %>%
+  dplyr::select(-dplyr::any_of(c("p_fdr", "p_fdr_global"))) %>%
+  dplyr::left_join(global_fdr_tbl, by = c("system", "variable")) %>%
+  dplyr::relocate(p_fdr_global, .after = p_value)
+
+# 4) Export (Excel-friendly UTF-8 CSV)
+readr::write_excel_csv(
+  mega_tbl_final, here::here("results", "clinical_results_mega_table_globalFDR_FINAL.csv"))
+```
+
+
+# -----------------------------------------------------------------------------
+#### PANELS PLOTS (run again the FIRST function plot)
+# -----------------------------------------------------------------------------
+##### Lung function
+```{r Lung panel, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+# Panel 3
+panel_lung_all <- (p_ppFEV1 | p_ppFVC | p_ratio) /
+  (p_ppFEV1_fem | p_ppFEV1_mal | plot_spacer()) / 
+  (p_ppFEV1_adu | p_ppFEV1_ped | plot_spacer()) +
+  plot_layout(guides = "collect") & theme(legend.position = "bottom")
+
+panel_lung_all <- panel_lung_all + plot_annotation(tag_levels = "A")
+
+ggsave(here("results","lung_all_panel.svg"), panel_lung_all, width = 10, height = 9, bg = "white")
+```
+
+##### Lung function with trajectories
+```{r Lung panel, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+# Panel 3
+panel_lung_trajec <- (p_ppFEV1 | p_ppFEV1_trajec) /
+  (p_ppFEV1_fem | p_ppFEV1_mal) / 
+  (p_ppFEV1_adu | p_ppFEV1_ped) +
+  plot_layout(guides = "collect") & theme(legend.position = "bottom")
+
+panel_lung_trajec <- panel_lung_trajec + plot_annotation(tag_levels = "A")
+
+ggsave(here("results","lung_trajec_panel.svg"), panel_lung_trajec, width = 8, height = 11, bg = "white")
+```
+
+##### Transaminases
+```{r Trans panel, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+# Panel 3
+panel_trans <- (p_ALT | p_AST  | p_GGT) +
+  plot_layout(guides = "collect") & theme(legend.position = "bottom")
+
+panel_trans <- panel_trans + plot_annotation(tag_levels = "A")
+
+ggsave(here("results","trans_panel.svg"), panel_trans, width = 10, height = 5, bg = "white")
+```
+
+#### Transaminases with Elastase and calpro
+```{r Transas Elas and Calpro panel, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+# Panel 3x"3"
+panel_trans_calpro_elas <- (p_ALT | p_AST | p_GGT) /
+  (p_calpro | p_elas | plot_spacer()) +
+  plot_layout(guides = "collect") & theme(legend.position = "bottom")
+
+panel_trans_calpro_elas <- panel_trans_calpro_elas + plot_annotation(tag_levels = "A")
+
+ggsave(here("results","trans_calpro_elas_panel.svg"), panel_trans_calpro_elas, width = 10, height = 7, bg = "white")
+```
+
+#### Transaminases with Elastase and calpro version 2
+```{r Transas Elas and Calpro version 2  panel, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+top_panel <- p_ALT_y | p_AST_y | p_GGT_y
+bottom_panel <- p_calpro | p_elas | plot_spacer()
+
+panel_trans_calpro_elas_final <- top_panel / bottom_panel +
+  plot_layout(
+    guides = "collect",
+    heights = c(1.4, 1)
+  ) &
+  theme(legend.position = "bottom")
+
+#panel_trans_calpro_elas_final <- panel_trans_calpro_elas_final +
+#  plot_annotation(tag_levels = "A")
+
+ggsave(
+  here("results", "trans_calpro_elas_panel_final.svg"),
+  plot = panel_trans_calpro_elas_final, width = 10, height = 8, bg = "white")
+```
+
+##### Elastase and calpro
+```{r Elas and Calpro panel, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+# Panel 2x2
+panel_calpro_elas <- (p_calpro | p_elas) +
+  plot_layout(guides = "collect") & theme(legend.position = "bottom")
+
+panel_calpro_elas <- panel_calpro_elas + plot_annotation(tag_levels = "A")
+
+ggsave(here("results","calpro_elas_panel.svg"), panel_calpro_elas, width = 8, height = 4, bg = "white")
+```
+
+##### BMI and Z-scores
+```{r BMI and Zscores panel, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+# Panel 3x3
+panel_bmi_z <- (p_bmi_wt | p_bmi_ht | p_bmi_bmi) /
+  (p_z_wt | p_z_ht | p_z_bmi) +
+  
+  plot_layout(guides = "collect") & theme(legend.position = "bottom")
+
+panel_bmi_z <- panel_bmi_z + plot_annotation(tag_levels = "A")
+
+ggsave(here("results","bmi_zscores_panel.svg"), panel_bmi_z, width = 10, height = 7, bg = "white")
+
+
+panel_bmi_z_all <- (p_bmi_wt | p_bmi_ht | p_bmi_bmi) /
+  (p_zscores_all) +
+  
+  plot_layout(guides = "collect") & theme(legend.position = "bottom")
+
+panel_bmi_z_all <- panel_bmi_z_all + plot_annotation(tag_levels = "A")
+
+ggsave(here("results","bmi_zscores_all_panel.svg"), panel_bmi_z_all, width = 10, height = 7, bg = "white")
+```
+
+
+

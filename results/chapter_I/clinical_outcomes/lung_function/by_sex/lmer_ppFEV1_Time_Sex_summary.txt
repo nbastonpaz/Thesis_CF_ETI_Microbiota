@@ -1,0 +1,30 @@
+Linear mixed model fit by REML. t-tests use Satterthwaite's method ['lmerModLmerTest']
+Formula: ppFEV1 ~ Time * Sex + (1 | PatientID)
+   Data: df_lung
+
+REML criterion at convergence: 569.4
+
+Scaled residuals: 
+     Min       1Q   Median       3Q      Max 
+-2.12245 -0.34818  0.02177  0.38320  2.31336 
+
+Random effects:
+ Groups    Name        Variance Std.Dev.
+ PatientID (Intercept) 534.28   23.114  
+ Residual               66.55    8.158  
+Number of obs: 70, groups:  PatientID, 35
+
+Fixed effects:
+                Estimate Std. Error      df t value Pr(>|t|)    
+(Intercept)      66.6250     6.1280 36.8565  10.872  4.7e-13 ***
+TimeT12          11.1875     2.8843 33.0000   3.879 0.000474 ***
+Sexmale           6.7434     8.3171 36.8565   0.811 0.422692    
+TimeT12:Sexmale   0.1283     3.9147 33.0000   0.033 0.974054    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+            (Intr) TimT12 Sexmal
+TimeT12     -0.235              
+Sexmale     -0.737  0.173       
+TimT12:Sxml  0.173 -0.737 -0.235

@@ -1,0 +1,4 @@
+group,n,shapiro_p,test,stat,p_value,mean_delta,median_delta
+only_Pae (ALL),6,0.0011490911073247414,Wilcoxon signed-rank,6,0.40167816646977295,12606047.5,-816995
+only_Pae (UP),1,NA,insufficient pairs (<3),NA,NA,97680000,97680000
+only_Pae (DOWN),5,0.004260626958632651,Wilcoxon signed-rank,0,0.059058229090536735,-4408743,-1609990

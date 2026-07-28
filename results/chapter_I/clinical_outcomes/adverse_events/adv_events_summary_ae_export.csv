@@ -1,0 +1,19 @@
+AgeGroup,Which_AE,Which_AE_label,n_patients_ae,n_total_ae,percent_ae
+pediatric,generalized_rash,Generalized Rash,4,14,28.571428571428573
+adult,generalized_rash,Generalized Rash,3,21,14.285714285714286
+pediatric,abdominal_pain,Abdominal Pain,1,14,7.142857142857143
+adult,abdominal_pain,Abdominal Pain,2,21,9.523809523809524
+pediatric,diarrhea,Diarrhea,1,14,7.142857142857143
+adult,diarrhea,Diarrhea,2,21,9.523809523809524
+pediatric,lower_limb_edema,Lower Limb Edema,0,14,0
+adult,lower_limb_edema,Lower Limb Edema,2,21,9.523809523809524
+pediatric,dry_eyes,Dry Eyes,0,14,0
+adult,dry_eyes,Dry Eyes,1,21,4.761904761904762
+pediatric,elevated_transaminases,Elevated Transaminases,0,14,0
+adult,elevated_transaminases,Elevated Transaminases,1,21,4.761904761904762
+pediatric,gastritis,Gastritis,0,14,0
+adult,gastritis,Gastritis,1,21,4.761904761904762
+pediatric,headache,Headache,0,14,0
+adult,headache,Headache,1,21,4.761904761904762
+pediatric,otalgia_ear_fullness,Otalgia Ear Fullness,0,14,0
+adult,otalgia_ear_fullness,Otalgia Ear Fullness,1,21,4.761904761904762

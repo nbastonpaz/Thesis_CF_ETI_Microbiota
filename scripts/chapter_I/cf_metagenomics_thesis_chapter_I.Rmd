@@ -1,0 +1,3551 @@
+---
+title: "cf_metagenomics_thesis_chapter_I"
+author: "Natalia Bastón-Paz"
+date: "2026"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+# Original: knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{#r Clean environments, include=FALSE}
+rm(list = ls())
+```
+
+## General introduction
+
+Cystic Fibrosis (CF) is a genetic disorder that primarily affects the respiratory, digestive, and reproductive systems. It is caused by mutations in the CFTR (Cystic Fibrosis Transmembrane Conductance Regulator) gene, which encodes a protein responsible for regulating chloride and bicarbonate transport across epithelial cell membranes. These mutations result in abnormal ion transport, leading to thick, sticky mucus accumulation in the lungs, pancreas, and other organs. CF is one of the most common autosomal recessive disorders in Caucasian populations, with an incidence of approximately 1 in 2,500–3,500 live births. People with CF (pwCF) typically present with chronic lung infections due to impaired mucociliary clearance, ancreatic insufficiency, leading to malabsorption and nutritional deficiencies, liver disease, diabetes, and other systemic complications. The CF lung microbiome is characterized by chronic colonization and infection with pathogens such as *Pseudomonas aeruginosa*, and *Staphylococcus aureus*, among others. These infections contribute to progressive lung damage, inflammation, and exacerbations. Significant advances in CF management, including CFTR modulators, improved airway clearance techniques, and antibiotic therapies, have increased life expectancy and quality of life for pwCF. The triple therapy elexacaftor-tezacaftor-ivacaftor (ETI) was approved in the USA in 2019, but its effects over the microbiota remains unclear.
+
+*Questions to be answered:*
+
+-   *Have the gut and lung microbiota changed after one year of treatment with ETI?*
+
+## Libraries
+
+```{r Libraries, message=FALSE, warning=FALSE}
+library(mia)     
+library(miaViz)
+library(tidyverse)         
+library(castor)
+library(readr)
+library(ggpubr)
+library(utils)
+library(ggplot2)          
+library(patchwork)
+library(plotrix)
+library(ComplexUpset)
+library(vegan)
+library(stats)
+library(rstatix)
+library(data.table)
+library(Maaslin2)
+library(MicrobiomeStat)
+library(ANCOMBC)
+library(ALDEx2)
+library(MADAV)
+library(SummarizedExperiment)
+library(tibble)
+library(TreeSummarizedExperiment)
+library(stringr)
+library(here)
+library(svglite)
+library(aplot)
+library(patchwork)
+library(tidyr)
+library(ggsci)
+library(purrr)
+library(openxlsx)
+library(broom)
+library(ggthemes)
+library(RColorBrewer)
+library(gghalves)
+library(scales)
+library(ggdist)
+library(forcats)
+library(dplyr)
+
+# if (!requireNamespace("BiocManager", quietly = TRUE))
+#     install.packages("BiocManager")
+
+# BiocManager::install("package_name")
+```
+
+## Load the data
+
+#### Optional: If we want to know which samples have 0 counts:
+
+```{r Samples with 0 counts, echo=TRUE, results='show'}
+df <- read.table(here("data", "cf_metaphlan_counts.txt"),
+                 header = TRUE, sep = "\t", 
+                 row.names = 1, stringsAsFactors = FALSE)
+
+print(names(which(colSums(df) == 100000000)))
+```
+
+#### Sample Metadata file
+
+Load in sample metadata file --\> colData_Metaphlan object:
+
+```{r Load in Sample Metadata file}
+Metaphlan_data_cf <- read_delim(here("data", "cf_metadata_profiles.txt"), 
+                                "\t", 
+                                escape_double = FALSE, 
+                                trim_ws = TRUE)
+# Fix column names
+colnames(Metaphlan_data_cf)[1] <- 'SampleID'
+```
+
+Remove the samples that have 0 counts and others of interest:
+
+```{r Remove samples of choice}
+samples_to_remove <- c("A12E0", "A12E12", "A20E0", "A20E12", "A26E0", "A26E12", "P16E0", "P16E12", "P21E0", "P21E12", "P3H0", "P3H12")  # Replace with actual SampleIDs
+Metaphlan_data_cf <- Metaphlan_data_cf[!Metaphlan_data_cf$SampleID %in% samples_to_remove, ]
+# view(Metaphlan_data_cf)
+```
+
+Convert the column SampleID into row names:
+
+```{r Convert col SampleID into row names}
+Metaphlan_data_cf <- Metaphlan_data_cf %>%
+  column_to_rownames(var = 'SampleID') %>%                                          
+  data.frame()
+# view(Metaphlan_data_cf)
+```
+
+#### Abundance file
+
+Load in abundance file (change file name and FeatureID_column) --> assay_Metaphlan object:
+
+```{r Load in abundance file}
+M_assay_cf <- read_delim(here("data", "cf_metaphlan_counts.txt"), "\t", escape_double = FALSE, trim_ws = TRUE)
+colnames(M_assay_cf)[1] <- 'FeatureID'
+```
+
+Get the taxonomy data from the FeatureID column of the assay_Metaphlan object --> rowData_Metaphlan object:
+
+```{r Get the taxonomy data from FeatureID}
+M_rowData_cf <- M_assay_cf[,'FeatureID'] %>% 
+  mutate(split = FeatureID) %>%  
+  separate(col = split, into = c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species",'Type'), sep = "\\|.__") %>%
+  mutate(Kingdom = str_remove_all(Kingdom,'^k__')) %>%  
+  column_to_rownames(var = "FeatureID") %>%        
+  data.frame()
+```
+
+Filter the assay_Metaphlan object (M_assay_cf) using the rowData_Metaphlan (M_rowData_cf) & colData_Metaphlan (Metaphlan_data_cf) objects and create the TSE:
+
+```{r Filter and create the TSE}
+M_assay_cf <- M_assay_cf[,c('FeatureID',rownames(Metaphlan_data_cf))] %>% # The assay data columns are reorder to match the colData
+  column_to_rownames(var = 'FeatureID') %>%        
+  as.matrix()
+M_TSE_cf_unfiltered <- TreeSummarizedExperiment(assays = M_assay_cf, # To create TreeSummarizedExperiment object                                   
+                                                    rowData = M_rowData_cf,
+                                                     colData = Metaphlan_data_cf)
+assayNames(M_TSE_cf_unfiltered) <-'counts'
+```
+
+Rename NA's in 'UNCLASSIFIED' row of rowData(TSE_Metaphlan) --\> Replaces NA values (and any other values) with "UNCLASSIFIED" in the UNCLASSIFIED row only:
+
+```{r Rename UNCLASSIFIED}
+rowData(M_TSE_cf_unfiltered)[rowData(M_TSE_cf_unfiltered)$Kingdom == 'UNCLASSIFIED',1:ncol(rowData(M_TSE_cf_unfiltered))] <- 'UNCLASSIFIED' 
+```
+
+Filter to 'Species' level and retain 'UNCLASSIFIED':
+
+```{r Filter to Species and retain UNCLASSIFIED}
+M_TSE_cf_unfiltered <- M_TSE_cf_unfiltered[
+  (!is.na(rowData(M_TSE_cf_unfiltered)$Species) & is.na(rowData(M_TSE_cf_unfiltered)$Type)) | 
+    (rowData(M_TSE_cf_unfiltered)$Kingdom == 'UNCLASSIFIED'),
+]
+```
+
+Optional filtering steps: Remove all non-bacteria taxa (check first whether Bacteria are in the 'Kingdom' or 'Domain' class). Here we also keep unclassified Bacteria and UNCLASSIFIED
+
+```{r Remove non-bacteria taxa}
+M_TSE_cf_bacteria <- M_TSE_cf_unfiltered[rowData(M_TSE_cf_unfiltered)$Kingdom %in% c('UNCLASSIFIED','Bacteria'), ]
+```
+
+Remove all singleton features:
+
+```{r Remove singletons}
+M_TSE_cf_singletons <- M_TSE_cf_bacteria[apply(assay(M_TSE_cf_bacteria), 1, function(x) { sum(x > 0) > 1 }), ]
+```
+
+Remove 'UNCLASSIFIED' feature:
+
+```{r Remove UNCLASSIFIED}
+M_TSE_cf_UN <- M_TSE_cf_singletons
+M_TSE_cf_no_UN <- M_TSE_cf_singletons[rownames(M_TSE_cf_singletons) != 'UNCLASSIFIED',]
+```
+
+*REMEMBER:*
+
+-   *For Relative Abundance use: M_TSE_cf_UN*
+
+-   *For alpha and beta diversity, for differential abundance and for the relative abundance of the differential abundance analysis use: M_TSE_cf_UN*
+
+## Create subsets with different variables
+
+#### Subsets by Time
+
+```{r Subset by Time}
+subset_T0 <- M_TSE_cf_UN[, M_TSE_cf_UN$Time %in% 'T0']
+subset_T12 <- M_TSE_cf_UN[, M_TSE_cf_UN$Time %in% 'T12']
+subset_T0_no_UN <- M_TSE_cf_no_UN[, M_TSE_cf_no_UN$Time %in% 'T0']
+subset_T12_no_UN <- M_TSE_cf_no_UN[, M_TSE_cf_no_UN$Time %in% 'T12']
+```
+
+#### Subsets by SampleType
+
+```{r Subset by SampleType}
+subset_feces <- M_TSE_cf_UN[, M_TSE_cf_UN$SampleType %in% 'feces']
+subset_sputum <- M_TSE_cf_UN[, M_TSE_cf_UN$SampleType %in% 'sputum']
+subset_feces_no_UN <- M_TSE_cf_no_UN[, M_TSE_cf_no_UN$SampleType %in% 'feces']
+subset_sputum_no_UN <- M_TSE_cf_no_UN[, M_TSE_cf_no_UN$SampleType %in% 'sputum']
+```
+
+# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
+# RELATIVE ABUNDANCE (RA)
+# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
+
+```{r RA CSV at T0 and T12, echo=TRUE, fig.show='hide', message=FALSE, warning=FALSE}
+# Phylum
+rank_level <- "Phylum"
+
+RA_agg <- mia::transformAssay(M_TSE_cf_UN, method = "relabundance") %>%
+  mia::agglomerateByRank(rank_level, onRankOnly = TRUE, na.rm = TRUE)
+
+ra_mat <- SummarizedExperiment::assay(RA_agg, "relabundance")
+
+ra_wide <- as.data.frame(ra_mat) %>%
+  tibble::rownames_to_column(var = "FeatureID")
+
+readr::write_csv(ra_wide, here::here("results", paste0("relabundance_", rank_level, "_wide.csv")))
+
+# Species
+rank_level <- "Species"  # "Genus", etc.
+
+RA_agg <- mia::transformAssay(M_TSE_cf_UN, method = "relabundance") %>%
+  mia::agglomerateByRank(rank_level, onRankOnly = TRUE, na.rm = TRUE)
+
+ra_mat <- SummarizedExperiment::assay(RA_agg, "relabundance")
+
+ra_wide <- as.data.frame(ra_mat) %>%
+  tibble::rownames_to_column(var = "FeatureID")
+
+readr::write_csv(ra_wide, here::here("results", paste0("relabundance_", rank_level, "_wide.csv")))
+```
+
+#------------------
+## SAMPLE TYPE
+#------------------
+
+#### Feces at T0 and T12
+
+##### Phylum
+
+```{r RA of Feces at T0 and T12 phylum, echo=TRUE, fig.show='show', message=FALSE, warning=FALSE}
+RA_bar_cf_fc_ph <- RA_bar(tse = subset_feces,
+                    var = c('Time'),
+                    var_levels = c('T0', 'T12'),
+                    level = 'Phylum',
+                    top_features = 5,
+                    feature_order = 'abund',
+                    sample_order = 'SampleType',
+                    sample_order_levels = NULL,
+                    feature_bar = NULL,
+                    feature_bar_levels = 'SampleType',
+                    group_average = FALSE,
+                    plot_title = 'Relative Abundance of Feces',
+                    cutoff_features = 'None',
+                    show_counts = FALSE)
+# Save as SVG
+ggsave(filename = here("results", "RA_bar_cf_fc_phylum.svg"), plot = RA_bar_cf_fc_ph$RA_bar_plot, width = 12, height = 8, dpi = 300, device = "svg") # Use RA_bar_plot when feature_bar = NULL
+```
+
+##### Species
+
+```{r RA of Feces at T0 and T12 species, echo=TRUE, fig.show='show', message=FALSE, warning=FALSE}
+RA_bar_cf_fc_sps <- RA_bar(tse = subset_feces,
+                    var = c('Time'),
+                    var_levels = c('T0', 'T12'),
+                    level = 'Species',
+                    top_features = 10,
+                    feature_order = 'abund',
+                    sample_order = 'SampleType',
+                    sample_order_levels = NULL,
+                    feature_bar = NULL,
+                    feature_bar_levels = 'SampleType',
+                    group_average = FALSE,
+                    plot_title = 'Relative Abundance of Feces',
+                    cutoff_features = 'None',
+                    show_counts = FALSE)
+# Save as SVG
+ggsave(filename = here("results", "RA_bar_cf_fc_species.svg"), plot = RA_bar_cf_fc_sps$RA_bar_plot, width = 12, height = 8, dpi = 300, device = "svg") # Use RA_bar_plot when feature_bar = NULL
+```
+
+#### Sputum at T0 and T12
+
+##### Phylum
+
+```{r RA of Sputum at T0 and T12 phylum, echo=TRUE, fig.show='show', message=FALSE, warning=FALSE}
+RA_bar_cf_sp_ph <- RA_bar(tse = subset_sputum,
+                    var = c('Time'),
+                    var_levels = c('T0', 'T12'),
+                    level = 'Phylum',
+                    top_features = 5,
+                    feature_order = 'abund',
+                    sample_order = 'SampleType',
+                    sample_order_levels = NULL,
+                    feature_bar = NULL,
+                    feature_bar_levels = 'SampleType',
+                    group_average = FALSE,
+                    plot_title = 'Relative Abundance of Sputum',
+                    cutoff_features = 'None',
+                    show_counts = FALSE)
+# Save as SVG
+ggsave(filename = here("results", "RA_bar_cf_sp_phylum.svg"), plot = RA_bar_cf_sp_ph$RA_bar_plot, width = 12, height = 8, dpi = 300, device = "svg") # Use RA_bar_plot when feature_bar = NULL
+```
+
+##### Species
+
+```{r RA of Sputum at T0 and T12 species, echo=TRUE, fig.show='show', message=FALSE, warning=FALSE}
+RA_bar_cf_sp_sps <- RA_bar(tse = subset_sputum,
+                    var = c('Time'),
+                    var_levels = c('T0', 'T12'),
+                    level = 'Species',
+                    top_features = 10,
+                    feature_order = 'abund',
+                    sample_order = 'SampleType',
+                    sample_order_levels = NULL,
+                    feature_bar = NULL,
+                    feature_bar_levels = 'SampleType',
+                    group_average = FALSE,
+                    plot_title = 'Relative Abundance of Sputum',
+                    cutoff_features = 'None',
+                    show_counts = FALSE)
+# Save as SVG
+ggsave(filename = here("results", "RA_bar_cf_sp_species.svg"), plot = RA_bar_cf_sp_sps$RA_bar_plot, width = 12, height = 8, dpi = 300, device = "svg") # Use RA_bar_plot when feature_bar = NULL
+```
+
+#-------------------
+### FECES AND SPUTUM
+#-------------------
+
+# Function to calculate relative abundance
+```{r Function to calculate RA, echo=TRUE, fig.show='hide', message=FALSE, warning=FALSE}
+# ------------------------------------------------------------------------------
+# RELATIVE ABUNDANCE TABLES BY SAMPLE TYPE AND TAXONOMIC LEVEL
+# Phylum in feces, Phylum in sputum, Species in feces, Species in sputum
+# ------------------------------------------------------------------------------
+
+calc_relative_abundance <- function(tse, rank_level, output_prefix, group_vars = c("Time")) {
+  
+  # 0. Standardize phylum names before relative abundance calculation
+  # This is only applied when calculating relative abundance at Phylum level
+  if (rank_level == "Phylum") {
+    
+    phylum_map <- c(
+      "Firmicutes"      = "Bacillota",
+      "Bacteroidetes"   = "Bacteroidota",
+      "Proteobacteria"  = "Pseudomonadota",
+      "Actinobacteria"  = "Actinomycetota",
+      "Verrucomicrobia" = "Verrucomicrobiota",
+      "Fusobacteria"    = "Fusobacteriota",
+      "Spirochaetes"    = "Spirochaetota",
+      "Tenericutes"     = "Mycoplasmatota"
+    )
+    
+    phylum <- as.character(SummarizedExperiment::rowData(tse)$Phylum)
+    
+    phylum[phylum %in% names(phylum_map)] <- phylum_map[
+      phylum[phylum %in% names(phylum_map)]
+    ]
+    
+    SummarizedExperiment::rowData(tse)$Phylum <- phylum
+  }
+  
+  # 1. Calculate relative abundance per sample and agglomerate at selected rank
+  RA_agg <- mia::transformAssay(tse, method = "relabundance") %>%
+    mia::agglomerateByRank(rank_level, onRankOnly = TRUE, na.rm = TRUE)
+  
+  # 2. Extract relative abundance matrix and convert to percentage
+  ra_mat <- SummarizedExperiment::assay(RA_agg, "relabundance") * 100
+  
+  # 3. Taxonomy table
+  tax_table <- as.data.frame(SummarizedExperiment::rowData(RA_agg)) %>%
+    tibble::rownames_to_column(var = "FeatureID") %>%
+    dplyr::mutate(
+      Rank = rank_level,
+      Taxon = .data[[rank_level]]
+    ) %>%
+    dplyr::select(FeatureID, Rank, Taxon)
+  
+  # 4. Metadata table
+  meta_table <- as.data.frame(SummarizedExperiment::colData(RA_agg)) %>%
+    tibble::rownames_to_column(var = "SampleID")
+  
+  # 5. Wide table: taxa as rows, samples as columns
+  ra_wide <- as.data.frame(ra_mat) %>%
+    tibble::rownames_to_column(var = "FeatureID") %>%
+    dplyr::left_join(tax_table, by = "FeatureID") %>%
+    dplyr::select(FeatureID, Rank, Taxon, dplyr::everything())
+  
+  # 6. Long table: one row per taxon and sample
+  ra_long <- as.data.frame(ra_mat) %>%
+    tibble::rownames_to_column(var = "FeatureID") %>%
+    tidyr::pivot_longer(
+      cols = -FeatureID,
+      names_to = "SampleID",
+      values_to = "Relative_abundance_percent"
+    ) %>%
+    dplyr::left_join(tax_table, by = "FeatureID") %>%
+    dplyr::left_join(meta_table, by = "SampleID") %>%
+    dplyr::select(
+      SampleID,
+      SampleType,
+      dplyr::all_of(group_vars),
+      Rank,
+      Taxon,
+      Relative_abundance_percent,
+      dplyr::everything()
+    )
+  
+  # 7. Summary table by group, usually T0 and T12
+  ra_summary <- ra_long %>%
+    dplyr::group_by(
+      dplyr::across(dplyr::all_of(c("SampleType", group_vars, "Rank", "Taxon")))
+    ) %>%
+    dplyr::summarise(
+      n_samples = dplyr::n(),
+      mean_RA_percent = mean(Relative_abundance_percent, na.rm = TRUE),
+      sd_RA_percent = sd(Relative_abundance_percent, na.rm = TRUE),
+      median_RA_percent = median(Relative_abundance_percent, na.rm = TRUE),
+      Q1_RA_percent = quantile(Relative_abundance_percent, 0.25, na.rm = TRUE),
+      Q3_RA_percent = quantile(Relative_abundance_percent, 0.75, na.rm = TRUE),
+      min_RA_percent = min(Relative_abundance_percent, na.rm = TRUE),
+      max_RA_percent = max(Relative_abundance_percent, na.rm = TRUE),
+      .groups = "drop"
+    ) %>%
+    dplyr::arrange(SampleType, dplyr::across(dplyr::all_of(group_vars)), desc(mean_RA_percent))
+  
+  # 8. Export CSV files
+  readr::write_csv(
+    ra_wide,
+    here::here("results", paste0(output_prefix, "_wide_by_sample.csv"))
+  )
+  
+  readr::write_csv(
+    ra_long,
+    here::here("results", paste0(output_prefix, "_long_by_sample.csv"))
+  )
+  
+  readr::write_csv(
+    ra_summary,
+    here::here("results", paste0(output_prefix, "_summary_by_", paste(group_vars, collapse = "_"), ".csv"))
+  )
+  
+  # 9. Return objects to R environment
+  return(list(
+    RA_agg = RA_agg,
+    wide = ra_wide,
+    long = ra_long,
+    summary = ra_summary
+  ))
+}
+```
+
+## Run to calculate RA
+```{r Run function to calculate RA, echo=TRUE, fig.show='hide', message=FALSE, warning=FALSE}
+# Phylum in feces
+RA_phylum_feces <- calc_relative_abundance(
+  tse = subset_feces,
+  rank_level = "Phylum",
+  output_prefix = "relabundance_phylum_feces"
+)
+
+# Phylum in sputum
+RA_phylum_sputum <- calc_relative_abundance(
+  tse = subset_sputum,
+  rank_level = "Phylum",
+  output_prefix = "relabundance_phylum_sputum"
+)
+
+# Species in feces
+RA_species_feces <- calc_relative_abundance(
+  tse = subset_feces,
+  rank_level = "Species",
+  output_prefix = "relabundance_species_feces"
+)
+
+# Species in sputum
+RA_species_sputum <- calc_relative_abundance(
+  tse = subset_sputum,
+  rank_level = "Species",
+  output_prefix = "relabundance_species_sputum"
+)
+```
+
+### Function to check distribution
+```{r Function to check distribution, echo=TRUE, fig.show='hide', message=FALSE, warning=FALSE}
+# ------------------------------------------------------------------------------
+# CHECK DISTRIBUTION OF RELATIVE ABUNDANCE VALUES
+# Safe version: avoids Shapiro-Wilk errors when all values are identical
+# ------------------------------------------------------------------------------
+
+safe_shapiro_p <- function(x) {
+  
+  x <- x[!is.na(x)]
+  
+  if (length(x) < 3) {
+    return(NA_real_)
+  }
+  
+  if (length(x) > 5000) {
+    return(NA_real_)
+  }
+  
+  if (length(unique(x)) < 3) {
+    return(NA_real_)
+  }
+  
+  return(shapiro.test(x)$p.value)
+}
+
+check_RA_distribution <- function(ra_long) {
+  
+  distribution_table <- ra_long %>%
+    dplyr::group_by(SampleType, Time, Rank, Taxon) %>%
+    dplyr::summarise(
+      n_samples = sum(!is.na(Relative_abundance_percent)),
+      n_nonzero = sum(Relative_abundance_percent > 0, na.rm = TRUE),
+      n_unique_values = length(unique(Relative_abundance_percent[!is.na(Relative_abundance_percent)])),
+      zero_percent = mean(Relative_abundance_percent == 0, na.rm = TRUE) * 100,
+      mean_RA_percent = mean(Relative_abundance_percent, na.rm = TRUE),
+      sd_RA_percent = sd(Relative_abundance_percent, na.rm = TRUE),
+      median_RA_percent = median(Relative_abundance_percent, na.rm = TRUE),
+      Q1_RA_percent = quantile(Relative_abundance_percent, 0.25, na.rm = TRUE),
+      Q3_RA_percent = quantile(Relative_abundance_percent, 0.75, na.rm = TRUE),
+      min_RA_percent = min(Relative_abundance_percent, na.rm = TRUE),
+      max_RA_percent = max(Relative_abundance_percent, na.rm = TRUE),
+      shapiro_p = safe_shapiro_p(Relative_abundance_percent),
+      .groups = "drop"
+    ) %>%
+    dplyr::mutate(
+      distribution = dplyr::case_when(
+        n_unique_values < 3 ~ "Not assessed: identical or nearly identical values",
+        is.na(shapiro_p) ~ "Not assessed",
+        shapiro_p < 0.05 ~ "Non-normal",
+        shapiro_p >= 0.05 ~ "Compatible with normality"
+      ),
+      recommended_summary = dplyr::case_when(
+        n_unique_values < 3 ~ "Median [IQR]",
+        zero_percent > 20 ~ "Median [IQR]",
+        is.na(shapiro_p) ~ "Median [IQR]",
+        shapiro_p < 0.05 ~ "Median [IQR]",
+        shapiro_p >= 0.05 ~ "Mean +/- SD"
+      )
+    ) %>%
+    dplyr::arrange(SampleType, Time, Rank, desc(mean_RA_percent))
+  
+  return(distribution_table)
+}
+```
+
+### Run distribution
+```{r Run distribution, echo=TRUE, fig.show='hide', message=FALSE, warning=FALSE}
+dist_phylum_feces <- check_RA_distribution(RA_phylum_feces$long)
+dist_phylum_sputum <- check_RA_distribution(RA_phylum_sputum$long)
+
+dist_species_feces <- check_RA_distribution(RA_species_feces$long)
+dist_species_sputum <- check_RA_distribution(RA_species_sputum$long)
+```
+
+### Export distribution
+```{r Export distribution, echo=TRUE, fig.show='hide', message=FALSE, warning=FALSE}
+readr::write_csv(dist_phylum_feces, here::here("results", "distribution_phylum_feces.csv"))
+readr::write_csv(dist_phylum_sputum, here::here("results", "distribution_phylum_sputum.csv"))
+readr::write_csv(dist_species_feces, here::here("results", "distribution_species_feces.csv"))
+readr::write_csv(dist_species_sputum, here::here("results", "distribution_species_sputum.csv"))
+```
+
+## Patient by patient FECES
+
+### Taxonomy harmonization
+```{r Taxonomy harmonization, echo=TRUE, fig.show='hide', message=FALSE, warning=FALSE}
+# ------------------------------------------------------------------------------
+# TAXONOMIC NAME STANDARDIZATION
+# ------------------------------------------------------------------------------
+
+standardize_taxon_names_in_ra_long <- function(ra_long) {
+  
+  phylum_map <- c(
+    "Firmicutes"      = "Bacillota",
+    "Bacteroidetes"   = "Bacteroidota",
+    "Proteobacteria"  = "Pseudomonadota",
+    "Actinobacteria"  = "Actinomycetota",
+    "Verrucomicrobia" = "Verrucomicrobiota",
+    "Fusobacteria"    = "Fusobacteriota",
+    "Spirochaetes"    = "Spirochaetota",
+    "Tenericutes"     = "Mycoplasmatota"
+  )
+  
+  ra_long_std <- ra_long %>%
+    dplyr::mutate(
+      Taxon = dplyr::case_when(
+        Rank == "Phylum" & Taxon %in% names(phylum_map) ~ phylum_map[Taxon],
+        TRUE ~ Taxon
+      )
+    ) %>%
+    dplyr::group_by(
+      SampleID,
+      SampleType,
+      Time,
+      Rank,
+      Taxon,
+      dplyr::across(dplyr::any_of(c("PatientID", "AgeGroup", "Sex")))
+    ) %>%
+    dplyr::summarise(
+      Relative_abundance_percent = sum(Relative_abundance_percent, na.rm = TRUE),
+      .groups = "drop"
+    )
+  
+  return(ra_long_std)
+}
+```
+
+### Functions to paired patient-level RA changes
+```{r Function to paired patient RA changes, echo=TRUE, fig.show='hide', message=FALSE, warning=FALSE}
+# ------------------------------------------------------------------------------
+# PAIRED PATIENT-LEVEL RELATIVE ABUNDANCE CHANGES
+# For taxa shown in the fecal relative abundance figure
+# ------------------------------------------------------------------------------
+
+# Taxa shown in Figure 8A
+feces_phyla_fig8 <- c(
+  "Bacillota",
+  "Actinomycetota",
+  "Verrucomicrobiota",
+  "Pseudomonadota",
+  "Bacteroidota"
+)
+
+# Taxa shown in Figure 8B
+feces_species_fig8 <- c(
+  "Bifidobacterium_longum",
+  "Ruminococcus_bromii",
+  "Blautia_wexlerae",
+  "Akkermansia_muciniphila",
+  "Eubacterium_rectale",
+  "Ruminococcus_gnavus",
+  "Blautia_massiliensis",
+  "Dialister_invisus",
+  "Anaerostipes_hadrus"
+)
+
+# ------------------------------------------------------------------------------
+# Function 1: create patient-level paired table
+# ------------------------------------------------------------------------------
+
+get_paired_RA_changes <- function(ra_long,
+                                  taxa_keep,
+                                  detection_threshold = 0,
+                                  change_threshold = 0) {
+  
+  # Standardize phylum names and merge duplicated taxa after renaming
+  ra_long <- standardize_taxon_names_in_ra_long(ra_long)
+  
+  # Also standardize taxa_keep, in case old phylum names are used
+  phylum_map <- c(
+    "Firmicutes"      = "Bacillota",
+    "Bacteroidetes"   = "Bacteroidota",
+    "Proteobacteria"  = "Pseudomonadota",
+    "Actinobacteria"  = "Actinomycetota",
+    "Verrucomicrobia" = "Verrucomicrobiota",
+    "Fusobacteria"    = "Fusobacteriota",
+    "Spirochaetes"    = "Spirochaetota",
+    "Tenericutes"     = "Mycoplasmatota"
+  )
+  
+  taxa_keep[taxa_keep %in% names(phylum_map)] <- phylum_map[
+    taxa_keep[taxa_keep %in% names(phylum_map)]
+  ]
+  
+  df <- ra_long %>%
+    dplyr::filter(
+      Taxon %in% taxa_keep,
+      Time %in% c("T0", "T12"),
+      !Taxon %in% c("UNCLASSIFIED", "Unclassified", "Other")
+    )
+  
+  # If PatientID is not present, derive it from SampleID
+  if (!"PatientID" %in% colnames(df)) {
+    df <- df %>%
+      dplyr::mutate(
+        PatientID = stringr::str_remove(SampleID, "(H|E)(0|12)$")
+      )
+  }
+  
+  paired_df <- df %>%
+    dplyr::select(
+      PatientID,
+      SampleID,
+      SampleType,
+      Time,
+      Rank,
+      Taxon,
+      Relative_abundance_percent
+    ) %>%
+    dplyr::group_by(PatientID, SampleType, Rank, Taxon, Time) %>%
+    dplyr::summarise(
+      SampleID = paste(unique(SampleID), collapse = ";"),
+      RA_percent = sum(Relative_abundance_percent, na.rm = TRUE),
+      .groups = "drop"
+    ) %>%
+    tidyr::pivot_wider(
+      names_from = Time,
+      values_from = c(SampleID, RA_percent),
+      names_sep = "_"
+    ) %>%
+    dplyr::filter(
+      !is.na(RA_percent_T0),
+      !is.na(RA_percent_T12)
+    ) %>%
+    dplyr::mutate(
+      detected_T0 = RA_percent_T0 > detection_threshold,
+      detected_T12 = RA_percent_T12 > detection_threshold,
+      delta_T12_minus_T0 = RA_percent_T12 - RA_percent_T0,
+      
+      detection_status = dplyr::case_when(
+        detected_T0 & detected_T12 ~ "detected_T0_and_T12",
+        detected_T0 & !detected_T12 ~ "detected_T0_only",
+        !detected_T0 & detected_T12 ~ "detected_T12_only",
+        !detected_T0 & !detected_T12 ~ "not_detected"
+      ),
+      
+      change_direction = dplyr::case_when(
+        delta_T12_minus_T0 > change_threshold ~ "increase",
+        delta_T12_minus_T0 < -change_threshold ~ "decrease",
+        TRUE ~ "stable"
+      )
+    ) %>%
+    dplyr::arrange(Taxon, PatientID)
+  
+  return(paired_df)
+}
+
+# ------------------------------------------------------------------------------
+# Function 2: summarise paired changes by taxon
+# ------------------------------------------------------------------------------
+
+summarise_paired_RA_changes <- function(paired_df) {
+  
+  summary_df <- paired_df %>%
+    dplyr::group_by(SampleType, Rank, Taxon) %>%
+    dplyr::summarise(
+      n_paired = dplyr::n(),
+      
+      detected_T0_n = sum(detected_T0, na.rm = TRUE),
+      detected_T12_n = sum(detected_T12, na.rm = TRUE),
+      
+      detected_T0_percent = detected_T0_n / n_paired * 100,
+      detected_T12_percent = detected_T12_n / n_paired * 100,
+      
+      detected_T0_only_n = sum(detection_status == "detected_T0_only", na.rm = TRUE),
+      detected_T12_only_n = sum(detection_status == "detected_T12_only", na.rm = TRUE),
+      detected_both_n = sum(detection_status == "detected_T0_and_T12", na.rm = TRUE),
+      not_detected_n = sum(detection_status == "not_detected", na.rm = TRUE),
+      
+      increased_n = sum(change_direction == "increase", na.rm = TRUE),
+      decreased_n = sum(change_direction == "decrease", na.rm = TRUE),
+      stable_n = sum(change_direction == "stable", na.rm = TRUE),
+      
+      median_T0_all = median(RA_percent_T0, na.rm = TRUE),
+      Q1_T0_all = quantile(RA_percent_T0, 0.25, na.rm = TRUE),
+      Q3_T0_all = quantile(RA_percent_T0, 0.75, na.rm = TRUE),
+      
+      median_T12_all = median(RA_percent_T12, na.rm = TRUE),
+      Q1_T12_all = quantile(RA_percent_T12, 0.25, na.rm = TRUE),
+      Q3_T12_all = quantile(RA_percent_T12, 0.75, na.rm = TRUE),
+      
+      median_delta_all = median(delta_T12_minus_T0, na.rm = TRUE),
+      Q1_delta_all = quantile(delta_T12_minus_T0, 0.25, na.rm = TRUE),
+      Q3_delta_all = quantile(delta_T12_minus_T0, 0.75, na.rm = TRUE),
+      
+      median_T0_among_T0_detected = if (sum(detected_T0, na.rm = TRUE) > 0) {
+        median(RA_percent_T0[detected_T0], na.rm = TRUE)
+      } else {
+        NA_real_
+      },
+      
+      median_T12_among_T0_detected = if (sum(detected_T0, na.rm = TRUE) > 0) {
+        median(RA_percent_T12[detected_T0], na.rm = TRUE)
+      } else {
+        NA_real_
+      },
+      
+      median_delta_among_T0_detected = if (sum(detected_T0, na.rm = TRUE) > 0) {
+        median(delta_T12_minus_T0[detected_T0], na.rm = TRUE)
+      } else {
+        NA_real_
+      },
+      
+      patients_detected_T0_only = paste(PatientID[detection_status == "detected_T0_only"], collapse = "; "),
+      patients_detected_T12_only = paste(PatientID[detection_status == "detected_T12_only"], collapse = "; "),
+      patients_with_decrease = paste(PatientID[change_direction == "decrease"], collapse = "; "),
+      patients_with_increase = paste(PatientID[change_direction == "increase"], collapse = "; "),
+      
+      .groups = "drop"
+    ) %>%
+    dplyr::arrange(Rank, desc(detected_T0_n), desc(median_T0_all))
+  
+  return(summary_df)
+}
+
+# ------------------------------------------------------------------------------
+# Function 3: extract the individual samples with highest RA per taxon and timepoint
+# ------------------------------------------------------------------------------
+
+get_top_RA_samples <- function(ra_long,
+                               taxa_keep,
+                               n_top = 5,
+                               detection_threshold = 0) {
+  
+  # Standardize phylum names and merge duplicated taxa after renaming
+  ra_long <- standardize_taxon_names_in_ra_long(ra_long)
+  
+  # Also standardize taxa_keep
+  phylum_map <- c(
+    "Firmicutes"      = "Bacillota",
+    "Bacteroidetes"   = "Bacteroidota",
+    "Proteobacteria"  = "Pseudomonadota",
+    "Actinobacteria"  = "Actinomycetota",
+    "Verrucomicrobia" = "Verrucomicrobiota",
+    "Fusobacteria"    = "Fusobacteriota",
+    "Spirochaetes"    = "Spirochaetota",
+    "Tenericutes"     = "Mycoplasmatota"
+  )
+  
+  taxa_keep[taxa_keep %in% names(phylum_map)] <- phylum_map[
+    taxa_keep[taxa_keep %in% names(phylum_map)]
+  ]
+  
+  df <- ra_long %>%
+    dplyr::filter(
+      Taxon %in% taxa_keep,
+      Time %in% c("T0", "T12"),
+      !Taxon %in% c("UNCLASSIFIED", "Unclassified", "Other")
+    )
+  
+  if (!"PatientID" %in% colnames(df)) {
+    df <- df %>%
+      dplyr::mutate(
+        PatientID = stringr::str_remove(SampleID, "(H|E)(0|12)$")
+      )
+  }
+  
+  top_df <- df %>%
+    dplyr::filter(Relative_abundance_percent > detection_threshold) %>%
+    dplyr::group_by(SampleType, Rank, Taxon, Time) %>%
+    dplyr::arrange(desc(Relative_abundance_percent), .by_group = TRUE) %>%
+    dplyr::mutate(rank_within_taxon_time = dplyr::row_number()) %>%
+    dplyr::filter(rank_within_taxon_time <= n_top) %>%
+    dplyr::ungroup() %>%
+    dplyr::select(
+      SampleType,
+      Rank,
+      Taxon,
+      Time,
+      rank_within_taxon_time,
+      PatientID,
+      SampleID,
+      Relative_abundance_percent
+    )
+  
+  return(top_df)
+}
+```
+
+### Run functions
+```{r Run functions, echo=TRUE, fig.show='hide', message=FALSE, warning=FALSE}
+# ------------------------------------------------------------------------------
+# Apply to fecal phyla
+# ------------------------------------------------------------------------------
+
+feces_phylum_patient_changes <- get_paired_RA_changes(
+  ra_long = RA_phylum_feces$long,
+  taxa_keep = feces_phyla_fig8,
+  detection_threshold = 0,
+  change_threshold = 0
+)
+
+feces_phylum_summary_changes <- summarise_paired_RA_changes(
+  feces_phylum_patient_changes
+)
+
+feces_phylum_top_samples <- get_top_RA_samples(
+  ra_long = RA_phylum_feces$long,
+  taxa_keep = feces_phyla_fig8,
+  n_top = 5,
+  detection_threshold = 0
+)
+
+# ------------------------------------------------------------------------------
+# Apply to fecal species
+# ------------------------------------------------------------------------------
+
+feces_species_patient_changes <- get_paired_RA_changes(
+  ra_long = RA_species_feces$long,
+  taxa_keep = feces_species_fig8,
+  detection_threshold = 0,
+  change_threshold = 0
+)
+
+feces_species_summary_changes <- summarise_paired_RA_changes(
+  feces_species_patient_changes
+)
+
+feces_species_top_samples <- get_top_RA_samples(
+  ra_long = RA_species_feces$long,
+  taxa_keep = feces_species_fig8,
+  n_top = 5,
+  detection_threshold = 0
+)
+```
+
+### Export results
+```{r Export results, echo=TRUE, fig.show='hide', message=FALSE, warning=FALSE}
+# ------------------------------------------------------------------------------
+# EXPORT FECAL PATIENT-LEVEL TABLES
+# ------------------------------------------------------------------------------
+# Phylum-level fecal tables
+readr::write_csv(
+  feces_phylum_patient_changes,
+  here::here("results", "feces_phylum_patient_level_T0_T12_changes.csv")
+)
+
+readr::write_csv(
+  feces_phylum_summary_changes,
+  here::here("results", "feces_phylum_summary_T0_T12_changes.csv")
+)
+
+readr::write_csv(
+  feces_phylum_top_samples,
+  here::here("results", "feces_phylum_top_samples_by_taxon_time.csv")
+)
+
+# Species-level fecal tables
+readr::write_csv(
+  feces_species_patient_changes,
+  here::here("results", "feces_species_patient_level_T0_T12_changes.csv")
+)
+
+readr::write_csv(
+  feces_species_summary_changes,
+  here::here("results", "feces_species_summary_T0_T12_changes.csv")
+)
+
+readr::write_csv(
+  feces_species_top_samples,
+  here::here("results", "feces_species_top_samples_by_taxon_time.csv")
+)
+```
+
+## Patient by Patient SPUTUM
+
+### Taxonomy harmonization
+
+```{r Taxonomy harmoniztion, echo=TRUE, fig.show='hide', message=FALSE, warning=FALSE}
+# ------------------------------------------------------------------------------
+# SPUTUM: PATIENT-LEVEL RELATIVE ABUNDANCE CHANGES
+# Figure 15A and Figure 15B
+# ------------------------------------------------------------------------------
+# Phyla shown in Figure 15A
+sputum_phyla_fig15 <- c(
+  "Actinomycetota",
+  "Bacillota",
+  "Bacteroidota",
+  "Pseudomonadota",
+  "Verrucomicrobiota"
+)
+
+# Species shown in Figure 15B
+sputum_species_fig15 <- c(
+  "Rothia_mucilaginosa",
+  "Streptococcus_mitis",
+  "Porphyromonas_bobii",
+  "Pseudomonas_aeruginosa",
+  "Staphylococcus_aureus",
+  "Moraxella_catarrhalis",
+  "Achromobacter_xylosoxidans",
+  "Stenotrophomonas_maltophilia",
+  "Burkholderia_contaminans"
+)
+```
+
+### Run functions
+```{r Run functions, echo=TRUE, fig.show='hide', message=FALSE, warning=FALSE}
+# ------------------------------------------------------------------------------
+# Paired patient-level changes: phylum level
+# ------------------------------------------------------------------------------
+
+sputum_phylum_patient_changes <- get_paired_RA_changes(
+  ra_long = RA_phylum_sputum$long,
+  taxa_keep = sputum_phyla_fig15,
+  detection_threshold = 0,
+  change_threshold = 0
+)
+
+sputum_phylum_summary_changes <- summarise_paired_RA_changes(
+  sputum_phylum_patient_changes
+)
+
+sputum_phylum_top_samples <- get_top_RA_samples(
+  ra_long = RA_phylum_sputum$long,
+  taxa_keep = sputum_phyla_fig15,
+  n_top = 5,
+  detection_threshold = 0
+)
+
+# ------------------------------------------------------------------------------
+# Paired patient-level changes: species level
+# ------------------------------------------------------------------------------
+
+sputum_species_patient_changes <- get_paired_RA_changes(
+  ra_long = RA_species_sputum$long,
+  taxa_keep = sputum_species_fig15,
+  detection_threshold = 0,
+  change_threshold = 0
+)
+
+sputum_species_summary_changes <- summarise_paired_RA_changes(
+  sputum_species_patient_changes
+)
+
+sputum_species_top_samples <- get_top_RA_samples(
+  ra_long = RA_species_sputum$long,
+  taxa_keep = sputum_species_fig15,
+  n_top = 5,
+  detection_threshold = 0
+)
+```
+
+### Export results
+```{r Export results, echo=TRUE, fig.show='hide', message=FALSE, warning=FALSE}
+# ------------------------------------------------------------------------------
+# Export sputum tables
+# ------------------------------------------------------------------------------
+# Phylum-level sputum tables
+readr::write_csv(
+  sputum_phylum_patient_changes,
+  here::here("results", "sputum_phylum_patient_level_T0_T12_changes.csv")
+)
+
+readr::write_csv(
+  sputum_phylum_summary_changes,
+  here::here("results", "sputum_phylum_summary_T0_T12_changes.csv")
+)
+
+readr::write_csv(
+  sputum_phylum_top_samples,
+  here::here("results", "sputum_phylum_top_samples_by_taxon_time.csv")
+)
+
+# Species-level sputum tables
+readr::write_csv(
+  sputum_species_patient_changes,
+  here::here("results", "sputum_species_patient_level_T0_T12_changes.csv")
+)
+
+readr::write_csv(
+  sputum_species_summary_changes,
+  here::here("results", "sputum_species_summary_T0_T12_changes.csv")
+)
+
+readr::write_csv(
+  sputum_species_top_samples,
+  here::here("results", "sputum_species_top_samples_by_taxon_time.csv")
+)
+```
+
+
+#-----------------------
+### Statistics by SampleType
+#### Function
+```{r Function statistics, echo=TRUE, fig.show='hide', message=FALSE, warning=FALSE}
+get_ra_stats_paired <- function(tse_obj, rank_level = "Phylum") {
+  
+  # 1) Agglomerate + relative abundance
+  tse_ra <- tse_obj %>%
+    mia::agglomerateByRank(rank = rank_level, onRankOnly = TRUE, na.rm = TRUE) %>%
+    mia::transformAssay(method = "relabundance", pseudocount = 0, name = "relabundance")
+  
+  # 2) Extract matrix
+  ra_mat <- SummarizedExperiment::assay(tse_ra, "relabundance")
+  
+  # 3) Long format + metadata
+  ra_long <- as.data.frame(ra_mat) %>%
+    tibble::rownames_to_column(var = "FeatureID") %>%
+    tidyr::pivot_longer(
+      cols = -FeatureID,
+      names_to = "SampleID",
+      values_to = "abundance"
+    ) %>%
+    dplyr::left_join(
+      as.data.frame(SummarizedExperiment::colData(tse_ra)) %>%
+        tibble::rownames_to_column(var = "SampleID"),
+      by = "SampleID"
+    ) %>%
+    dplyr::filter(Time %in% c("T0", "T12")) %>%
+    dplyr::mutate(Time = factor(Time, levels = c("T0", "T12")))
+  
+  # 4) Basic stats by taxon and time
+  stats_basic <- ra_long %>%
+    dplyr::group_by(FeatureID, Time) %>%
+    dplyr::summarise(
+      n = sum(!is.na(abundance)),
+      prevalence = 100 * mean(abundance > 0, na.rm = TRUE),
+      mean = mean(abundance, na.rm = TRUE),
+      sd = sd(abundance, na.rm = TRUE),
+      median = median(abundance, na.rm = TRUE),
+      iqr = IQR(abundance, na.rm = TRUE),
+      sum_abundance = sum(abundance, na.rm = TRUE),
+      .groups = "drop"
+    )
+  
+  # 5) Paired test per taxon: T0 vs T12
+  paired_results <- ra_long %>%
+    dplyr::select(FeatureID, PatientID, Time, abundance) %>%
+    tidyr::pivot_wider(names_from = Time, values_from = abundance) %>%
+    dplyr::group_by(FeatureID) %>%
+    dplyr::group_modify(~{
+      dat <- .x
+      
+      pair_ok <- stats::complete.cases(dat$T0, dat$T12)
+      x0 <- dat$T0[pair_ok]
+      x12 <- dat$T12[pair_ok]
+      delta <- x12 - x0
+      
+      n_pairs <- length(delta)
+      
+      prev_T0 <- if (n_pairs > 0) 100 * mean(x0 > 0, na.rm = TRUE) else NA_real_
+      prev_T12 <- if (n_pairs > 0) 100 * mean(x12 > 0, na.rm = TRUE) else NA_real_
+      
+      sum_T0 <- sum(x0, na.rm = TRUE)
+      sum_T12 <- sum(x12, na.rm = TRUE)
+      
+      n_unique_delta <- dplyr::n_distinct(delta)
+      all_zero_delta <- if (n_pairs > 0) all(delta == 0, na.rm = TRUE) else NA
+      
+      shapiro_p <- if (n_pairs >= 3 && n_unique_delta >= 2 && !isTRUE(all_zero_delta)) {
+        stats::shapiro.test(delta)$p.value
+      } else {
+        NA_real_
+      }
+      
+      method <- if (n_pairs < 3) {
+        NA_character_
+      } else if (isTRUE(all_zero_delta)) {
+        "no_change_constant"
+      } else if (!is.na(shapiro_p) && shapiro_p >= 0.05) {
+        "paired_t"
+      } else {
+        "wilcoxon_paired"
+      }
+      
+      p_value <- if (n_pairs < 3) {
+        NA_real_
+      } else if (isTRUE(all_zero_delta)) {
+        1
+      } else if (!is.na(shapiro_p) && shapiro_p >= 0.05) {
+        stats::t.test(x12, x0, paired = TRUE)$p.value
+      } else {
+        stats::wilcox.test(x12, x0, paired = TRUE, exact = FALSE)$p.value
+      }
+      
+      tibble::tibble(
+        n_pairs = n_pairs,
+        prev_T0 = prev_T0,
+        prev_T12 = prev_T12,
+        sum_T0 = sum_T0,
+        sum_T12 = sum_T12,
+        shapiro_p = shapiro_p,
+        method = method,
+        p_value = p_value,
+        mean_delta = if (n_pairs > 0) mean(delta, na.rm = TRUE) else NA_real_,
+        median_delta = if (n_pairs > 0) median(delta, na.rm = TRUE) else NA_real_
+      )
+    }) %>%
+    dplyr::ungroup() %>%
+    dplyr::mutate(
+      pooled_RA_T0 = 100 * sum_T0 / sum(sum_T0, na.rm = TRUE),
+      pooled_RA_T12 = 100 * sum_T12 / sum(sum_T12, na.rm = TRUE),
+      p_fdr = stats::p.adjust(p_value, method = "fdr")
+    ) %>%
+    dplyr::select(
+      FeatureID,
+      n_pairs,
+      prev_T0, prev_T12,
+      pooled_RA_T0, pooled_RA_T12,
+      mean_delta, median_delta,
+      shapiro_p, method, p_value, p_fdr
+    ) %>%
+    dplyr::arrange(p_fdr)
+  
+  list(
+    ra_long = ra_long,
+    stats_basic = stats_basic,
+    paired_results = paired_results
+  )
+}
+```
+
+##### Feces
+```{r Run function, echo=TRUE, fig.show='hide', message=FALSE, warning=FALSE}
+# Phylum
+ra_stats_fc_ph <- get_ra_stats_paired(
+  tse_obj = subset_feces,
+  rank_level = "Phylum"
+)
+
+readr::write_excel_csv(
+  ra_stats_fc_ph$stats_basic,
+  here::here("results", "phyla_basic_stats_by_time_feces.csv")
+)
+
+readr::write_excel_csv(
+  ra_stats_fc_ph$paired_results,
+  here::here("results", "phyla_paired_tests_T0_vs_T12_feces.csv")
+)
+
+# Species
+ra_stats_fc_sps <- get_ra_stats_paired(
+  tse_obj = subset_feces,
+  rank_level = "Species"
+)
+
+readr::write_excel_csv(
+  ra_stats_fc_sps$stats_basic,
+  here::here("results", "species_basic_stats_by_time_feces.csv")
+)
+
+readr::write_excel_csv(
+  ra_stats_fc_sps$paired_results,
+  here::here("results", "species_paired_tests_T0_vs_T12_feces.csv")
+)
+```
+
+##### Sputum
+```{r Run function, echo=TRUE, fig.show='hide', message=FALSE, warning=FALSE}
+# Phylum
+ra_stats_sp_ph <- get_ra_stats_paired(
+  tse_obj = subset_sputum,
+  rank_level = "Phylum"
+)
+
+readr::write_excel_csv(
+  ra_stats_sp_ph$stats_basic,
+  here::here("results", "phyla_basic_stats_by_time_sputum.csv")
+)
+
+readr::write_excel_csv(
+  ra_stats_sp_ph$paired_results,
+  here::here("results", "phyla_paired_tests_T0_vs_T12_sputum.csv")
+)
+
+# Species
+ra_stats_sp_sps <- get_ra_stats_paired(
+  tse_obj = subset_sputum,
+  rank_level = "Species"
+)
+
+readr::write_excel_csv(
+  ra_stats_sp_sps$stats_basic,
+  here::here("results", "species_basic_stats_by_time_sputum.csv")
+)
+
+readr::write_excel_csv(
+  ra_stats_sp_sps$paired_results,
+  here::here("results", "species_paired_tests_T0_vs_T12_sputum.csv")
+)
+```
+
+
+# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
+# ALPHA DIVERSITY (AD)
+# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
+
+**Goal:** Measure within-sample diversity changes over time, age, and sex.
+
+Indices for Alpha Diversity:
+
+-   Chao1: estimated species richness
+
+-   Shannon: species richness and evenness
+
+-   Inverse Simpson: dominance (evenness)
+
+## Modified function of AD_plot {MADAV}: AD_plot_paired_csv
+
+```{r AD_plot MODIFIED for paired results and CSV, echo=TRUE, fig.show='hide', message=FALSE, warning=FALSE}
+# Drop-in replacement of AD_plot:
+# - Adds `paired` and `export_csv` parameters
+# - Exports alpha-diversity values to CSV if requested
+# - Uses paired comparisons in geom_pwc() when paired = TRUE
+AD_plot_paired_csv <- function (tse,
+                     assay_type = "counts",
+                     var,
+                     var_levels = NULL,
+                     level = NULL,
+                     index = "inverse_simpson",
+                     plot_title = "Alpha-diversity",
+                     hide.ns = FALSE,
+                     paired = FALSE,            # new argument
+                     export_csv = NULL) {       # new argument
+
+  `%>%` <- magrittr::`%>%`
+  AD <- tse
+
+  if (is.null(level)) {
+    level <- mia::taxonomyRanks(tse)[length(mia::taxonomyRanks(tse))]
+    warning(paste("No level was specified, alpha-diversity analysis was performed on",
+                  level, "level"))
+  }
+
+  if (level %in% colnames(SummarizedExperiment::rowData(AD)) &
+      !(level %in% mia::taxonomyRanks(AD))) {
+    if ("domain" %in% colnames(SummarizedExperiment::rowData(AD))) {
+      colnames(SummarizedExperiment::rowData(AD))[colnames(SummarizedExperiment::rowData(AD)) ==
+        "domain"] <- "true_domain_column"
+    }
+    colnames(SummarizedExperiment::rowData(AD))[colnames(SummarizedExperiment::rowData(AD)) ==
+      level] <- "domain"
+    rank <- "domain"
+  } else if (level %in% mia::taxonomyRanks(AD)) {
+    rank <- level
+  }
+
+  AD_agg <- mia::agglomerateByRank(AD, rank, onRankOnly = TRUE, na.rm = TRUE)
+
+  if (!is.null(var_levels)) {
+    SummarizedExperiment::colData(AD_agg)[, var] <- factor(
+      SummarizedExperiment::colData(AD_agg)[, var], levels = var_levels
+    )
+  } else {
+    SummarizedExperiment::colData(AD_agg)[, var] <- factor(
+      SummarizedExperiment::colData(AD_agg)[, var]
+    )
+  }
+
+  set_levels <- levels(SummarizedExperiment::colData(AD_agg)[, var])
+
+  if (index %in% c("coverage", "fisher", "gini_simpson", "inverse_simpson",
+                   "log_modulo_skewness", "shannon")) {
+    AD_index <- mia::estimateDiversity(AD_agg, index = index, assay.type = assay_type)
+  } else if (index %in% c("ace", "chao1", "hill", "observed")) {
+    AD_index <- mia::estimateRichness(AD_agg, index = index, assay.type = assay_type)
+  }
+
+  # NEW: build a tidy alpha-diversity table and optionally export it
+  alpha_df <- SummarizedExperiment::colData(AD_index) %>%
+    as.data.frame() %>%
+    dplyr::transmute(
+      SampleID  = rownames(.),
+      PatientID = .data[["PatientID"]],
+      Time      = .data[[var]],
+      AlphaValue = .data[[index]]
+  )
+  if (!is.null(export_csv)) {
+    readr::write_csv(alpha_df, export_csv)
+    message("Alpha-diversity exported to: ", export_csv)
+  }
+
+  y_label <- stringr::str_replace_all(index, "_", " ") %>%
+    stringr::str_to_title() %>% paste("Index", sep = " ")
+
+  plot_palette <- c("#1F77B4FF", "#AEC7E8FF", "#FF7F0EFF",
+                    "#FFBB78FF", "#2CA02CFF", "#98DF8AFF", "#D62728FF", "#FF9896FF",
+                    "#9467BDFF", "#C5B0D5FF", "#8C564BFF", "#C49C94FF", "#E377C2FF",
+                    "#F7B6D2FF", "#7F7F7FFF", "#C7C7C7FF", "#BCBD22FF", "#DBDB8DFF",
+                    "#17BECFFF", "#9EDAE5FF")
+
+  if (length(set_levels) <= 10) {
+    plot_colors <- plot_palette[seq(1, 19, 2)][1:length(set_levels)]
+    color_scale <- ggplot2::scale_color_manual(values = plot_colors)
+  } else if (length(set_levels) <= 20) {
+    plot_colors <- plot_palette[sort(c(seq(2, 20, 2)[1:(length(set_levels) - 5)],
+                                       seq(1, 19, 2)))]
+    color_scale <- ggplot2::scale_color_manual(values = plot_colors)
+  } else {
+    color_scale <- ggraph::scale_color_viridis(discrete = TRUE)
+  }
+
+  AD_plot_final <- ggplot2::ggplot(
+    SummarizedExperiment::colData(AD_index),
+    ggplot2::aes(SummarizedExperiment::colData(AD_index)[, var],
+                 SummarizedExperiment::colData(AD_index)[, index])
+  ) +
+    ggplot2::geom_boxplot(lwd = 0.65, show.legend = FALSE, outlier.shape = NA) +
+    ggplot2::geom_jitter(
+      ggplot2::aes(color = SummarizedExperiment::colData(AD_index)[, var]),
+      position = ggplot2::position_jitterdodge(0.2),
+      alpha = 0.75, show.legend = FALSE
+    ) +
+    color_scale +
+    ggplot2::theme_bw(base_size = 16, base_line_size = 1, base_rect_size = 1) +
+    ggplot2::theme(
+      axis.title.x = ggplot2::element_blank(),
+      plot.title   = ggplot2::element_text(size = 17),
+      panel.grid   = ggplot2::element_blank(),
+      axis.text.x  = ggplot2::element_text(color = "Grey1", size = 12, angle = 45, hjust = 1, face = "plain"),
+      axis.text.y  = ggplot2::element_text(color = "Grey1", size = 12, face = "plain"),
+      axis.title.y = ggplot2::element_text(color = "Grey1", size = 14, face = "plain")
+    ) +
+    ggpubr::geom_pwc(
+      label = "p.adj.signif",
+      p.adjust.method = "BH",
+      hide.ns = hide.ns,
+      method.args = list(paired = paired)  # NEW: pass paired to tests
+    ) +
+    ggplot2::ggtitle(plot_title) +
+    ggplot2::ylab(y_label)
+
+  print(AD_plot_final)
+  return(invisible(AD_plot_final))
+}
+```
+
+#----------------------
+## SAMPLETYPE AND TIME
+#----------------------
+
+### Feces at T0 and T12
+
+```{r AD of Feces at T0 and T12, echo=TRUE, fig.show='hide', message=FALSE, warning=FALSE}
+AD_plot_fc_ch_csv <- AD_plot_paired_csv(tse = subset_feces_no_UN,
+                                var = 'Time',
+                                var_levels = c('T0','T12'),
+                                level = 'Species',
+                                index = 'chao1',  
+                                plot_title = 'Alpha diversity of Feces',
+                                hide.ns = FALSE,
+                                paired = TRUE,
+                                export_csv = here::here("results", "alpha_feces_species_chao1.csv"))
+ggsave(filename = here("results", "AD_plot_fc_ch_csv.svg"), plot = AD_plot_fc_ch_csv, width = 8, height = 6, dpi = 300, device = "svg")
+
+AD_plot_fc_sh_csv <- AD_plot_paired_csv(tse = subset_feces_no_UN,
+                                var = 'Time',
+                                var_levels = c('T0','T12'),
+                                level = 'Species',
+                                index = 'shannon',  
+                                plot_title = 'Alpha diversity of Feces',
+                                hide.ns = FALSE,
+                                paired = TRUE,
+                                export_csv = here::here("results", "alpha_feces_species_shannon.csv"))
+
+ggsave(filename = here("results", "AD_plot_fc_sh_csv.svg"), plot = AD_plot_fc_sh_csv, width = 8, height = 6, dpi = 300, device = "svg")
+
+AD_plot_fc_is_csv <- AD_plot_paired_csv(tse = subset_feces_no_UN,
+                                var = 'Time',
+                                var_levels = c('T0','T12'),
+                                level = 'Species',
+                                index = 'inverse_simpson',
+                                plot_title = 'Alpha diversity of Feces',
+                                hide.ns = FALSE,
+                                paired = TRUE,
+                                export_csv = here::here("results", "alpha_feces_species_inverse_simpson.csv"))
+
+ggsave(filename = here("results", "AD_plot_fc_is_csv.svg"), plot = AD_plot_fc_is_csv, width = 8, height = 6, dpi = 300, device = "svg")
+```
+
+#### Plots
+
+##### Chao1
+
+```{r Plots alpha diversity Chao1 FECES, echo=TRUE, fig.show='show', message=FALSE, warning=FALSE}
+# 1) Load data
+alpha_df_fc <- read_csv(here::here("results", "alpha_feces_species_chao1.csv")) %>%
+  mutate(Time = factor(Time, levels = c("T0","T12"))) %>%
+  group_by(PatientID) %>% filter(n_distinct(Time) == 2) %>% ungroup()
+
+# 2) Compute paired Wilcoxon test
+wilc_fc <- alpha_df_fc %>%
+  wilcox_test(AlphaValue ~ Time, paired = TRUE) %>%
+  adjust_pvalue(method = "BH")
+
+# 3) Format p-value for label
+p_value_label_fc <- ifelse(wilc_fc$p.adj < 0.001, "p.adj < 0.001",
+                           paste0("p.adj = ", signif(wilc_fc$p.adj, 3)))
+
+# 4) Define colors for boxplots and points
+col_box   <- c("T0" = "#F4E1A1", "T12" = "#A1E1E1")
+col_point <- c("T0" = "#FAF3DC", "T12" = "#D6F5F5")
+
+# 5) Add color columns and numeric x-axis values for plotting
+alpha_df_fc <- alpha_df_fc %>%
+  mutate(
+    fill_box   = col_box[Time],
+    fill_point = col_point[Time],
+    x          = as.numeric(Time)  # for continuous x-axis
+  )
+
+# 6) Data for p-value line and label
+p_values_fc <- data.frame(
+  x = 1, xend = 2,
+  y = max(alpha_df_fc$AlphaValue) * 1.05,
+  label = p_value_label_fc
+)
+
+# 7) Raincloud-style plot with connecting lines
+p_chao1_fc <- ggplot() +
+  # Raincloud T0
+  stat_slab(
+    data = alpha_df_fc %>% filter(Time == "T0"),
+    aes(x = x, y = AlphaValue, fill = fill_box),
+    side = "left", alpha = 0.5, adjust = 0.6, show.legend = FALSE
+  ) +
+  # Raincloud T12
+  stat_slab(
+    data = alpha_df_fc %>% filter(Time == "T12"),
+    aes(x = x, y = AlphaValue, fill = fill_box),
+    side = "right", alpha = 0.5, adjust = 0.6, show.legend = FALSE
+  ) +
+  # Boxplots
+  geom_boxplot(
+    data = alpha_df_fc,
+    aes(x = x, y = AlphaValue, fill = fill_box),
+    width = 0.5, outlier.shape = NA,
+    color = "black", alpha = 0.9, show.legend = TRUE
+  ) +
+  # Points
+  geom_point(
+    data = alpha_df_fc,
+    aes(x = x, y = AlphaValue, fill = fill_point),
+    shape = 21, size = 3, stroke = 0.3, color = "black",
+    show.legend = FALSE
+  ) +
+  # Connecting lines
+  geom_line(
+    data = alpha_df_fc,
+    aes(x = x, y = AlphaValue, group = PatientID),
+    color = "grey40", alpha = 0.4, linetype = "dashed", linewidth = 0.4
+  ) +
+  # p-value line and text
+  geom_segment(
+    data = p_values_fc,
+    aes(x = x, xend = xend, y = y, yend = y),
+    color = "black", linewidth = 0.5
+  ) +
+  geom_text(
+    data = p_values_fc,
+    aes(x = (x + xend) / 2, y = y + 0.02 * y, label = label),
+    size = 4
+  ) +
+  scale_x_continuous(breaks = c(1, 2), labels = c("T0", "T12")) +
+  scale_fill_identity(guide = "legend", name = "Time",
+                      breaks = col_box, labels = names(col_box)) +
+  labs(x = NULL, y = "Chao1 index - Feces") +
+  theme_minimal(base_size = 14) +
+  theme(
+    legend.position = "right",
+    axis.text.x = element_text(size = 14)
+  )
+
+# 8) Save plot
+ggsave(filename = here("results", "alpha_diversity_chao1_feces.svg"), plot = p_chao1_fc, width = 8, height = 6, dpi = 300, device = "svg")
+```
+
+##### Shannon
+
+```{r Plots alpha diversity Shanon FECES, echo=TRUE, fig.show='show', message=FALSE, warning=FALSE}
+# 1) Load data
+alpha_df_fc <- read_csv(here::here("results", "alpha_feces_species_shannon.csv")) %>%
+  mutate(Time = factor(Time, levels = c("T0","T12"))) %>%
+  group_by(PatientID) %>% filter(n_distinct(Time) == 2) %>% ungroup()
+
+# 2) Compute paired Wilcoxon test
+wilc_fc <- alpha_df_fc %>%
+  wilcox_test(AlphaValue ~ Time, paired = TRUE) %>%
+  adjust_pvalue(method = "BH")
+
+# 3) Format p-value for label
+p_value_label_fc <- ifelse(wilc_fc$p.adj < 0.001, "p.adj < 0.001",
+                           paste0("p.adj = ", signif(wilc_fc$p.adj, 3)))
+
+# 4) Define colors for boxplots and points
+col_box   <- c("T0" = "#F4E1A1", "T12" = "#A1E1E1")
+col_point <- c("T0" = "#FAF3DC", "T12" = "#D6F5F5")
+
+# 5) Add color columns and numeric x-axis values for plotting
+alpha_df_fc <- alpha_df_fc %>%
+  mutate(
+    fill_box   = col_box[Time],
+    fill_point = col_point[Time],
+    x          = as.numeric(Time)  # for continuous x-axis
+  )
+
+# 6) Data for p-value line and label
+p_values_fc <- data.frame(
+  x = 1, xend = 2,
+  y = max(alpha_df_fc$AlphaValue) * 1.05,
+  label = p_value_label_fc
+)
+
+# 7) Raincloud-style plot with connecting lines
+p_shannon_fc <- ggplot() +
+  # Raincloud T0
+  stat_slab(
+    data = alpha_df_fc %>% filter(Time == "T0"),
+    aes(x = x, y = AlphaValue, fill = fill_box),
+    side = "left", alpha = 0.5, adjust = 0.6, show.legend = FALSE
+  ) +
+  # Raincloud T12
+  stat_slab(
+    data = alpha_df_fc %>% filter(Time == "T12"),
+    aes(x = x, y = AlphaValue, fill = fill_box),
+    side = "right", alpha = 0.5, adjust = 0.6, show.legend = FALSE
+  ) +
+  # Boxplots
+  geom_boxplot(
+    data = alpha_df_fc,
+    aes(x = x, y = AlphaValue, fill = fill_box),
+    width = 0.5, outlier.shape = NA,
+    color = "black", alpha = 0.9, show.legend = TRUE
+  ) +
+  # Points
+  geom_point(
+    data = alpha_df_fc,
+    aes(x = x, y = AlphaValue, fill = fill_point),
+    shape = 21, size = 3, stroke = 0.3, color = "black",
+    show.legend = FALSE
+  ) +
+  # Connecting lines
+  geom_line(
+    data = alpha_df_fc,
+    aes(x = x, y = AlphaValue, group = PatientID),
+    color = "grey40", alpha = 0.4, linetype = "dashed", linewidth = 0.4
+  ) +
+  # p-value line and text
+  geom_segment(
+    data = p_values_fc,
+    aes(x = x, xend = xend, y = y, yend = y),
+    color = "black", linewidth = 0.5
+  ) +
+  geom_text(
+    data = p_values_fc,
+    aes(x = (x + xend) / 2, y = y + 0.02 * y, label = label),
+    size = 4
+  ) +
+  scale_x_continuous(breaks = c(1, 2), labels = c("T0", "T12")) +
+  scale_fill_identity(guide = "legend", name = "Time",
+                      breaks = col_box, labels = names(col_box)) +
+  labs(x = NULL, y = "Shannon index - Feces") +
+  theme_minimal(base_size = 14) +
+  theme(
+    legend.position = "right",
+    axis.text.x = element_text(size = 14)
+  )
+
+# 8) Save plot
+ggsave(filename = here("results", "alpha_diversity_shannon_feces.svg"), plot = p_shannon_fc, width = 8, height = 6, dpi = 300, device = "svg")
+```
+
+
+##### Inverse Simpson
+
+```{r Plots alpha diversity Inverse Simpson FECES, echo=TRUE, fig.show='show', message=FALSE, warning=FALSE}
+# 1) Load data
+alpha_df_fc <- read_csv(here::here("results", "alpha_feces_species_inverse_simpson.csv")) %>%
+  mutate(Time = factor(Time, levels = c("T0","T12"))) %>%
+  group_by(PatientID) %>% filter(n_distinct(Time) == 2) %>% ungroup()
+
+# 2) Compute paired Wilcoxon test
+wilc_fc <- alpha_df_fc %>%
+  wilcox_test(AlphaValue ~ Time, paired = TRUE) %>%
+  adjust_pvalue(method = "BH")
+
+# 3) Format p-value for label
+p_value_label_fc <- ifelse(wilc_fc$p.adj < 0.001, "p.adj < 0.001",
+                           paste0("p.adj = ", signif(wilc_fc$p.adj, 3)))
+
+# 4) Define colors for boxplots and points
+col_box   <- c("T0" = "#F4E1A1", "T12" = "#A1E1E1")
+col_point <- c("T0" = "#FAF3DC", "T12" = "#D6F5F5")
+
+# 5) Add color columns and numeric x-axis values for plotting
+alpha_df_fc <- alpha_df_fc %>%
+  mutate(
+    fill_box   = col_box[Time],
+    fill_point = col_point[Time],
+    x          = as.numeric(Time)  # for continuous x-axis
+  )
+
+# 6) Raincloud-style plot with connecting lines
+p_values_fc <- data.frame(
+  x = 1, xend = 2,
+  y = max(alpha_df_fc$AlphaValue) * 1.05,
+  label = p_value_label_fc
+)
+
+# 7) Raincloud-style plot with connecting lines
+p_invsimp_fc <- ggplot() +
+  # Raincloud T0
+  stat_slab(
+    data = alpha_df_fc %>% filter(Time == "T0"),
+    aes(x = x, y = AlphaValue, fill = fill_box),
+    side = "left", alpha = 0.5, adjust = 0.6, show.legend = FALSE
+  ) +
+  # Raincloud T12
+  stat_slab(
+    data = alpha_df_fc %>% filter(Time == "T12"),
+    aes(x = x, y = AlphaValue, fill = fill_box),
+    side = "right", alpha = 0.5, adjust = 0.6, show.legend = FALSE
+  ) +
+  # Boxplots
+  geom_boxplot(
+    data = alpha_df_fc,
+    aes(x = x, y = AlphaValue, fill = fill_box),
+    width = 0.5, outlier.shape = NA,
+    color = "black", alpha = 0.9, show.legend = TRUE
+  ) +
+  # Points
+  geom_point(
+    data = alpha_df_fc,
+    aes(x = x, y = AlphaValue, fill = fill_point),
+    shape = 21, size = 3, stroke = 0.3, color = "black",
+    show.legend = FALSE
+  ) +
+  # Connecting lines
+  geom_line(
+    data = alpha_df_fc,
+    aes(x = x, y = AlphaValue, group = PatientID),
+    color = "grey40", alpha = 0.4, linetype = "dashed", linewidth = 0.4
+  ) +
+  # p-value line and text
+  geom_segment(
+    data = p_values_fc,
+    aes(x = x, xend = xend, y = y, yend = y),
+    color = "black", linewidth = 0.5
+  ) +
+  geom_text(
+    data = p_values_fc,
+    aes(x = (x + xend) / 2, y = y + 0.02 * y, label = label),
+    size = 4
+  ) +
+  scale_x_continuous(breaks = c(1, 2), labels = c("T0", "T12")) +
+  scale_fill_identity(guide = "legend", name = "Time",
+                      breaks = col_box, labels = names(col_box)) +
+  labs(x = NULL, y = "Inverse Simpson index - Feces") +
+  theme_minimal(base_size = 14) +
+  theme(
+    legend.position = "right",
+    axis.text.x = element_text(size = 14)
+  )
+
+# 8) Save plot
+ggsave(filename = here("results", "alpha_diversity_invsimp_feces.svg"), plot = p_invsimp_fc, width = 8, height = 6, dpi = 300, device = "svg")
+```
+
+
+### Sputum at T0 and T12
+
+```{r AD of Sputum at T0 and T12, echo=TRUE, fig.show='hide', message=FALSE, warning=FALSE}
+AD_plot_sp_ch_csv <- AD_plot_paired_csv(tse = subset_sputum_no_UN,
+                                var = 'Time',
+                                var_levels = c('T0','T12'),
+                                level = 'Species',
+                                index = 'chao1',
+                                plot_title = 'Alpha diversity of Sputum',
+                                hide.ns = FALSE,
+                                paired = TRUE,
+                                export_csv = here::here("results", "alpha_sputum_species_chao1.csv"))
+ggsave(filename = here("results", "AD_plot_sp_ch_csv.svg"), plot = AD_plot_sp_ch_csv, width = 8, height = 6, dpi = 300, device = "svg")
+
+AD_plot_sp_sh_csv <- AD_plot_paired_csv(tse = subset_sputum_no_UN,
+                                var = 'Time',
+                                var_levels = c('T0','T12'),
+                                level = 'Species',
+                                index = 'shannon',
+                                plot_title = 'Alpha diversity of Sputum',
+                                hide.ns = FALSE,
+                                paired = TRUE,
+                                export_csv = here::here("results", "alpha_sputum_species_shannon.csv"))
+ggsave(filename = here("results", "AD_plot_sp_sh_csv.svg"), plot = AD_plot_sp_sh_csv, width = 8, height = 6, dpi = 300, device = "svg")
+
+AD_plot_sp_is_csv <- AD_plot_paired_csv(tse = subset_sputum_no_UN,
+                                var = 'Time',
+                                var_levels = c('T0','T12'),
+                                level = 'Species',
+                                index = 'inverse_simpson',
+                                plot_title = 'Alpha diversity of Sputum',
+                                hide.ns = FALSE,
+                                paired = TRUE,
+                                export_csv = here::here("results", "alpha_sputum_species_inverse_simpson.csv"))
+
+ggsave(filename = here("results", "AD_plot_sp_is_csv.svg"), plot = AD_plot_sp_is_csv, width = 8, height = 6, dpi = 300, device = "svg")
+```
+
+
+#### Plots
+
+##### Chao1
+
+```{r Plots alpha diversity Chao1 SPUTUM, echo=TRUE, fig.show='show', message=FALSE, warning=FALSE}
+# 1) Load data
+alpha_df_sp <- read_csv(here::here("results", "alpha_sputum_species_chao1.csv")) %>%
+  mutate(Time = factor(Time, levels = c("T0","T12"))) %>%
+  group_by(PatientID) %>% filter(n_distinct(Time) == 2) %>% ungroup()
+
+# 2) Compute paired Wilcoxon test
+wilc_sp <- alpha_df_sp %>%
+  wilcox_test(AlphaValue ~ Time, paired = TRUE) %>%
+  adjust_pvalue(method = "BH")
+
+# 3) Format p-value for label
+p_value_label_sp <- ifelse(wilc_sp$p.adj < 0.001, "p.adj < 0.001",
+                           paste0("p.adj = ", signif(wilc_sp$p.adj, 3)))
+
+# 4) Define colors for boxplots and points
+col_box   <- c("T0" = "#D9C2E9", "T12" = "#B3E1B6")
+col_point <- c("T0" = "#EDE3F4", "T12" = "#E2F5E3")
+
+# 5) Add color columns and numeric x-axis values for plotting
+alpha_df_sp <- alpha_df_sp %>%
+  mutate(
+    fill_box   = col_box[Time],
+    fill_point = col_point[Time],
+    x          = as.numeric(Time) # for continuous x-axis
+  )
+
+# 6) Data for p-value line and label
+p_values_sp <- data.frame(
+  x = 1, xend = 2,
+  y = max(alpha_df_sp$AlphaValue) * 1.05,
+  label = p_value_label_sp
+)
+
+# 7) Raincloud-style plot with connecting lines
+p_chao1_sp <- ggplot() +
+  # Raincloud T0
+  stat_slab(
+    data = alpha_df_sp %>% filter(Time == "T0"),
+    aes(x = x, y = AlphaValue, fill = fill_box),
+    side = "left", alpha = 0.5, adjust = 0.6, show.legend = FALSE
+  ) +
+  # Raincloud T12
+  stat_slab(
+    data = alpha_df_sp %>% filter(Time == "T12"),
+    aes(x = x, y = AlphaValue, fill = fill_box),
+    side = "right", alpha = 0.5, adjust = 0.6, show.legend = FALSE
+  ) +
+  # Boxplots
+  geom_boxplot(
+    data = alpha_df_sp,
+    aes(x = x, y = AlphaValue, fill = fill_box),
+    width = 0.5, outlier.shape = NA,
+    color = "black", alpha = 0.9, show.legend = TRUE
+  ) +
+  # Points
+  geom_point(
+    data = alpha_df_sp,
+    aes(x = x, y = AlphaValue, fill = fill_point),
+    shape = 21, size = 3, stroke = 0.3, color = "black",
+    show.legend = FALSE
+  ) +
+  # Connecting lines
+  geom_line(
+    data = alpha_df_sp,
+    aes(x = x, y = AlphaValue, group = PatientID),
+    color = "grey40", alpha = 0.4, linetype = "dashed", linewidth = 0.4
+  ) +
+  # p-value line and text
+  geom_segment(
+    data = p_values_sp,
+    aes(x = x, xend = xend, y = y, yend = y),
+    color = "black", linewidth = 0.5
+  ) +
+  geom_text(
+    data = p_values_sp,
+    aes(x = (x + xend) / 2, y = y + 0.02 * y, label = label),
+    size = 4
+  ) +
+  scale_x_continuous(breaks = c(1, 2), labels = c("T0", "T12")) +
+  scale_fill_identity(guide = "legend", name = "Time",
+                      breaks = col_box, labels = names(col_box)) +
+  labs(x = NULL, y = "Chao1 index - Sputum") +
+  theme_minimal(base_size = 14) +
+  theme(
+    legend.position = "right",
+    axis.text.x = element_text(size = 14)
+  )
+
+# 8) Save plot
+ggsave(filename = here("results", "alpha_diversity_chao1_sputum.svg"), plot = p_chao1_sp, width = 8, height = 6, dpi = 300, device = "svg")
+```
+
+##### Shannon
+
+```{r Plots alpha diversity Shannon SPUTUM, echo=TRUE, fig.show='show', message=FALSE, warning=FALSE}
+# 1) Load data
+alpha_df_sp <- read_csv(here::here("results", "alpha_sputum_species_shannon.csv")) %>%
+  mutate(Time = factor(Time, levels = c("T0","T12"))) %>%
+  group_by(PatientID) %>% filter(n_distinct(Time) == 2) %>% ungroup()
+
+# 2) Compute paired Wilcoxon test
+wilc_sp <- alpha_df_sp %>%
+  wilcox_test(AlphaValue ~ Time, paired = TRUE) %>%
+  adjust_pvalue(method = "BH")
+
+# 3) Format p-value for label
+p_value_label_sp <- ifelse(wilc_sp$p.adj < 0.001, "p.adj < 0.001",
+                           paste0("p.adj = ", signif(wilc_sp$p.adj, 3)))
+
+# 4) Define colors for boxplots and points
+col_box   <- c("T0" = "#D9C2E9", "T12" = "#B3E1B6")
+col_point <- c("T0" = "#EDE3F4", "T12" = "#E2F5E3")
+
+# 5) Add color columns and numeric x-axis values for plotting
+alpha_df_sp <- alpha_df_sp %>%
+  mutate(
+    fill_box   = col_box[Time],
+    fill_point = col_point[Time],
+    x          = as.numeric(Time)  # for continuous x-axis
+  )
+
+# 6) Data for p-value line and label
+p_values_sp <- data.frame(
+  x = 1, xend = 2,
+  y = max(alpha_df_sp$AlphaValue) * 1.05,
+  label = p_value_label_sp
+)
+
+# 7) Raincloud-style plot with connecting lines
+p_shannon_sp <- ggplot() +
+  # Raincloud T0
+  stat_slab(
+    data = alpha_df_sp %>% filter(Time == "T0"),
+    aes(x = x, y = AlphaValue, fill = fill_box),
+    side = "left", alpha = 0.5, adjust = 0.6, show.legend = FALSE
+  ) +
+  # Raincloud T12
+  stat_slab(
+    data = alpha_df_sp %>% filter(Time == "T12"),
+    aes(x = x, y = AlphaValue, fill = fill_box),
+    side = "right", alpha = 0.5, adjust = 0.6, show.legend = FALSE
+  ) +
+  # Boxplots
+  geom_boxplot(
+    data = alpha_df_sp,
+    aes(x = x, y = AlphaValue, fill = fill_box),
+    width = 0.5, outlier.shape = NA,
+    color = "black", alpha = 0.9, show.legend = TRUE
+  ) +
+  # Points
+  geom_point(
+    data = alpha_df_sp,
+    aes(x = x, y = AlphaValue, fill = fill_point),
+    shape = 21, size = 3, stroke = 0.3, color = "black",
+    show.legend = FALSE
+  ) +
+  # Connecting lines
+  geom_line(
+    data = alpha_df_sp,
+    aes(x = x, y = AlphaValue, group = PatientID),
+    color = "grey40", alpha = 0.4, linetype = "dashed", linewidth = 0.4
+  ) +
+  # p-value line and text
+  geom_segment(
+    data = p_values_sp,
+    aes(x = x, xend = xend, y = y, yend = y),
+    color = "black", linewidth = 0.5
+  ) +
+  geom_text(
+    data = p_values_sp,
+    aes(x = (x + xend) / 2, y = y + 0.02 * y, label = label),
+    size = 4
+  ) +
+  scale_x_continuous(breaks = c(1, 2), labels = c("T0", "T12")) +
+  scale_fill_identity(guide = "legend", name = "Time",
+                      breaks = col_box, labels = names(col_box)) +
+  labs(x = NULL, y = "Shannon index - Sputum") +
+  theme_minimal(base_size = 14) +
+  theme(
+    legend.position = "right",
+    axis.text.x = element_text(size = 14)
+  )
+
+# 8) Save plot
+ggsave(filename = here("results", "alpha_diversity_shannon_sputum.svg"), plot = p_shannon_sp, width = 8, height = 6, dpi = 300, device = "svg")
+```
+
+##### Inverse Simpson
+
+```{r Plots alpha diversity Inverse Simpson SPUTUM, echo=TRUE, fig.show='show', message=FALSE, warning=FALSE}
+# 1) Load data
+alpha_df_sp <- read_csv(here::here("results", "alpha_sputum_species_inverse_simpson.csv")) %>%
+  mutate(Time = factor(Time, levels = c("T0","T12"))) %>%
+  group_by(PatientID) %>% filter(n_distinct(Time) == 2) %>% ungroup()
+
+# 2) Compute paired Wilcoxon test
+wilc_sp <- alpha_df_sp %>%
+  wilcox_test(AlphaValue ~ Time, paired = TRUE) %>%
+  adjust_pvalue(method = "BH")
+
+# 3) Format p-value for label
+p_value_label_sp <- ifelse(wilc_sp$p.adj < 0.001, "p.adj < 0.001",
+                           paste0("p.adj = ", signif(wilc_sp$p.adj, 3)))
+
+# 4) Define colors for boxplots and points
+col_box   <- c("T0" = "#D9C2E9", "T12" = "#B3E1B6")
+col_point <- c("T0" = "#EDE3F4", "T12" = "#E2F5E3")
+
+# 5) Add color columns and numeric x-axis values for plotting
+alpha_df_sp <- alpha_df_sp %>%
+  mutate(
+    fill_box   = col_box[Time],
+    fill_point = col_point[Time],
+    x          = as.numeric(Time)  # for continuous x-axis
+  )
+
+# 6) Data for p-value line and label
+p_values_sp <- data.frame(
+  x = 1, xend = 2,
+  y = max(alpha_df_sp$AlphaValue) * 1.05,
+  label = p_value_label_sp
+)
+
+# 7) Raincloud-style plot with connecting lines
+p_invsimp_sp <- ggplot() +
+  # Raincloud T0
+  stat_slab(
+    data = alpha_df_sp %>% filter(Time == "T0"),
+    aes(x = x, y = AlphaValue, fill = fill_box),
+    side = "left", alpha = 0.5, adjust = 0.6, show.legend = FALSE
+  ) +
+  # Raincloud T12
+  stat_slab(
+    data = alpha_df_sp %>% filter(Time == "T12"),
+    aes(x = x, y = AlphaValue, fill = fill_box),
+    side = "right", alpha = 0.5, adjust = 0.6, show.legend = FALSE
+  ) +
+  # Boxplots
+  geom_boxplot(
+    data = alpha_df_sp,
+    aes(x = x, y = AlphaValue, fill = fill_box),
+    width = 0.5, outlier.shape = NA,
+    color = "black", alpha = 0.9, show.legend = TRUE
+  ) +
+  # Points
+  geom_point(
+    data = alpha_df_sp,
+    aes(x = x, y = AlphaValue, fill = fill_point),
+    shape = 21, size = 3, stroke = 0.3, color = "black",
+    show.legend = FALSE
+  ) +
+  # Connecting lines
+  geom_line(
+    data = alpha_df_sp,
+    aes(x = x, y = AlphaValue, group = PatientID),
+    color = "grey40", alpha = 0.4, linetype = "dashed", linewidth = 0.4
+  ) +
+  # p-value line and text
+  geom_segment(
+    data = p_values_sp,
+    aes(x = x, xend = xend, y = y, yend = y),
+    color = "black", linewidth = 0.5
+  ) +
+  geom_text(
+    data = p_values_sp,
+    aes(x = (x + xend) / 2, y = y + 0.02 * y, label = label),
+    size = 4
+  ) +
+  scale_x_continuous(breaks = c(1, 2), labels = c("T0", "T12")) +
+  scale_fill_identity(guide = "legend", name = "Time",
+                      breaks = col_box, labels = names(col_box)) +
+  labs(x = NULL, y = "Inverse Simpson index - Sputum") +
+  theme_minimal(base_size = 14) +
+  theme(
+    legend.position = "right",
+    axis.text.x = element_text(size = 14)
+  )
+
+# 8) Save plot
+ggsave(filename = here("results", "alpha_diversity_invsimp_sputum.svg"), plot = p_invsimp_sp, width = 8, height = 6, dpi = 300, device = "svg")
+```
+
+
+# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
+# BETA DIVERSITY (AD)
+# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
+
+**Goal:** Measure between-sample diversity differences over time, age, and sex.
+
+Dissimilarity Metrics:
+
+-   Bray-Curtis: species abundance dissimilarity
+
+-   Weighted UniFrac: phylogenetic structure and abundance
+
+
+### Modified function of BD_plot {MADAV}: BD_plot_paired_csv
+
+```{r BD_plot MODIFIED paired csv, echo=TRUE, fig.show='hide', message=FALSE, warning=FALSE}
+BD_plot_paired_csv <- function(tse, assay_type = "counts", var, var_levels = NULL, 
+    level = NULL, method = "bray", weighted_UniFrac = TRUE, ordination = "PCoA", 
+    constraining = var, plot_title = "Beta Diversity", dissimilarity_plot = FALSE, 
+    hide.ns = FALSE, export_prefix = NULL) {
+
+  set.seed(1234)
+  `%>%` <- magrittr::`%>%`
+  BD <- tse
+
+  if (is.null(level)) {
+    level <- mia::taxonomyRanks(tse)[length(mia::taxonomyRanks(tse))]
+    warning(paste("No level was specified, beta-diversity analysis was performed on", level, "level"))
+  }
+
+  if (level %in% colnames(SummarizedExperiment::rowData(BD)) & !(level %in% mia::taxonomyRanks(BD))) {
+    if ("domain" %in% colnames(SummarizedExperiment::rowData(BD))) {
+      colnames(SummarizedExperiment::rowData(BD))[colnames(SummarizedExperiment::rowData(BD)) == "domain"] <- "true_domain_column"
+    }
+    colnames(SummarizedExperiment::rowData(BD))[colnames(SummarizedExperiment::rowData(BD)) == level] <- "domain"
+    rank <- "domain"
+  } else if (level %in% mia::taxonomyRanks(BD)) {
+    rank <- level
+  }
+
+  BD_agg <- mia::agglomerateByRank(BD, rank, onRankOnly = TRUE, agglomerateTree = TRUE, na.rm = TRUE)
+
+  if (length(var) == 1) var_levels <- list(var_levels)
+  for (cov in 1:length(var)) {
+    if (!is.null(var_levels[[cov]])) {
+      SummarizedExperiment::colData(BD_agg)[, var[cov]] <- factor(SummarizedExperiment::colData(BD_agg)[, var[cov]], levels = var_levels[[cov]])
+    } else {
+      SummarizedExperiment::colData(BD_agg)[, var[cov]] <- factor(SummarizedExperiment::colData(BD_agg)[, var[cov]])
+    }
+  }
+
+  set_levels <- lapply(var, function(x) levels(SummarizedExperiment::colData(BD_agg)[, x]))
+
+  if (method %in% c("manhattan","euclidean","canberra","clark","bray","kulczynski","gower","altGower",
+                    "morisita","horn","mountford","raup","binomial","chao","cao","mahalanobis","chisq",
+                    "chord","hellinger","aitchison","robust.aitchison")) {
+    BD_dist <- vegan::vegdist(as.matrix(t(SummarizedExperiment::assays(BD_agg)[[assay_type]])), method = method, binary = FALSE)
+  } else if (method == "jaccard") {
+    BD_dist <- vegan::vegdist(as.matrix(t(SummarizedExperiment::assays(BD_agg)[[assay_type]])), method = method, binary = TRUE)
+  } else if (method == "UniFrac") {
+    BD_dist <- calculateUnifrac(BD_agg, assay.type = assay_type, weighted = weighted_UniFrac)
+  } else if (method == "JSD") {
+    BD_dist <- calculateJSD(BD_agg, assay.type = assay_type)
+  }
+
+  # PERMANOVA (pareado por PatientID)
+  permanova <- vegan::adonis2(
+    BD_dist ~ SummarizedExperiment::colData(BD_agg)[, var[1]],
+    strata = SummarizedExperiment::colData(BD_agg)$PatientID
+  ) %>% data.frame()
+  rownames(permanova)[1] <- var[1]
+  print(permanova)
+
+  permanova_R2 <- signif(permanova[1, 3], 2)
+  permanova_P  <- signif(permanova[1, 5], 2)
+  permanova_plot_text <- bquote(atop(R^2:~.(permanova_R2), paste("     Pr(>F): ", .(permanova_P))))
+
+  # Dispersion and permutest
+  BD_dispr  <- vegan::betadisper(BD_dist, SummarizedExperiment::colData(BD_agg)[, var[1]])
+  permutest <- vegan::permutest(BD_dispr, pairwise = TRUE)
+  print(permutest)
+
+  # Ordenation and dataframe for plot
+  pct1 <- pct2 <- NA_real_
+
+  if (ordination == "PCoA") {
+    BD_ord <- stats::cmdscale(BD_dist, eig = TRUE)
+    BD_ord_df <- data.frame(BD_ord$points[,1], BD_ord$points[,2], SummarizedExperiment::colData(BD_agg)[, var])
+    pct1 <- round(100 * BD_ord$eig[1] / sum(BD_ord$eig), 2)
+    pct2 <- round(100 * BD_ord$eig[2] / sum(BD_ord$eig), 2)
+    axis_title_x <- paste0("PCoA1 (", pct1, "%)")
+    axis_title_y <- paste0("PCoA2 (", pct2, "%)")
+  } else if (ordination == "NMDS") {
+    BD_ord <- vegan::metaMDS(BD_dist, k = 2)
+    BD_ord_df <- data.frame(BD_ord$points, SummarizedExperiment::colData(BD_agg)[, var])
+    axis_title_x <- "NMDS1"; axis_title_y <- "NMDS2"
+  } else if (ordination == "RDA") {
+    BD_ord <- mia::calculateRDA(BD_agg, stats::formula(paste("data ~", paste(constraining, collapse = " + "))),
+                                method = method, assay.type = assay_type, homogeneity.test = "permanova")
+    BD_ord_df <- data.frame(BD_ord[,1:2], SummarizedExperiment::colData(BD_agg)[, var])
+    axis_title_x <- paste0("dbRDA1 (", round(100*attr(BD_ord,"rda")$CCA$eig[1]/attr(BD_ord,"rda")$CCA$tot.chi, 2), "%)")
+    axis_title_y <- paste0("dbRDA2 (", round(100*attr(BD_ord,"rda")$CCA$eig[2]/attr(BD_ord,"rda")$CCA$tot.chi, 2), "%)")
+  } else if (ordination == "CCA") {
+    BD_ord <- mia::calculateCCA(BD_agg, stats::formula(paste("data ~", paste(constraining, collapse = " + "))),
+                                method = method, assay.type = assay_type, homogeneity.test = "permanova")
+    BD_ord_df <- data.frame(BD_ord[,1:2], SummarizedExperiment::colData(BD_agg)[, var])
+    axis_title_x <- paste0("CCA1 (", round(100*attr(BD_ord,"cca")$CCA$eig[1]/attr(BD_ord,"cca")$CCA$tot.chi, 2), "%)")
+    axis_title_y <- paste0("CCA2 (", round(100*attr(BD_ord,"cca")$CCA$eig[2]/attr(BD_ord,"cca")$CCA$tot.chi, 2), "%)")
+  } else if (ordination == "DPCoA") {
+    BD_ord <- mia::calculateDPCoA(BD_agg)
+    BD_ord_df <- data.frame(BD_ord[,1:2], SummarizedExperiment::colData(BD_agg)[, var])
+    axis_title_x <- paste0("DPCoA1 (", round(100*attr(BD_ord,"eig")[1]/sum(attr(BD_ord,"eig")),2), "%)")
+    axis_title_y <- paste0("DPCoA2 (", round(100*attr(BD_ord,"eig")[2]/sum(attr(BD_ord,"eig")),2), "%)")
+  }
+
+  if (length(var) > 1) { shape <- BD_ord_df[,4]; shape_lab <- var[2] } else { shape <- NULL; shape_lab <- NULL }
+
+  plot_palette <- c("#1F77B4FF","#AEC7E8FF","#FF7F0EFF","#FFBB78FF","#2CA02CFF","#98DF8AFF",
+                    "#D62728FF","#FF9896FF","#9467BDFF","#C5B0D5FF","#8C564BFF","#C49C94FF",
+                    "#E377C2FF","#F7B6D2FF","#7F7F7FFF","#C7C7C7FF","#BCBD22FF","#DBDB8DFF",
+                    "#17BECFFF","#9EDAE5FF")
+
+  if (length(set_levels[[1]]) <= 5) {
+    plot_colors <- plot_palette[seq(1, 9, 2)][1:length(set_levels[[1]])]
+    color_scale <- ggplot2::scale_color_manual(values = plot_colors)
+  } else if (length(set_levels[[1]]) <= 10) {
+    plot_colors <- plot_palette[sort(c(seq(2, 10, 2)[1:(length(set_levels[[1]]) - 5)], seq(1, 9, 2)))]
+    color_scale <- ggplot2::scale_color_manual(values = plot_colors)
+  } else if (length(set_levels[[1]]) <= 20) {
+    plot_colors <- plot_palette[sort(c(seq(2, 20, 2)[1:(length(set_levels[[1]]) - 10)], seq(1, 19, 2)))]
+    color_scale <- ggplot2::scale_color_manual(values = plot_colors)
+  } else {
+    color_scale <- ggraph::scale_color_viridis(discrete = TRUE)
+  }
+
+  BD_ord_plot <- ggplot2::ggplot(BD_ord_df, ggplot2::aes(BD_ord_df[,1], BD_ord_df[,2], color = BD_ord_df[,3])) +
+    ggplot2::geom_point(ggplot2::aes(shape = shape), size = 2) +
+    ggplot2::ggtitle(plot_title) +
+    color_scale +
+    ggplot2::stat_ellipse(ggplot2::aes(group = BD_ord_df[,3]), linetype = 1, linewidth = 1) +
+    ggplot2::labs(caption = permanova_plot_text, x = axis_title_x, y = axis_title_y, shape = shape_lab) +
+    ggplot2::theme_bw() +
+    ggplot2::theme(
+      plot.title = ggplot2::element_text(size = 17),
+      legend.text = ggplot2::element_text(size = 12),
+      legend.title = ggplot2::element_text(size = 13),
+      panel.grid = ggplot2::element_blank(),
+      axis.text.x = ggplot2::element_text(color = "Black", size = 12),
+      axis.text.y = ggplot2::element_text(color = "Black", size = 12),
+      axis.title.x = ggplot2::element_text(color = "Black", size = 14),
+      axis.title.y = ggplot2::element_text(color = "Black", size = 14),
+      plot.caption.position = "plot",
+      plot.caption = ggplot2::element_text(hjust = 0.08, size = 11)
+    ) +
+    ggplot2::guides(color = ggplot2::guide_legend(order = 1, title = var[1]),
+                    shape = ggplot2::guide_legend(order = 2, title = var[2]))
+
+  print(BD_ord_plot)
+
+  # ---------- EXPORTS ----------
+  if (!is.null(export_prefix)) {
+    # 1) PERMANOVA
+    readr::write_csv(permanova,
+      file = here::here("results", paste0(export_prefix, "_permanova.csv"))
+    )
+    # 2) PERMUTEST (table)
+    readr::write_csv(as.data.frame(permutest$tab),
+      file = here::here("results", paste0(export_prefix, "_permutest.csv"))
+    )
+    # 3) COORDINATES
+    sample_ids <- rownames(if (ordination %in% c("PCoA","NMDS")) BD_ord$points else as.matrix(BD_ord_df[,1:2]))
+    if (is.null(sample_ids)) sample_ids <- colnames(SummarizedExperiment::assays(BD_agg)[[assay_type]])
+    coords_df <- data.frame(
+      SampleID = sample_ids,
+      Axis1    = BD_ord_df[[1]],
+      Axis2    = BD_ord_df[[2]],
+      Group    = BD_ord_df[[3]]
+    )
+    readr::write_csv(coords_df,
+      file = here::here("results", paste0(export_prefix, "_coords.csv"))
+    )
+    # 4) % of axis (only PCoA; if not, it is omitted)
+    if (ordination == "PCoA" && is.finite(pct1) && is.finite(pct2)) {
+      readr::write_csv(
+        tibble::tibble(Axis = c("PCoA1","PCoA2"), Percent = c(pct1, pct2)),
+        here::here("results", paste0(export_prefix, "_axes.csv"))
+      )
+    }
+  }
+  # -----------------------------
+
+  BD_output <- list(BD_ord_plot, permanova, permutest)
+  names(BD_output) <- c("BD_plot", "PERMANOVA_results", "Permutest_results")
+  invisible(BD_output)
+}
+```
+
+
+#----------------------
+## SAMPLETYPE AND TIME
+#----------------------
+
+### Feces at T0 and T12
+
+```{r Beta diversity paired CSV Feces at T0 and T12 no error message, echo=TRUE, fig.show='hide', message=FALSE, warning=FALSE, error=TRUE}
+BD_plot_cf_fc_csv <- BD_plot_paired_csv(
+  tse = subset_feces_no_UN,
+  var = 'Time',
+  var_levels = c('T0','T12'),
+  level = 'Species',
+  method = 'bray',
+  weighted_UniFrac = TRUE,
+  ordination = 'PCoA',
+  constraining = var,
+  plot_title = 'Beta diversity of Feces',
+  dissimilarity_plot = FALSE,
+  hide.ns = FALSE,
+  export_prefix = "beta_feces_species_bray"
+)
+
+ggsave(filename = here("results", "BD_plot_cf_fc_csv.svg"), plot = BD_plot_cf_fc_csv$BD_plot_paired_csv, width = 10, height = 7, dpi = 300, device = "svg")
+```
+
+#### Plot
+
+```{r Plot BD feces, echo=TRUE, fig.show='show', message=FALSE, warning=FALSE}
+# ==== files prefixes ====
+prefix <- "beta_feces_species_bray"
+# =============================
+
+# 1) Load data
+coords <- read_csv(here("results", paste0(prefix, "_coords.csv"))) %>%
+  mutate(Group = factor(Group, levels = c("T0","T12")))
+
+perm <- read_csv(here("results", paste0(prefix, "_permanova.csv")))
+
+# Helpers to extract numbers or text
+get_num1 <- function(x) {
+  if (is.numeric(x)) x[1] else readr::parse_number(as.character(x[1]))
+}
+
+# R2 and p
+R2_val <- signif(get_num1(perm$R2), 3)
+
+p_col  <- names(perm)[grepl("Pr\\(>F\\)|Pr|p", names(perm), ignore.case = TRUE)][1]
+p_num  <- get_num1(perm[[p_col]])
+p_txt  <- if (is.na(p_num)) "NA" else if (p_num < 1e-3) "< 0.001" else signif(p_num, 3)
+
+cap_text <- paste0("R\u00B2 = ", R2_val, "   •   p = ", p_txt)
+
+# % of axis
+axes_file <- here("results", paste0(prefix, "_axes.csv"))
+if (file.exists(axes_file)) {
+  ax <- read_csv(axes_file)
+  ax1 <- ax$Percent[ax$Axis %in% c("PCoA1","PC1")][1]
+  ax2 <- ax$Percent[ax$Axis %in% c("PCoA2","PC2")][1]
+  x_lab <- paste0("PCoA1 (", ax1, "%)")
+  y_lab <- paste0("PCoA2 (", ax2, "%)")
+} else {
+  x_lab <- "PCoA1"; y_lab <- "PCoA2"
+}
+
+# Colours
+col_ellipse <- c("T0" = "#F4E1A1", "T12" = "#A1E1E1")
+col_point   <- c("T0" = "#FAF3DC", "T12" = "#D6F5F5")
+
+# 3) Plot
+p_beta_fc <- ggplot(coords, aes(Axis1, Axis2)) +
+  stat_ellipse(aes(fill = Group, color = Group),
+               geom = "polygon", level = 0.95,
+               alpha = 0.35, linewidth = 0.6, show.legend = TRUE) +
+  geom_point(
+    data = coords %>% filter(Group == "T0"),
+    shape = 21, size = 3, stroke = 0.3, color = "black",
+    fill  = col_point["T0"]
+  ) +
+  geom_point(
+    data = coords %>% filter(Group == "T12"),
+    shape = 21, size = 3, stroke = 0.3, color = "black",
+    fill  = col_point["T12"]
+  ) +
+  scale_fill_manual(values = col_ellipse, name = "Time") +
+  scale_color_manual(values = col_ellipse, guide = "none") +
+  guides(fill = guide_legend(override.aes = list(alpha = 0.35, linewidth = 0.6, color = col_ellipse))) +
+  labs(
+    x = x_lab, y = y_lab,
+    title = "Beta diversity (PCoA) - Feces",
+    caption = cap_text
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    panel.grid.minor      = element_blank(),
+    legend.position       = "right",
+    plot.title            = element_text(size = 14),
+    plot.caption.position = "plot",
+    plot.caption          = element_text(hjust = 0, size = 11)
+  )
+
+p_beta_fc
+
+# 4) Save SVG
+ggsave(here::here("results", "beta_feces_pcoa.svg"),
+       p_beta_fc, width = 8, height = 6, units = "in")
+```
+
+### Sputum at T0 and T12
+
+```{r Beta diversity paired CSV Sputum at T0 and T12 no error message, echo=TRUE, fig.show='hide', message=FALSE, warning=FALSE, error=TRUE}
+BD_plot_cf_sp_csv <- BD_plot_paired_csv(
+  tse = subset_sputum_no_UN,
+  var = 'Time',
+  var_levels = c('T0','T12'),
+  level = 'Species',
+  method = 'bray',
+  weighted_UniFrac = TRUE,
+  ordination = 'PCoA',
+  constraining = var,
+  plot_title = 'Beta diversity of Sputum',
+  dissimilarity_plot = FALSE,
+  hide.ns = FALSE,
+  export_prefix = "beta_sputum_species_bray"
+)
+
+ggsave(filename = here("results", "BD_plot_cf_sp_csv.svg"), plot = BD_plot_cf_sp_csv$BD_plot_paired_csv, width = 10, height = 7, dpi = 300, device = "svg")
+```
+
+#### Plot
+
+```{r Plot BD sputum, echo=TRUE, fig.show='show', message=FALSE, warning=FALSE}
+# ==== files prefixes ====
+prefix <- "beta_sputum_species_bray"
+# =============================
+
+# 1) Load data
+coords <- read_csv(here("results", paste0(prefix, "_coords.csv"))) %>%
+  mutate(Group = factor(Group, levels = c("T0","T12")))
+
+perm <- read_csv(here("results", paste0(prefix, "_permanova.csv")))
+
+# Helpers to extract numbers or text
+get_num1 <- function(x) {
+  if (is.numeric(x)) x[1] else readr::parse_number(as.character(x[1]))
+}
+
+# R2 and p
+R2_val <- signif(get_num1(perm$R2), 3)
+
+p_col  <- names(perm)[grepl("Pr\\(>F\\)|Pr|p", names(perm), ignore.case = TRUE)][1]
+p_num  <- get_num1(perm[[p_col]])
+p_txt  <- if (is.na(p_num)) "NA" else if (p_num < 1e-3) "< 0.001" else signif(p_num, 3)
+
+cap_text <- paste0("R\u00B2 = ", R2_val, "   •   p = ", p_txt)
+
+# % of axis
+axes_file <- here("results", paste0(prefix, "_axes.csv"))
+if (file.exists(axes_file)) {
+  ax <- read_csv(axes_file)
+  ax1 <- ax$Percent[ax$Axis %in% c("PCoA1","PC1")][1]
+  ax2 <- ax$Percent[ax$Axis %in% c("PCoA2","PC2")][1]
+  x_lab <- paste0("PCoA1 (", ax1, "%)")
+  y_lab <- paste0("PCoA2 (", ax2, "%)")
+} else {
+  x_lab <- "PCoA1"; y_lab <- "PCoA2"
+}
+
+# Colours
+col_ellipse <- c("T0" = "#D9C2E9", "T12" = "#B3E1B6")
+col_point   <- c("T0" = "#EDE3F4", "T12" = "#E2F5E3")
+
+# 3) Plot
+p_beta_sp <- ggplot(coords, aes(Axis1, Axis2)) +
+  stat_ellipse(aes(fill = Group, color = Group),
+               geom = "polygon", level = 0.95,
+               alpha = 0.35, linewidth = 0.6, show.legend = TRUE) +
+  geom_point(
+    data = coords %>% filter(Group == "T0"),
+    shape = 21, size = 3, stroke = 0.3, color = "black",
+    fill  = col_point["T0"]
+  ) +
+  geom_point(
+    data = coords %>% filter(Group == "T12"),
+    shape = 21, size = 3, stroke = 0.3, color = "black",
+    fill  = col_point["T12"]
+  ) +
+  scale_fill_manual(values = col_ellipse, name = "Time") +
+  scale_color_manual(values = col_ellipse, guide = "none") +
+  guides(fill = guide_legend(override.aes = list(alpha = 0.35, linewidth = 0.6, color = col_ellipse))) +
+  labs(
+    x = x_lab, y = y_lab,
+    title = "Beta diversity (PCoA) - Sputum",
+    caption = cap_text
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    panel.grid.minor      = element_blank(),
+    legend.position       = "right",
+    plot.title            = element_text(size = 14),
+    plot.caption.position = "plot",
+    plot.caption          = element_text(hjust = 0, size = 11)
+  )
+
+p_beta_sp
+
+# 4) Save SVG
+ggsave(here::here("results", "beta_sputum_pcoa.svg"),
+       p_beta_sp, width = 8, height = 6, units = "in")
+```
+
+
+# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
+# DIFFERENTIAL ABUNDANCE ANALYSIS (DAA)
+# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
+
+**Goal:** Identify differentially abundant species between groups.
+
+## Modified function of RA_plot {MADAV}: RA_plot_csv
+A modification for the RA_plot() function from MADAV package was used in order to export the results.
+
+```{r RA_plot MODIFIED for CSV, echo=TRUE, fig.show='hide', message=FALSE, warning=FALSE}
+RA_plot_csv <- function (features, tse, var, var_levels = NULL, level = NULL, 
+                         total_tools = 0, plot_title = "Relative Abundance", 
+                         hide.ns = FALSE, panel_dim = c(4, 4),
+                         export_csv = NULL) {  # NEW: optional CSV export path
+  
+  `%>%` <- magrittr::`%>%`
+  RAP <- tse
+  
+  if (is.null(level)) {
+    level <- mia::taxonomyRanks(tse)[length(mia::taxonomyRanks(tse))]
+    warning(paste("No level was specified, DA analysis was performed on", level, "level"))
+  }
+  
+  if (level %in% colnames(SummarizedExperiment::rowData(RAP)) & !(level %in% mia::taxonomyRanks(RAP))) {
+    if ("domain" %in% colnames(SummarizedExperiment::rowData(RAP))) {
+      colnames(SummarizedExperiment::rowData(RAP))[colnames(SummarizedExperiment::rowData(RAP)) == "domain"] <- "true_domain_column"
+    }
+    colnames(SummarizedExperiment::rowData(RAP))[colnames(SummarizedExperiment::rowData(RAP)) == level] <- "domain"
+    rank <- "domain"
+  } else if (level %in% mia::taxonomyRanks(RAP)) {
+    rank <- level
+  }
+  
+  RAP_agg <- mia::transformAssay(RAP, method = "relabundance") %>% 
+    mia::agglomerateByRank(rank, onRankOnly = TRUE, na.rm = TRUE)
+  
+  if (!is.null(attr(features, "var"))) {
+    feature_frame <- features$comparison[features$comparison$total_tools >= total_tools, c("featureID", "var")]
+    if (nrow(feature_frame) != 0) {
+      feature_frame <- feature_frame[!(duplicated(feature_frame)), ] %>% 
+        dplyr::mutate(var = paste("sign", var, sep = "|"))
+      feature_frame <- tidyr::pivot_wider(feature_frame, names_from = "var", values_from = "var")
+      feature_frame[, 2:length(feature_frame)] <- apply(feature_frame[, 2:length(feature_frame)], 2, function(x) ifelse(is.na(x), FALSE, TRUE))
+    } else {
+      stop("No features were detected by the selected number of total_tools")
+    }
+  } else {
+    feature_frame <- data.frame(matrix(ncol = length(var) + 1, nrow = length(features))) %>% 
+      stats::setNames(c("featureID", paste("sign", var, sep = "|")))
+    feature_frame$featureID <- features
+    feature_frame[, paste("sign", var, sep = "|")] <- TRUE
+  }
+  
+  if (all(feature_frame$featureID %in% rownames(RAP_agg))) {
+    RAP_sel <- RAP_agg[rownames(RAP_agg) %in% feature_frame$featureID, ]
+  } else {
+    stop("Not all features are present in the tse object at the selected level")
+  }
+  
+  RAP_meta <- tibble::rownames_to_column(data.frame(SummarizedExperiment::colData(RAP_sel)), var = "sampleID") %>% 
+    dplyr::select(dplyr::all_of(c("sampleID", var)))
+  
+  RAP_melt <- as.data.frame(SummarizedExperiment::assays(RAP_sel)[["relabundance"]]) %>% 
+    tibble::rownames_to_column(var = "featureID") %>% 
+    reshape2::melt(id = "featureID") %>% 
+    stats::setNames(c("featureID", "sampleID", "abundance")) %>% 
+    dplyr::right_join(RAP_meta, by = "sampleID") %>% 
+    dplyr::right_join(feature_frame, by = "featureID")
+  
+  # NEW: export relative abundance table to CSV (long format)
+  if (!is.null(export_csv)) {
+    dir.create(dirname(export_csv), recursive = TRUE, showWarnings = FALSE)
+    
+    rap_export <- as.data.frame(RAP_melt)
+    first_cols <- c("featureID", "sampleID", "abundance", var)
+    first_cols <- first_cols[first_cols %in% colnames(rap_export)]
+    rap_export <- rap_export[, c(first_cols, setdiff(colnames(rap_export), first_cols)), drop = FALSE]
+    
+    names(rap_export)[names(rap_export) == "featureID"] <- "FeatureID"
+    names(rap_export)[names(rap_export) == "sampleID"]  <- "SampleID"
+    names(rap_export)[names(rap_export) == "abundance"] <- "RelAbundance"
+    
+    readr::write_csv(rap_export, export_csv)
+    message("Relative abundance exported to: ", export_csv)
+  }
+  
+  feature_order <- data.frame(SummarizedExperiment::assays(RAP_sel)[["relabundance"]]) %>% 
+    rowSums() %>% sort(decreasing = TRUE) %>% names()
+  RAP_melt$featureID <- factor(RAP_melt$featureID, levels = feature_order)
+  
+  RAP_out_list <- list()
+  RAP_mean <- data.frame(feature_order) %>% stats::setNames("featureID")
+  
+  if (length(var) == 1) {
+    var_levels <- list(var_levels)
+  }
+  
+  for (cov in rev(var)) {
+    if (paste("sign", cov, sep = "|") %in% colnames(RAP_melt)) {
+      
+      RAP_melt_sel <- RAP_melt[RAP_melt[, paste("sign", cov, sep = "|")] == TRUE, ] %>% 
+        dplyr::select(all_of(c("featureID", "sampleID", "abundance", cov))) %>% 
+        stats::setNames(c("featureID", "sampleID", "abundance", "variable"))
+      
+      RAP_cov_list <- list()
+      
+      if (is.character(RAP_melt_sel$variable) | is.factor(RAP_melt_sel$variable)) {
+        RAP_melt_cov <- RAP_melt_sel
+        
+        if (!is.null(var_levels[[which(var == cov)]])) {
+          RAP_melt_cov$variable <- factor(RAP_melt_cov$variable, levels = var_levels[[which(var == cov)]])
+        } else {
+          RAP_melt_cov$variable <- factor(RAP_melt_cov$variable)
+        }
+        
+        plot_palette <- c("#1F77B4FF", "#AEC7E8FF", "#FF7F0EFF", 
+                          "#FFBB78FF", "#2CA02CFF", "#98DF8AFF", "#D62728FF", 
+                          "#FF9896FF", "#9467BDFF", "#C5B0D5FF", "#8C564BFF", 
+                          "#C49C94FF", "#E377C2FF", "#F7B6D2FF", "#7F7F7FFF", 
+                          "#C7C7C7FF", "#BCBD22FF", "#DBDB8DFF", "#17BECFFF", 
+                          "#9EDAE5FF")
+        
+        if (length(levels(RAP_melt_cov$variable)) <= 10) {
+          plot_colors <- plot_palette[seq(1, 19, 2)][1:length(levels(RAP_melt_cov$variable))]
+          color_scale <- ggplot2::scale_color_manual(values = plot_colors)
+        } else if (length(levels(RAP_melt_cov$variable)) <= 20) {
+          # NOTE: kept logic; uses levels(variable) instead of undefined set_levels
+          plot_colors <- plot_palette[sort(c(seq(2, 20, 2)[1:(length(levels(RAP_melt_cov$variable)) - 10)], seq(1, 19, 2)))]
+          color_scale <- ggplot2::scale_color_manual(values = plot_colors)
+        } else {
+          color_scale <- ggraph::scale_color_viridis(discrete = TRUE)
+        }
+        
+      } else {
+        RAP_melt_cov <- suppressMessages(
+          RAP_melt_sel %>% dplyr::group_by(featureID, variable) %>% 
+            dplyr::summarise(mean = mean(abundance), std = plotrix::std.error(abundance))
+        )
+        
+        lm_list <- lapply(unique(RAP_melt_cov$featureID), function(x) {
+          summary(stats::lm(as.data.frame(RAP_melt_cov[RAP_melt_cov$featureID == x, ])$mean ~ 
+                              as.data.frame(RAP_melt_cov[RAP_melt_cov$featureID == x, ])$variable))
+        })
+        
+        RAP_lm_stats <- data.frame(
+          as.character(unique(RAP_melt_cov$featureID)),
+          unlist(lapply(lm_list, function(x) paste("R2:", signif(x$adj.r.squared, digits = 2)))),
+          unlist(lapply(lm_list, function(x) paste("Pr(>|t|):", signif(x$coefficients[2, 4], digits = 2))))
+        ) %>% stats::setNames(c("featureID", "R2", "Pr(>|t|)"))
+      }
+      
+      for (part in (ceiling(length(unique(RAP_melt_sel$featureID)) / prod(panel_dim))):1) {
+        feature_range <- (prod(panel_dim) * part - prod(panel_dim) + 1):(prod(panel_dim) * part)
+        feature_sel <- unique(RAP_melt_sel$featureID)[feature_range]
+        RAP_melt_panel <- RAP_melt_cov[RAP_melt_cov$featureID %in% feature_sel, ]
+        
+        if (is.numeric(RAP_melt_sel$variable) | is.double(RAP_melt_sel$variable)) {
+          RAP_lm_stats_sel <- RAP_lm_stats[RAP_lm_stats$featureID %in% feature_sel, ]
+        }
+        
+        if (length(unique(RAP_melt_sel$featureID)) > prod(panel_dim)) {
+          plot_title_panel <- paste(plot_title, ": ", cov, " (", part, ")", sep = "")
+        } else {
+          plot_title_panel <- paste(plot_title, ": ", cov, sep = "")
+        }
+        
+        if (is.factor(RAP_melt_cov$variable)) {
+          RAP_out_panel <- ggplot2::ggplot(RAP_melt_panel, ggplot2::aes(x = variable, y = abundance)) +
+            ggplot2::geom_boxplot(lwd = 0.5, show.legend = FALSE, outlier.shape = NA) +
+            ggplot2::geom_jitter(ggplot2::aes(color = variable), size = 0.65,
+                                 position = ggplot2::position_jitterdodge(0.2),
+                                 alpha = 0.75, show.legend = FALSE) +
+            ggpubr::geom_pwc(label = "p.adj.signif", p.adjust.method = "BH", hide.ns = hide.ns) +
+            color_scale
+        } else {
+          RAP_out_panel <- ggplot2::ggplot(RAP_melt_panel, ggplot2::aes(x = variable, y = mean)) +
+            ggplot2::geom_point(size = 2, color = "#26456E") +
+            ggplot2::geom_line(linetype = 2, color = "#26456E") +
+            ggplot2::geom_errorbar(ggplot2::aes(ymin = mean - std, ymax = mean + std), width = 0.2, color = "grey") +
+            ggplot2::geom_text(data = RAP_lm_stats_sel, ggplot2::aes(x = -Inf, y = Inf, label = R2),
+                               size = 2.5, vjust = 1.2, hjust = -0.1) +
+            ggplot2::geom_text(data = RAP_lm_stats_sel, ggplot2::aes(x = -Inf, y = Inf, label = `Pr(>|t|)`),
+                               size = 2.5, vjust = 2.4, hjust = -0.07)
+        }
+        
+        RAP_out_panel <- RAP_out_panel +
+          ggplot2::labs(x = "", y = "Relative abundance", title = plot_title_panel, fill = cov) +
+          ggplot2::theme_bw() +
+          ggplot2::theme(plot.title = ggplot2::element_text(size = 20, face = "plain"),
+                         axis.title.y = ggplot2::element_text(size = 15, face = "plain"),
+                         strip.text.x = ggplot2::element_text(size = 9, face = "italic"),
+                         panel.grid = ggplot2::element_blank()) +
+          ggplot2::facet_wrap(~featureID, scales = "free", ncol = panel_dim[2])
+        
+        RAP_cov_list <- append(RAP_cov_list, list(RAP_out_panel))
+        names(RAP_cov_list)[length(RAP_cov_list)] <- paste(cov, part, sep = "_")
+      }
+      
+      print(RAP_cov_list)
+      
+      for (feat in unique(RAP_melt_sel$featureID)) {
+        RAP_melt_feat <- RAP_melt_cov[RAP_melt_cov$featureID == feat, ]
+        
+        if (is.numeric(RAP_melt_sel$variable) | is.double(RAP_melt_sel$variable)) {
+          RAP_lm_stats_feat <- RAP_lm_stats[RAP_lm_stats$featureID == feat, ]
+        }
+        
+        if (is.factor(RAP_melt_cov$variable)) {
+          RAP_out_feat <- ggplot2::ggplot(RAP_melt_feat, ggplot2::aes(x = variable, y = abundance)) +
+            ggplot2::geom_boxplot(lwd = 0.65, show.legend = FALSE, outlier.shape = NA) +
+            ggplot2::geom_jitter(ggplot2::aes(color = variable),
+                                 position = ggplot2::position_jitterdodge(0.2),
+                                 alpha = 0.75, show.legend = FALSE) +
+            ggpubr::geom_pwc(label = "p.adj.signif", p.adjust.method = "BH",
+                             hide.ns = hide.ns, label.size = 2.8) +
+            color_scale
+        } else {
+          RAP_out_feat <- ggplot2::ggplot(RAP_melt_feat, ggplot2::aes(x = variable, y = mean)) +
+            ggplot2::geom_point(size = 2, color = "#26456E") +
+            ggplot2::geom_line(linetype = 2, color = "#26456E") +
+            ggplot2::geom_errorbar(ggplot2::aes(ymin = mean - std, ymax = mean + std), width = 0.2, color = "grey") +
+            ggplot2::geom_text(data = RAP_lm_stats_feat, ggplot2::aes(x = -Inf, y = Inf, label = R2),
+                               size = 4, vjust = 1.2, hjust = -0.1) +
+            ggplot2::geom_text(data = RAP_lm_stats_feat, ggplot2::aes(x = -Inf, y = Inf, label = `Pr(>|t|)`),
+                               size = 4, vjust = 2.4, hjust = -0.07)
+        }
+        
+        RAP_out_feat <- RAP_out_feat +
+          ggplot2::labs(x = "", y = "", fill = cov, title = feat) +
+          ggplot2::theme_bw() +
+          ggplot2::theme(plot.title = ggplot2::element_text(size = 13, face = "italic"),
+                         axis.title.y = ggplot2::element_text(size = 12, face = "plain"),
+                         strip.text.x = ggplot2::element_text(size = 9, face = "italic"),
+                         panel.grid = ggplot2::element_blank())
+        
+        RAP_cov_list$features <- append(RAP_cov_list$features, list(RAP_out_feat))
+        names(RAP_cov_list$features)[length(RAP_cov_list$features)] <- feat
+      }
+      
+      RAP_out_list <- append(RAP_out_list, list(RAP_cov_list))
+      names(RAP_out_list)[length(RAP_out_list)] <- cov
+      
+      RAP_mean_add <- stats::aggregate(stats::as.formula(paste("abundance ~ featureID +", cov)), RAP_melt, mean) %>% 
+        tidyr::pivot_wider(names_from = dplyr::all_of(cov), values_from = abundance)
+      colnames(RAP_mean_add) <- c("featureID", paste(cov, colnames(RAP_mean_add)[-1], sep = ""))
+      RAP_mean <- dplyr::right_join(RAP_mean, RAP_mean_add, by = "featureID")
+      
+    } else {
+      warning(paste("No significant comparisons were identified in the DA_analysis object for selected conditions for variable:", cov))
+    }
+  }
+  
+  RAP_out_list <- append(RAP_out_list, list(RAP_mean))
+  names(RAP_out_list)[length(RAP_out_list)] <- "mean_relabundance"
+  
+  return(invisible(RAP_out_list))
+}
+```
+
+## Function to export p- values and p-adjusted values from RA
+
+```{r Function to export p values and p adj values from RA, echo=TRUE, fig.show='hide', message=FALSE, warning=FALSE}
+RA_padj_from_RA <- function(ra_long,
+                            feature_col  = "FeatureID",
+                            value_col    = "RelAbundance",
+                            group_col    = "Time",
+                            group_levels = c("T0","T12"),
+                            paired       = FALSE,
+                            id_col       = "PatientID",
+                            padj_method  = "BH") {
+
+  df <- ra_long %>%
+    dplyr::mutate(
+      .feature = .data[[feature_col]],
+      .value   = .data[[value_col]],
+      .group   = factor(.data[[group_col]], levels = group_levels)
+    ) %>%
+    dplyr::filter(!is.na(.group), !is.na(.value))
+
+  if (paired) {
+    if (!(id_col %in% colnames(df))) {
+      stop(sprintf("paired=TRUE: the column '%s' does not exist in ra_long", id_col))
+    }
+
+    df <- df %>%
+      dplyr::group_by(.feature, .data[[id_col]], .group) %>%
+      dplyr::summarise(.value = stats::median(.value, na.rm = TRUE), .groups = "drop") %>%
+      dplyr::group_by(.feature, .data[[id_col]]) %>%
+      dplyr::filter(all(group_levels %in% .group)) %>%
+      dplyr::ungroup()
+
+    out <- df %>%
+      tidyr::pivot_wider(names_from = .group, values_from = .value) %>%
+      dplyr::group_by(.feature) %>%
+      dplyr::summarise(
+        n_pairs = sum(!is.na(.data[[group_levels[1]]]) & !is.na(.data[[group_levels[2]]])),
+        n_T0  = n_pairs,
+        n_T12 = n_pairs,
+        p = tryCatch(
+          stats::wilcox.test(
+            .data[[group_levels[1]]],
+            .data[[group_levels[2]]],
+            paired = TRUE,
+            exact = FALSE
+          )$p.value,
+          error = function(e) NA_real_
+        ),
+        .groups = "drop"
+      )
+
+  } else {
+
+    out <- df %>%
+      dplyr::group_by(.feature) %>%
+      dplyr::summarise(
+        n_T0  = sum(.group == group_levels[1]),
+        n_T12 = sum(.group == group_levels[2]),
+        p = tryCatch(
+          stats::wilcox.test(.value ~ .group, paired = FALSE, exact = FALSE)$p.value,
+          error = function(e) NA_real_
+        ),
+        .groups = "drop"
+      )
+  }
+
+  out %>%
+    dplyr::mutate(
+      padj = stats::p.adjust(p, method = padj_method),
+      padj_signif = dplyr::case_when(
+        is.na(padj)      ~ NA_character_,
+        padj <= 0.0001   ~ "****",
+        padj <= 0.001    ~ "***",
+        padj <= 0.01     ~ "**",
+        padj <= 0.05     ~ "*",
+        TRUE             ~ "ns"
+      )
+    ) %>%
+    dplyr::rename(FeatureID = .feature)
+}
+```
+
+## Function: percent zeros (prevalence of zeros) by Feature and Time
+
+```{r Zeros percent, echo=TRUE, fig.show='hide', message=FALSE, warning=FALSE}
+# ---- function: percent zeros (prevalence of zeros) by Feature and Time ----
+zeros_by_feature_time <- function(ra_long,
+                                  feature_col  = "FeatureID",
+                                  value_col    = "RelAbundance",
+                                  group_col    = "Time",
+                                  group_levels = c("T0","T12"),
+                                  zero_eps     = 0) {
+
+  ra_long %>%
+    mutate(
+      .feature = .data[[feature_col]],
+      .value   = .data[[value_col]],
+      .group   = factor(.data[[group_col]], levels = group_levels)
+    ) %>%
+    filter(!is.na(.feature), !is.na(.group), !is.na(.value)) %>%
+    group_by(.feature, .group) %>%
+    summarise(
+      n = n(),
+      n_zero = sum(.value <= zero_eps),
+      pct_zero = 100 * n_zero / n,
+      .groups = "drop"
+    ) %>%
+    pivot_wider(
+      names_from  = .group,
+      values_from = c(n, n_zero, pct_zero),
+      names_sep   = "_"
+    ) %>%
+    rename(FeatureID = .feature)
+}
+```
+
+#----------------------
+## SAMPLETYPE AND TIME
+#----------------------
+
+### Feces at T0 and T12
+
+```{r DAA ANCOMBC2 of Feces at T0 and T12 min_prevalence 0.10, results='hide', echo=TRUE, warning=FALSE, message=FALSE}
+DAA_Metaphlan_cf_fc_abc <- DA_analysis(tse = subset_feces_no_UN,
+                               assay_type = 'counts',
+                               var = 'Time',
+                               main_var = NULL,
+                               var_levels = c('T0','T12'),
+                               pairwise = T,
+                               level = 'Species',
+                               min_prevalence = 0.10,
+                               min_abundance = 0,
+                               padj_method = 'BH',
+                               padj_m = 'default',
+                               rand_formula = NULL,
+                               tools = 'ANCOM_BC2',
+                               sign_cut = 0.05,
+                               effect_cut = 0,
+                               n_cores = 1,
+                               verbose = T,
+                               struc_zero = F,
+                               neg_lb = F,
+                               pseudo_sens = T,
+                               s0_perc = 0.05)
+```
+
+#### Print significant results
+
+```{r Print significant features of DAA_Metaphlan_cf_fc}
+print(DAA_Metaphlan_cf_fc_abc$sign_features)
+```
+
+#### Save significant results
+
+```{r Save results feces T0 and T12}
+write.csv(DAA_Metaphlan_cf_fc_abc$sign_features$ANCOM_BC2,
+          file = here("results", "DAA_ANCOMBC2_sign_species_feces.csv"),
+          row.names = FALSE)
+```
+
+#### Plot significant results
+
+```{r Plot significat results feces}
+sign_df_fc <- DAA_Metaphlan_cf_fc_abc$sign_features$ANCOM_BC2
+
+DAA_Metaphlan_cf_fc_abc_bar <- ggplot(sign_df_fc, 
+    aes(x = reorder(featureID, effect), y = effect, fill = effect)) +
+  geom_bar(stat = "identity", color = "black", size = 0.2) +
+  coord_flip() +
+  scale_fill_gradient2(low = "#F4E1A1", mid = "white", high = "#A1E1E1", midpoint = 0) +
+  labs(title = "Differentially abundant species at T12 vs T0",
+       x = "",
+       y = "Effect size (log fold change)") +
+  theme_minimal()
+ggsave(filename = here("results", "DAA_Metaphlan_cf_fc_abc_bar.svg"), plot = DAA_Metaphlan_cf_fc_abc_bar, width = 10, height = 7, dpi = 300, device = "svg")
+```
+
+##### Relative abundance of DAA of Feces at T0 and T12
+###### Export CSV
+
+```{r RA CSV of DAA of Feces at T0 and T12, echo=TRUE, fig.show='hide', warning=FALSE, message=FALSE}
+RAP_out_fc <- RA_plot_csv(
+  features = DAA_Metaphlan_cf_fc_abc,
+  tse = subset_feces_no_UN,
+  var = c("Time"),
+  var_levels = c("T0","T12"),
+  level = "Species",
+  plot_title = "Relative Abundance",
+  export_csv = here::here("results", "RA_DAA_plot_relabundance_long_fc.csv")
+)
+```
+
+###### Run function to export p-values and p-adjusted values from RA PAIRED
+
+```{r Run function to export pval and p adj values from RA PAIRED, echo=TRUE, warning=FALSE, message=FALSE}
+ra_df <- read_csv(here::here("results","RA_DAA_plot_relabundance_long_fc.csv"), show_col_types = FALSE) %>%
+  mutate(
+    PatientID = str_extract(SampleID, "^[A-Za-z]+\\d+")
+  )
+
+ra_padj <- RA_padj_from_RA(
+  ra_long = ra_df,
+  paired = TRUE
+)
+
+write_csv(ra_padj, here::here("results","RA_DAA_padj_from_RA_Time_feces.csv"))
+```
+
+###### Plot
+
+```{r Plot of RA of DAA of Feces at T0 and T12, echo=TRUE, fig.show='hide', warning=FALSE, message=FALSE}
+# Load ANCOM-BC2 significant features
+ancom_tab <- read_csv(here::here("results", "DAA_ANCOMBC2_sign_species_feces.csv"),
+                      show_col_types = FALSE) %>%
+  rename(FeatureID = featureID)
+
+sig_feats <- ancom_tab %>%
+  filter(padj < 0.05) %>%
+  pull(FeatureID) %>%
+  unique()
+
+# Load RA long CSV
+ra_df <- read_csv(here::here("results", "RA_DAA_plot_relabundance_long_fc.csv"),
+                  show_col_types = FALSE) %>%
+  mutate(
+    PatientID = str_extract(SampleID, "^[A-Za-z]+\\d+"),
+    Time = factor(Time, levels = c("T0", "T12"))
+  )
+
+# Keep only sig features + paired patients (T0 and T12)
+ra_sig <- ra_df %>%
+  filter(FeatureID %in% sig_feats) %>%
+  group_by(FeatureID, PatientID) %>%
+  filter(n_distinct(Time) == 2) %>%
+  ungroup()
+
+# ---- Compute Wilcoxon paired p-values on Relative Abundance (for labels) ----
+ra_pvals <- ra_sig %>%
+  group_by(FeatureID, PatientID, Time) %>%
+  summarise(RelAbundance = median(RelAbundance, na.rm = TRUE), .groups = "drop") %>%
+  pivot_wider(names_from = Time, values_from = RelAbundance) %>%
+  group_by(FeatureID) %>%
+  summarise(
+    p_RA = tryCatch(
+      wilcox.test(T0, T12, paired = TRUE, exact = FALSE)$p.value,
+      error = function(e) NA_real_
+    ),
+    .groups = "drop"
+  )
+
+# Colors
+col_box   <- c("T0" = "#F4E1A1", "T12" = "#A1E1E1")
+col_point <- c("T0" = "#FAF3DC", "T12" = "#D6F5F5")
+
+# Paired plot for ONE feature
+plot_ra_feature <- function(feat) {
+
+  df <- ra_sig %>%
+    filter(FeatureID == feat) %>%
+    mutate(
+      fill_box   = col_box[Time],
+      fill_point = col_point[Time],
+      x          = as.numeric(Time)
+    )
+
+  # ---- Label using RA Wilcoxon paired p-value ----
+  p_val <- ra_pvals %>%
+    filter(FeatureID == feat) %>%
+    slice(1) %>%
+    pull(p_RA)
+
+  lab <- ifelse(is.na(p_val), "p = NA",
+                ifelse(p_val < 0.001, "p < 0.001",
+                       paste0("p = ", signif(p_val, 3))))
+
+  y_max <- max(df$RelAbundance, na.rm = TRUE)
+  if (!is.finite(y_max) || y_max == 0) y_max <- 1e-6
+
+  y_bracket <- y_max * 1.15
+  y_text    <- y_max * 1.22
+  y_lim     <- y_max * 1.30
+
+  p_values <- data.frame(x = 1, xend = 2, y = y_bracket, label = lab)
+
+  ggplot() +
+    stat_slab(
+      data = df %>% filter(Time == "T0"),
+      aes(x = x, y = RelAbundance, fill = fill_box),
+      side = "left", alpha = 0.5, adjust = 0.6, show.legend = FALSE
+    ) +
+    stat_slab(
+      data = df %>% filter(Time == "T12"),
+      aes(x = x, y = RelAbundance, fill = fill_box),
+      side = "right", alpha = 0.5, adjust = 0.6, show.legend = FALSE
+    ) +
+    geom_boxplot(
+      data = df,
+      aes(x = x, y = RelAbundance, fill = fill_box),
+      width = 0.5, outlier.shape = NA,
+      color = "black", alpha = 0.9, show.legend = TRUE
+    ) +
+    geom_point(
+      data = df,
+      aes(x = x, y = RelAbundance, fill = fill_point),
+      shape = 21, size = 3, stroke = 0.3, color = "black",
+      show.legend = FALSE
+    ) +
+    geom_line(
+      data = df,
+      aes(x = x, y = RelAbundance, group = PatientID),
+      color = "grey40", alpha = 0.4, linetype = "dashed", linewidth = 0.4
+    ) +
+    geom_segment(
+      data = p_values,
+      aes(x = x, xend = xend, y = y, yend = y),
+      color = "black", linewidth = 0.5
+    ) +
+    geom_text(
+      data = p_values,
+      aes(x = 1.5, y = y_text, label = label),
+      size = 4
+    ) +
+    scale_x_continuous(breaks = c(1, 2), labels = c("T0", "T12")) +
+    scale_fill_identity(
+      guide = "legend", name = "Time",
+      breaks = col_box, labels = names(col_box)
+    ) +
+    coord_cartesian(ylim = c(0, y_lim)) +
+    labs(x = NULL, y = "Relative abundance", title = feat) +
+    theme_minimal(base_size = 14) +
+    theme(
+      legend.position = "right",
+      axis.text.x = element_text(size = 14)
+    )
+}
+
+# Save ONLY the ANCOM-BC2 significant features into results/
+for (feat in sig_feats) {
+  p <- plot_ra_feature(feat)
+
+  out_file <- here::here(
+    "results",
+    paste0("RA_DAA_fc_", gsub("[^A-Za-z0-9]+", "_", feat), ".svg")
+  )
+
+  ggsave(out_file, plot = p, width = 8, height = 6, dpi = 300, device = "svg")
+  message("Saved: ", out_file)
+}
+```
+
+####### Panel plot
+
+```{r Panel plot of RA of DAA of Feces at T0 and T12, echo=TRUE, fig.show='show', warning=FALSE, message=FALSE}
+# Create all plots first
+plot_list <- lapply(sig_feats, plot_ra_feature)
+names(plot_list) <- sig_feats
+
+# Combine into one panel
+panel_plot_fc <- wrap_plots(
+  plotlist = plot_list,
+  ncol = 4,
+  guides = "collect"
+) & theme(
+  legend.position = "right"
+)
+
+# Save panel
+n_rows_panel <- ceiling(length(plot_list) / 3)
+
+ggsave(filename = here::here("results", "RA_DAA_panel_fc.svg"),
+  plot = panel_plot_fc, width = 14, height = 2.5 * n_rows_panel, dpi = 300,
+  device = "svg")
+```
+
+###### Prevalence of zeros (%) by taxon and by time
+
+```{r Prevalence of zeros, echo=TRUE, fig.show='show', warning=FALSE, message=FALSE}
+# ---- load your long RA table ----
+ra_df <- read_csv(
+  here::here("results", "RA_DAA_plot_relabundance_long_fc.csv"),
+  show_col_types = FALSE
+) %>%
+  mutate(
+    PatientID = str_extract(SampleID, "^[A-Za-z]+\\d+"),
+    Time = factor(Time, levels = c("T0","T12"))
+  )
+
+group_levels <- c("T0","T12")
+zero_eps <- 0
+
+# ---- 1) Prevalence of zeros by feature and time ----
+zero_df <- ra_df %>%
+  filter(!is.na(FeatureID), !is.na(Time), !is.na(RelAbundance)) %>%
+  group_by(FeatureID, Time) %>%
+  summarise(
+    n = n(),
+    n_zero = sum(RelAbundance <= zero_eps),
+    pct_zero = 100 * n_zero / n,
+    .groups = "drop"
+  ) %>%
+  pivot_wider(
+    names_from  = Time,
+    values_from = c(n, n_zero, pct_zero),
+    names_sep   = "_"
+  )
+
+# ---- 2) Paired wilcoxon T0 vs T12 by feature (p-value) ----
+p_df <- ra_df %>%
+  filter(!is.na(FeatureID), !is.na(Time), !is.na(RelAbundance), !is.na(PatientID)) %>%
+  group_by(FeatureID, PatientID, Time) %>%
+  summarise(RelAbundance = median(RelAbundance, na.rm = TRUE), .groups = "drop") %>%
+  group_by(FeatureID, PatientID) %>%
+  filter(all(group_levels %in% Time)) %>%
+  ungroup() %>%
+  pivot_wider(names_from = Time, values_from = RelAbundance) %>%
+  group_by(FeatureID) %>%
+  summarise(
+    n_pairs = sum(!is.na(.data[[group_levels[1]]]) & !is.na(.data[[group_levels[2]]])),
+    p = tryCatch(
+      wilcox.test(
+        .data[[group_levels[1]]],
+        .data[[group_levels[2]]],
+        paired = TRUE,
+        exact  = FALSE
+      )$p.value,
+      error = function(e) NA_real_
+    ),
+    .groups = "drop"
+  ) %>%
+  mutate(
+    padj = p.adjust(p, method = "BH"),
+    p_signif = case_when(
+      is.na(p) ~ NA_character_,
+      p <= 0.0001 ~ "****",
+      p <= 0.001  ~ "***",
+      p <= 0.01   ~ "**",
+      p <= 0.05   ~ "*",
+      TRUE ~ "ns"
+    ),
+    padj_signif = case_when(
+      is.na(padj) ~ NA_character_,
+      padj <= 0.0001 ~ "****",
+      padj <= 0.001  ~ "***",
+      padj <= 0.01   ~ "**",
+      padj <= 0.05   ~ "*",
+      TRUE ~ "ns"
+    )
+  )
+
+# ---- 3) Merge ----
+ra_zero_p <- p_df %>%
+  left_join(zero_df, by = "FeatureID") %>%
+  arrange(p)
+
+# ---- Export ----
+write_csv(ra_zero_p, here::here("results", "RA_DAA_pvalues_and_percent_zeros_by_Time_feces.csv"))
+```
+
+
+### Sputum at T0 and T12
+
+```{r DAA ANCOMBC2 of Sputum at T0 and T12 min_prevalence 0.10, results='hide', echo=TRUE, warning=FALSE, message=FALSE}
+DAA_Metaphlan_cf_sp_abc <- DA_analysis(tse = subset_sputum_no_UN,
+                               assay_type = 'counts',
+                               var = 'Time',
+                               main_var = NULL,
+                               var_levels = c('T0','T12'),
+                               pairwise = T,
+                               level = 'Species',
+                               min_prevalence = 0.10,
+                               min_abundance = 0,
+                               padj_method = 'BH',
+                               padj_m = 'default',
+                               rand_formula = NULL,
+                               tools = 'ANCOM_BC2',
+                               sign_cut = 0.05,
+                               effect_cut = 0,
+                               n_cores = 1,
+                               verbose = T,
+                               struc_zero = F,
+                               neg_lb = F,
+                               pseudo_sens = T,
+                               s0_perc = 0.05)
+```
+
+#### Print significant results
+
+```{r Print significant features of DAA_Metaphlan_cf_sp}
+print(DAA_Metaphlan_cf_sp_abc$sign_features)
+```
+
+#### Save significant results
+
+```{r Save results sputum T0 and T12}
+write.csv(DAA_Metaphlan_cf_sp_abc$sign_features$ANCOM_BC2,
+          file = here("results", "DAA_ANCOMBC2_sign_species_sputum.csv"),
+          row.names = FALSE)
+```
+
+#### Plot significant results
+
+```{r Plot significat results sputum T0 T12}
+sign_df_sp <- DAA_Metaphlan_cf_sp_abc$sign_features$ANCOM_BC2
+
+DAA_Metaphlan_cf_sp_abc_bar <- ggplot(sign_df_sp, 
+    aes(x = reorder(featureID, effect), y = effect, fill = effect)) +
+  geom_bar(stat = "identity", color = "black", size = 0.2) +
+  coord_flip() +
+  scale_fill_gradient2(low = "#D9C2E9", mid = "white", high = "#B3E1B6", midpoint = 0) +
+  labs(title = "Differentially abundant species at T12 vs T0 in sputum",
+       x = "",
+       y = "Effect size (log fold change)") +
+  theme_minimal()
+ggsave(filename = here("results", "DAA_Metaphlan_cf_sp_abc_bar.svg"), plot = DAA_Metaphlan_cf_sp_abc_bar, width = 10, height = 7, dpi = 300, device = "svg")
+```
+
+##### Relative abundance of DAA of Sputum at T0 and T12
+###### Export CSV
+
+```{r RA CSV of DAA of Sputum at T0 and T12, echo=TRUE, fig.show='hide', warning=FALSE, message=FALSE}
+RAP_out_sp <- RA_plot_csv(
+  features = DAA_Metaphlan_cf_sp_abc,
+  tse = subset_sputum_no_UN,
+  var = c("Time"),
+  var_levels = c("T0","T12"),
+  level = "Species",
+  plot_title = "Relative Abundance",
+  export_csv = here::here("results", "RA_DAA_plot_relabundance_long_sp.csv")
+)
+```
+
+###### Run function to export p-values and p-adjusted values from RA PAIRED
+
+```{r Run function to export pval and p adj values from RA PAIRED, echo=TRUE, warning=FALSE, message=FALSE}
+ra_df <- read_csv(here::here("results","RA_DAA_plot_relabundance_long_sp.csv"), show_col_types = FALSE) %>%
+  mutate(
+    PatientID = str_extract(SampleID, "^[A-Za-z]+\\d+")
+  )
+
+ra_padj <- RA_padj_from_RA(
+  ra_long = ra_df,
+  paired = TRUE
+)
+
+write_csv(ra_padj, here::here("results","RA_DAA_padj_from_RA_Time_sputum.csv"))
+```
+
+###### Plot
+
+```{r Plot of RA of DAA of Feces at T0 and T12, echo=TRUE, fig.show='hide', warning=FALSE, message=FALSE}
+# Load ANCOM-BC2 significant features
+ancom_tab <- read_csv(here::here("results", "DAA_ANCOMBC2_sign_species_sputum.csv"),
+                      show_col_types = FALSE) %>%
+  rename(FeatureID = featureID)
+
+sig_feats <- ancom_tab %>%
+  filter(padj < 0.05) %>%
+  pull(FeatureID) %>%
+  unique()
+
+# Load RA long CSV
+ra_df <- read_csv(here::here("results", "RA_DAA_plot_relabundance_long_sp.csv"),
+                  show_col_types = FALSE) %>%
+  mutate(
+    PatientID = str_extract(SampleID, "^[A-Za-z]+\\d+"),
+    Time = factor(Time, levels = c("T0", "T12"))
+  )
+
+# Keep only sig features + paired patients (T0 and T12)
+ra_sig <- ra_df %>%
+  filter(FeatureID %in% sig_feats) %>%
+  group_by(FeatureID, PatientID) %>%
+  filter(n_distinct(Time) == 2) %>%
+  ungroup()
+
+# ---- Compute Wilcoxon paired p-values on Relative Abundance (for labels) ----
+ra_pvals <- ra_sig %>%
+  group_by(FeatureID, PatientID, Time) %>%
+  summarise(RelAbundance = median(RelAbundance, na.rm = TRUE), .groups = "drop") %>%
+  pivot_wider(names_from = Time, values_from = RelAbundance) %>%
+  group_by(FeatureID) %>%
+  summarise(
+    p_RA = tryCatch(
+      wilcox.test(T0, T12, paired = TRUE, exact = FALSE)$p.value,
+      error = function(e) NA_real_
+    ),
+    .groups = "drop"
+  )
+
+# Colors
+col_box   <- c("T0" = "#D9C2E9", "T12" = "#B3E1B6")
+col_point <- c("T0" = "#EDE3F4", "T12" = "#E2F5E3")
+
+# Paired plot for ONE feature
+plot_ra_feature <- function(feat) {
+
+  df <- ra_sig %>%
+    filter(FeatureID == feat) %>%
+    mutate(
+      fill_box   = col_box[Time],
+      fill_point = col_point[Time],
+      x          = as.numeric(Time)
+    )
+
+  # ---- Label using RA Wilcoxon paired p-value ----
+  p_val <- ra_pvals %>%
+    filter(FeatureID == feat) %>%
+    slice(1) %>%
+    pull(p_RA)
+
+  lab <- ifelse(is.na(p_val), "p = NA",
+                ifelse(p_val < 0.001, "p < 0.001",
+                       paste0("p = ", signif(p_val, 3))))
+
+  y_max <- max(df$RelAbundance, na.rm = TRUE)
+  if (!is.finite(y_max) || y_max == 0) y_max <- 1e-6
+
+  y_bracket <- y_max * 1.15
+  y_text    <- y_max * 1.22
+  y_lim     <- y_max * 1.30
+
+  p_values <- data.frame(x = 1, xend = 2, y = y_bracket, label = lab)
+
+  ggplot() +
+    stat_slab(
+      data = df %>% filter(Time == "T0"),
+      aes(x = x, y = RelAbundance, fill = fill_box),
+      side = "left", alpha = 0.5, adjust = 0.6, show.legend = FALSE
+    ) +
+    stat_slab(
+      data = df %>% filter(Time == "T12"),
+      aes(x = x, y = RelAbundance, fill = fill_box),
+      side = "right", alpha = 0.5, adjust = 0.6, show.legend = FALSE
+    ) +
+    geom_boxplot(
+      data = df,
+      aes(x = x, y = RelAbundance, fill = fill_box),
+      width = 0.5, outlier.shape = NA,
+      color = "black", alpha = 0.9, show.legend = TRUE
+    ) +
+    geom_point(
+      data = df,
+      aes(x = x, y = RelAbundance, fill = fill_point),
+      shape = 21, size = 3, stroke = 0.3, color = "black",
+      show.legend = FALSE
+    ) +
+    geom_line(
+      data = df,
+      aes(x = x, y = RelAbundance, group = PatientID),
+      color = "grey40", alpha = 0.4, linetype = "dashed", linewidth = 0.4
+    ) +
+    geom_segment(
+      data = p_values,
+      aes(x = x, xend = xend, y = y, yend = y),
+      color = "black", linewidth = 0.5
+    ) +
+    geom_text(
+      data = p_values,
+      aes(x = 1.5, y = y_text, label = label),
+      size = 4
+    ) +
+    scale_x_continuous(breaks = c(1, 2), labels = c("T0", "T12")) +
+    scale_fill_identity(
+      guide = "legend", name = "Time",
+      breaks = col_box, labels = names(col_box)
+    ) +
+    coord_cartesian(ylim = c(0, y_lim)) +
+    labs(x = NULL, y = "Relative abundance", title = feat) +
+    theme_minimal(base_size = 14) +
+    theme(
+      legend.position = "right",
+      axis.text.x = element_text(size = 14)
+    )
+}
+
+# Save ONLY the ANCOM-BC2 significant features into results/
+for (feat in sig_feats) {
+  p <- plot_ra_feature(feat)
+
+  out_file <- here::here(
+    "results",
+    paste0("RA_DAA_sp_", gsub("[^A-Za-z0-9]+", "_", feat), ".svg")
+  )
+
+  ggsave(out_file, plot = p, width = 8, height = 6, dpi = 300, device = "svg")
+  message("Saved: ", out_file)
+}
+```
+
+###### Panel plot
+
+```{r Panel plot of RA of DAA of Sputum at T0 and T12, echo=TRUE, fig.show='show', warning=FALSE, message=FALSE}
+# Create all plots first
+plot_list <- lapply(sig_feats, plot_ra_feature)
+names(plot_list) <- sig_feats
+
+# Combine into one panel
+panel_plot_sp <- wrap_plots(
+  plotlist = plot_list,
+  ncol = 2,
+  guides = "collect"
+) & theme(
+  legend.position = "right"
+)
+
+# Save panel
+n_rows_panel <- ceiling(length(plot_list) / 3)
+
+ggsave(filename = here::here("results", "RA_DAA_panel_sp.svg"),
+  plot = panel_plot_sp, width = 8, height = 3 * n_rows_panel, dpi = 300,
+  device = "svg")
+```
+
+###### Prevalence of zeros (%) by taxon and by time
+
+```{r Prevalence of zeros, echo=TRUE, fig.show='show', warning=FALSE, message=FALSE}
+# ---- load your long RA table ----
+ra_df <- read_csv(
+  here::here("results", "RA_DAA_plot_relabundance_long_sp.csv"),
+  show_col_types = FALSE
+) %>%
+  mutate(
+    PatientID = str_extract(SampleID, "^[A-Za-z]+\\d+"),
+    Time = factor(Time, levels = c("T0","T12"))
+  )
+
+group_levels <- c("T0","T12")
+zero_eps <- 0
+
+# ---- 1) Prevalence of zeros by feature and time ----
+zero_df <- ra_df %>%
+  filter(!is.na(FeatureID), !is.na(Time), !is.na(RelAbundance)) %>%
+  group_by(FeatureID, Time) %>%
+  summarise(
+    n = n(),
+    n_zero = sum(RelAbundance <= zero_eps),
+    pct_zero = 100 * n_zero / n,
+    .groups = "drop"
+  ) %>%
+  pivot_wider(
+    names_from  = Time,
+    values_from = c(n, n_zero, pct_zero),
+    names_sep   = "_"
+  )
+
+# ---- 2) Paired wilcoxon T0 vs T12 by feature (p-value) ----
+p_df <- ra_df %>%
+  filter(!is.na(FeatureID), !is.na(Time), !is.na(RelAbundance), !is.na(PatientID)) %>%
+  group_by(FeatureID, PatientID, Time) %>%
+  summarise(RelAbundance = median(RelAbundance, na.rm = TRUE), .groups = "drop") %>%
+  group_by(FeatureID, PatientID) %>%
+  filter(all(group_levels %in% Time)) %>%
+  ungroup() %>%
+  pivot_wider(names_from = Time, values_from = RelAbundance) %>%
+  group_by(FeatureID) %>%
+  summarise(
+    n_pairs = sum(!is.na(.data[[group_levels[1]]]) & !is.na(.data[[group_levels[2]]])),
+    p = tryCatch(
+      wilcox.test(
+        .data[[group_levels[1]]],
+        .data[[group_levels[2]]],
+        paired = TRUE,
+        exact  = FALSE
+      )$p.value,
+      error = function(e) NA_real_
+    ),
+    .groups = "drop"
+  ) %>%
+  mutate(
+    padj = p.adjust(p, method = "BH"),
+    p_signif = case_when(
+      is.na(p) ~ NA_character_,
+      p <= 0.0001 ~ "****",
+      p <= 0.001  ~ "***",
+      p <= 0.01   ~ "**",
+      p <= 0.05   ~ "*",
+      TRUE ~ "ns"
+    ),
+    padj_signif = case_when(
+      is.na(padj) ~ NA_character_,
+      padj <= 0.0001 ~ "****",
+      padj <= 0.001  ~ "***",
+      padj <= 0.01   ~ "**",
+      padj <= 0.05   ~ "*",
+      TRUE ~ "ns"
+    )
+  )
+
+# ---- 3) Merge ----
+ra_zero_p <- p_df %>%
+  left_join(zero_df, by = "FeatureID") %>%
+  arrange(p)
+
+# ---- Export ----
+write_csv(ra_zero_p, here::here("results", "RA_DAA_pvalues_and_percent_zeros_by_Time_sputum.csv"))
+```
+

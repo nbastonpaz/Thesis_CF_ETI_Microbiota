@@ -1,0 +1,404 @@
+SampleID	Gene	Data_Type	Predicted_Phenotype	CGE_Predicted_Phenotype	Identity_perc	Overlap_perc	ATB_class
+A1E0	ST436 (hinfluenzae)	MLST					
+A1E0	repUS43	Plasmid			100	99.75	
+A1E0	aph(3')-IIb	Resistance	kanamycin	"Kanamycin, Neomycin, Paromomycin, Ribostamycin, Butiromycin, Gentamicin"	98.6	61.83	Aminoglycoside
+A1E0	catB7	Resistance	chloramphenicol	Chloramphenicol	99.52	65.26	Phenicol
+A1E0	cfxA3	Resistance	ampicillin	Ampicillin	100	93.48	Beta-lactam
+A1E0	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.08	99.48	MLS
+A1E0	erm(F)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.88	100	MLS
+A1E0	erm(X)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	98.6	100.12	MLS
+A1E0	mef(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin"	100	100	Macrolide
+A1E0	msr(D)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Telithromycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A1E0	tet(M)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.45	66.51	Tetracycline
+A1E0	tet(Q)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	98.05	86.11	Tetracycline
+A1E12	ST- (-)	MLST					
+A1E12	repUS43	Plasmid			99.75	100	
+A1E12	cfxA3	Resistance	ampicillin	Ampicillin	100	100	Beta-lactam
+A1E12	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.61	100.13	MLS
+A1E12	erm(F)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.8	60.92	MLS
+A1E12	erm(X)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.74	100.13	MLS
+A1E12	mef(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin"	100	96.39	Macrolide
+A1E12	msr(D)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Telithromycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A1E12	tet(32)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.95	100	Tetracycline
+A1E12	tet(Q)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	98.73	99.9	Tetracycline
+A3E0	ST- (paeruginosa)	MLST					
+A3E0	repUS43	Plasmid			99.83	99.75	
+A3E0	blaOXA-494	Resistance	ampicillin	Unknown Beta-lactam	99.75	100	Beta-lactam
+A3E0	catS	Resistance	chloramphenicol	Chloramphenicol	98.7	71.32	Phenicol
+A3E0	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.08	100.13	MLS
+A3E0	erm(F)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.84	76.53	MLS
+A3E0	erm(X)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.18	100.12	MLS
+A3E0	fosA	Resistance	fosfomycin	Fosfomycin	98.09	64.22	Epoxide
+A3E0	mef(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin"	99.63	89.33	Macrolide
+A3E12	ST- (neisseria)	MLST					
+A3E12	repUS43	Plasmid			100	69.07	
+A3E12	cfxA	Resistance	ampicillin	"Cefoxitin, Ampicillin"	99.78	93.48	Beta-lactam
+A3E12	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.08	100.13	MLS
+A3E12	erm(F)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.88	100	MLS
+A3E12	erm(X)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	98.97	68.19	MLS
+A3E12	lsa(C)	Resistance	"lincomycin, clindamycin"	"Lincomycin, Clindamycin, Dalfopristin, Pristinamycin IIA, Virginiamycin M, Tiamulin"	98.6	72.35	Multi-Drug
+A3E12	msr(D)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Telithromycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A3E12	tet(32)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.94	80.1	Tetracycline
+A3E12	tet(M)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	100	64.53	Tetracycline
+A3E12	tet(Q)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.74	99.9	Tetracycline
+A3E12	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	100	83.18	Tetracycline
+A4E0	NA	NA	NA	NA	NA	NA	NA
+A4E12	ST- (-)	MLST					
+A4E12	None	Plasmid					
+A4E12	aac(6')-Iak	Resistance	gentamicin	"Tobramycin, Dibekacin, Amikacin, Sisomicin, Netilmicin"	99.35	100	Aminoglycoside
+A6E0	ST175 (paeruginosa)	MLST					
+A6E0	None	Plasmid					
+A6E0	ant(2'')-Ia	Resistance	gentamicin	"Gentamicin, Tobramycin"	100	100	Aminoglycoside
+A6E0	aph(3')-IIb	Resistance	kanamycin	Unknown Aminoglycoside	98.88	100	Aminoglycoside
+A6E0	blaOXA-50	Resistance	ampicillin	"Amoxicillin, Ampicillin"	99.87	100	Beta-lactam
+A6E0	blaPAO	Resistance	"ampicillin, amoxicillin/clavulanic acid, cefoxitin, ceftriaxone"	"Amoxicillin, Ampicillin, Cefepime, Ceftazidime"	100	100	Beta-lactam
+A6E0	catB7	Resistance	chloramphenicol	Chloramphenicol	99.84	100	Phenicol
+A6E0	crpP	Resistance	ciprofloxacin I/R	Ciprofloxacin	98.99	100	Fluoroquinolone
+A6E0	erm(F)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.88	100	MLS
+A6E0	erm(X)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.59	95.54	MLS
+A6E0	fosA	Resistance	fosfomycin	Fosfomycin	98.78	100	Epoxide
+A6E0	sul1	Resistance	sulfisoxazole	Sulfamethoxazole	100	99.76	Sulfonamide
+A6E12	ST- (-)	MLST					
+A6E12	repUS43	Plasmid			100	99.75	
+A6E12	cfxA3	Resistance	ampicillin	Ampicillin	100	74.22	Beta-lactam
+A6E12	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A6E12	erm(F)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.86	87.14	MLS
+A6E12	erm(X)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.3	100.12	MLS
+A6E12	mef(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin"	100	100	Macrolide
+A6E12	msr(D)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Telithromycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A6E12	tet(M)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.24	68.54	Tetracycline
+A6E12	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.37	99.69	Tetracycline
+A7E0	ST- (paeruginosa)	MLST					
+A7E0	None	Plasmid					
+A7E0	aph(3')-IIb	Resistance	kanamycin	Unknown Aminoglycoside	99.63	100	Aminoglycoside
+A7E0	blaOXA-396	Resistance	ampicillin	"Amoxicillin, Ampicillin, Meropenem"	99.7	84.16	Beta-lactam
+A7E0	crpP	Resistance	ciprofloxacin I/R	Ciprofloxacin	98.74	80.3	Fluoroquinolone
+A7E0	fosA	Resistance	fosfomycin	Fosfomycin	99.51	100	Epoxide
+A7E12	ST- (paeruginosa)	MLST					
+A7E12	repUS43	Plasmid			99.88	71.23	
+A7E12	blaOXA-494	Resistance	ampicillin	Unknown Beta-lactam	99.7	84.28	Beta-lactam
+A7E12	crpP	Resistance	ciprofloxacin I/R	Ciprofloxacin	99.24	66.67	Fluoroquinolone
+A7E12	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.16	93.18	MLS
+A7E12	mef(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin"	99.92	100	Macrolide
+A7E12	msr(D)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Telithromycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.93	100	MLS
+A8E0	ST- (oralstrep)	MLST					
+A8E0	repUS43	Plasmid			99.92	99.75	
+A8E0	aac(6')-aph(2'')	Resistance	"amikacin, gentamicin, tobramycin"	"Gentamicin, Tobramycin, Netilmicin, Kanamycin, Amikacin, Dibekacin, Isepamicin, Fortimicin, Streptomycin"	99.93	100	Aminoglycoside
+A8E0	ant(6)-Ia	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+A8E0	aph(3')-III	Resistance	"kanamycin, amikacin"	"Kanamycin, Amikacin, Neomycin, Butirosin, Isepamicin, Lividomycin, Paromomycin, Ribostamycin"	100	100	Aminoglycoside
+A8E0	cfxA3	Resistance	ampicillin	Ampicillin	100	95.86	Beta-lactam
+A8E0	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.48	100.13	MLS
+A8E0	erm(F)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.88	100	MLS
+A8E0	erm(X)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.06	100.12	MLS
+A8E0	mef(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin"	100	100	Macrolide
+A8E0	msr(D)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Telithromycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A8E0	tet(M)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.48	100	Tetracycline
+A8E12	ST62 (mcatarrhalis_achtman_6)	MLST					
+A8E12	None	Plasmid					
+A8E12	blaBRO-1	Resistance	ampicillin	"Amoxicillin, Ampicillin, Penicillin, Piperacillin"	100	100	Beta-lactam
+A9E0	ST- (-)	MLST					
+A9E0	repUS43	Plasmid			99.83	100	
+A9E0	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	84.82	MLS
+A9E0	tet(S/M)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	98.6	100.05	Tetracycline
+A9E12	ST- (-)	MLST					
+A9E12	None	Plasmid					
+A9E12	None	Resistance	Susceptible				
+A10E0	ST- (-)	MLST					
+A10E0	None	Plasmid					
+A10E0	None	Resistance	Susceptible				
+A10E12	ST- (-)	MLST					
+A10E12	None	Plasmid					
+A10E12	None	Resistance	Susceptible				
+A12E0	ST- (-)	MLST					
+A12E0	repUS43	Plasmid			100	99.75	
+A12E0	aac(6')-aph(2'')	Resistance	"amikacin, gentamicin, tobramycin"	"Gentamicin, Tobramycin, Netilmicin, Kanamycin, Amikacin, Dibekacin, Isepamicin, Fortimicin, Streptomycin"	99.79	100	Aminoglycoside
+A12E0	ant(6)-Ia	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+A12E0	aph(3')-III	Resistance	"kanamycin, amikacin"	"Kanamycin, Amikacin, Neomycin, Butirosin, Isepamicin, Lividomycin, Paromomycin, Ribostamycin"	100	100	Aminoglycoside
+A12E0	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.34	100.13	MLS
+A12E0	erm(F)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.88	100	MLS
+A12E0	erm(X)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.18	100.12	MLS
+A12E0	mef(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin"	100	100	Macrolide
+A12E0	msr(D)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Telithromycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A12E12	ST- (-)	MLST					
+A12E12	None	Plasmid					
+A12E12	None	Resistance	Susceptible				
+A13E0	ST- (-)	MLST					
+A13E0	None	Plasmid					
+A13E0	None	Resistance	Susceptible				
+A13E12	ST- (neisseria)	MLST					
+A13E12	repUS43	Plasmid			99.78	74.96	
+A13E12	cfxA	Resistance	ampicillin	"Cefoxitin, Ampicillin"	99.79	100	Beta-lactam
+A13E12	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.61	100.13	MLS
+A13E12	erm(F)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.88	100	MLS
+A13E12	erm(X)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.18	100.12	MLS
+A13E12	lsa(C)	Resistance	"lincomycin, clindamycin"	"Lincomycin, Clindamycin, Dalfopristin, Pristinamycin IIA, Virginiamycin M, Tiamulin"	99.35	72.55	MLS
+A13E12	tet(M)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.43	100	Tetracycline
+A16E0	ST- (-)	MLST					
+A16E0	None	Plasmid					
+A16E0	aph(3'')-Ib	Resistance	streptomycin	Streptomycin	100	66.54	Aminoglycoside
+A16E12	ST- (-)	MLST					
+A16E12	None	Plasmid					
+A16E12	None	Resistance	Susceptible				
+A17E0	ST2 (achromobacter)	MLST					
+A17E0	None	Plasmid					
+A17E0	blaOXA-114c	Resistance	ampicillin	Unknown Beta-lactam	99.52	100	Beta-lactam
+A17E0	erm(X)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.18	100.12	MLS
+A17E12	ST- (-)	MLST					
+A17E12	None	Plasmid					
+A17E12	None	Resistance	Susceptible				
+A19E0	ST- (paeruginosa)	MLST					
+A19E0	None	Plasmid					
+A19E0	aph(3')-IIb	Resistance	kanamycin	Unknown Aminoglycoside	99.75	100	Aminoglycoside
+A19E0	blaOXA-494	Resistance	ampicillin	Unknown Beta-lactam	99.75	100	Beta-lactam
+A19E0	blaPAO	Resistance	"ampicillin, amoxicillin/clavulanic acid, cefoxitin, ceftriaxone"	"Amoxicillin, Ampicillin, Cefepime, Ceftazidime"	99.66	100	Beta-lactam
+A19E0	catB7	Resistance	chloramphenicol	Chloramphenicol	99.74	61.19	Phenicol
+A19E0	fosA	Resistance	fosfomycin	Fosfomycin	98.78	100	Epoxide
+A19E12	ST569 (paeruginosa)	MLST					
+A19E12	repUS43	Plasmid			99.83	100	
+A19E12	aph(3')-IIb	Resistance	kanamycin	Unknown Aminoglycoside	99.75	100	Aminoglycoside
+A19E12	blaOXA-494	Resistance	ampicillin	Unknown Beta-lactam	99.75	100	Beta-lactam
+A19E12	blaPAO	Resistance	"ampicillin, amoxicillin/clavulanic acid, cefoxitin, ceftriaxone"	"Amoxicillin, Ampicillin, Cefepime, Ceftazidime"	99.66	100	Beta-lactam
+A19E12	catB7	Resistance	chloramphenicol	Chloramphenicol	99.53	100	Phenicol
+A19E12	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.34	100.13	MLS
+A19E12	erm(F)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.86	86.52	MLS
+A19E12	fosA	Resistance	fosfomycin	Fosfomycin	99.02	100	Epoxide
+A19E12	lnu(C)	Resistance	lincomycin	Lincomycin	99.19	100	Lincosamide
+A19E12	mef(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin"	100	100	Macrolide
+A19E12	msr(D)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Telithromycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A19E12	tet(M)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	98.49	100	Tetracycline
+A20E0	ST- (-)	MLST					
+A20E0	None	Plasmid					
+A20E0	None	Resistance	Susceptible				
+A20E12	ST- (-)	MLST					
+A20E12	None	Plasmid					
+A20E12	None	Resistance	Susceptible				
+A22E0	ST27 (bordetella_3)	MLST					
+A22E0	None	Plasmid					
+A22E0	erm(X)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.06	100.12	MLS
+A22E0	mef(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin"	100	81.61	Macrolide
+A22E0	msr(D)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Telithromycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.59	100	MLS
+A22E0	sul2	Resistance	sulfisoxazole	Sulfamethoxazole	100	100	Sulfonamide
+A22E0	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	98.23	97.03	Tetracycline
+A22E12	ST27 (bordetella_3)	MLST					
+A22E12	repUS43	Plasmid			99.83	100	
+A22E12	cfxA3	Resistance	ampicillin	Ampicillin	100	93.17	Beta-lactam
+A22E12	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.08	100.13	MLS
+A22E12	mef(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin"	100	100	Macrolide
+A22E12	msr(D)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Telithromycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A22E12	sul2	Resistance	sulfisoxazole	Sulfamethoxazole	100	100	Sulfonamide
+A22E12	tet(M)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.56	83.07	Tetracycline
+A22E12	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	100	93.65	Tetracycline
+A24E0	ST- (-)	MLST					
+A24E0	None	Plasmid					
+A24E0	aac(6')-Ic	Resistance	"amikacin, tobramycin"	"Tobramycin, Dibekacin, Amikacin, Sisomicin, Netilmicin"	100	87.53	Aminoglycoside
+A24E12	ST- (-)	MLST					
+A24E12	None	Plasmid					
+A24E12	None	Resistance	Susceptible				
+A25E0	ST- (paeruginosa)	MLST					
+A25E0	None	Plasmid					
+A25E0	aph(3')-IIb	Resistance	kanamycin	Unknown Aminoglycoside	99.01	100	Aminoglycoside
+A25E0	blaOXA-494	Resistance	ampicillin	Unknown Beta-lactam	99.75	100	Beta-lactam
+A25E0	blaPAO	Resistance	"ampicillin, amoxicillin/clavulanic acid, cefoxitin, ceftriaxone"	"Amoxicillin, Ampicillin, Cefepime, Ceftazidime"	99.5	100	Beta-lactam
+A25E0	catB7	Resistance	chloramphenicol	Chloramphenicol	99.06	100	Phenicol
+A25E0	crpP	Resistance	ciprofloxacin I/R	Ciprofloxacin	98.48	100	Fluoroquinolone
+A25E0	erm(F)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.35	77.03	MLS
+A25E0	erm(X)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.18	100.12	MLS
+A25E0	fosA	Resistance	fosfomycin	Fosfomycin	98.78	100	Epoxide
+A25E12	ST- (spneumoniae)	MLST					
+A25E12	repUS43	Plasmid			99.92	100	
+A25E12	cfxA	Resistance	ampicillin	"Cefoxitin, Ampicillin"	99.79	100	Beta-lactam
+A25E12	erm(F)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.88	100	MLS
+A25E12	erm(X)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.18	100.12	MLS
+A25E12	mef(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin"	100	100	Macrolide
+A25E12	msr(D)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Telithromycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A25E12	tet(M)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.17	100	Tetracycline
+A25E12	tet(Q)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.53	65.84	Tetracycline
+A25E12	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.73	97.08	Tetracycline
+A26E0	ST- (-)	MLST					
+A26E0	None	Plasmid					
+A26E0	None	Resistance	Susceptible				
+A26E12	ST- (-)	MLST					
+A26E12	None	Plasmid					
+A26E12	None	Resistance	Susceptible				
+A27E0	ST3774 (paeruginosa)	MLST					
+A27E0	repUS43	Plasmid			100	99.75	
+A27E0	ant(6)-Ia	Resistance	streptomycin	Streptomycin	99.78	100	Aminoglycoside
+A27E0	aph(2'')-Ia	Resistance	"amikacin, gentamicin, tobramycin"	"Amikacin, Gentamicin, Tobramycin, Kanamycin"	99.93	97.02	Aminoglycoside
+A27E0	aph(3')-IIb	Resistance	kanamycin	Unknown Aminoglycoside	99.13	100	Aminoglycoside
+A27E0	blaOXA-494	Resistance	ampicillin	Unknown Beta-lactam	99.62	100	Beta-lactam
+A27E0	blaPAO	Resistance	"ampicillin, amoxicillin/clavulanic acid, cefoxitin, ceftriaxone"	"Amoxicillin, Ampicillin, Cefepime, Ceftazidime"	99.33	100	Beta-lactam
+A27E0	catB7	Resistance	chloramphenicol	Chloramphenicol	98.9	100	Phenicol
+A27E0	cfxA5	Resistance	ampicillin	Unknown Beta-lactam	99.9	100	Beta-lactam
+A27E0	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.34	100.13	MLS
+A27E0	erm(F)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.88	100	MLS
+A27E0	erm(X)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.18	100.12	MLS
+A27E0	fosA	Resistance	fosfomycin	Fosfomycin	99.51	100	Epoxide
+A27E0	lsa(C)	Resistance	"lincomycin, clindamycin"	"Lincomycin, Clindamycin, Dalfopristin, Pristinamycin IIA, Virginiamycin M, Tiamulin"	98.5	71.94	MLS
+A27E0	mef(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin"	100	100	Macrolide
+A27E0	msr(D)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Telithromycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A27E0	tet(O)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.69	100	Tetracycline
+A27E0	tet(Q)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.84	100	Tetracycline
+A27E0	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	98.69	99.69	Tetracycline
+A27E12	ST- (-)	MLST					
+A27E12	repUS43	Plasmid			100	99.75	
+A27E12	aph(3'')-Ib	Resistance	streptomycin	Streptomycin	100	69.28	Aminoglycoside
+A27E12	cfxA5	Resistance	ampicillin	Unknown Beta-lactam	99.78	95.65	Beta-lactam
+A27E12	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.34	100.13	MLS
+A27E12	erm(F)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.5	100	MLS
+A27E12	mef(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin"	100	100	Macrolide
+A27E12	msr(D)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Telithromycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A28E0	ST- (achromobacter)	MLST					
+A28E0	None	Plasmid					
+A28E0	aph(3'')-Ib	Resistance	streptomycin	Streptomycin	100	99.88	Aminoglycoside
+A28E0	aph(3'')-Ib	Resistance	streptomycin	Streptomycin	100	99.88	Aminoglycoside
+A28E0	aph(6)-Id	Resistance	kanamycin	Streptomycin	100	100	Aminoglycoside
+A28E0	aph(6)-Id	Resistance	kanamycin	Streptomycin	100	100	Aminoglycoside
+A28E0	blaOXA-114c	Resistance	ampicillin	Unknown Beta-lactam	99.64	100	Beta-lactam
+A28E12	ST- (-)	MLST					
+A28E12	None	Plasmid					
+A28E12	None	Resistance	Susceptible				
+A30E0	ST- (-)	MLST					
+A30E0	None	Plasmid					
+A30E0	None	Resistance	Susceptible				
+A30E12	ST- (neisseria)	MLST					
+A30E12	repUS34	Plasmid			99.16	67.46	
+A30E12	repUS43	Plasmid			100	99.75	
+A30E12	aac(6')-aph(2'')	Resistance	"amikacin, gentamicin, tobramycin"	"Gentamicin, Tobramycin, Netilmicin, Kanamycin, Amikacin, Dibekacin, Isepamicin, Fortimicin, Streptomycin"	100	70.14	Aminoglycoside
+A30E12	blaTEM-1A	Resistance	ampicillin	"Amoxicillin, Ampicillin, Cephalothin, Piperacillin, Ticarcillin"	99.88	100	Beta-lactam
+A30E12	cfxA3	Resistance	ampicillin	Ampicillin	100	93.17	Beta-lactam
+A30E12	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A30E12	erm(F)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.88	100	MLS
+A30E12	erm(X)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.18	100.12	MLS
+A30E12	mef(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin"	100	76.85	Macrolide
+A30E12	msr(D)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Telithromycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A30E12	tet(32)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	100	100	Tetracycline
+A30E12	tet(O)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.74	100	Tetracycline
+A30E12	tet(Q)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.84	100	Tetracycline
+A30E12	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	98.22	99.69	Tetracycline
+A30E12	tet(X)	Resistance	"doxycycline, tetracycline, minocycline, tigecycline"	"Doxycycline, Tetracycline, Minocycline, Tigecycline"	99.88	72.24	Tetracycline
+P2E0	ST- (-)	MLST					
+P2E0	None	Plasmid					
+P2E0	None	Resistance	Susceptible				
+P2E12	ST- (-)	MLST					
+P2E12	None	Plasmid					
+P2E12	None	Resistance	Susceptible				
+P3E0	ST- (-)	MLST					
+P3E0	None	Plasmid					
+P3E0	catB7	Resistance	chloramphenicol	Chloramphenicol	99.1	69.8	Phenicol
+P3E12	ST- (-)	MLST					
+P3E12	None	Plasmid					
+P3E12	None	Resistance	Susceptible				
+P4E0	ST- (-)	MLST					
+P4E0	None	Plasmid					
+P4E0	None	Resistance	Susceptible				
+P4E12	ST- (spneumoniae)	MLST					
+P4E12	rep13	Plasmid			99.76	60.91	
+P4E12	repUS43	Plasmid			99.9	79.1	
+P4E12	cfxA3	Resistance	ampicillin	Ampicillin	100	100	Beta-lactam
+P4E12	erm(F)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.88	100	MLS
+P4E12	erm(X)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.18	100.12	MLS
+P4E12	mef(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin"	100	100	Macrolide
+P4E12	msr(D)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Telithromycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+P4E12	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	100	100	Tetracycline
+P5E0	ST- (-)	MLST					
+P5E0	repUS43	Plasmid			99.92	100	
+P5E0	cfxA3	Resistance	ampicillin	Ampicillin	99.88	90.27	Beta-lactam
+P5E0	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.61	100.13	MLS
+P5E0	erm(F)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.88	100	MLS
+P5E0	erm(X)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.32	97.11	MLS
+P5E0	mef(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin"	100	100	Macrolide
+P5E0	tet(37)	Resistance	tetracycline	Tetracycline	99.55	67.89	Tetracycline
+P5E0	tet(M)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.64	100	Tetracycline
+P5E12	ST- (-)	MLST					
+P5E12	None	Plasmid					
+P5E12	None	Resistance	Susceptible				
+P11E0	ST- (mycobacteria_2)	MLST					
+P11E0	repUS43	Plasmid			99.77	71.23	
+P11E0	mef(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin"	100	100	Macrolide
+P11E0	msr(D)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Telithromycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+P11E12	ST- (-)	MLST					
+P11E12	None	Plasmid					
+P11E12	None	Resistance	Susceptible				
+P14E0	ST- (hinfluenzae)	MLST					
+P14E0	None	Plasmid					
+P14E0	msr(D)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Telithromycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+P14E12	ST- (-)	MLST					
+P14E12	None	Plasmid					
+P14E12	None	Resistance	Susceptible				
+P16E0	ST- (-)	MLST					
+P16E0	None	Plasmid					
+P16E0	None	Resistance	Susceptible				
+P16E12	ST- (-)	MLST					
+P16E12	None	Plasmid					
+P16E12	None	Resistance	Susceptible				
+P17E0	ST- (-)	MLST					
+P17E0	None	Plasmid					
+P17E0	None	Resistance	Susceptible				
+P17E12	ST- (neisseria)	MLST					
+P17E12	repUS43	Plasmid			99.83	99.75	
+P17E12	blaROB-1	Resistance	ampicillin	"Penicillin, Amoxicillin, Ampicillin"	99.88	94.88	Beta-lactam
+P17E12	cfxA3	Resistance	ampicillin	Ampicillin	100	100	Beta-lactam
+P17E12	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+P17E12	erm(F)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.88	100	MLS
+P17E12	erm(X)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	81.76	MLS
+P17E12	mef(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin"	100	100	Macrolide
+P17E12	msr(D)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Telithromycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	61.27	MLS
+P17E12	tet(M)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.79	100	Tetracycline
+P17E12	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	100	100	Tetracycline
+P20E0	ST- (-)	MLST					
+P20E0	repUS43	Plasmid			98.47	70.48	
+P20E0	aac(6')-aph(2'')	Resistance	"amikacin, gentamicin, tobramycin"	"Gentamicin, Tobramycin, Netilmicin, Kanamycin, Amikacin, Dibekacin, Isepamicin, Fortimicin, Streptomycin"	100	73.26	Aminoglycoside
+P20E0	cfxA3	Resistance	ampicillin	Ampicillin	100	93.17	Beta-lactam
+P20E0	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.61	100.13	MLS
+P20E0	erm(F)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.88	100	MLS
+P20E0	erm(X)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.87	100.13	MLS
+P20E0	mef(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin"	100	100	Macrolide
+P20E0	msr(D)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Telithromycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+P20E0	tet(M)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.58	61.46	Tetracycline
+P20E12	ST- (-)	MLST					
+P20E12	None	Plasmid					
+P20E12	cfxA3	Resistance	ampicillin	Ampicillin	100	66.87	Beta-lactam
+P20E12	mef(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin"	100	100	Macrolide
+P20E12	msr(D)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Telithromycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.93	100	MLS
+P21E0	ST- (-)	MLST					
+P21E0	None	Plasmid					
+P21E0	None	Resistance	Susceptible				
+P21E12	ST- (-)	MLST					
+P21E12	None	Plasmid					
+P21E12	None	Resistance	Susceptible				
+P25E0	ST- (saureus)	MLST					
+P25E0	None	Plasmid					
+P25E0	None	Resistance	Susceptible				
+P25E12	ST- (-)	MLST					
+P25E12	None	Plasmid					
+P25E12	None	Resistance	Susceptible				
+P26E0	ST- (-)	MLST					
+P26E0	None	Plasmid					
+P26E0	bleO	Resistance	unknown[bleO_1_AF051917]	Bleomycin	100	70.43	Bleomycin
+P26E12	ST- (-)	MLST					
+P26E12	None	Plasmid					
+P26E12	None	Resistance	Susceptible				
+P27E0	ST- (-)	MLST					
+P27E0	repUS38	Plasmid			100	100	
+P27E0	repUS43	Plasmid			100	100	
+P27E0	blaTEM-1C	Resistance	ampicillin	"Amoxicillin, Ampicillin, Cephalothin, Piperacillin, Ticarcillin"	100	65.51	Beta-lactam
+P27E0	cfxA3	Resistance	ampicillin	Ampicillin	99.9	100	Beta-lactam
+P27E0	erm(X)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.18	100.12	MLS
+P27E0	mef(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin"	100	100	Macrolide
+P27E0	msr(D)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Telithromycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+P27E0	tet(M)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.84	100	Tetracycline
+P27E0	tet(O/W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	98.82	61.51	Tetracycline
+P27E12	ST- (neisseria)	MLST					
+P27E12	None	Plasmid					
+P27E12	cfxA3	Resistance	ampicillin	Ampicillin	100	100	Beta-lactam
+P27E12	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.73	100	MLS
+P27E12	erm(F)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.88	100	MLS
+P27E12	mef(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin"	100	76.27	Macrolide
+P27E12	msr(D)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Telithromycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+P27E12	tet(Q)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.84	100	Tetracycline
+P42E0	ST- (-)	MLST					
+P42E0	None	Plasmid					
+P42E0	cfxA3	Resistance	ampicillin	Ampicillin	99.88	85.2	Beta-lactam
+P42E12	ST- (-)	MLST					
+P42E12	None	Plasmid					
+P42E12	None	Resistance	Susceptible				

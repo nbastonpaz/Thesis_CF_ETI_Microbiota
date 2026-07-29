@@ -1,0 +1,1588 @@
+SampleID	Gene	Data_Type	Predicted_Phenotype	CGE_Predicted_Phenotype	Identity_perc	Overlap_perc	ATB_class
+A1H0	ST- (-)	MLST					
+A1H0	Col(BS512)	Plasmid			99.55	95.71	
+A1H0	IncFII(29)	Plasmid			100	81.08	
+A1H0	rep11c	Plasmid			100	60.41	
+A1H0	rep37	Plasmid			99.66	92.59	
+A1H0	repUS2	Plasmid			98.53	99.71	
+A1H0	aac(6')-Im	Resistance	"amikacin, tobramycin"	"Amikacin, Tobramycin, Kanamycin"	99.63	100	Aminoglycoside
+A1H0	aph(3'')-Ib	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+A1H0	aph(6)-Id	Resistance	kanamycin	Streptomycin	100	100	Aminoglycoside
+A1H0	catS	Resistance	chloramphenicol	Chloramphenicol	98.51	100	Phenicol
+A1H0	sul2	Resistance	sulfisoxazole	Sulfamethoxazole	100	100	Sulfonamide
+A1H0	tet(O)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.91	60.83	Tetracycline
+A1H12	ST- (ecoli_achtman_4)	MLST					
+A1H12	Col(BS512)	Plasmid			100	72.53	
+A1H12	Col156	Plasmid			98.05	100	
+A1H12	IncFIB(K)	Plasmid			98.7	68.39	
+A1H12	IncFII(29)	Plasmid			98.78	94.98	
+A1H12	IncI1-I(Alpha)	Plasmid			100	100	
+A1H12	repUS2	Plasmid			98.68	99.71	
+A1H12	aac(6')-Im	Resistance	"amikacin, tobramycin"	"Amikacin, Tobramycin, Kanamycin"	99.63	100	Aminoglycoside
+A1H12	ant(6)-Ia	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+A1H12	aph(3'')-Ib	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+A1H12	aph(6)-Id	Resistance	kanamycin	Streptomycin	100	95.22	Aminoglycoside
+A1H12	catS	Resistance	chloramphenicol	Chloramphenicol	98.7	100	Phenicol
+A1H12	cfxA5	Resistance	ampicillin	Unknown Beta-lactam	99.85	70.5	Beta-lactam
+A1H12	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.08	100.13	MLS
+A1H12	sul2	Resistance	sulfisoxazole	Sulfamethoxazole	100	100	Sulfonamide
+A1H12	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.84	100	Tetracycline
+A1H12	tet(M)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.95	100	Tetracycline
+A1H12	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	100	100	Tetracycline
+A3H0	ST- (streptothermophilus)	MLST					
+A3H0	IncI1-I(Alpha)	Plasmid			100	100	
+A3H0	repUS43	Plasmid			99.92	100	
+A3H0	ant(6)-Ia	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+A3H0	ant(6)-Ia	Resistance	streptomycin	Streptomycin	99.88	100	Aminoglycoside
+A3H0	aph(3')-III	Resistance	"kanamycin, amikacin"	"Kanamycin, Amikacin, Neomycin, Butirosin, Isepamicin, Lividomycin, Paromomycin, Ribostamycin"	99.87	100	Aminoglycoside
+A3H0	catS	Resistance	chloramphenicol	Chloramphenicol	98.7	100	Phenicol
+A3H0	cfr(C)	Resistance	chloramphenicol	"Chloramphenicol, Florfenicol, Clindamycin, Lincomycin, Linezolid, Dalfopristin, Pristinamycin IIA, Virginiamycin M, Tiamulin"	99.9	84.49	Multi-Drug
+A3H0	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.34	100.13	MLS
+A3H0	erm(Q)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A3H0	erm(X)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.06	100.12	MLS
+A3H0	erm(X)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.06	100.12	MLS
+A3H0	lnu(C)	Resistance	lincomycin	Lincomycin	98.79	100	Lincosamide
+A3H0	lsa(C)	Resistance	"lincomycin, clindamycin"	"Lincomycin, Clindamycin, Dalfopristin, Pristinamycin IIA, Virginiamycin M, Tiamulin"	99.59	100	MLS
+A3H0	mef(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin"	99.92	100	Macrolide
+A3H0	msr(D)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Telithromycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A3H0	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.75	100	Tetracycline
+A3H0	tet(44)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	98.02	100	Tetracycline
+A3H0	tet(M)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.64	100	Tetracycline
+A3H0	tet(O)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.69	99.79	Tetracycline
+A3H0	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.79	99.95	Tetracycline
+A3H12	ST- (-)	MLST					
+A3H12	repUS2	Plasmid			98.53	100.15	
+A3H12	repUS43	Plasmid			99.92	100	
+A3H12	aac(6')-aph(2'')	Resistance	"amikacin, gentamicin, tobramycin"	"Gentamicin, Tobramycin, Netilmicin, Kanamycin, Amikacin, Dibekacin, Isepamicin, Fortimicin, Streptomycin"	100	73.96	Aminoglycoside
+A3H12	ant(6)-Ia	Resistance	streptomycin	Streptomycin	99.88	100	Aminoglycoside
+A3H12	ant(6)-Ib	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+A3H12	aph(3')-IIIa	Resistance	"amikacin, gentamicin, kanamycin"	"Amikacin, Kanamycin"	100	77.36	Aminoglycoside
+A3H12	cat	Resistance	chloramphenicol	Chloramphenicol	100	100	Phenicol
+A3H12	catS	Resistance	chloramphenicol	Chloramphenicol	98.7	100	Phenicol
+A3H12	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A3H12	erm(F)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	60.42	MLS
+A3H12	erm(G)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.32	100	MLS
+A3H12	lnu(C)	Resistance	lincomycin	Lincomycin	99.04	84.04	Lincosamide
+A3H12	msr(D)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Telithromycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	98.75	98.16	MLS
+A3H12	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.67	100	Tetracycline
+A3H12	tet(L)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.49	99.93	Tetracycline
+A3H12	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.44	92.5	Tetracycline
+A4H0	ST116 (sthermophilus)	MLST					
+A4H0	repUS2	Plasmid			98.53	100.15	
+A4H0	Cfr(E)	Resistance	unknown[Cfr(E)_1_NG_070225]	"Chloramphenicol, Florfenicol, Clindamycin, Lincomycin, Linezolid, Dalfopristin, Pristinamycin IIA, Virginiamycin M, Tiamulin"	100	61.26	Phenicol
+A4H0	NarB	Resistance	unknown[NarB_1_MN590304]	"Narasin, Salinomycin, Maduramicin"	100	69.95	Ionophore
+A4H0	aac(6')-aph(2'')	Resistance	"amikacin, gentamicin, tobramycin"	"Gentamicin, Tobramycin, Netilmicin, Kanamycin, Amikacin, Dibekacin, Isepamicin, Fortimicin, Streptomycin"	100	65.62	Aminoglycoside
+A4H0	ant(6)-Ia	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+A4H0	ant(6)-Ia	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+A4H0	aph(3')-III	Resistance	"kanamycin, amikacin"	"Kanamycin, Amikacin, Neomycin, Butirosin, Isepamicin, Lividomycin, Paromomycin, Ribostamycin"	100	100	Aminoglycoside
+A4H0	blaOXA-347	Resistance	ampicillin	Unknown Beta-lactam	100	100	Beta-lactam
+A4H0	cfr(C)	Resistance	chloramphenicol	"Chloramphenicol, Florfenicol, Clindamycin, Lincomycin, Linezolid, Dalfopristin, Pristinamycin IIA, Virginiamycin M, Tiamulin"	100	84.49	Phenicol
+A4H0	cfxA3	Resistance	ampicillin	Ampicillin	100	95.86	Beta-lactam
+A4H0	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A4H0	erm(F)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A4H0	erm(G)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A4H0	erm(X)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.72	94.75	MLS
+A4H0	lnu(C)	Resistance	lincomycin	Lincomycin	98.8	84.04	Lincosamide
+A4H0	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.84	100	Tetracycline
+A4H0	tet(44)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.04	75.77	Tetracycline
+A4H0	tet(M)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.68	96.3	Tetracycline
+A4H0	tet(O)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.74	100	Tetracycline
+A4H0	tet(Q)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.84	100	Tetracycline
+A4H0	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	98.94	93.65	Tetracycline
+A4H0	tet(X)	Resistance	"doxycycline, tetracycline, minocycline, tigecycline"	"Doxycycline, Tetracycline, Minocycline, Tigecycline"	99.91	100	Tetracycline
+A4H12	ST116 (sthermophilus)	MLST					
+A4H12	repUS2	Plasmid			98.68	99.71	
+A4H12	repUS43	Plasmid			99.92	100	
+A4H12	Cfr(E)	Resistance	unknown[Cfr(E)_1_NG_070225]	"Chloramphenicol, Florfenicol, Clindamycin, Lincomycin, Linezolid, Dalfopristin, Pristinamycin IIA, Virginiamycin M, Tiamulin"	100	82.22	Multi-Drug
+A4H12	aac(6')-aph(2'')	Resistance	"amikacin, gentamicin, tobramycin"	"Gentamicin, Tobramycin, Netilmicin, Kanamycin, Amikacin, Dibekacin, Isepamicin, Fortimicin, Streptomycin"	99.9	68.82	Aminoglycoside
+A4H12	ant(6)-Ia	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+A4H12	ant(6)-Ia	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+A4H12	aph(3'')-Ib	Resistance	streptomycin	Streptomycin	100	87.69	Aminoglycoside
+A4H12	aph(3')-III	Resistance	"kanamycin, amikacin"	"Kanamycin, Amikacin, Neomycin, Butirosin, Isepamicin, Lividomycin, Paromomycin, Ribostamycin"	100	100	Aminoglycoside
+A4H12	blaOXA-347	Resistance	ampicillin	Unknown Beta-lactam	100	100	Beta-lactam
+A4H12	cat(pC194)	Resistance	chloramphenicol	Chloramphenicol	100	100	Phenicol
+A4H12	cfr(C)	Resistance	"chloramphenicol, florfenicol, linezolid, tiamulin, clindamycin"	"Chloramphenicol, Florfenicol, Clindamycin, Lincomycin, Linezolid, Dalfopristin, Pristinamycin IIA, Virginiamycin M, Tiamulin"	99.87	69.65	Multi-Drug
+A4H12	cfxA	Resistance	ampicillin	"Cefoxitin, Ampicillin"	99.89	96.17	Beta-lactam
+A4H12	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	98.95	100.13	MLS
+A4H12	erm(F)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A4H12	erm(G)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.86	100	MLS
+A4H12	erm(X)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.18	100.12	MLS
+A4H12	msr(D)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Telithromycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A4H12	sul2	Resistance	sulfisoxazole	Sulfamethoxazole	100	72.79	Sulfonamide
+A4H12	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.92	100	Tetracycline
+A4H12	tet(O)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.79	100	Tetracycline
+A4H12	tet(Q)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.69	100	Tetracycline
+A4H12	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.9	100	Tetracycline
+A4H12	tet(X)	Resistance	"doxycycline, tetracycline, minocycline, tigecycline"	"Doxycycline, Tetracycline, Minocycline, Tigecycline"	100	67.52	Tetracycline
+A6H0	ST- (-)	MLST					
+A6H0	repUS2	Plasmid			98.68	99.71	
+A6H0	repUS2	Plasmid			98.68	99.71	
+A6H0	repUS43	Plasmid			100	99.75	
+A6H0	ant(6)-Ia	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+A6H0	ant(6)-Ia	Resistance	streptomycin	Streptomycin	99.88	100	Aminoglycoside
+A6H0	aph(3')-III	Resistance	"kanamycin, amikacin"	"Kanamycin, Amikacin, Neomycin, Butirosin, Isepamicin, Lividomycin, Paromomycin, Ribostamycin"	100	84.03	Aminoglycoside
+A6H0	cfxA5	Resistance	ampicillin	Unknown Beta-lactam	99.9	100	Beta-lactam
+A6H0	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A6H0	erm(F)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.88	100	MLS
+A6H0	erm(G)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.86	100	MLS
+A6H0	erm(X)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.3	100.12	MLS
+A6H0	mef(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin"	100	100	Macrolide
+A6H0	msr(D)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Telithromycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A6H0	sul2	Resistance	sulfisoxazole	Sulfamethoxazole	99.88	100	Sulfonamide
+A6H0	tet(32)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.77	67.76	Tetracycline
+A6H0	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.84	100	Tetracycline
+A6H0	tet(M)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.43	100	Tetracycline
+A6H0	tet(O)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.69	100	Tetracycline
+A6H0	tet(Q)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.44	99.9	Tetracycline
+A6H0	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.48	100	Tetracycline
+A6H0	tet(X)	Resistance	"doxycycline, tetracycline, minocycline, tigecycline"	"Doxycycline, Tetracycline, Minocycline, Tigecycline"	99.87	67.52	Tetracycline
+A6H0	tetB(P)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.17	67.89	Tetracycline
+A6H12	ST- (-)	MLST					
+A6H12	repUS2	Plasmid			98.42	92.66	
+A6H12	repUS38	Plasmid			98.03	100	
+A6H12	repUS43	Plasmid			100	99.75	
+A6H12	aac(6')-aph(2'')	Resistance	"amikacin, gentamicin, tobramycin"	"Gentamicin, Tobramycin, Netilmicin, Kanamycin, Amikacin, Dibekacin, Isepamicin, Fortimicin, Streptomycin"	99.86	100	Aminoglycoside
+A6H12	ant(6)-Ia	Resistance	streptomycin	Streptomycin	100	81.41	Aminoglycoside
+A6H12	ant(6)-Ia	Resistance	streptomycin	Streptomycin	99.88	100	Aminoglycoside
+A6H12	aph(2'')-Ib	Resistance	unknown[aph(2'')-Ib_3_KF652098]	"Amikacin, Gentamicin, Tobramycin, Kanamycin"	98.78	100	Aminoglycoside
+A6H12	aph(3')-III	Resistance	"kanamycin, amikacin"	"Kanamycin, Amikacin, Neomycin, Butirosin, Isepamicin, Lividomycin, Paromomycin, Ribostamycin"	100	100	Aminoglycoside
+A6H12	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A6H12	erm(T)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A6H12	erm(X)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.3	100.12	MLS
+A6H12	mef(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin"	100	100	Macrolide
+A6H12	msr(D)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Telithromycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.86	96.65	MLS
+A6H12	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.67	100	Tetracycline
+A6H12	tet(M)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.84	100	Tetracycline
+A6H12	tet(O)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.48	60.31	Tetracycline
+A6H12	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	98.54	99.69	Tetracycline
+A7H0	ST- (bfragilis)	MLST					
+A7H0	rep1	Plasmid			100	100	
+A7H0	repUS43	Plasmid			99.92	99.75	
+A7H0	aac(6')-Im	Resistance	"amikacin, tobramycin"	"Amikacin, Tobramycin, Kanamycin"	98.32	100	Aminoglycoside
+A7H0	aac(6')-aph(2'')	Resistance	"amikacin, gentamicin, tobramycin"	"Gentamicin, Tobramycin, Netilmicin, Kanamycin, Amikacin, Dibekacin, Isepamicin, Fortimicin, Streptomycin"	99.93	100	Aminoglycoside
+A7H0	ant(6)-Ia	Resistance	streptomycin	Streptomycin	99.88	100	Aminoglycoside
+A7H0	aph(2'')-Ib	Resistance	unknown[aph(2'')-Ib_3_KF652098]	"Amikacin, Gentamicin, Tobramycin, Kanamycin"	98.78	100	Aminoglycoside
+A7H0	aph(2'')-If	Resistance	"amikacin, gentamicin, tobramycin"	"Amikacin, Gentamicin, Tobramycin, Kanamycin"	100	100	Aminoglycoside
+A7H0	aph(3')-III	Resistance	"kanamycin, amikacin"	"Kanamycin, Amikacin, Neomycin, Butirosin, Isepamicin, Lividomycin, Paromomycin, Ribostamycin"	100	100	Aminoglycoside
+A7H0	blaOXA-347	Resistance	ampicillin	Unknown Beta-lactam	100	100	Beta-lactam
+A7H0	catP	Resistance	chloramphenicol	Chloramphenicol	100	100	Phenicol
+A7H0	cepA	Resistance	ampicillin	Unknown Beta-lactam	99.89	100	Beta-lactam
+A7H0	cfxA4	Resistance	ampicillin	Unknown Beta-lactam	100	100	Beta-lactam
+A7H0	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	79.95	MLS
+A7H0	erm(F)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A7H0	erm(X)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.06	100.12	MLS
+A7H0	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.75	100	Tetracycline
+A7H0	tet(M)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	100	100	Tetracycline
+A7H0	tet(Q)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.58	100	Tetracycline
+A7H0	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.42	98.49	Tetracycline
+A7H0	tet(X)	Resistance	"doxycycline, tetracycline, minocycline, tigecycline"	"Doxycycline, Tetracycline, Minocycline, Tigecycline"	99.83	100	Tetracycline
+A7H12	ST- (-)	MLST					
+A7H12	rep1	Plasmid			100	100	
+A7H12	repUS43	Plasmid			100	100	
+A7H12	aac(6')-aph(2'')	Resistance	"amikacin, gentamicin, tobramycin"	"Gentamicin, Tobramycin, Netilmicin, Kanamycin, Amikacin, Dibekacin, Isepamicin, Fortimicin, Streptomycin"	100	100	Aminoglycoside
+A7H12	ant(6)-Ia	Resistance	streptomycin	Streptomycin	99.88	100	Aminoglycoside
+A7H12	aph(2'')-Ib	Resistance	unknown[aph(2'')-Ib_3_KF652098]	"Amikacin, Gentamicin, Tobramycin, Kanamycin"	98.78	100	Aminoglycoside
+A7H12	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A7H12	erm(X)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.61	100.13	MLS
+A7H12	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.84	100	Tetracycline
+A7H12	tet(S/M)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.68	80.47	Tetracycline
+A7H12	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.12	100	Tetracycline
+A8H0	ST- (ecoli_achtman_4)	MLST					
+A8H0	Col156	Plasmid			98.7	100	
+A8H0	Col3M	Plasmid			98.16	69.43	
+A8H0	ColpEC648	Plasmid			99.11	95.86	
+A8H0	IncFIA	Plasmid			100	68.56	
+A8H0	IncFIB(AP001918)	Plasmid			98.39	100	
+A8H0	IncI1-I(Alpha)	Plasmid			100	98.59	
+A8H0	IncX1	Plasmid			98.66	100	
+A8H0	pKPC-CAV1321	Plasmid			100	86.58	
+A8H0	rep1	Plasmid			100	100	
+A8H0	rep37	Plasmid			100	100	
+A8H0	repUS2	Plasmid			98.53	100.15	
+A8H0	aac(6')-aph(2'')	Resistance	"amikacin, gentamicin, tobramycin"	"Gentamicin, Tobramycin, Netilmicin, Kanamycin, Amikacin, Dibekacin, Isepamicin, Fortimicin, Streptomycin"	99.91	76.6	Aminoglycoside
+A8H0	aadA1	Resistance	streptomycin	"Spectinomycin, Streptomycin"	100	100	Aminoglycoside
+A8H0	aadA2	Resistance	streptomycin	"Spectinomycin, Streptomycin"	100	100	Aminoglycoside
+A8H0	ant(6)-Ia	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+A8H0	ant(6)-Ia	Resistance	streptomycin	Streptomycin	99.88	100	Aminoglycoside
+A8H0	aph(2'')-Ib	Resistance	unknown[aph(2'')-Ib_3_KF652098]	"Amikacin, Gentamicin, Tobramycin, Kanamycin"	98.78	100	Aminoglycoside
+A8H0	aph(3')-III	Resistance	"kanamycin, amikacin"	"Kanamycin, Amikacin, Neomycin, Butirosin, Isepamicin, Lividomycin, Paromomycin, Ribostamycin"	100	100	Aminoglycoside
+A8H0	blaTEM-1B	Resistance	ampicillin	"Amoxicillin, Ampicillin, Cephalothin, Piperacillin, Ticarcillin"	100	100	Beta-lactam
+A8H0	cepA	Resistance	ampicillin	Unknown Beta-lactam	100	100	Beta-lactam
+A8H0	cfxA3	Resistance	ampicillin	Ampicillin	100	100	Beta-lactam
+A8H0	cmlA1	Resistance	chloramphenicol	Chloramphenicol	99.92	100	Phenicol
+A8H0	dfrA1	Resistance	trimethoprim	Trimethoprim	99.79	100	Diaminopyrimidine
+A8H0	dfrA12	Resistance	trimethoprim	Trimethoprim	100	100	Diaminopyrimidine
+A8H0	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.61	100.13	MLS
+A8H0	erm(F)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.88	100	MLS
+A8H0	erm(G)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	98.89	61.09	MLS
+A8H0	lnu(C)	Resistance	lincomycin	Lincomycin	99.19	100	Lincosamide
+A8H0	lnu(P)	Resistance	lincomycin	Lincomycin	100	66.07	Lincosamide
+A8H0	qnrD1	Resistance	unknown[qnrD1_1_FJ228229]	Ciprofloxacin	100	100	Fluoroquinolone
+A8H0	sul2	Resistance	sulfisoxazole	Sulfamethoxazole	100	100	Sulfonamide
+A8H0	sul3	Resistance	sulfisoxazole	Sulfamethoxazole	100	100	Sulfonamide
+A8H0	tet(32)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.74	100	Tetracycline
+A8H0	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.51	100	Tetracycline
+A8H0	tet(A)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.92	97.8	Tetracycline
+A8H0	tet(Q)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.31	60.54	Tetracycline
+A8H0	tet(S/M)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.67	62.17	Tetracycline
+A8H0	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	98.37	92.55	Tetracycline
+A8H0	tet(X)	Resistance	"doxycycline, tetracycline, minocycline, tigecycline"	"Doxycycline, Tetracycline, Minocycline, Tigecycline"	100	91.43	Tetracycline
+A8H12	ST6447 (ecoli_achtman_4)	MLST					
+A8H12	ColpEC648	Plasmid			99.14	99.86	
+A8H12	IncFIA	Plasmid			100	93.3	
+A8H12	IncHI2	Plasmid			100	100	
+A8H12	IncHI2A	Plasmid			100	100	
+A8H12	IncI1-I(Alpha)	Plasmid			100	100	
+A8H12	IncY	Plasmid			98.95	100	
+A8H12	repUS2	Plasmid			98.53	100.15	
+A8H12	ant(6)-Ia	Resistance	streptomycin	Streptomycin	99.77	100	Aminoglycoside
+A8H12	ant(6)-Ia	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+A8H12	ant(6)-Ib	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+A8H12	aph(3'')-Ib	Resistance	streptomycin	Streptomycin	100	99.88	Aminoglycoside
+A8H12	aph(6)-Id	Resistance	kanamycin	Streptomycin	100	100	Aminoglycoside
+A8H12	catS	Resistance	chloramphenicol	Chloramphenicol	98.7	100	Phenicol
+A8H12	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A8H12	erm(F)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.88	100	MLS
+A8H12	erm(G)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.73	100	MLS
+A8H12	erm(Q)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.87	100	MLS
+A8H12	lnu(B)	Resistance	lincomycin	"Lincomycin, Clindamycin"	100	100	Lincosamide
+A8H12	lnu(P)	Resistance	lincomycin	Lincomycin	99.14	69.66	Lincosamide
+A8H12	sul1	Resistance	sulfisoxazole	Sulfamethoxazole	100	100	Sulfonamide
+A8H12	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.84	100	Tetracycline
+A8H12	tet(44)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.12	100	Tetracycline
+A8H12	tet(M)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	98.38	70.73	Tetracycline
+A8H12	tet(Q)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.83	60.54	Tetracycline
+A8H12	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.9	100	Tetracycline
+A8H12	tetB(P)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	98.52	100	Tetracycline
+A9H0	ST167 (ecoli_achtman_4)	MLST					
+A9H0	Col3M	Plasmid			98.09	100	
+A9H0	IncFIA	Plasmid			99.74	100	
+A9H0	IncFIB(AP001918)	Plasmid			98.39	100	
+A9H0	IncFII(pAMA1167-NDM-5)	Plasmid			98.08	100	
+A9H0	IncX1	Plasmid			98.93	100	
+A9H0	IncX4	Plasmid			98.88	100	
+A9H0	rep11a	Plasmid			99.89	100	
+A9H0	rep14a	Plasmid			99.44	100	
+A9H0	rep22	Plasmid			99.89	87.26	
+A9H0	rep29	Plasmid			100	100	
+A9H0	rep37	Plasmid			99.67	64.03	
+A9H0	repUS2	Plasmid			98.53	100.15	
+A9H0	repUS43	Plasmid			99.83	100	
+A9H0	aac(6')-Ib-cr	Resistance	"amikacin, tobramycin, ciprofloxacin I/R"	"Tobramycin, Dibekacin, Amikacin, Sisomicin, Netilmicin, Fluoroquinolone, Ciprofloxacin"	100	81.5	Multi-Drug
+A9H0	aadA2	Resistance	streptomycin	"Spectinomycin, Streptomycin"	100	100	Aminoglycoside
+A9H0	ant(6)-Ia	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+A9H0	ant(6)-Ia	Resistance	streptomycin	Streptomycin	99.88	100	Aminoglycoside
+A9H0	aph(3'')-Ib	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+A9H0	aph(3')-III	Resistance	"kanamycin, amikacin"	"Kanamycin, Amikacin, Neomycin, Butirosin, Isepamicin, Lividomycin, Paromomycin, Ribostamycin"	100	100	Aminoglycoside
+A9H0	aph(3')-Ia	Resistance	kanamycin	"Kanamycin, Neomycin"	99.88	100	Aminoglycoside
+A9H0	aph(6)-Id	Resistance	kanamycin	Streptomycin	100	100	Aminoglycoside
+A9H0	blaACI-1	Resistance	ampicillin	"Amoxicillin, Ampicillin, Ticarcillin, Ceftazidime, Cefotaxime"	99.88	100	Beta-lactam
+A9H0	blaCTX-M-210	Resistance	"ampicillin, ceftriaxone"	"Amoxicillin, Ampicillin, Aztreonam, Cefepime, Cefotaxime, Ceftazidime, Ceftriaxone, Piperacillin, Ticarcillin"	99.87	88.24	Beta-lactam
+A9H0	blaCTX-M-27	Resistance	"ampicillin, ceftriaxone"	"Amoxicillin, Ampicillin, Aztreonam, Cefepime, Cefotaxime, Ceftazidime, Ceftriaxone, Piperacillin, Ticarcillin"	100	100	Beta-lactam
+A9H0	blaDHA-4	Resistance	"ampicillin, amoxicillin/clavulanic acid, cefoxitin"	"Amoxicillin, Amoxicillin+Clavulanic acid, Ampicillin, Ampicillin+Clavulanic acid, Cefotaxime, Cefoxitin, Ceftazidime, Piperacillin, Piperacillin+Tazobactam, Ticarcillin, Ticarcillin+Clavulanic acid"	100	63.68	Beta-lactam
+A9H0	blaTEM-176	Resistance	"ampicillin, amoxicillin/clavulanic acid"	Unknown Beta-lactam	100	100	Beta-lactam
+A9H0	catA1	Resistance	chloramphenicol	Chloramphenicol	99.85	100	Phenicol
+A9H0	catB3	Resistance	chloramphenicol	Chloramphenicol	100	100	Phenicol
+A9H0	catS	Resistance	chloramphenicol	Chloramphenicol	98.7	100	Phenicol
+A9H0	cfxA5	Resistance	ampicillin	Unknown Beta-lactam	100	95.65	Beta-lactam
+A9H0	dfrA12	Resistance	trimethoprim	Trimethoprim	100	100	Diaminopyrimidine
+A9H0	dfrA14	Resistance	trimethoprim	Trimethoprim	100	100	Diaminopyrimidine
+A9H0	dfrG	Resistance	trimethoprim	Trimethoprim	100	100	Diaminopyrimidine
+A9H0	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.61	100.13	MLS
+A9H0	erm(F)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A9H0	erm(G)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.86	100	MLS
+A9H0	erm(Q)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.8	66.28	MLS
+A9H0	erm(X)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.18	100.12	MLS
+A9H0	floR	Resistance	chloramphenicol	"Chloramphenicol, Florfenicol"	98.1	99.92	Phenicol
+A9H0	lnu(P)	Resistance	lincomycin	Lincomycin	99.69	63.87	Lincosamide
+A9H0	mph(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Spiramycin, Telithromycin"	100	99.67	Macrolide
+A9H0	msr(C)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Telithromycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	98.99	100	MLS
+A9H0	msr(D)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Telithromycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.9	71.86	MLS
+A9H0	qnrD1	Resistance	unknown[qnrD1_1_FJ228229]	Ciprofloxacin	100	77.98	Fluoroquinolone
+A9H0	qnrS1	Resistance	ciprofloxacin I/R	Ciprofloxacin	100	100	Fluoroquinolone
+A9H0	sul1	Resistance	sulfisoxazole	Sulfamethoxazole	100	100	Sulfonamide
+A9H0	sul2	Resistance	sulfisoxazole	Sulfamethoxazole	100	97.79	Sulfonamide
+A9H0	tet(44)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	98.65	100	Tetracycline
+A9H0	tet(A)	Resistance	tetracycline	"Doxycycline, Tetracycline"	100	100	Tetracycline
+A9H0	tet(B)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	100	100	Tetracycline
+A9H0	tet(L)	Resistance	unknown[tet(L)_9_CP068241]	"Doxycycline, Tetracycline, Minocycline, Tigecycline"	99.88	60.71	Tetracycline
+A9H0	tet(Q)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.43	100	Tetracycline
+A9H0	tet(S/M)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	98.6	100.05	Tetracycline
+A9H0	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.29	87.81	Tetracycline
+A9H0	tet(X)	Resistance	"doxycycline, tetracycline, minocycline, tigecycline"	"Doxycycline, Tetracycline, Minocycline, Tigecycline"	99.88	74.29	Tetracycline
+A9H0	tetA(P)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99	95.33	Tetracycline
+A9H0	tetB(P)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	98.52	100	Tetracycline
+A9H12	ST16 (efaecalis)	MLST					
+A9H12	Col(BS512)	Plasmid			100	100	
+A9H12	repUS43	Plasmid			100	100	
+A9H12	aadA5	Resistance	streptomycin	"Spectinomycin, Streptomycin"	100	100	Aminoglycoside
+A9H12	ant(6)-Ia	Resistance	streptomycin	Streptomycin	100	88.01	Aminoglycoside
+A9H12	ant(6)-Ia	Resistance	streptomycin	Streptomycin	99.65	100	Aminoglycoside
+A9H12	aph(3'')-Ib	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+A9H12	aph(3')-III	Resistance	"kanamycin, amikacin"	"Kanamycin, Amikacin, Neomycin, Butirosin, Isepamicin, Lividomycin, Paromomycin, Ribostamycin"	100	100	Aminoglycoside
+A9H12	aph(6)-Id	Resistance	kanamycin	Streptomycin	100	100	Aminoglycoside
+A9H12	blaCTX-M-27	Resistance	"ampicillin, ceftriaxone"	"Amoxicillin, Ampicillin, Aztreonam, Cefepime, Cefotaxime, Ceftazidime, Ceftriaxone, Piperacillin, Ticarcillin"	100	100	Beta-lactam
+A9H12	catS	Resistance	chloramphenicol	Chloramphenicol	98.7	100	Phenicol
+A9H12	dfrA17	Resistance	trimethoprim	Trimethoprim	100	100	Diaminopyrimidine
+A9H12	dfrG	Resistance	trimethoprim	Trimethoprim	100	100	Diaminopyrimidine
+A9H12	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A9H12	erm(G)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A9H12	erm(X)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.18	100.12	MLS
+A9H12	lnu(A)	Resistance	lincomycin	Lincomycin	98.76	100	Lincosamide
+A9H12	lnu(C)	Resistance	lincomycin	Lincomycin	99.19	100	Lincosamide
+A9H12	lsa(A)	Resistance	"lincomycin, clindamycin"	"Lincomycin, Clindamycin, Dalfopristin, Pristinamycin IIA, Virginiamycin M"	98.93	100	MLS
+A9H12	mph(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Spiramycin, Telithromycin"	99.68	100.11	Macrolide
+A9H12	sul1	Resistance	sulfisoxazole	Sulfamethoxazole	100	100	Sulfonamide
+A9H12	sul2	Resistance	sulfisoxazole	Sulfamethoxazole	100	100	Sulfonamide
+A9H12	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.43	100	Tetracycline
+A9H12	tet(A)	Resistance	tetracycline	"Doxycycline, Tetracycline"	100	100	Tetracycline
+A9H12	tet(M)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	100	100	Tetracycline
+A10H0	ST67 (sthermophilus)	MLST					
+A10H0	IncQ1	Plasmid			100	66.46	
+A10H0	rep20	Plasmid			100	100	
+A10H0	rep37	Plasmid			100	100	
+A10H0	repUS43	Plasmid			99.92	99.75	
+A10H0	aadA5	Resistance	streptomycin	"Spectinomycin, Streptomycin"	100	100	Aminoglycoside
+A10H0	ant(6)-Ia	Resistance	streptomycin	Streptomycin	100	75.25	Aminoglycoside
+A10H0	ant(6)-Ia	Resistance	streptomycin	Streptomycin	99.77	100	Aminoglycoside
+A10H0	ant(6)-Ib	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+A10H0	ant(9)-Ia	Resistance	spectinomycin	Spectinomycin	100	100	Aminoglycoside
+A10H0	aph(2'')-Ib	Resistance	unknown[aph(2'')-Ib_3_KF652098]	"Amikacin, Gentamicin, Tobramycin, Kanamycin"	98.67	100	Aminoglycoside
+A10H0	aph(3'')-Ib	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+A10H0	aph(3')-III	Resistance	"kanamycin, amikacin"	"Kanamycin, Amikacin, Neomycin, Butirosin, Isepamicin, Lividomycin, Paromomycin, Ribostamycin"	100	100	Aminoglycoside
+A10H0	aph(6)-Id	Resistance	kanamycin	Streptomycin	100	100	Aminoglycoside
+A10H0	blaTEM-1B	Resistance	ampicillin	"Amoxicillin, Ampicillin, Cephalothin, Piperacillin, Ticarcillin"	100	100	Beta-lactam
+A10H0	blaZ	Resistance	ampicillin	"Amoxicillin, Ampicillin, Penicillin, Piperacillin"	100	100	Beta-lactam
+A10H0	cfr(B)	Resistance	chloramphenicol	"Chloramphenicol, Florfenicol, Clindamycin, Lincomycin, Linezolid, Dalfopristin, Pristinamycin IIA, Virginiamycin M, Tiamulin"	99.9	100	MLS
+A10H0	cfr(C)	Resistance	chloramphenicol	"Chloramphenicol, Florfenicol, Clindamycin, Lincomycin, Linezolid, Dalfopristin, Pristinamycin IIA, Virginiamycin M, Tiamulin"	99.9	84.49	MLS
+A10H0	dfrA17	Resistance	trimethoprim	Trimethoprim	100	100	Diaminopyrimidine
+A10H0	erm(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.86	100	MLS
+A10H0	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A10H0	erm(F)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	95.88	MLS
+A10H0	erm(G)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A10H0	erm(X)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.18	100.12	MLS
+A10H0	mef(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin"	100	85.06	Macrolide
+A10H0	mph(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Spiramycin, Telithromycin"	99.68	100.11	Macrolide
+A10H0	sul1	Resistance	sulfisoxazole	Sulfamethoxazole	100	100	Sulfonamide
+A10H0	sul2	Resistance	sulfisoxazole	Sulfamethoxazole	100	100	Sulfonamide
+A10H0	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.84	100	Tetracycline
+A10H0	tet(44)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	98.75	100	Tetracycline
+A10H0	tet(O)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.59	63.49	Tetracycline
+A10H0	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	100	93.65	Tetracycline
+A10H12	ST- (efaecalis)	MLST					
+A10H12	IncFIA	Plasmid			99.45	93.56	
+A10H12	IncFIB(AP001918)	Plasmid			98.97	71.26	
+A10H12	rep2	Plasmid			100	100	
+A10H12	rep29	Plasmid			99.86	100	
+A10H12	rep4a	Plasmid			98.67	100.12	
+A10H12	rep6	Plasmid			100	100	
+A10H12	repUS15	Plasmid			99.62	100	
+A10H12	repUS43	Plasmid			100	100	
+A10H12	aac(6')-Ii	Resistance	"amikacin, tobramycin"	"Tobramycin, Dibekacin, Gentamicin, Sisomicin, Netilmicin"	98.18	100	Aminoglycoside
+A10H12	aac(6')-Iih	Resistance	gentamicin	"Amikacin, Tobramycin"	99.46	100	Aminoglycoside
+A10H12	ant(6)-Ia	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+A10H12	aph(3')-III	Resistance	"kanamycin, amikacin"	"Kanamycin, Amikacin, Neomycin, Butirosin, Isepamicin, Lividomycin, Paromomycin, Ribostamycin"	100	100	Aminoglycoside
+A10H12	blaTEM-1B	Resistance	ampicillin	"Amoxicillin, Ampicillin, Cephalothin, Piperacillin, Ticarcillin"	100	100	Beta-lactam
+A10H12	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.08	100.13	MLS
+A10H12	erm(Q)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A10H12	erm(X)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.18	100.12	MLS
+A10H12	lnu(P)	Resistance	lincomycin	Lincomycin	99.8	100	Lincosamide
+A10H12	mef(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin"	100	100	Macrolide
+A10H12	msr(D)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Telithromycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.93	100	MLS
+A10H12	str	Resistance	streptomycin	Streptomycin	99.88	100	Aminoglycoside
+A10H12	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.59	100	Tetracycline
+A10H12	tet(M)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	100	78.54	Tetracycline
+A10H12	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	98.91	100	Tetracycline
+A12H0	ST130 (streptothermophilus)	MLST					
+A12H0	Col(BS512)	Plasmid			100	100	
+A12H0	IncFIA	Plasmid			99.48	100	
+A12H0	IncFII	Plasmid			98.42	97.32	
+A12H0	p0111	Plasmid			98.64	100	
+A12H0	repUS2	Plasmid			98.68	99.71	
+A12H0	repUS43	Plasmid			100	100	
+A12H0	aac(3)-IId	Resistance	gentamicin	"Apramycin, Gentamicin, Tobramycin, Dibekacin, Netilmicin, Sisomicin"	99.88	100	Aminoglycoside
+A12H0	aac(6')-aph(2'')	Resistance	"amikacin, gentamicin, tobramycin"	"Gentamicin, Tobramycin, Netilmicin, Kanamycin, Amikacin, Dibekacin, Isepamicin, Fortimicin, Streptomycin"	99.93	94.03	Aminoglycoside
+A12H0	aadA5	Resistance	streptomycin	"Spectinomycin, Streptomycin"	100	100	Aminoglycoside
+A12H0	ant(6)-Ia	Resistance	streptomycin	Streptomycin	99.88	100	Aminoglycoside
+A12H0	aph(2'')-Ib	Resistance	unknown[aph(2'')-Ib_3_KF652098]	"Amikacin, Gentamicin, Tobramycin, Kanamycin"	98.78	100	Aminoglycoside
+A12H0	aph(3'')-Ib	Resistance	streptomycin	Streptomycin	100	99.88	Aminoglycoside
+A12H0	aph(3')-III	Resistance	"kanamycin, amikacin"	"Kanamycin, Amikacin, Neomycin, Butirosin, Isepamicin, Lividomycin, Paromomycin, Ribostamycin"	100	100	Aminoglycoside
+A12H0	aph(3')-Ia	Resistance	kanamycin	Kanamycin	99.88	100	Aminoglycoside
+A12H0	aph(6)-Id	Resistance	kanamycin	Streptomycin	100	100	Aminoglycoside
+A12H0	blaCTX-M-15	Resistance	"ampicillin, ceftriaxone"	"Amoxicillin, Ampicillin, Aztreonam, Cefepime, Cefotaxime, Ceftazidime, Ceftriaxone, Piperacillin, Ticarcillin"	100	100	Beta-lactam
+A12H0	blaCTX-M-65	Resistance	"ampicillin, ceftriaxone"	"Amoxicillin, Ampicillin, Aztreonam, Cefepime, Cefotaxime, Ceftazidime, Ceftriaxone, Piperacillin, Ticarcillin"	100	100	Beta-lactam
+A12H0	catS	Resistance	chloramphenicol	Chloramphenicol	98.7	100	Phenicol
+A12H0	dfrA17	Resistance	trimethoprim	Trimethoprim	100	100	Diaminopyrimidine
+A12H0	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.08	100.26	MLS
+A12H0	erm(X)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.18	100.12	MLS
+A12H0	floR	Resistance	chloramphenicol	"Chloramphenicol, Florfenicol"	98.19	99.92	Phenicol
+A12H0	fosA3	Resistance	fosfomycin	Fosfomycin	100	100	Epoxide
+A12H0	lnu(A)	Resistance	lincomycin	Lincomycin	98.76	100	Lincosamide
+A12H0	mef(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin"	100	100	Macrolide
+A12H0	mph(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Spiramycin, Telithromycin"	99.68	100.11	MLS
+A12H0	msr(D)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Telithromycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A12H0	sul1	Resistance	sulfisoxazole	Sulfamethoxazole	100	81.28	Sulfonamide
+A12H0	sul2	Resistance	sulfisoxazole	Sulfamethoxazole	99.88	100	Sulfonamide
+A12H0	tet(A)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.92	100	Tetracycline
+A12H0	tet(L)	Resistance	tetracycline	"Doxycycline, Tetracycline"	100	85.11	Tetracycline
+A12H0	tet(O/32/O)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.84	100	Tetracycline
+A12H0	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	100	100	Tetracycline
+A12H12	ST- (-)	MLST					
+A12H12	None	Plasmid					
+A12H12	aph(2'')-Ib	Resistance	unknown[aph(2'')-Ib_3_KF652098]	"Amikacin, Gentamicin, Tobramycin, Kanamycin"	98.75	97.44	Aminoglycoside
+A12H12	catS	Resistance	chloramphenicol	Chloramphenicol	98.62	81.01	Phenicol
+A12H12	tet(32)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	100	60.42	Tetracycline
+A12H12	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.59	100	Tetracycline
+A12H12	tet(O)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.35	64.27	Tetracycline
+A13H0	ST- (efaecium)	MLST					
+A13H0	rep2	Plasmid			99.89	62.05	
+A13H0	repUS2	Plasmid			99.27	100.15	
+A13H0	repUS32	Plasmid			99.34	65.1	
+A13H0	repUS43	Plasmid			100	100	
+A13H0	VanHBX	Resistance	vancomycin	Vancomycin	99.16	100	Glycopeptide
+A13H0	aac(6')-Ii	Resistance	"amikacin, tobramycin"	"Tobramycin, Dibekacin, Gentamicin, Sisomicin, Netilmicin"	99.58	86.7	Aminoglycoside
+A13H0	aac(6')-Im	Resistance	"amikacin, tobramycin"	"Amikacin, Tobramycin, Kanamycin"	100	100	Aminoglycoside
+A13H0	ant(6)-Ia	Resistance	streptomycin	Streptomycin	99.77	100	Aminoglycoside
+A13H0	aph(2'')-If	Resistance	"amikacin, gentamicin, tobramycin"	"Amikacin, Gentamicin, Tobramycin, Kanamycin"	98.18	67.67	Aminoglycoside
+A13H0	aph(3')-III	Resistance	"kanamycin, amikacin"	"Kanamycin, Amikacin, Neomycin, Butirosin, Isepamicin, Lividomycin, Paromomycin, Ribostamycin"	99.87	100	Aminoglycoside
+A13H0	catP	Resistance	chloramphenicol	Chloramphenicol	100	86.86	Phenicol
+A13H0	cfr(C)	Resistance	chloramphenicol	"Chloramphenicol, Florfenicol, Clindamycin, Lincomycin, Linezolid, Dalfopristin, Pristinamycin IIA, Virginiamycin M, Tiamulin"	99.81	84.49	Multi-Drug
+A13H0	dfrG	Resistance	trimethoprim	Trimethoprim	100	100	Diaminopyrimidine
+A13H0	erm(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A13H0	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	98.82	99.87	MLS
+A13H0	lnu(C)	Resistance	lincomycin	Lincomycin	99.19	100	Lincosamide
+A13H0	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	100	100	Tetracycline
+A13H0	tet(L)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.89	68.12	Tetracycline
+A13H0	tet(M)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	98.07	100	Tetracycline
+A13H0	tet(O)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.69	99.79	Tetracycline
+A13H0	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	98.44	100	Tetracycline
+A13H12	ST- (ecloacae)	MLST					
+A13H12	IncQ1	Plasmid			100	100	
+A13H12	repUS2	Plasmid			99.27	100.15	
+A13H12	VanHBX	Resistance	vancomycin	Vancomycin	99.16	100	Glycopeptide
+A13H12	aadA1	Resistance	streptomycin	"Spectinomycin, Streptomycin"	100	100	Aminoglycoside
+A13H12	ant(6)-Ia	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+A13H12	ant(6)-Ib	Resistance	streptomycin	Streptomycin	100	78.21	Aminoglycoside
+A13H12	aph(3'')-Ib	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+A13H12	aph(3')-III	Resistance	"kanamycin, amikacin"	"Kanamycin, Amikacin, Neomycin, Butirosin, Isepamicin, Lividomycin, Paromomycin, Ribostamycin"	100	100	Aminoglycoside
+A13H12	aph(6)-Id	Resistance	kanamycin	Streptomycin	100	100	Aminoglycoside
+A13H12	blaACT-14	Resistance	"ampicillin, amoxicillin/clavulanic acid, cefoxitin, ceftriaxone"	"Amoxicillin, Amoxicillin+Clavulanic acid, Ampicillin, Ampicillin+Clavulanic acid, Cefotaxime, Cefoxitin, Ceftazidime, Piperacillin, Piperacillin+Tazobactam, Ticarcillin, Ticarcillin+Clavulanic acid"	99.05	91.45	Beta-lactam
+A13H12	blaTEM-1B	Resistance	ampicillin	"Amoxicillin, Ampicillin, Cephalothin, Piperacillin, Ticarcillin"	100	100	Beta-lactam
+A13H12	dfrA14	Resistance	trimethoprim	Trimethoprim	100	100	Diaminopyrimidine
+A13H12	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	64.77	MLS
+A13H12	erm(G)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.8	69.66	MLS
+A13H12	erm(Q)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A13H12	lnu(B)	Resistance	lincomycin	"Lincomycin, Clindamycin"	100	100	Lincosamide
+A13H12	lnu(C)	Resistance	lincomycin	Lincomycin	99.19	100	Lincosamide
+A13H12	lnu(P)	Resistance	lincomycin	Lincomycin	99.14	70.06	Lincosamide
+A13H12	mef(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin"	100	100	Macrolide
+A13H12	msr(D)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Telithromycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A13H12	sul2	Resistance	sulfisoxazole	Sulfamethoxazole	100	100	Sulfonamide
+A13H12	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.92	100	Tetracycline
+A13H12	tet(44)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	98.96	100	Tetracycline
+A13H12	tet(A)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.92	97.8	Tetracycline
+A13H12	tet(O/W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.28	86.98	Tetracycline
+A13H12	tetA(P)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.5	63.58	Tetracycline
+A13H12	tetB(P)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	98.52	100	Tetracycline
+A16H0	ST- (oralstrep)	MLST					
+A16H0	Col(BS512)	Plasmid			100	100	
+A16H0	rep22	Plasmid			99.9	100	
+A16H0	repUS2	Plasmid			98.68	99.71	
+A16H0	repUS38	Plasmid			98.22	89.79	
+A16H0	repUS43	Plasmid			99.92	100	
+A16H0	aac(6')-aph(2'')	Resistance	"amikacin, gentamicin, tobramycin"	"Gentamicin, Tobramycin, Netilmicin, Kanamycin, Amikacin, Dibekacin, Isepamicin, Fortimicin, Streptomycin"	100	100	Aminoglycoside
+A16H0	ant(6)-Ia	Resistance	streptomycin	Streptomycin	99.77	100	Aminoglycoside
+A16H0	aph(3')-III	Resistance	"kanamycin, amikacin"	"Kanamycin, Amikacin, Neomycin, Butirosin, Isepamicin, Lividomycin, Paromomycin, Ribostamycin"	100	100	Aminoglycoside
+A16H0	catS	Resistance	chloramphenicol	Chloramphenicol	98.7	100	Phenicol
+A16H0	cfxA5	Resistance	ampicillin	Unknown Beta-lactam	99.78	96.38	Beta-lactam
+A16H0	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A16H0	erm(F)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.5	100	MLS
+A16H0	erm(G)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A16H0	lnu(C)	Resistance	lincomycin	Lincomycin	98.99	100	Lincosamide
+A16H0	mef(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin"	100	81.77	Macrolide
+A16H0	msr(D)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Telithromycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	95.42	MLS
+A16H0	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.92	100	Tetracycline
+A16H0	tet(L)	Resistance	tetracycline	"Doxycycline, Tetracycline"	100	97.53	Tetracycline
+A16H0	tet(M)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.84	64.38	Tetracycline
+A16H0	tet(O)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.64	100	Tetracycline
+A16H0	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	100	100	Tetracycline
+A16H12	ST1447 (klebsiella)	MLST					
+A16H12	IncHI1B(pNDM-MAR)	Plasmid			99.82	100	
+A16H12	IncR	Plasmid			100	100	
+A16H12	repUS2	Plasmid			98.53	100.15	
+A16H12	OqxA	Resistance	unknown[OqxA_1_EU370913]	"Chloramphenicol, Nalidixic acid, Ciprofloxacin, Trimethoprim"	99.83	100	Multi-Drug
+A16H12	OqxB	Resistance	unknown[OqxB_1_EU370913]	"Chloramphenicol, Nalidixic acid, Ciprofloxacin, Trimethoprim"	99.11	100	Multi-Drug
+A16H12	aac(6')-aph(2'')	Resistance	"amikacin, gentamicin, tobramycin"	"Gentamicin, Tobramycin, Netilmicin, Kanamycin, Amikacin, Dibekacin, Isepamicin, Fortimicin, Streptomycin"	100	94.03	Aminoglycoside
+A16H12	aadA2	Resistance	streptomycin	"Spectinomycin, Streptomycin"	100	100	Aminoglycoside
+A16H12	ant(3'')-Ia	Resistance	streptomycin	Streptomycin	99.88	82.51	Aminoglycoside
+A16H12	ant(6)-Ia	Resistance	streptomycin	Streptomycin	99.88	100	Aminoglycoside
+A16H12	aph(3')-III	Resistance	"kanamycin, amikacin"	"Kanamycin, Amikacin, Neomycin, Butirosin, Isepamicin, Lividomycin, Paromomycin, Ribostamycin"	100	100	Aminoglycoside
+A16H12	aph(3')-Ia	Resistance	kanamycin	"Neomycin, Kanamycin, Lividomycin, Paromomycin, Ribostamycin"	100	100	Aminoglycoside
+A16H12	blaACT-9	Resistance	"ampicillin, amoxicillin/clavulanic acid, cefoxitin, ceftriaxone"	"Amoxicillin, Amoxicillin+Clavulanic acid, Ampicillin, Ampicillin+Clavulanic acid, Cefotaxime, Cefoxitin, Ceftazidime, Piperacillin, Piperacillin+Tazobactam, Ticarcillin, Ticarcillin+Clavulanic acid"	98.84	60.1	Beta-lactam
+A16H12	blaSHV-27	Resistance	ampicillin	"Amoxicillin, Ampicillin, Aztreonam, Cefepime, Cefotaxime, Ceftazidime, Ceftriaxone, Piperacillin, Ticarcillin"	99.77	100	Beta-lactam
+A16H12	blaTEM-1B	Resistance	ampicillin	"Amoxicillin, Ampicillin, Cephalothin, Piperacillin, Ticarcillin"	100	100	Beta-lactam
+A16H12	catS	Resistance	chloramphenicol	Chloramphenicol	98.7	100	Phenicol
+A16H12	cfxA	Resistance	ampicillin	"Cefoxitin, Ampicillin"	99.9	100	Beta-lactam
+A16H12	cmlA1	Resistance	chloramphenicol	Chloramphenicol	99.92	100	Phenicol
+A16H12	dfrA12	Resistance	trimethoprim	Trimethoprim	100	100	Diaminopyrimidine
+A16H12	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A16H12	erm(F)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.5	100	MLS
+A16H12	erm(Q)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A16H12	fosA	Resistance	fosfomycin	Fosfomycin	98.57	100	MLS
+A16H12	mef(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin"	99.01	66.09	Macrolide
+A16H12	qnrS1	Resistance	ciprofloxacin I/R	Ciprofloxacin	100	100	Fluoroquinolone
+A16H12	sul3	Resistance	sulfisoxazole	Sulfamethoxazole	100	100	Sulfonamide
+A16H12	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.26	100.08	Tetracycline
+A16H12	tet(A)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.92	97.8	Tetracycline
+A16H12	tet(Q)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.58	100	Tetracycline
+A16H12	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.42	98.75	Tetracycline
+A17H0	ST- (bfragilis)	MLST					
+A17H0	repUS2	Plasmid			98.53	100.15	
+A17H0	repUS43	Plasmid			99.75	100	
+A17H0	ant(6)-Ia	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+A17H0	ant(6)-Ib	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+A17H0	aph(3')-III	Resistance	"kanamycin, amikacin"	"Kanamycin, Amikacin, Neomycin, Butirosin, Isepamicin, Lividomycin, Paromomycin, Ribostamycin"	100	100	Aminoglycoside
+A17H0	cfxA3	Resistance	ampicillin	Ampicillin	100	95.86	Beta-lactam
+A17H0	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.34	100.13	MLS
+A17H0	erm(F)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	65.04	MLS
+A17H0	erm(G)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.86	100	MLS
+A17H0	erm(X)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.18	100.12	MLS
+A17H0	lnu(C)	Resistance	lincomycin	Lincomycin	99.04	84.04	Lincosamide
+A17H0	mef(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin"	100	95.57	Macrolide
+A17H0	msr(D)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Telithromycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A17H0	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.75	100	Tetracycline
+A17H0	tet(M)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.95	100	Tetracycline
+A17H0	tet(O/32/O)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.58	99.79	Tetracycline
+A17H0	tet(Q)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	98.6	100	Tetracycline
+A17H0	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.64	100	Tetracycline
+A17H0	tet(X)	Resistance	"doxycycline, tetracycline, minocycline, tigecycline"	"Doxycycline, Tetracycline, Minocycline, Tigecycline"	99.91	100	Tetracycline
+A17H12	ST- (-)	MLST					
+A17H12	repUS2	Plasmid			98.53	100.15	
+A17H12	ant(6)-Ia	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+A17H12	aph(3')-III	Resistance	"kanamycin, amikacin"	"Kanamycin, Amikacin, Neomycin, Butirosin, Isepamicin, Lividomycin, Paromomycin, Ribostamycin"	100	100	Aminoglycoside
+A17H12	cfxA3	Resistance	ampicillin	Ampicillin	99.9	100	Beta-lactam
+A17H12	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.21	100.13	MLS
+A17H12	erm(F)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.81	65.04	MLS
+A17H12	erm(G)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.86	100	MLS
+A17H12	lnu(C)	Resistance	lincomycin	Lincomycin	99.19	100	Lincosamide
+A17H12	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.92	100	Tetracycline
+A17H12	tet(O)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.32	99.79	Tetracycline
+A17H12	tet(Q)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	98.37	99.9	Tetracycline
+A17H12	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.74	81.46	Tetracycline
+A17H12	tet(X)	Resistance	"doxycycline, tetracycline, minocycline, tigecycline"	"Doxycycline, Tetracycline, Minocycline, Tigecycline"	99.58	81.75	Tetracycline
+A19H0	ST2599 (ecoli_achtman_4)	MLST					
+A19H0	IncFIB(AP001918)	Plasmid			98.39	100	
+A19H0	IncFII	Plasmid			100	100	
+A19H0	IncI1-I(Alpha)	Plasmid			99.3	100	
+A19H0	IncP1	Plasmid			99.45	100	
+A19H0	Cfr(E)	Resistance	unknown[Cfr(E)_1_NG_070225]	"Chloramphenicol, Florfenicol, Clindamycin, Lincomycin, Linezolid, Dalfopristin, Pristinamycin IIA, Virginiamycin M, Tiamulin"	100	93.91	Multi-Drug
+A19H0	aac(3)-IId	Resistance	gentamicin	"Apramycin, Gentamicin, Tobramycin, Dibekacin, Netilmicin, Sisomicin"	99.88	100	Aminoglycoside
+A19H0	ant(6)-Ia	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+A19H0	ant(6)-Ia	Resistance	streptomycin	Streptomycin	99.88	100	Aminoglycoside
+A19H0	ant(6)-Ib	Resistance	streptomycin	Streptomycin	99.88	100	Aminoglycoside
+A19H0	aph(3'')-Ib	Resistance	streptomycin	Streptomycin	100	99.88	Aminoglycoside
+A19H0	aph(3')-III	Resistance	"kanamycin, amikacin"	"Kanamycin, Amikacin, Neomycin, Butirosin, Isepamicin, Lividomycin, Paromomycin, Ribostamycin"	100	100	Aminoglycoside
+A19H0	aph(6)-Id	Resistance	kanamycin	Streptomycin	100	100	Aminoglycoside
+A19H0	blaTEM-1B	Resistance	ampicillin	"Amoxicillin, Ampicillin, Cephalothin, Piperacillin, Ticarcillin"	100	100	Beta-lactam
+A19H0	catS	Resistance	chloramphenicol	Chloramphenicol	98.7	100	Phenicol
+A19H0	dfrA14	Resistance	trimethoprim	Trimethoprim	100	100	Diaminopyrimidine
+A19H0	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.86	100	MLS
+A19H0	erm(F)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.75	100	MLS
+A19H0	erm(G)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.83	78.91	MLS
+A19H0	erm(T)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A19H0	erm(X)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.18	100.12	MLS
+A19H0	floR	Resistance	chloramphenicol	"Chloramphenicol, Florfenicol"	98.19	99.92	Phenicol
+A19H0	fosB3	Resistance	fosfomycin	Fosfomycin	99.52	100	Epoxide
+A19H0	mph(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Spiramycin, Telithromycin"	99.68	100.11	Macrolide
+A19H0	sul2	Resistance	sulfisoxazole	Sulfamethoxazole	100	100	Sulfonamide
+A19H0	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.84	100	Tetracycline
+A19H0	tet(44)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.01	100	Tetracycline
+A19H0	tet(A)	Resistance	tetracycline	"Doxycycline, Tetracycline"	100	100	Tetracycline
+A19H0	tet(Q)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.78	92.78	Tetracycline
+A19H0	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.43	100	Tetracycline
+A19H0	tet(X)	Resistance	"doxycycline, tetracycline, minocycline, tigecycline"	"Doxycycline, Tetracycline, Minocycline, Tigecycline"	99.83	100	Tetracycline
+A19H12	ST16 (efaecalis)	MLST					
+A19H12	Col(BS512)	Plasmid			100	100	
+A19H12	repUS43	Plasmid			100	100	
+A19H12	aadA5	Resistance	streptomycin	"Spectinomycin, Streptomycin"	100	100	Aminoglycoside
+A19H12	ant(6)-Ia	Resistance	streptomycin	Streptomycin	100	88.01	Aminoglycoside
+A19H12	ant(6)-Ia	Resistance	streptomycin	Streptomycin	99.65	100	Aminoglycoside
+A19H12	aph(3'')-Ib	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+A19H12	aph(3')-III	Resistance	"kanamycin, amikacin"	"Kanamycin, Amikacin, Neomycin, Butirosin, Isepamicin, Lividomycin, Paromomycin, Ribostamycin"	100	100	Aminoglycoside
+A19H12	aph(6)-Id	Resistance	kanamycin	Streptomycin	100	100	Aminoglycoside
+A19H12	blaCTX-M-27	Resistance	"ampicillin, ceftriaxone"	"Amoxicillin, Ampicillin, Aztreonam, Cefepime, Cefotaxime, Ceftazidime, Ceftriaxone, Piperacillin, Ticarcillin"	100	100	Beta-lactam
+A19H12	catS	Resistance	chloramphenicol	Chloramphenicol	98.7	100	Phenicol
+A19H12	dfrA17	Resistance	trimethoprim	Trimethoprim	100	100	Diaminopyrimidine
+A19H12	dfrG	Resistance	trimethoprim	Trimethoprim	100	100	Diaminopyrimidine
+A19H12	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A19H12	erm(G)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A19H12	erm(X)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.18	100.12	MLS
+A19H12	lnu(A)	Resistance	lincomycin	Lincomycin	98.76	100	Lincosamide
+A19H12	lnu(C)	Resistance	lincomycin	Lincomycin	99.19	100	Lincosamide
+A19H12	lsa(A)	Resistance	"lincomycin, clindamycin"	"Lincomycin, Clindamycin, Dalfopristin, Pristinamycin IIA, Virginiamycin M"	98.93	100	MLS
+A19H12	mph(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Spiramycin, Telithromycin"	99.68	100.11	Macrolide
+A19H12	sul1	Resistance	sulfisoxazole	Sulfamethoxazole	100	100	Sulfonamide
+A19H12	sul2	Resistance	sulfisoxazole	Sulfamethoxazole	100	100	Sulfonamide
+A19H12	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.43	100	Tetracycline
+A19H12	tet(A)	Resistance	tetracycline	"Doxycycline, Tetracycline"	100	100	Tetracycline
+A19H12	tet(M)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	100	100	Tetracycline
+A20H0	ST- (-)	MLST					
+A20H0	repUS43	Plasmid			100	100	
+A20H0	ant(6)-Ia	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+A20H0	aph(2'')-Ib	Resistance	"kanamycin, gentamicin"	"Amikacin, Gentamicin, Tobramycin, Kanamycin"	99.84	71.22	Aminoglycoside
+A20H0	aph(3')-III	Resistance	"kanamycin, amikacin"	"Kanamycin, Amikacin, Neomycin, Butirosin, Isepamicin, Lividomycin, Paromomycin, Ribostamycin"	100	100	Aminoglycoside
+A20H0	cfxA5	Resistance	ampicillin	Unknown Beta-lactam	100	95.86	Beta-lactam
+A20H0	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.48	100.13	MLS
+A20H0	erm(F)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A20H0	erm(T)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A20H0	lnu(C)	Resistance	lincomycin	Lincomycin	98.99	100	Lincosamide
+A20H0	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.84	100	Tetracycline
+A20H0	tet(44)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.26	99.01	Tetracycline
+A20H0	tet(M)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	98.28	100	Tetracycline
+A20H0	tet(O)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.74	100	Tetracycline
+A20H0	tet(Q)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.74	99.9	Tetracycline
+A20H0	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.58	99.17	Tetracycline
+A20H0	tet(X)	Resistance	"doxycycline, tetracycline, minocycline, tigecycline"	"Doxycycline, Tetracycline, Minocycline, Tigecycline"	99.91	100	Tetracycline
+A20H12	ST104 (ecoli_achtman_4)	MLST					
+A20H12	repUS43	Plasmid			100	100	
+A20H12	ant(6)-Ia	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+A20H12	aph(2'')-Ib	Resistance	unknown[aph(2'')-Ib_3_KF652098]	"Amikacin, Gentamicin, Tobramycin, Kanamycin"	98.78	100	Aminoglycoside
+A20H12	aph(3')-III	Resistance	"kanamycin, amikacin"	"Kanamycin, Amikacin, Neomycin, Butirosin, Isepamicin, Lividomycin, Paromomycin, Ribostamycin"	100	100	Aminoglycoside
+A20H12	blaOXA-418	Resistance	ampicillin	Unknown Beta-lactam	99.28	100	Beta-lactam
+A20H12	catP	Resistance	chloramphenicol	Chloramphenicol	100	72.12	Phenicol
+A20H12	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A20H12	erm(F)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	72.03	MLS
+A20H12	erm(T)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A20H12	lnu(C)	Resistance	lincomycin	Lincomycin	99.19	100	Lincosamide
+A20H12	mef(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin"	100	100	Macrolide
+A20H12	msr(D)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Telithromycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A20H12	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.43	100	Tetracycline
+A20H12	tet(O/32/O)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.69	100	Tetracycline
+A20H12	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.62	96.04	Tetracycline
+A22H0	ST8 (streptothermophilus)	MLST					
+A22H0	rep1	Plasmid			100	100	
+A22H0	rep17	Plasmid			99.81	100	
+A22H0	rep2	Plasmid			99.9	65.86	
+A22H0	rep37	Plasmid			100	100	
+A22H0	rep7a	Plasmid			100	100	
+A22H0	repUS15	Plasmid			99.52	100	
+A22H0	repUS2	Plasmid			98.53	100.15	
+A22H0	repUS43	Plasmid			100	100	
+A22H0	aac(6')-Ii	Resistance	"amikacin, tobramycin"	"Tobramycin, Dibekacin, Gentamicin, Sisomicin, Netilmicin"	99.63	99.64	Aminoglycoside
+A22H0	aac(6')-aph(2'')	Resistance	"amikacin, gentamicin, tobramycin"	"Gentamicin, Tobramycin, Netilmicin, Kanamycin, Amikacin, Dibekacin, Isepamicin, Fortimicin, Streptomycin"	100	100	Aminoglycoside
+A22H0	aadA13	Resistance	streptomycin	"Spectinomycin, Streptomycin"	100	71.05	Aminoglycoside
+A22H0	ant(6)-Ia	Resistance	streptomycin	Streptomycin	100	88.01	Aminoglycoside
+A22H0	ant(6)-Ia	Resistance	streptomycin	Streptomycin	99.88	100	Aminoglycoside
+A22H0	aph(3')-III	Resistance	"kanamycin, amikacin"	"Kanamycin, Amikacin, Neomycin, Butirosin, Isepamicin, Lividomycin, Paromomycin, Ribostamycin"	100	84.4	Aminoglycoside
+A22H0	catS	Resistance	chloramphenicol	Chloramphenicol	98.7	100	Phenicol
+A22H0	cfxA3	Resistance	ampicillin	Ampicillin	100	100	Beta-lactam
+A22H0	dfrG	Resistance	trimethoprim	Trimethoprim	100	100	Diaminopyrimidine
+A22H0	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	87.4	MLS
+A22H0	erm(F)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	90.89	MLS
+A22H0	erm(X)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.06	100.12	MLS
+A22H0	lnu(B)	Resistance	lincomycin	"Lincomycin, Clindamycin"	99.82	69.65	Lincosamide
+A22H0	lnu(C)	Resistance	lincomycin	Lincomycin	99.19	100	Lincosamide
+A22H0	lsa(E)	Resistance	"lincomycin, clindamycin"	"Lincomycin, Clindamycin, Dalfopristin, Pristinamycin IIA, Virginiamycin M, Tiamulin"	99.9	69.97	MLS
+A22H0	msr(C)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Telithromycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	98.72	100	MLS
+A22H0	sul2	Resistance	sulfisoxazole	Sulfamethoxazole	100	100	Sulfonamide
+A22H0	tet(32)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.23	61.2	Tetracycline
+A22H0	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.75	100	Tetracycline
+A22H0	tet(L)	Resistance	tetracycline	"Doxycycline, Tetracycline"	100	97.53	Tetracycline
+A22H0	tet(Q)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.45	84.84	Tetracycline
+A22H0	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	98.88	92.55	Tetracycline
+A22H0	tet(X)	Resistance	"doxycycline, tetracycline, minocycline, tigecycline"	"Doxycycline, Tetracycline, Minocycline, Tigecycline"	99.91	100	Tetracycline
+A22H12	ST- (streptothermophilus)	MLST					
+A22H12	rep1	Plasmid			100	100	
+A22H12	rep17	Plasmid			99.81	100	
+A22H12	rep37	Plasmid			100	100	
+A22H12	rep7a	Plasmid			100	80.62	
+A22H12	repUS1	Plasmid			100	77.67	
+A22H12	repUS2	Plasmid			98.68	99.71	
+A22H12	repUS43	Plasmid			100	100	
+A22H12	aac(6')-Ii	Resistance	"amikacin, tobramycin"	"Tobramycin, Dibekacin, Gentamicin, Sisomicin, Netilmicin"	99.63	99.64	Aminoglycoside
+A22H12	aac(6')-aph(2'')	Resistance	"amikacin, gentamicin, tobramycin"	"Gentamicin, Tobramycin, Netilmicin, Kanamycin, Amikacin, Dibekacin, Isepamicin, Fortimicin, Streptomycin"	100	100	Aminoglycoside
+A22H12	ant(6)-Ia	Resistance	unknown[ant(6)-Ia_5_AB247327]	Streptomycin	100	62.38	Aminoglycoside
+A22H12	ant(6)-Ia	Resistance	streptomycin	Streptomycin	99.88	100	Aminoglycoside
+A22H12	ant(9)-Ia	Resistance	spectinomycin	Spectinomycin	100	100	Aminoglycoside
+A22H12	aph(3')-III	Resistance	"kanamycin, amikacin"	"Kanamycin, Amikacin, Neomycin, Butirosin, Isepamicin, Lividomycin, Paromomycin, Ribostamycin"	100	100	Aminoglycoside
+A22H12	catS	Resistance	chloramphenicol	Chloramphenicol	98.7	100	Phenicol
+A22H12	cfxA	Resistance	ampicillin	"Cefoxitin, Ampicillin"	99.89	96.17	Beta-lactam
+A22H12	dfrG	Resistance	trimethoprim	Trimethoprim	100	71.69	Diaminopyrimidine
+A22H12	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	62.33	MLS
+A22H12	erm(F)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A22H12	lnu(B)	Resistance	lincomycin	"Lincomycin, Clindamycin"	100	78.36	Lincosamide
+A22H12	lnu(C)	Resistance	lincomycin	Lincomycin	99.19	100	Lincosamide
+A22H12	lsa(A)	Resistance	"lincomycin, clindamycin"	"Lincomycin, Clindamycin, Dalfopristin, Pristinamycin IIA, Virginiamycin M"	98.49	84.03	MLS
+A22H12	mef(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin"	100	77.26	Macrolide
+A22H12	msr(D)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Telithromycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	94.47	MLS
+A22H12	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.92	100	Tetracycline
+A22H12	tet(M)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.7	70.26	Tetracycline
+A22H12	tet(Q)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.84	100	Tetracycline
+A22H12	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	98.79	98.91	Tetracycline
+A22H12	tet(X)	Resistance	"doxycycline, tetracycline, minocycline, tigecycline"	"Doxycycline, Tetracycline, Minocycline, Tigecycline"	99.91	100	Tetracycline
+A24H0	ST- (-)	MLST					
+A24H0	repUS43	Plasmid			99.92	99.75	
+A24H0	ant(6)-Ia	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+A24H0	ant(6)-Ia	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+A24H0	aph(3')-III	Resistance	"kanamycin, amikacin"	"Kanamycin, Amikacin, Neomycin, Butirosin, Isepamicin, Lividomycin, Paromomycin, Ribostamycin"	100	100	Aminoglycoside
+A24H0	catS	Resistance	chloramphenicol	Chloramphenicol	98.7	100	Phenicol
+A24H0	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.08	100.13	MLS
+A24H0	erm(G)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A24H0	lnu(P)	Resistance	lincomycin	Lincomycin	99.04	62.67	Lincosamide
+A24H0	msr(D)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Telithromycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.92	89	MLS
+A24H0	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.84	100	Tetracycline
+A24H0	tet(44)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	98.54	100	Tetracycline
+A24H0	tet(O/W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.68	81.25	Tetracycline
+A24H0	tetB(P)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	98.52	100	Tetracycline
+A24H12	ST- (-)	MLST					
+A24H12	repUS37	Plasmid			100	68.4	
+A24H12	ant(6)-Ia	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+A24H12	catS	Resistance	chloramphenicol	Chloramphenicol	98.7	100	Phenicol
+A24H12	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.61	100.13	MLS
+A24H12	erm(F)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A24H12	erm(G)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A24H12	erm(T)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A24H12	mef(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin"	100	92.2	Macrolide
+A24H12	msr(D)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Telithromycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A24H12	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	100	100	Tetracycline
+A24H12	tet(44)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	98.54	100	Tetracycline
+A24H12	tet(S/M)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	98.79	72.66	Tetracycline
+A24H12	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.52	98.75	Tetracycline
+A24H12	tet(X)	Resistance	"doxycycline, tetracycline, minocycline, tigecycline"	"Doxycycline, Tetracycline, Minocycline, Tigecycline"	100	60.24	Tetracycline
+A25H0	ST- (-)	MLST					
+A25H0	rep22	Plasmid			100	62.99	
+A25H0	repUS43	Plasmid			100	99.75	
+A25H0	Cfr(E)	Resistance	unknown[Cfr(E)_1_NG_070225]	"Chloramphenicol, Florfenicol, Clindamycin, Lincomycin, Linezolid, Dalfopristin, Pristinamycin IIA, Virginiamycin M, Tiamulin"	100	93.91	Multi-Drug
+A25H0	NarA	Resistance	unknown[NarA_1_MN590304]	"Narasin, Salinomycin, Maduramicin"	99.09	100	Ionophore
+A25H0	NarB	Resistance	unknown[NarB_1_MN590304]	"Narasin, Salinomycin, Maduramicin"	99.5	100	Ionophore
+A25H0	aadD	Resistance	"amikacin, tobramycin"	"Amikacin, Tobramycin"	100	100	Aminoglycoside
+A25H0	ant(6)-Ia	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+A25H0	ant(6)-Ia	Resistance	streptomycin	Streptomycin	99.88	100	Aminoglycoside
+A25H0	ant(6)-Ib	Resistance	streptomycin	Streptomycin	99.88	100	Aminoglycoside
+A25H0	aph(2'')-Ia	Resistance	"amikacin, gentamicin, tobramycin"	"Amikacin, Gentamicin, Tobramycin, Kanamycin"	99.9	71.34	Aminoglycoside
+A25H0	aph(2'')-Ib	Resistance	unknown[aph(2'')-Ib_3_KF652098]	"Amikacin, Gentamicin, Tobramycin, Kanamycin"	98.78	100	Aminoglycoside
+A25H0	aph(2'')-Ic	Resistance	"kanamycin, gentamicin"	"Amikacin, Gentamicin, Tobramycin, Kanamycin"	99.82	60.37	Aminoglycoside
+A25H0	aph(3')-III	Resistance	"kanamycin, amikacin"	"Kanamycin, Amikacin, Neomycin, Butirosin, Isepamicin, Lividomycin, Paromomycin, Ribostamycin"	100	100	Aminoglycoside
+A25H0	bleO	Resistance	unknown[bleO_1_AF051917]	Bleomycin	100	100	Bleomycin
+A25H0	cat(pC194)	Resistance	chloramphenicol	Chloramphenicol	98.78	100.46	Phenicol
+A25H0	cepA-44	Resistance	ampicillin	Unknown Beta-lactam	99.17	66.56	Beta-lactam
+A25H0	dfrG	Resistance	trimethoprim	Trimethoprim	100	100	Diaminopyrimidine
+A25H0	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.34	100.13	MLS
+A25H0	erm(C)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A25H0	erm(F)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.87	93.88	MLS
+A25H0	erm(G)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A25H0	erm(T)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.82	75.92	MLS
+A25H0	erm(X)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.18	100.12	MLS
+A25H0	lsa(A)	Resistance	"lincomycin, clindamycin"	"Lincomycin, Clindamycin, Dalfopristin, Pristinamycin IIA, Virginiamycin M"	99.26	89.98	MLS
+A25H0	mef(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin"	99.08	89.16	Macrolide
+A25H0	msr(D)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Telithromycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A25H0	tet(32)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.66	61.2	Tetracycline
+A25H0	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.75	100	Tetracycline
+A25H0	tet(44)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	98.02	100	Tetracycline
+A25H0	tet(M)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.84	100	Tetracycline
+A25H0	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	100	100	Tetracycline
+A25H12	ST- (efaecalis)	MLST					
+A25H12	IncR	Plasmid			100	76.89	
+A25H12	rep1	Plasmid			100	100	
+A25H12	repUS33	Plasmid			99.7	100	
+A25H12	repUS4	Plasmid			99.58	61.22	
+A25H12	repUS43	Plasmid			100	99.75	
+A25H12	aac(6')-Im	Resistance	"amikacin, tobramycin"	"Amikacin, Tobramycin, Kanamycin"	99.63	100	Aminoglycoside
+A25H12	aac(6')-aph(2'')	Resistance	"amikacin, gentamicin, tobramycin"	"Gentamicin, Tobramycin, Netilmicin, Kanamycin, Amikacin, Dibekacin, Isepamicin, Fortimicin, Streptomycin"	100	73.4	Aminoglycoside
+A25H12	ant(6)-Ia	Resistance	streptomycin	Streptomycin	99.88	100	Aminoglycoside
+A25H12	ant(6)-Ib	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+A25H12	aph(2'')-Ib	Resistance	"amikacin, gentamicin, tobramycin"	"Amikacin, Gentamicin, Tobramycin, Kanamycin"	100	69.22	Aminoglycoside
+A25H12	aph(3')-III	Resistance	"kanamycin, amikacin"	"Kanamycin, Amikacin, Neomycin, Butirosin, Isepamicin, Lividomycin, Paromomycin, Ribostamycin"	100	100	Aminoglycoside
+A25H12	catS	Resistance	chloramphenicol	Chloramphenicol	98.56	77.65	Phenicol
+A25H12	cfr(C)	Resistance	chloramphenicol	"Chloramphenicol, Florfenicol, Clindamycin, Lincomycin, Linezolid, Dalfopristin, Pristinamycin IIA, Virginiamycin M, Tiamulin"	100	100	Multi-Drug
+A25H12	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A25H12	erm(Q)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A25H12	erm(T)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A25H12	lnu(B)	Resistance	lincomycin	"Lincomycin, Clindamycin"	100	86.69	Lincosamide
+A25H12	lnu(P)	Resistance	lincomycin	Lincomycin	99.8	100	Lincosamide
+A25H12	lsa(A)	Resistance	"lincomycin, clindamycin"	"Lincomycin, Clindamycin, Dalfopristin, Pristinamycin IIA, Virginiamycin M"	98.93	75.15	MLS
+A25H12	mef(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin"	100	77.26	Macrolide
+A25H12	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.34	100	Tetracycline
+A25H12	tet(44)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.12	100	Tetracycline
+A25H12	tet(O)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.58	99.79	Tetracycline
+A25H12	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99	93.65	Tetracycline
+A25H12	tetB(P)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	98.52	100	Tetracycline
+A26H0	ST1011 (ecoli_achtman_4)	MLST					
+A26H0	IncI2	Plasmid			99.38	100	
+A26H0	p0111	Plasmid			98.64	100	
+A26H0	repUS2	Plasmid			98.68	99.71	
+A26H0	VanHBX	Resistance	vancomycin	Vancomycin	99.16	100	Glycopeptide
+A26H0	aac(3)-IId	Resistance	gentamicin	"Apramycin, Gentamicin, Tobramycin, Dibekacin, Netilmicin, Sisomicin"	99.88	100	Aminoglycoside
+A26H0	aadA2	Resistance	streptomycin	"Spectinomycin, Streptomycin"	100	100	Aminoglycoside
+A26H0	ant(6)-Ia	Resistance	streptomycin	Streptomycin	99.88	100	Aminoglycoside
+A26H0	aph(3')-III	Resistance	"kanamycin, amikacin"	"Kanamycin, Amikacin, Neomycin, Butirosin, Isepamicin, Lividomycin, Paromomycin, Ribostamycin"	100	100	Aminoglycoside
+A26H0	blaTEM-30	Resistance	"ampicillin, amoxicillin/clavulanic acid"	"Amoxicillin, Amoxicillin+Clavulanic acid, Ampicillin, Ampicillin+Clavulanic acid, Piperacillin, Piperacillin+Tazobactam, Ticarcillin, Ticarcillin+Clavulanic acid"	100	100	Beta-lactam
+A26H0	catA1	Resistance	chloramphenicol	Chloramphenicol	99.85	100	Phenicol
+A26H0	cfxA5	Resistance	ampicillin	Unknown Beta-lactam	99.9	100	Beta-lactam
+A26H0	dfrA12	Resistance	trimethoprim	Trimethoprim	100	100	Diaminopyrimidine
+A26H0	dfrG	Resistance	trimethoprim	Trimethoprim	100	70.68	Diaminopyrimidine
+A26H0	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.82	76.83	MLS
+A26H0	erm(F)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.87	99.38	MLS
+A26H0	lnu(C)	Resistance	lincomycin	Lincomycin	98.92	74.95	Lincosamide
+A26H0	mph(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Spiramycin, Telithromycin"	99.68	100.11	Macrolide
+A26H0	sul1	Resistance	sulfisoxazole	Sulfamethoxazole	100	100	Sulfonamide
+A26H0	sul2	Resistance	sulfisoxazole	Sulfamethoxazole	100	82.6	Sulfonamide
+A26H0	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.84	100	Tetracycline
+A26H0	tet(O)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.43	100	Tetracycline
+A26H0	tet(Q)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.88	84.32	Tetracycline
+A26H0	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.95	100	Tetracycline
+A26H0	tet(X)	Resistance	"doxycycline, tetracycline, minocycline, tigecycline"	"Doxycycline, Tetracycline, Minocycline, Tigecycline"	99.91	100	Tetracycline
+A26H12	ST58 (ecoli_achtman_4)	MLST					
+A26H12	IncFIB(AP001918)	Plasmid			98.39	100	
+A26H12	IncFII	Plasmid			100	100	
+A26H12	IncQ1	Plasmid			100	66.46	
+A26H12	repUS2	Plasmid			98.68	99.71	
+A26H12	VanHBX	Resistance	vancomycin	Vancomycin	99.16	100	Glycopeptide
+A26H12	ant(6)-Ia	Resistance	streptomycin	Streptomycin	99.88	100	Aminoglycoside
+A26H12	aph(3'')-Ib	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+A26H12	aph(6)-Id	Resistance	kanamycin	Streptomycin	100	100	Aminoglycoside
+A26H12	blaTEM-1B	Resistance	ampicillin	"Amoxicillin, Ampicillin, Cephalothin, Piperacillin, Ticarcillin"	100	100	Beta-lactam
+A26H12	erm(X)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.06	100.12	MLS
+A26H12	lnu(C)	Resistance	lincomycin	Lincomycin	98.99	100	Lincosamide
+A26H12	sul2	Resistance	sulfisoxazole	Sulfamethoxazole	100	100	Sulfonamide
+A26H12	tet(M)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	100	100	Tetracycline
+A26H12	tet(O)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.43	100	Tetracycline
+A26H12	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	98.8	82.14	Tetracycline
+A27H0	ST1 (streptothermophilus)	MLST					
+A27H0	rep1	Plasmid			100	100	
+A27H0	rep37	Plasmid			99.59	77.04	
+A27H0	rep37	Plasmid			99.45	77.22	
+A27H0	repUS43	Plasmid			100	92.29	
+A27H0	aac(6')-aph(2'')	Resistance	"amikacin, gentamicin, tobramycin"	"Gentamicin, Tobramycin, Netilmicin, Kanamycin, Amikacin, Dibekacin, Isepamicin, Fortimicin, Streptomycin"	99.92	83.06	Aminoglycoside
+A27H0	ant(6)-Ia	Resistance	streptomycin	Streptomycin	99.89	100	Aminoglycoside
+A27H0	ant(6)-Ia	Resistance	streptomycin	Streptomycin	99.88	100	Aminoglycoside
+A27H0	aph(2'')-Ib	Resistance	unknown[aph(2'')-Ib_3_KF652098]	"Amikacin, Gentamicin, Tobramycin, Kanamycin"	98.78	100	Aminoglycoside
+A27H0	aph(3')-III	Resistance	"kanamycin, amikacin"	"Kanamycin, Amikacin, Neomycin, Butirosin, Isepamicin, Lividomycin, Paromomycin, Ribostamycin"	100	100	Aminoglycoside
+A27H0	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.34	100.13	MLS
+A27H0	erm(F)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.82	68.79	MLS
+A27H0	erm(X)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.18	100.12	MLS
+A27H0	lnu(C)	Resistance	lincomycin	Lincomycin	98.75	80.81	Lincosamide
+A27H0	lsa(C)	Resistance	"lincomycin, clindamycin"	"Lincomycin, Clindamycin, Dalfopristin, Pristinamycin IIA, Virginiamycin M, Tiamulin"	99.86	100	MLS
+A27H0	mef(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin"	99.67	100	Macrolide
+A27H0	tet(32)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	100	100	Tetracycline
+A27H0	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.92	100	Tetracycline
+A27H0	tet(A)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.67	100	Tetracycline
+A27H0	tet(M)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	98.96	100	Tetracycline
+A27H0	tet(O)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.64	100	Tetracycline
+A27H0	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.95	97.92	Tetracycline
+A27H0	tet(X)	Resistance	"doxycycline, tetracycline, minocycline, tigecycline"	"Doxycycline, Tetracycline, Minocycline, Tigecycline"	99.82	96.32	Tetracycline
+A27H12	ST16 (efaecalis)	MLST					
+A27H12	rep4a	Plasmid			99.88	100.12	
+A27H12	rep9b	Plasmid			100	100	
+A27H12	repUS43	Plasmid			100	100	
+A27H12	aac(6')-aph(2'')	Resistance	"amikacin, gentamicin, tobramycin"	"Gentamicin, Tobramycin, Netilmicin, Kanamycin, Amikacin, Dibekacin, Isepamicin, Fortimicin, Streptomycin"	100	100	Aminoglycoside
+A27H12	aac(6')Ib-cr	Resistance	unknown[aac(6')Ib-cr_3_EF210035]	"Tobramycin, Dibekacin, Amikacin, Sisomicin, Netilmicin, Fluoroquinolone, Ciprofloxacin"	99.69	62.24	Aminoglycoside
+A27H12	ant(6)-Ia	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+A27H12	aph(2'')-Ib	Resistance	unknown[aph(2'')-Ib_3_KF652098]	"Amikacin, Gentamicin, Tobramycin, Kanamycin"	98.67	100	Aminoglycoside
+A27H12	aph(3')-III	Resistance	"kanamycin, amikacin"	"Kanamycin, Amikacin, Neomycin, Butirosin, Isepamicin, Lividomycin, Paromomycin, Ribostamycin"	100	100	Aminoglycoside
+A27H12	dfrG	Resistance	trimethoprim	Trimethoprim	100	100	Diaminopyrimidine
+A27H12	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A27H12	lnu(B)	Resistance	lincomycin	"Lincomycin, Clindamycin"	100	100	Lincosamide
+A27H12	lsa(A)	Resistance	"lincomycin, clindamycin"	"Lincomycin, Clindamycin, Dalfopristin, Pristinamycin IIA, Virginiamycin M"	98.93	100	MLS
+A27H12	lsa(E)	Resistance	"lincomycin, clindamycin"	"Lincomycin, Clindamycin, Dalfopristin, Pristinamycin IIA, Virginiamycin M, Tiamulin"	100	100	MLS
+A27H12	str	Resistance	streptomycin	Streptomycin	99.84	74.68	Aminoglycoside
+A27H12	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	100	100	Tetracycline
+A27H12	tet(M)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	100	100	Tetracycline
+A27H12	tet(O)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.39	93.49	Tetracycline
+A27H12	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.95	100	Tetracycline
+A28H0	ST- (efaecalis)	MLST					
+A28H0	rep14a	Plasmid			99.47	93.78	
+A28H0	rep2	Plasmid			99.33	69.81	
+A28H0	rep7a	Plasmid			100	100	
+A28H0	rep9b	Plasmid			100	92.11	
+A28H0	repUS12	Plasmid			100	88.01	
+A28H0	repUS2	Plasmid			98.53	100.15	
+A28H0	repUS43	Plasmid			100	100	
+A28H0	ant(6)-Ia	Resistance	streptomycin	Streptomycin	100	93.08	Aminoglycoside
+A28H0	aph(3')-III	Resistance	"kanamycin, amikacin"	"Kanamycin, Amikacin, Neomycin, Butirosin, Isepamicin, Lividomycin, Paromomycin, Ribostamycin"	100	100	Aminoglycoside
+A28H0	cfxA5	Resistance	ampicillin	Unknown Beta-lactam	99.69	100	Beta-lactam
+A28H0	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.48	100.13	MLS
+A28H0	erm(F)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A28H0	lnu(C)	Resistance	lincomycin	Lincomycin	99.19	100	Lincosamide
+A28H0	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.84	100	Tetracycline
+A28H0	tet(O)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.79	100	Tetracycline
+A28H0	tet(Q)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.84	100	Tetracycline
+A28H0	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.48	100	Tetracycline
+A28H0	tet(X)	Resistance	"doxycycline, tetracycline, minocycline, tigecycline"	"Doxycycline, Tetracycline, Minocycline, Tigecycline"	99.91	100	Tetracycline
+A28H12	ST- (-)	MLST					
+A28H12	repUS2	Plasmid			98.53	100.15	
+A28H12	Cfr(E)	Resistance	unknown[Cfr(E)_1_NG_070225]	"Chloramphenicol, Florfenicol, Clindamycin, Lincomycin, Linezolid, Dalfopristin, Pristinamycin IIA, Virginiamycin M, Tiamulin"	99.9	100	Phenicol
+A28H12	ant(6)-Ia	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+A28H12	blaACI-1	Resistance	ampicillin	"Amoxicillin, Ampicillin, Ticarcillin, Ceftazidime, Cefotaxime"	99.88	100	Beta-lactam
+A28H12	cfxA3	Resistance	ampicillin	Ampicillin	99.48	100	Beta-lactam
+A28H12	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A28H12	erm(F)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	88.64	MLS
+A28H12	erm(X)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.18	100.12	MLS
+A28H12	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.67	100	Tetracycline
+A28H12	tet(Q)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	100	100	Tetracycline
+A28H12	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.22	100	Tetracycline
+A28H12	tet(X)	Resistance	"doxycycline, tetracycline, minocycline, tigecycline"	"Doxycycline, Tetracycline, Minocycline, Tigecycline"	99.91	100	Tetracycline
+A30H0	ST95 (ecoli_achtman_4)	MLST					
+A30H0	Col156	Plasmid			98.05	100	
+A30H0	IncFIB(AP001918)	Plasmid			98.39	100	
+A30H0	IncFII	Plasmid			100	100	
+A30H0	IncI1-I(Alpha)	Plasmid			99.3	100	
+A30H0	rep1	Plasmid			100	71.5	
+A30H0	rep37	Plasmid			100	100	
+A30H0	repUS2	Plasmid			98.68	99.71	
+A30H0	repUS43	Plasmid			100	99.75	
+A30H0	Cfr(E)	Resistance	unknown[Cfr(E)_1_NG_070225]	"Chloramphenicol, Florfenicol, Clindamycin, Lincomycin, Linezolid, Dalfopristin, Pristinamycin IIA, Virginiamycin M, Tiamulin"	100	93.91	Multi-Drug
+A30H0	aac(6')-Im	Resistance	"amikacin, tobramycin"	"Amikacin, Tobramycin, Kanamycin"	99.63	100	Aminoglycoside
+A30H0	aac(6')-aph(2'')	Resistance	"amikacin, gentamicin, tobramycin"	"Gentamicin, Tobramycin, Netilmicin, Kanamycin, Amikacin, Dibekacin, Isepamicin, Fortimicin, Streptomycin"	100	100	Aminoglycoside
+A30H0	aadA1	Resistance	streptomycin	"Spectinomycin, Streptomycin"	99.87	100	Aminoglycoside
+A30H0	ant(2'')-Ia	Resistance	gentamicin	"Gentamicin, Tobramycin"	100	100	Aminoglycoside
+A30H0	ant(6)-Ia	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+A30H0	ant(6)-Ib	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+A30H0	aph(2'')-Ib	Resistance	unknown[aph(2'')-Ib_3_KF652098]	"Amikacin, Gentamicin, Tobramycin, Kanamycin"	98.78	100	Aminoglycoside
+A30H0	aph(2'')-If	Resistance	"amikacin, gentamicin, tobramycin"	"Amikacin, Gentamicin, Tobramycin, Kanamycin"	100	100	Aminoglycoside
+A30H0	aph(3'')-Ib	Resistance	streptomycin	Streptomycin	100	89.18	Aminoglycoside
+A30H0	aph(3')-III	Resistance	"kanamycin, amikacin"	"Kanamycin, Amikacin, Neomycin, Butirosin, Isepamicin, Lividomycin, Paromomycin, Ribostamycin"	100	100	Aminoglycoside
+A30H0	aph(6)-Id	Resistance	kanamycin	Streptomycin	100	100	Aminoglycoside
+A30H0	blaTEM-70	Resistance	ampicillin	Unknown Beta-lactam	99.83	69.8	Beta-lactam
+A30H0	catS	Resistance	chloramphenicol	Chloramphenicol	98.7	100	Phenicol
+A30H0	cfxA	Resistance	ampicillin	"Cefoxitin, Ampicillin"	99.9	100	Beta-lactam
+A30H0	dfrA1	Resistance	trimethoprim	Trimethoprim	100	77.85	Diaminopyrimidine
+A30H0	dfrA14	Resistance	trimethoprim	Trimethoprim	99.65	60.34	Diaminopyrimidine
+A30H0	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.61	100.13	MLS
+A30H0	erm(F)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A30H0	erm(G)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.32	100	MLS
+A30H0	erm(X)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.18	85.26	MLS
+A30H0	mef(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin"	100	77.26	Macrolide
+A30H0	mph(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Spiramycin, Telithromycin"	99.68	100.11	Macrolide
+A30H0	mph(B)	Resistance	erythromycin	"Erythromycin, Spiramycin, Telithromycin"	100	66.89	Macrolide
+A30H0	tet(32)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	100	100	Tetracycline
+A30H0	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.84	100	Tetracycline
+A30H0	tet(44)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.9	100	Tetracycline
+A30H0	tet(M)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.93	77.86	Tetracycline
+A30H0	tet(O)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.74	100	Tetracycline
+A30H0	tet(Q)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.84	100	Tetracycline
+A30H0	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.94	93.65	Tetracycline
+A30H0	tetA(P)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.26	96.36	Tetracycline
+A30H12	ST- (sthermophilus)	MLST					
+A30H12	rep37	Plasmid			100	100	
+A30H12	repUS2	Plasmid			98.77	83.85	
+A30H12	Cfr(E)	Resistance	unknown[Cfr(E)_1_NG_070225]	"Chloramphenicol, Florfenicol, Clindamycin, Lincomycin, Linezolid, Dalfopristin, Pristinamycin IIA, Virginiamycin M, Tiamulin"	100	85.99	Multi-Drug
+A30H12	aac(6')-Im	Resistance	"amikacin, tobramycin"	"Amikacin, Tobramycin, Kanamycin"	98.99	73.56	Aminoglycoside
+A30H12	aac(6')-aph(2'')	Resistance	"amikacin, gentamicin, tobramycin"	"Gentamicin, Tobramycin, Netilmicin, Kanamycin, Amikacin, Dibekacin, Isepamicin, Fortimicin, Streptomycin"	100	100	Aminoglycoside
+A30H12	ant(6)-Ia	Resistance	streptomycin	Streptomycin	99.88	100	Aminoglycoside
+A30H12	aph(2'')-Ib	Resistance	unknown[aph(2'')-Ib_3_KF652098]	"Amikacin, Gentamicin, Tobramycin, Kanamycin"	98.78	100	Aminoglycoside
+A30H12	aph(2'')-If	Resistance	"amikacin, gentamicin, tobramycin"	"Amikacin, Gentamicin, Tobramycin, Kanamycin"	100	100	Aminoglycoside
+A30H12	aph(3')-IIIa	Resistance	"amikacin, gentamicin, kanamycin"	"Amikacin, Kanamycin"	99.8	63.77	Aminoglycoside
+A30H12	catS	Resistance	chloramphenicol	Chloramphenicol	98.7	100	Phenicol
+A30H12	cepA-29	Resistance	ampicillin	Unknown Beta-lactam	100	82.95	Beta-lactam
+A30H12	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.34	100.13	MLS
+A30H12	erm(G)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.73	100	MLS
+A30H12	erm(Q)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	67.31	MLS
+A30H12	erm(X)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.25	93.1	MLS
+A30H12	lnu(B)	Resistance	lincomycin	"Lincomycin, Clindamycin"	100	78.61	Lincosamide
+A30H12	lnu(C)	Resistance	lincomycin	Lincomycin	98.26	69.49	Lincosamide
+A30H12	lnu(P)	Resistance	lincomycin	Lincomycin	99.6	100	Lincosamide
+A30H12	mef(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin"	100	100	Macrolide
+A30H12	msr(D)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Telithromycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+A30H12	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.43	100	Tetracycline
+A30H12	tet(M)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.64	86.67	Tetracycline
+A30H12	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	98.85	99.69	Tetracycline
+A30H12	tetB(P)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	98.52	100	Tetracycline
+P2H0	ST2161 (ecoli_achtman_4)	MLST					
+P2H0	repUS2	Plasmid			98.68	99.71	
+P2H0	repUS43	Plasmid			99.81	87.89	
+P2H0	aadA1	Resistance	streptomycin	"Spectinomycin, Streptomycin"	99.87	100	Aminoglycoside
+P2H0	ant(2'')-Ia	Resistance	gentamicin	"Gentamicin, Tobramycin"	100	100	Aminoglycoside
+P2H0	ant(6)-Ia	Resistance	streptomycin	Streptomycin	100	95.05	Aminoglycoside
+P2H0	ant(6)-Ia	Resistance	streptomycin	Streptomycin	99.77	100	Aminoglycoside
+P2H0	aph(3')-III	Resistance	"kanamycin, amikacin"	"Kanamycin, Amikacin, Neomycin, Butirosin, Isepamicin, Lividomycin, Paromomycin, Ribostamycin"	100	81.64	Aminoglycoside
+P2H0	blaACI-1	Resistance	ampicillin	"Amoxicillin, Ampicillin, Ticarcillin, Ceftazidime, Cefotaxime"	99.88	100	Beta-lactam
+P2H0	blaTEM-84	Resistance	"ampicillin, amoxicillin/clavulanic acid"	"Amoxicillin, Amoxicillin+Clavulanic acid, Ampicillin, Ampicillin+Clavulanic acid, Piperacillin, Piperacillin+Tazobactam, Ticarcillin, Ticarcillin+Clavulanic acid"	99.88	100	Beta-lactam
+P2H0	catS	Resistance	chloramphenicol	Chloramphenicol	98.7	100	Phenicol
+P2H0	cepA-44	Resistance	ampicillin	Unknown Beta-lactam	99.89	100	Beta-lactam
+P2H0	cfxA	Resistance	ampicillin	"Cefoxitin, Ampicillin"	99.68	96.17	Beta-lactam
+P2H0	dfrA36	Resistance	unknown[dfrA36_1_CP038791]	Trimethoprim	100	100	Diaminopyrimidine
+P2H0	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.48	100.13	MLS
+P2H0	erm(F)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.84	77.9	MLS
+P2H0	erm(G)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.86	100	MLS
+P2H0	erm(X)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.18	100.12	MLS
+P2H0	floR	Resistance	chloramphenicol	"Chloramphenicol, Florfenicol"	98.1	99.92	Phenicol
+P2H0	lnu(C)	Resistance	lincomycin	Lincomycin	99.19	100	Lincosamide
+P2H0	sul1	Resistance	sulfisoxazole	Sulfamethoxazole	100	100	Sulfonamide
+P2H0	sul2	Resistance	sulfisoxazole	Sulfamethoxazole	100	100	Sulfonamide
+P2H0	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.84	100	Tetracycline
+P2H0	tet(B)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	100	100	Tetracycline
+P2H0	tet(M)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.94	83.07	Tetracycline
+P2H0	tet(O)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.74	100	Tetracycline
+P2H0	tet(Q)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.84	100	Tetracycline
+P2H0	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.64	100	Tetracycline
+P2H12	ST- (-)	MLST					
+P2H12	None	Plasmid					
+P2H12	catS	Resistance	chloramphenicol	Chloramphenicol	98.7	100	Phenicol
+P2H12	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	98.95	100.13	MLS
+P2H12	erm(X)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.06	100.12	MLS
+P2H12	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.84	100	Tetracycline
+P2H12	tet(O)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.74	100	Tetracycline
+P3H0	ST10968 (ecoli_achtman_4)	MLST					
+P3H0	None	Plasmid					
+P3H0	ant(6)-Ia	Resistance	streptomycin	Streptomycin	99.88	100	Aminoglycoside
+P3H0	aph(3')-III	Resistance	"kanamycin, amikacin"	"Kanamycin, Amikacin, Neomycin, Butirosin, Isepamicin, Lividomycin, Paromomycin, Ribostamycin"	100	100	Aminoglycoside
+P3H0	cfr(B)	Resistance	chloramphenicol	"Chloramphenicol, Florfenicol, Clindamycin, Lincomycin, Linezolid, Dalfopristin, Pristinamycin IIA, Virginiamycin M, Tiamulin"	100	100	Multi-Drug
+P3H0	cfr(C)	Resistance	chloramphenicol	"Chloramphenicol, Florfenicol, Clindamycin, Lincomycin, Linezolid, Dalfopristin, Pristinamycin IIA, Virginiamycin M, Tiamulin"	99.74	60.75	Multi-Drug
+P3H0	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.61	100.13	MLS
+P3H0	erm(F)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.88	100	MLS
+P3H0	lnu(C)	Resistance	lincomycin	Lincomycin	99	80.61	Lincosamide
+P3H0	mef(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin"	100	100	Macrolide
+P3H0	msr(D)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Telithromycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+P3H0	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.59	100	Tetracycline
+P3H0	tet(Q)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.74	99.9	Tetracycline
+P3H0	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.95	100	Tetracycline
+P3H12	ST- (-)	MLST					
+P3H12	None	Plasmid					
+P3H12	None	Resistance	Susceptible				
+P4H0	ST- (ecoli_achtman_4)	MLST					
+P4H0	IncFIA	Plasmid			100	100	
+P4H0	IncFIB(H89-PhagePlasmid)	Plasmid			99.6	100	
+P4H0	IncFII(pRSB107)	Plasmid			100	100	
+P4H0	IncQ1	Plasmid			100	66.46	
+P4H0	p0111	Plasmid			98.53	100	
+P4H0	pSL483	Plasmid			99.6	100	
+P4H0	repUS2	Plasmid			98.6	83.85	
+P4H0	aadA1	Resistance	streptomycin	"Spectinomycin, Streptomycin"	100	100	Aminoglycoside
+P4H0	ant(6)-Ia	Resistance	streptomycin	Streptomycin	99.77	100	Aminoglycoside
+P4H0	aph(3'')-Ib	Resistance	streptomycin	Streptomycin	100	99.88	Aminoglycoside
+P4H0	aph(3')-III	Resistance	"kanamycin, amikacin"	"Kanamycin, Amikacin, Neomycin, Butirosin, Isepamicin, Lividomycin, Paromomycin, Ribostamycin"	100	100	Aminoglycoside
+P4H0	aph(3')-Ia	Resistance	kanamycin	"Neomycin, Kanamycin, Lividomycin, Paromomycin, Ribostamycin"	99.75	99.75	Aminoglycoside
+P4H0	aph(6)-Id	Resistance	kanamycin	Streptomycin	100	100	Aminoglycoside
+P4H0	blaACI-1	Resistance	ampicillin	"Amoxicillin, Ampicillin, Ticarcillin, Ceftazidime, Cefotaxime"	99.88	100	Beta-lactam
+P4H0	blaCTX-M-27	Resistance	"ampicillin, ceftriaxone"	"Amoxicillin, Ampicillin, Aztreonam, Cefepime, Cefotaxime, Ceftazidime, Ceftriaxone, Piperacillin, Ticarcillin"	100	100	Beta-lactam
+P4H0	blaTEM-1B	Resistance	ampicillin	"Amoxicillin, Ampicillin, Cephalothin, Piperacillin, Ticarcillin"	100	100	Beta-lactam
+P4H0	dfrA1	Resistance	trimethoprim	Trimethoprim	99.79	100	Diaminopyrimidine
+P4H0	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+P4H0	sul1	Resistance	sulfisoxazole	Sulfamethoxazole	99.88	100	Sulfonamide
+P4H0	sul2	Resistance	sulfisoxazole	Sulfamethoxazole	100	100	Sulfonamide
+P4H0	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.75	100	Tetracycline
+P4H0	tet(A)	Resistance	tetracycline	"Doxycycline, Tetracycline"	100	100	Tetracycline
+P4H0	tet(O)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.79	100	Tetracycline
+P4H0	tet(Q)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	100	100	Tetracycline
+P4H0	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	100	93.18	Tetracycline
+P4H12	ST- (ecoli_achtman_4)	MLST					
+P4H12	ColpEC648	Plasmid			99.29	99.86	
+P4H12	IncB/O/K/Z	Plasmid			100	100	
+P4H12	IncFII	Plasmid			100	100	
+P4H12	IncR	Plasmid			99.42	68.13	
+P4H12	repUS2	Plasmid			98.53	100.15	
+P4H12	ant(3'')-Ia	Resistance	streptomycin	Streptomycin	99.88	82.51	Aminoglycoside
+P4H12	ant(6)-Ia	Resistance	streptomycin	Streptomycin	99.88	100	Aminoglycoside
+P4H12	aph(3')-III	Resistance	"kanamycin, amikacin"	"Kanamycin, Amikacin, Neomycin, Butirosin, Isepamicin, Lividomycin, Paromomycin, Ribostamycin"	100	100	Aminoglycoside
+P4H12	blaACI-1	Resistance	ampicillin	"Amoxicillin, Ampicillin, Ticarcillin, Ceftazidime, Cefotaxime"	99.88	100	Beta-lactam
+P4H12	cfxA	Resistance	ampicillin	"Cefoxitin, Ampicillin"	99.9	100	Beta-lactam
+P4H12	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.08	100.13	MLS
+P4H12	erm(F)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.88	100	MLS
+P4H12	erm(G)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.78	60.41	MLS
+P4H12	lnu(C)	Resistance	lincomycin	Lincomycin	98.99	100	Lincosamide
+P4H12	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.84	100	Tetracycline
+P4H12	tet(O)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.64	99.79	Tetracycline
+P4H12	tet(Q)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	100	100	Tetracycline
+P4H12	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.95	100	Tetracycline
+P4H12	tet(X)	Resistance	"doxycycline, tetracycline, minocycline, tigecycline"	"Doxycycline, Tetracycline, Minocycline, Tigecycline"	99.91	96.83	Tetracycline
+P5H0	ST- (efaecalis)	MLST					
+P5H0	rep2	Plasmid			100	100	
+P5H0	rep9b	Plasmid			100	100	
+P5H0	repUS15	Plasmid			100	100	
+P5H0	repUS2	Plasmid			98.68	99.71	
+P5H0	repUS43	Plasmid			100	100	
+P5H0	aac(6')-Ii	Resistance	"amikacin, tobramycin"	"Tobramycin, Dibekacin, Gentamicin, Sisomicin, Netilmicin"	99.64	100	Aminoglycoside
+P5H0	aac(6')-aph(2'')	Resistance	"amikacin, gentamicin, tobramycin"	"Gentamicin, Tobramycin, Netilmicin, Kanamycin, Amikacin, Dibekacin, Isepamicin, Fortimicin, Streptomycin"	100	84.65	Aminoglycoside
+P5H0	ant(6)-Ia	Resistance	streptomycin	Streptomycin	99.88	100	Aminoglycoside
+P5H0	ant(6)-Ib	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+P5H0	ant(9)-Ia	Resistance	spectinomycin	Spectinomycin	100	100	Aminoglycoside
+P5H0	aph(2'')-Ib	Resistance	unknown[aph(2'')-Ib_3_KF652098]	"Amikacin, Gentamicin, Tobramycin, Kanamycin"	98.78	100	Aminoglycoside
+P5H0	aph(3')-III	Resistance	"kanamycin, amikacin"	"Kanamycin, Amikacin, Neomycin, Butirosin, Isepamicin, Lividomycin, Paromomycin, Ribostamycin"	100	100	Aminoglycoside
+P5H0	catS	Resistance	chloramphenicol	Chloramphenicol	98.7	100	Phenicol
+P5H0	cfr(B)	Resistance	chloramphenicol	"Chloramphenicol, Florfenicol, Clindamycin, Lincomycin, Linezolid, Dalfopristin, Pristinamycin IIA, Virginiamycin M, Tiamulin"	99.9	100	Multi-Drug
+P5H0	dfrG	Resistance	trimethoprim	Trimethoprim	100	100	Diaminopyrimidine
+P5H0	erm(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.83	80.6	MLS
+P5H0	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.21	100.13	MLS
+P5H0	erm(G)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+P5H0	erm(T)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.86	100	MLS
+P5H0	erm(X)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.06	100.12	MLS
+P5H0	lnu(B)	Resistance	lincomycin	"Lincomycin, Clindamycin"	100	100	Lincosamide
+P5H0	lnu(P)	Resistance	lincomycin	Lincomycin	99.71	69.26	Lincosamide
+P5H0	lsa(A)	Resistance	"lincomycin, clindamycin"	"Lincomycin, Clindamycin, Dalfopristin, Pristinamycin IIA, Virginiamycin M"	98.86	100	MLS
+P5H0	lsa(E)	Resistance	"lincomycin, clindamycin"	"Lincomycin, Clindamycin, Dalfopristin, Pristinamycin IIA, Virginiamycin M, Tiamulin"	99.93	100	MLS
+P5H0	mef(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin"	100	86.21	Macrolide
+P5H0	msr(C)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Telithromycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	98.92	100	MLS
+P5H0	msr(D)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Telithromycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+P5H0	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.67	100	Tetracycline
+P5H0	tet(44)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	98.91	100	Tetracycline
+P5H0	tet(O)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.79	100	Tetracycline
+P5H0	tetA(P)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.18	96.36	Tetracycline
+P5H0	tetB(P)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	98.52	100	Tetracycline
+P5H12	ST- (ecoli_achtman_4)	MLST					
+P5H12	IncFIA	Plasmid			100	93.3	
+P5H12	IncFIA(HI1)	Plasmid			98.71	99.74	
+P5H12	IncFIB(AP001918)	Plasmid			98.39	100	
+P5H12	IncFIB(K)	Plasmid			98.75	100	
+P5H12	IncFII	Plasmid			100	100	
+P5H12	IncFII(Yp)	Plasmid			99.56	100	
+P5H12	IncI1-I(Alpha)	Plasmid			99.3	100	
+P5H12	IncQ1	Plasmid			99.84	77.14	
+P5H12	IncR	Plasmid			99.6	100	
+P5H12	repUS2	Plasmid			98.53	100.15	
+P5H12	repUS43	Plasmid			99.82	91.71	
+P5H12	aac(6')-Im	Resistance	"amikacin, tobramycin"	"Amikacin, Tobramycin, Kanamycin"	98.95	71.14	Aminoglycoside
+P5H12	ant(6)-Ia	Resistance	streptomycin	Streptomycin	99.88	100	Aminoglycoside
+P5H12	ant(6)-Ib	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+P5H12	aph(2'')-Ib	Resistance	unknown[aph(2'')-Ib_3_KF652098]	"Amikacin, Gentamicin, Tobramycin, Kanamycin"	98.33	100	Aminoglycoside
+P5H12	aph(3'')-Ib	Resistance	streptomycin	Streptomycin	99.88	100	Aminoglycoside
+P5H12	aph(3')-III	Resistance	"kanamycin, amikacin"	"Kanamycin, Amikacin, Neomycin, Butirosin, Isepamicin, Lividomycin, Paromomycin, Ribostamycin"	100	100	Aminoglycoside
+P5H12	aph(6)-Id	Resistance	kanamycin	Streptomycin	99.88	100	Aminoglycoside
+P5H12	blaACT-14	Resistance	"ampicillin, amoxicillin/clavulanic acid, cefoxitin, ceftriaxone"	"Amoxicillin, Amoxicillin+Clavulanic acid, Ampicillin, Ampicillin+Clavulanic acid, Cefotaxime, Cefoxitin, Ceftazidime, Piperacillin, Piperacillin+Tazobactam, Ticarcillin, Ticarcillin+Clavulanic acid"	98.87	100	Beta-lactam
+P5H12	blaSHV-12	Resistance	"ampicillin, ceftriaxone"	"Amoxicillin, Ampicillin, Aztreonam, Cefepime, Cefotaxime, Ceftazidime, Ceftriaxone, Piperacillin, Ticarcillin"	100	100	Beta-lactam
+P5H12	blaTEM-1C	Resistance	ampicillin	"Amoxicillin, Ampicillin, Cephalothin, Piperacillin, Ticarcillin"	100	100	Beta-lactam
+P5H12	catS	Resistance	chloramphenicol	Chloramphenicol	98.7	100	Phenicol
+P5H12	cfr(C)	Resistance	chloramphenicol	"Chloramphenicol, Florfenicol, Clindamycin, Lincomycin, Linezolid, Dalfopristin, Pristinamycin IIA, Virginiamycin M, Tiamulin"	100	100	Multi-Drug
+P5H12	cfxA5	Resistance	ampicillin	Unknown Beta-lactam	100	100	Beta-lactam
+P5H12	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.61	100.13	MLS
+P5H12	erm(G)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	97.82	MLS
+P5H12	erm(Q)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+P5H12	erm(X)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.18	100.12	MLS
+P5H12	lnu(C)	Resistance	lincomycin	Lincomycin	98.99	100	Lincosamide
+P5H12	lnu(P)	Resistance	lincomycin	Lincomycin	99.8	100	Lincosamide
+P5H12	msr(D)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Telithromycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.38	100	MLS
+P5H12	sul2	Resistance	sulfisoxazole	Sulfamethoxazole	100	100	Sulfonamide
+P5H12	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.59	100	Tetracycline
+P5H12	tet(44)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	98.91	100	Tetracycline
+P5H12	tet(A)	Resistance	tetracycline	"Doxycycline, Tetracycline"	100	100	Tetracycline
+P5H12	tet(Q)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99	83.33	Tetracycline
+P5H12	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.74	100	Tetracycline
+P5H12	tetA(P)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.18	96.36	Tetracycline
+P5H12	tetB(P)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	98.52	99.69	Tetracycline
+P11H0	ST399 (ecoli_achtman_4)	MLST					
+P11H0	IncY	Plasmid			98.95	100	
+P11H0	rep1	Plasmid			100	95.17	
+P11H0	rep14b	Plasmid			100	100	
+P11H0	rep38	Plasmid			99.34	100	
+P11H0	repUS2	Plasmid			98.68	99.71	
+P11H0	repUS43	Plasmid			99.83	100	
+P11H0	ARR-3	Resistance	rifampicin	Rifampicin	100	98.9	Ansamycin
+P11H0	Cfr(E)	Resistance	unknown[Cfr(E)_1_NG_070225]	"Chloramphenicol, Florfenicol, Clindamycin, Lincomycin, Linezolid, Dalfopristin, Pristinamycin IIA, Virginiamycin M, Tiamulin"	100	61.74	Multi-Drug
+P11H0	aac(6')-Im	Resistance	"amikacin, tobramycin"	"Amikacin, Tobramycin, Kanamycin"	99.26	100	Aminoglycoside
+P11H0	ant(6)-Ia	Resistance	streptomycin	Streptomycin	99.88	100	Aminoglycoside
+P11H0	ant(9)-Ia	Resistance	spectinomycin	Spectinomycin	100	100	Aminoglycoside
+P11H0	aph(2'')-Ib	Resistance	"amikacin, gentamicin, tobramycin"	"Amikacin, Gentamicin, Tobramycin, Kanamycin"	99.89	100	Aminoglycoside
+P11H0	aph(3')-III	Resistance	"kanamycin, amikacin"	"Kanamycin, Amikacin, Neomycin, Butirosin, Isepamicin, Lividomycin, Paromomycin, Ribostamycin"	100	100	Aminoglycoside
+P11H0	cfr(C)	Resistance	chloramphenicol	"Chloramphenicol, Florfenicol, Clindamycin, Lincomycin, Linezolid, Dalfopristin, Pristinamycin IIA, Virginiamycin M, Tiamulin"	99.88	63.71	Multi-Drug
+P11H0	dfrG	Resistance	trimethoprim	Trimethoprim	100	100	Diaminopyrimidine
+P11H0	erm(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+P11H0	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.61	100.13	MLS
+P11H0	erm(Q)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+P11H0	lnu(C)	Resistance	lincomycin	Lincomycin	99.19	100	Lincosamide
+P11H0	lsa(A)	Resistance	"lincomycin, clindamycin"	"Lincomycin, Clindamycin, Dalfopristin, Pristinamycin IIA, Virginiamycin M"	98.93	100	MLS
+P11H0	lsa(E)	Resistance	"lincomycin, clindamycin"	"Lincomycin, Clindamycin, Dalfopristin, Pristinamycin IIA, Virginiamycin M, Tiamulin"	100	63.97	MLS
+P11H0	mef(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin"	100	100	Macrolide
+P11H0	msr(D)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Telithromycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+P11H0	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.84	100	Tetracycline
+P11H0	tet(M)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	100	100	Tetracycline
+P11H0	tet(O/32/O)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.69	100	Tetracycline
+P11H0	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	100	100	Tetracycline
+P11H12	ST69 (ecoli_achtman_4)	MLST					
+P11H12	Col(pHAD28)	Plasmid			98.82	64.89	
+P11H12	IncN	Plasmid			99.61	100	
+P11H12	repUS2	Plasmid			98.68	99.71	
+P11H12	repUS38	Plasmid			99.82	69.86	
+P11H12	aac(3)-IId	Resistance	gentamicin	"Apramycin, Gentamicin, Tobramycin, Dibekacin, Netilmicin, Sisomicin"	99.88	100	Aminoglycoside
+P11H12	aac(6')-Im	Resistance	"amikacin, tobramycin"	"Amikacin, Tobramycin, Kanamycin"	99.26	100	Aminoglycoside
+P11H12	aac(6')-aph(2'')	Resistance	"amikacin, gentamicin, tobramycin"	"Gentamicin, Tobramycin, Netilmicin, Kanamycin, Amikacin, Dibekacin, Isepamicin, Fortimicin, Streptomycin"	99.93	100	Aminoglycoside
+P11H12	ant(6)-Ia	Resistance	streptomycin	Streptomycin	100	74.97	Aminoglycoside
+P11H12	ant(6)-Ib	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+P11H12	aph(2'')-Ib	Resistance	"amikacin, gentamicin, tobramycin"	"Amikacin, Gentamicin, Tobramycin, Kanamycin"	99.89	100	Aminoglycoside
+P11H12	aph(3'')-Ib	Resistance	streptomycin	Streptomycin	100	69.78	Aminoglycoside
+P11H12	aph(6)-Id	Resistance	kanamycin	Streptomycin	100	97.97	Aminoglycoside
+P11H12	blaOXY-6-1	Resistance	ampicillin	"Amoxicillin, Amoxicillin+Clavulanic acid, Ampicillin, Ampicillin+Clavulanic acid, Cefotaxime, Cefoxitin, Ceftazidime, Piperacillin, Piperacillin+Tazobactam, Ticarcillin, Ticarcillin+Clavulanic acid"	100	100	Beta-lactam
+P11H12	blaTEM-1B	Resistance	ampicillin	"Amoxicillin, Ampicillin, Cephalothin, Piperacillin, Ticarcillin"	100	100	Beta-lactam
+P11H12	cat	Resistance	chloramphenicol	Chloramphenicol	100	100	Phenicol
+P11H12	cfxA5	Resistance	ampicillin	Unknown Beta-lactam	99.78	92.65	Beta-lactam
+P11H12	dfrA14	Resistance	trimethoprim	Trimethoprim	100	100	Diaminopyrimidine
+P11H12	dfrA17	Resistance	trimethoprim	Trimethoprim	100	100	Diaminopyrimidine
+P11H12	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.21	100.13	MLS
+P11H12	erm(F)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+P11H12	erm(G)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.73	100	MLS
+P11H12	erm(Q)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.87	100	MLS
+P11H12	lnu(C)	Resistance	lincomycin	Lincomycin	98.26	92.93	Lincosamide
+P11H12	lsa(E)	Resistance	"lincomycin, clindamycin"	"Lincomycin, Clindamycin, Dalfopristin, Pristinamycin IIA, Virginiamycin M, Tiamulin"	99.93	100	Lincosamide
+P11H12	mef(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin"	99.2	82.02	Macrolide
+P11H12	msr(D)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Telithromycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.49	94.47	MLS
+P11H12	qnrS1	Resistance	ciprofloxacin I/R	Ciprofloxacin	100	100	Fluoroquinolone
+P11H12	sul2	Resistance	sulfisoxazole	Sulfamethoxazole	100	100	Sulfonamide
+P11H12	tet(32)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.66	61.2	Tetracycline
+P11H12	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.92	100	Tetracycline
+P11H12	tet(A)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.92	97.8	Tetracycline
+P11H12	tet(O)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.79	100	Tetracycline
+P11H12	tet(Q)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	98.99	92.78	Tetracycline
+P11H12	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	100	100	Tetracycline
+P11H12	tet(X)	Resistance	"doxycycline, tetracycline, minocycline, tigecycline"	"Doxycycline, Tetracycline, Minocycline, Tigecycline"	99.91	100	Tetracycline
+P11H12	tetA(P)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.17	95.33	Tetracycline
+P11H12	tetB(P)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	98.52	100	Tetracycline
+P14H0	ST- (-)	MLST					
+P14H0	rep1	Plasmid			100	100	
+P14H0	repUS2	Plasmid			98.68	99.71	
+P14H0	aac(6')-aph(2'')	Resistance	"amikacin, gentamicin, tobramycin"	"Gentamicin, Tobramycin, Netilmicin, Kanamycin, Amikacin, Dibekacin, Isepamicin, Fortimicin, Streptomycin"	100	71.11	Aminoglycoside
+P14H0	ant(6)-Ia	Resistance	streptomycin	Streptomycin	99.88	100	Aminoglycoside
+P14H0	aph(3')-IIIa	Resistance	"amikacin, gentamicin, kanamycin"	"Amikacin, Kanamycin"	100	83.77	Aminoglycoside
+P14H0	catS	Resistance	chloramphenicol	Chloramphenicol	98.71	86.41	Phenicol
+P14H0	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+P14H0	tet(O)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.79	100	Tetracycline
+P14H0	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.12	100	Tetracycline
+P14H12	ST- (-)	MLST					
+P14H12	ColpVC	Plasmid			100	72.02	
+P14H12	repUS2	Plasmid			98.68	99.71	
+P14H12	ant(6)-Ia	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+P14H12	aph(2'')-Ib	Resistance	unknown[aph(2'')-Ib_3_KF652098]	"Amikacin, Gentamicin, Tobramycin, Kanamycin"	98.78	100	Aminoglycoside
+P14H12	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.48	100.13	MLS
+P14H12	erm(G)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	80.54	MLS
+P14H12	lnu(C)	Resistance	lincomycin	Lincomycin	99.19	100	Lincosamide
+P14H12	mef(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin"	100	100	Macrolide
+P14H12	msr(D)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Telithromycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+P14H12	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	100	100	Tetracycline
+P14H12	tet(O)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.79	100	Tetracycline
+P14H12	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.06	93.65	Tetracycline
+P16H0	ST- (-)	MLST					
+P16H0	IncP1	Plasmid			100	72.68	
+P16H0	IncQ1	Plasmid			100	66.46	
+P16H0	ant(6)-Ia	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+P16H0	aph(3'')-Ib	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+P16H0	aph(3')-III	Resistance	"kanamycin, amikacin"	"Kanamycin, Amikacin, Neomycin, Butirosin, Isepamicin, Lividomycin, Paromomycin, Ribostamycin"	100	96.48	Aminoglycoside
+P16H0	aph(6)-Id	Resistance	kanamycin	Streptomycin	100	100	Aminoglycoside
+P16H0	blaTEM-1B	Resistance	ampicillin	"Amoxicillin, Ampicillin, Cephalothin, Piperacillin, Ticarcillin"	99.65	100	Beta-lactam
+P16H0	dfrA5	Resistance	trimethoprim	Trimethoprim	99.66	61.18	Diaminopyrimidine
+P16H0	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.32	98.92	MLS
+P16H0	erm(F)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+P16H0	erm(G)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.59	100	MLS
+P16H0	erm(X)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.18	100.12	MLS
+P16H0	sul2	Resistance	sulfisoxazole	Sulfamethoxazole	100	100	Sulfonamide
+P16H0	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.43	100	Tetracycline
+P16H0	tet(O/32/O)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.59	63.49	Tetracycline
+P16H0	tet(Q)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	98.64	99.33	Tetracycline
+P16H0	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	98.59	100	Tetracycline
+P16H0	tet(X)	Resistance	"doxycycline, tetracycline, minocycline, tigecycline"	"Doxycycline, Tetracycline, Minocycline, Tigecycline"	99.91	100	Tetracycline
+P16H12	ST- (-)	MLST					
+P16H12	None	Plasmid					
+P16H12	ant(6)-Ia	Resistance	streptomycin	Streptomycin	100	74.86	Aminoglycoside
+P16H12	aph(2'')-Ib	Resistance	unknown[aph(2'')-Ib_3_KF652098]	"Amikacin, Gentamicin, Tobramycin, Kanamycin"	98.78	100	Aminoglycoside
+P16H12	aph(3')-III	Resistance	"kanamycin, amikacin"	"Kanamycin, Amikacin, Neomycin, Butirosin, Isepamicin, Lividomycin, Paromomycin, Ribostamycin"	100	96.48	Aminoglycoside
+P16H12	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.48	100.13	MLS
+P16H12	erm(G)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	68.71	MLS
+P16H12	lnu(C)	Resistance	lincomycin	Lincomycin	99.19	100	Lincosamide
+P16H12	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.59	100	Tetracycline
+P16H12	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.17	99.9	Tetracycline
+P16H12	tetB(P)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	98.52	100	Tetracycline
+P17H0	ST69 (ecoli_achtman_4)	MLST					
+P17H0	IncFIA	Plasmid			99.74	100	
+P17H0	IncFII(pEH01)	Plasmid			99.17	100	
+P17H0	IncFII(pRSB107)	Plasmid			100	100	
+P17H0	IncX4	Plasmid			99.02	100	
+P17H0	repUS43	Plasmid			99.83	100	
+P17H0	aph(3'')-Ib	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+P17H0	aph(6)-Id	Resistance	kanamycin	Streptomycin	100	100	Aminoglycoside
+P17H0	blaCTX-M-14	Resistance	"ampicillin, ceftriaxone"	"Amoxicillin, Ampicillin, Aztreonam, Cefepime, Cefotaxime, Ceftazidime, Ceftriaxone, Piperacillin, Ticarcillin"	100	100	Beta-lactam
+P17H0	dfrA14	Resistance	trimethoprim	Trimethoprim	100	100	Diaminopyrimidine
+P17H0	lsa(C)	Resistance	"lincomycin, clindamycin"	"Lincomycin, Clindamycin, Dalfopristin, Pristinamycin IIA, Virginiamycin M, Tiamulin"	99.8	100	MLS
+P17H0	mef(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin"	100	100	Macrolide
+P17H0	mph(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Spiramycin, Telithromycin"	99.68	100.11	Macrolide
+P17H0	msr(D)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Telithromycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+P17H0	sul2	Resistance	sulfisoxazole	Sulfamethoxazole	100	100	Sulfonamide
+P17H0	tet(32)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	100	100	Tetracycline
+P17H0	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.34	100	Tetracycline
+P17H0	tet(A)	Resistance	tetracycline	"Doxycycline, Tetracycline"	100	100	Tetracycline
+P17H0	tet(B)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	100	100	Tetracycline
+P17H0	tet(M)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.84	100	Tetracycline
+P17H0	tet(O)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.64	99.79	Tetracycline
+P17H0	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.79	73.7	Tetracycline
+P17H12	ST- (-)	MLST					
+P17H12	ColpVC	Plasmid			98.96	100	
+P17H12	ant(6)-Ia	Resistance	streptomycin	Streptomycin	99.88	100	Aminoglycoside
+P17H12	aph(3')-III	Resistance	"kanamycin, amikacin"	"Kanamycin, Amikacin, Neomycin, Butirosin, Isepamicin, Lividomycin, Paromomycin, Ribostamycin"	100	64.03	Aminoglycoside
+P17H12	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.48	100.13	MLS
+P17H12	erm(Q)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+P17H12	erm(T)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.86	100.14	MLS
+P17H12	lnu(P)	Resistance	lincomycin	Lincomycin	99.72	72.26	Lincosamide
+P17H12	msr(D)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Telithromycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	64	MLS
+P17H12	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.59	100	Tetracycline
+P17H12	tet(44)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	98.63	71.92	Tetracycline
+P17H12	tetB(P)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	98.52	100	Tetracycline
+P20H0	ST1693 (efaecium)	MLST					
+P20H0	repUS15	Plasmid			100	100	
+P20H0	repUS2	Plasmid			98.68	99.71	
+P20H0	repUS43	Plasmid			100	100	
+P20H0	aac(6')-Ii	Resistance	"amikacin, tobramycin"	"Tobramycin, Dibekacin, Gentamicin, Sisomicin, Netilmicin"	99.64	100	Aminoglycoside
+P20H0	aac(6')-aph(2'')	Resistance	"amikacin, gentamicin, tobramycin"	"Gentamicin, Tobramycin, Netilmicin, Kanamycin, Amikacin, Dibekacin, Isepamicin, Fortimicin, Streptomycin"	100	61.18	Aminoglycoside
+P20H0	ant(6)-Ia	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+P20H0	aph(2'')-Ib	Resistance	unknown[aph(2'')-Ib_3_KF652098]	"Amikacin, Gentamicin, Tobramycin, Kanamycin"	98.78	100	Aminoglycoside
+P20H0	aph(3')-III	Resistance	"kanamycin, amikacin"	"Kanamycin, Amikacin, Neomycin, Butirosin, Isepamicin, Lividomycin, Paromomycin, Ribostamycin"	100	100	Aminoglycoside
+P20H0	catS	Resistance	chloramphenicol	Chloramphenicol	98.7	100	Phenicol
+P20H0	cepA	Resistance	ampicillin	Unknown Beta-lactam	100	100	Beta-lactam
+P20H0	cfr(C)	Resistance	chloramphenicol	"Chloramphenicol, Florfenicol, Clindamycin, Lincomycin, Linezolid, Dalfopristin, Pristinamycin IIA, Virginiamycin M, Tiamulin"	99.84	100	Multi-Drug
+P20H0	cfxA5	Resistance	ampicillin	Unknown Beta-lactam	99.79	100	Beta-lactam
+P20H0	dfrG	Resistance	trimethoprim	Trimethoprim	100	100	Diaminopyrimidine
+P20H0	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.16	93.83	MLS
+P20H0	erm(F)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.88	100	MLS
+P20H0	lnu(B)	Resistance	lincomycin	"Lincomycin, Clindamycin"	100	100	Lincosamide
+P20H0	lnu(C)	Resistance	lincomycin	Lincomycin	99.19	100	Lincosamide
+P20H0	lsa(E)	Resistance	"lincomycin, clindamycin"	"Lincomycin, Clindamycin, Dalfopristin, Pristinamycin IIA, Virginiamycin M, Tiamulin"	100	100	MLS
+P20H0	msr(C)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Telithromycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	98.96	97.03	MLS
+P20H0	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.59	100	Tetracycline
+P20H0	tet(M)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.9	100	Tetracycline
+P20H0	tet(O/32/O)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.69	100	Tetracycline
+P20H0	tet(Q)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.06	100	Tetracycline
+P20H0	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.06	93.65	Tetracycline
+P20H0	tet(X)	Resistance	"doxycycline, tetracycline, minocycline, tigecycline"	"Doxycycline, Tetracycline, Minocycline, Tigecycline"	99.88	69.49	Tetracycline
+P20H12	ST- (cperfringens)	MLST					
+P20H12	repUS2	Plasmid			98.53	100.15	
+P20H12	aac(6')-Ii	Resistance	"amikacin, tobramycin"	"Tobramycin, Dibekacin, Gentamicin, Sisomicin, Netilmicin"	98.29	95.81	Aminoglycoside
+P20H12	aac(6')-aph(2'')	Resistance	"amikacin, gentamicin, tobramycin"	"Gentamicin, Tobramycin, Netilmicin, Kanamycin, Amikacin, Dibekacin, Isepamicin, Fortimicin, Streptomycin"	100	72.57	Aminoglycoside
+P20H12	ant(6)-Ia	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+P20H12	ant(6)-Ia	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+P20H12	aph(2'')-Ib	Resistance	unknown[aph(2'')-Ib_3_KF652098]	"Amikacin, Gentamicin, Tobramycin, Kanamycin"	98.78	100	Aminoglycoside
+P20H12	aph(3')-III	Resistance	"kanamycin, amikacin"	"Kanamycin, Amikacin, Neomycin, Butirosin, Isepamicin, Lividomycin, Paromomycin, Ribostamycin"	100	100	Aminoglycoside
+P20H12	cfxA5	Resistance	ampicillin	Unknown Beta-lactam	99.79	100	Beta-lactam
+P20H12	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.48	100.13	MLS
+P20H12	erm(F)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	78.03	MLS
+P20H12	erm(Q)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	99.1	MLS
+P20H12	lnu(P)	Resistance	lincomycin	Lincomycin	99.72	71.06	Lincosamide
+P20H12	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.34	100	Tetracycline
+P20H12	tet(O)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.37	99.79	Tetracycline
+P20H12	tet(Q)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.84	99.64	Tetracycline
+P20H12	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	100	100	Tetracycline
+P20H12	tetA(P)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.71	82.11	Tetracycline
+P20H12	tetB(P)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.54	77.95	Tetracycline
+P21H0	ST5 (cperfringens)	MLST					
+P21H0	Col3M	Plasmid			98.09	100	
+P21H0	IncFIA(HI1)	Plasmid			98.43	98.45	
+P21H0	IncFIB(K)	Plasmid			99.11	100	
+P21H0	IncFII	Plasmid			99.53	81.99	
+P21H0	IncFII(pECLA)	Plasmid			98.13	100	
+P21H0	IncHI1A	Plasmid			99.76	100	
+P21H0	IncHI1B(R27)	Plasmid			100	100	
+P21H0	IncI1-I(Alpha)	Plasmid			99.3	100	
+P21H0	IncY	Plasmid			98.56	100	
+P21H0	repA(dmsm701b_NDM1)	Plasmid			100	75.04	
+P21H0	repB(R1701)	Plasmid			98.72	100	
+P21H0	repUS43	Plasmid			100	100	
+P21H0	aac(6')-If	Resistance	"tobramycin, dibekacin, amikacin, sisomicin, netilmicin"	"Tobramycin, Dibekacin, Amikacin, Sisomicin, Netilmicin"	98.85	100	Aminoglycoside
+P21H0	ant(6)-Ia	Resistance	streptomycin	Streptomycin	99.88	100	Aminoglycoside
+P21H0	aph(3'')-Ib	Resistance	streptomycin	Streptomycin	100	99.88	Aminoglycoside
+P21H0	aph(3')-III	Resistance	"kanamycin, amikacin"	"Kanamycin, Amikacin, Neomycin, Butirosin, Isepamicin, Lividomycin, Paromomycin, Ribostamycin"	100	100	Aminoglycoside
+P21H0	aph(6)-Id	Resistance	kanamycin	Streptomycin	100	100	Aminoglycoside
+P21H0	blaACT-12	Resistance	"ampicillin, amoxicillin/clavulanic acid, cefoxitin, ceftriaxone"	"Amoxicillin, Amoxicillin+Clavulanic acid, Ampicillin, Ampicillin+Clavulanic acid, Cefotaxime, Cefoxitin, Ceftazidime, Piperacillin, Piperacillin+Tazobactam, Ticarcillin, Ticarcillin+Clavulanic acid"	99.3	100	Beta-lactam
+P21H0	blaCMY-76	Resistance	"ampicillin, amoxicillin/clavulanic acid, cefoxitin, ceftriaxone"	"Amoxicillin, Amoxicillin+Clavulanic acid, Ampicillin, Ampicillin+Clavulanic acid, Cefotaxime, Cefoxitin, Ceftazidime, Piperacillin, Piperacillin+Tazobactam, Ticarcillin, Ticarcillin+Clavulanic acid"	98.78	100	Beta-lactam
+P21H0	blaMIR-6	Resistance	"ampicillin, amoxicillin/clavulanic acid, cefoxitin, ceftriaxone"	"Amoxicillin, Amoxicillin+Clavulanic acid, Ampicillin, Ampicillin+Clavulanic acid, Cefotaxime, Cefoxitin, Ceftazidime, Piperacillin, Piperacillin+Tazobactam, Ticarcillin, Ticarcillin+Clavulanic acid"	99.13	100	Beta-lactam
+P21H0	blaTEM-1B	Resistance	ampicillin	"Amoxicillin, Ampicillin, Cephalothin, Piperacillin, Ticarcillin"	100	100	Beta-lactam
+P21H0	cepA	Resistance	ampicillin	Unknown Beta-lactam	99.48	85.27	Beta-lactam
+P21H0	cfxA	Resistance	ampicillin	"Cefoxitin, Ampicillin"	99.9	100	Beta-lactam
+P21H0	dfrA17	Resistance	trimethoprim	Trimethoprim	99.66	62.24	Diaminopyrimidine
+P21H0	erm(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	98.63	MLS
+P21H0	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.48	100.13	MLS
+P21H0	erm(Q)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.87	100	MLS
+P21H0	fosA	Resistance	fosfomycin	Fosfomycin	99.52	100	Epoxide
+P21H0	fosA2	Resistance	fosfomycin	Fosfomycin	99.53	100	Epoxide
+P21H0	lnu(C)	Resistance	lincomycin	Lincomycin	98.99	100	Lincosamide
+P21H0	mef(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin"	100	100	Macrolide
+P21H0	msr(D)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Telithromycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+P21H0	qnrB60	Resistance	ciprofloxacin I/R	Ciprofloxacin	99.69	100	Fluoroquinolone
+P21H0	qnrD1	Resistance	unknown[qnrD1_1_FJ228229]	Ciprofloxacin	100	77.83	Fluoroquinolone
+P21H0	sul1	Resistance	sulfisoxazole	Sulfamethoxazole	100	62.32	Sulfonamide
+P21H0	sul2	Resistance	sulfisoxazole	Sulfamethoxazole	100	85.91	Sulfonamide
+P21H0	tet(32)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.83	61.2	Tetracycline
+P21H0	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	100	100	Tetracycline
+P21H0	tet(M)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	98.12	100	Tetracycline
+P21H0	tet(Q)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.27	100	Tetracycline
+P21H0	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	98.75	100	Tetracycline
+P21H0	tetA(P)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.26	96.36	Tetracycline
+P21H0	tetB(P)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	98.8	68.3	Tetracycline
+P21H12	ST- (-)	MLST					
+P21H12	None	Plasmid					
+P21H12	aac(6')-Im	Resistance	"amikacin, tobramycin"	"Amikacin, Tobramycin, Kanamycin"	99.7	62.01	Aminoglycoside
+P21H12	ant(6)-Ia	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+P21H12	ant(6)-Ia	Resistance	streptomycin	Streptomycin	99.88	100	Aminoglycoside
+P21H12	aph(3')-III	Resistance	"kanamycin, amikacin"	"Kanamycin, Amikacin, Neomycin, Butirosin, Isepamicin, Lividomycin, Paromomycin, Ribostamycin"	100	100	Aminoglycoside
+P21H12	catS	Resistance	chloramphenicol	Chloramphenicol	99.07	100	Phenicol
+P21H12	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.08	99.48	MLS
+P21H12	erm(Q)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+P21H12	lnu(P)	Resistance	lincomycin	Lincomycin	99.01	60.48	Lincosamide
+P21H12	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.84	100	Tetracycline
+P21H12	tet(44)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.06	100	Tetracycline
+P21H12	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	100	100	Tetracycline
+P21H12	tetB(P)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	98.52	100	Tetracycline
+P25H0	ST- (-)	MLST					
+P25H0	rep37	Plasmid			100	100	
+P25H0	repUS2	Plasmid			98.53	100.15	
+P25H0	repUS43	Plasmid			99.83	100	
+P25H0	aac(6')-Im	Resistance	"amikacin, tobramycin"	"Amikacin, Tobramycin, Kanamycin"	99.63	100	Aminoglycoside
+P25H0	aac(6')-aph(2'')	Resistance	"amikacin, gentamicin, tobramycin"	"Gentamicin, Tobramycin, Netilmicin, Kanamycin, Amikacin, Dibekacin, Isepamicin, Fortimicin, Streptomycin"	99.93	100	Aminoglycoside
+P25H0	ant(6)-Ia	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+P25H0	ant(6)-Ia	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+P25H0	ant(6)-Ib	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+P25H0	aph(2'')-Ib	Resistance	"amikacin, gentamicin, tobramycin"	"Amikacin, Gentamicin, Tobramycin, Kanamycin"	100	100	Aminoglycoside
+P25H0	aph(3')-III	Resistance	"kanamycin, amikacin"	"Kanamycin, Amikacin, Neomycin, Butirosin, Isepamicin, Lividomycin, Paromomycin, Ribostamycin"	100	100	Aminoglycoside
+P25H0	cfr(C)	Resistance	chloramphenicol	"Chloramphenicol, Florfenicol, Clindamycin, Lincomycin, Linezolid, Dalfopristin, Pristinamycin IIA, Virginiamycin M, Tiamulin"	100	100	Multi-Drug
+P25H0	cfxA5	Resistance	ampicillin	Unknown Beta-lactam	99.79	100	Beta-lactam
+P25H0	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.45	71.65	MLS
+P25H0	erm(F)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+P25H0	erm(G)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.32	100	MLS
+P25H0	erm(X)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.18	100.12	MLS
+P25H0	tet(32)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	98.96	64.84	Tetracycline
+P25H0	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.59	100	Tetracycline
+P25H0	tet(44)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.27	100	Tetracycline
+P25H0	tet(M)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.64	100	Tetracycline
+P25H0	tet(O)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.85	68.54	Tetracycline
+P25H0	tet(Q)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.74	99.9	Tetracycline
+P25H0	tet(X)	Resistance	"doxycycline, tetracycline, minocycline, tigecycline"	"Doxycycline, Tetracycline, Minocycline, Tigecycline"	99.91	100	Tetracycline
+P25H12	ST569 (ecoli_achtman_4)	MLST					
+P25H12	Col(IRGK)	Plasmid			98.37	100	
+P25H12	Col156	Plasmid			98.7	100	
+P25H12	IncFII(29)	Plasmid			100	100	
+P25H12	repUS2	Plasmid			98.19	64.76	
+P25H12	aac(6')-Im	Resistance	"amikacin, tobramycin"	"Amikacin, Tobramycin, Kanamycin"	99.63	100	Aminoglycoside
+P25H12	aac(6')-aph(2'')	Resistance	"amikacin, gentamicin, tobramycin"	"Gentamicin, Tobramycin, Netilmicin, Kanamycin, Amikacin, Dibekacin, Isepamicin, Fortimicin, Streptomycin"	99.93	100	Aminoglycoside
+P25H12	ant(6)-Ia	Resistance	unknown[ant(6)-Ia_5_AB247327]	Streptomycin	100	61.28	Aminoglycoside
+P25H12	ant(6)-Ia	Resistance	streptomycin	Streptomycin	99.88	100	Aminoglycoside
+P25H12	aph(2'')-Ib	Resistance	"amikacin, gentamicin, tobramycin"	"Amikacin, Gentamicin, Tobramycin, Kanamycin"	100	100	Aminoglycoside
+P25H12	aph(3'')-Ib	Resistance	streptomycin	Streptomycin	99.75	99.88	Aminoglycoside
+P25H12	aph(3')-III	Resistance	"kanamycin, amikacin"	"Kanamycin, Amikacin, Neomycin, Butirosin, Isepamicin, Lividomycin, Paromomycin, Ribostamycin"	100	100	Aminoglycoside
+P25H12	aph(6)-Id	Resistance	kanamycin	Streptomycin	100	100	Aminoglycoside
+P25H12	blaTEM-1B	Resistance	ampicillin	"Amoxicillin, Ampicillin, Cephalothin, Piperacillin, Ticarcillin"	100	100	Beta-lactam
+P25H12	catS	Resistance	chloramphenicol	Chloramphenicol	98.7	100	Phenicol
+P25H12	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.45	71.65	MLS
+P25H12	erm(G)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+P25H12	erm(X)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.18	100.12	MLS
+P25H12	lnu(C)	Resistance	lincomycin	Lincomycin	98.99	100	Lincosamide
+P25H12	mef(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin"	99.77	70.85	Macrolide
+P25H12	msr(D)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Telithromycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.52	100	MLS
+P25H12	sul2	Resistance	sulfisoxazole	Sulfamethoxazole	100	100	Sulfonamide
+P25H12	tet(B)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	100	100	Tetracycline
+P25H12	tet(O/32/O)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.9	100	Tetracycline
+P25H12	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.78	93.65	Tetracycline
+P26H0	ST1 (streptothermophilus)	MLST					
+P26H0	Col(BS512)	Plasmid			100	100	
+P26H0	Col(pHAD28)	Plasmid			100	100	
+P26H0	repUS2	Plasmid			98.68	99.71	
+P26H0	ant(6)-Ia	Resistance	streptomycin	Streptomycin	99.88	100	Aminoglycoside
+P26H0	aph(3')-III	Resistance	"kanamycin, amikacin"	"Kanamycin, Amikacin, Neomycin, Butirosin, Isepamicin, Lividomycin, Paromomycin, Ribostamycin"	100	100	Aminoglycoside
+P26H0	catS	Resistance	chloramphenicol	Chloramphenicol	98.7	100	Phenicol
+P26H0	cfxA5	Resistance	ampicillin	Unknown Beta-lactam	100	95.13	Beta-lactam
+P26H0	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.86	100	MLS
+P26H0	erm(F)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	77.65	MLS
+P26H0	erm(G)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+P26H0	erm(X)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.18	100.12	MLS
+P26H0	nimA	Resistance	nitroimidazole	Metronidazole	98.31	100.38	Macrolide
+P26H0	qnrB19	Resistance	ciprofloxacin I/R	Ciprofloxacin	100	100	Fluoroquinolone
+P26H0	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.75	100	Tetracycline
+P26H0	tet(Q)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	98.91	100	Tetracycline
+P26H0	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	100	100	Tetracycline
+P26H0	tet(X)	Resistance	"doxycycline, tetracycline, minocycline, tigecycline"	"Doxycycline, Tetracycline, Minocycline, Tigecycline"	99.91	100	Tetracycline
+P26H12	ST- (sthermophilus)	MLST					
+P26H12	Col8282	Plasmid			100	100	
+P26H12	IncY	Plasmid			98.73	72.29	
+P26H12	repUS2	Plasmid			98.68	99.71	
+P26H12	ant(6)-Ia	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+P26H12	ant(6)-Ia	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+P26H12	aph(3')-III	Resistance	"kanamycin, amikacin"	"Kanamycin, Amikacin, Neomycin, Butirosin, Isepamicin, Lividomycin, Paromomycin, Ribostamycin"	100	100	Aminoglycoside
+P26H12	aph(6)-Id	Resistance	kanamycin	Streptomycin	100	78.61	Aminoglycoside
+P26H12	blaTEM-30	Resistance	"ampicillin, amoxicillin/clavulanic acid"	"Amoxicillin, Amoxicillin+Clavulanic acid, Ampicillin, Ampicillin+Clavulanic acid, Piperacillin, Piperacillin+Tazobactam, Ticarcillin, Ticarcillin+Clavulanic acid"	100	74.33	Beta-lactam
+P26H12	cfxA5	Resistance	ampicillin	Unknown Beta-lactam	100	92.34	Beta-lactam
+P26H12	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+P26H12	erm(X)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.18	100.12	MLS
+P26H12	nimA	Resistance	nitroimidazole	Metronidazole	99.02	76.65	Nitroimidazole
+P26H12	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.75	100	Tetracycline
+P26H12	tet(O)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.58	100	Tetracycline
+P26H12	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	100	100	Tetracycline
+P27H0	ST- (klebsiella)	MLST					
+P27H0	Col(pHAD28)	Plasmid			100	100	
+P27H0	IncB/O/K/Z	Plasmid			100	100	
+P27H0	IncFIB(K)	Plasmid			100	100	
+P27H0	IncI1-I(Alpha)	Plasmid			100	100	
+P27H0	IncX1	Plasmid			98.93	100	
+P27H0	repUS38	Plasmid			100	100	
+P27H0	OqxA	Resistance	unknown[OqxA_1_EU370913]	"Chloramphenicol, Nalidixic acid, Ciprofloxacin, Trimethoprim"	99.15	100	Multi-Drug
+P27H0	OqxB	Resistance	unknown[OqxB_1_EU370913]	"Chloramphenicol, Nalidixic acid, Ciprofloxacin, Trimethoprim"	98.45	100	Multi-Drug
+P27H0	ant(6)-Ia	Resistance	streptomycin	Streptomycin	100	87.73	Aminoglycoside
+P27H0	aph(3'')-Ib	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+P27H0	aph(3')-III	Resistance	"kanamycin, amikacin"	"Kanamycin, Amikacin, Neomycin, Butirosin, Isepamicin, Lividomycin, Paromomycin, Ribostamycin"	100	100	Aminoglycoside
+P27H0	aph(6)-Id	Resistance	kanamycin	Streptomycin	100	87.57	Aminoglycoside
+P27H0	blaSHV-1	Resistance	ampicillin	"Amoxicillin, Ampicillin, Cephalothin, Piperacillin, Ticarcillin"	100	100	Beta-lactam
+P27H0	blaTEM-1C	Resistance	ampicillin	"Amoxicillin, Ampicillin, Cephalothin, Piperacillin, Ticarcillin"	100	100	Beta-lactam
+P27H0	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.5	78.87	MLS
+P27H0	fosA	Resistance	fosfomycin	Fosfomycin	100	98.1	Epoxide
+P27H0	mef(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin"	100	100	Macrolide
+P27H0	msr(D)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Telithromycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+P27H0	qnrB19	Resistance	ciprofloxacin I/R	Ciprofloxacin	100	100	Fluoroquinolone
+P27H0	sul2	Resistance	sulfisoxazole	Sulfamethoxazole	100	100	Sulfonamide
+P27H0	tet(B)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	100	100	Tetracycline
+P27H0	tet(D)	Resistance	tetracycline	"Doxycycline, Tetracycline"	100	100	Tetracycline
+P27H0	tetA(P)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.26	96.36	Tetracycline
+P27H12	ST- (-)	MLST					
+P27H12	repUS2	Plasmid			98.68	99.71	
+P27H12	ant(6)-Ia	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+P27H12	ant(6)-Ia	Resistance	streptomycin	Streptomycin	99.88	100	Aminoglycoside
+P27H12	aph(3')-III	Resistance	"kanamycin, amikacin"	"Kanamycin, Amikacin, Neomycin, Butirosin, Isepamicin, Lividomycin, Paromomycin, Ribostamycin"	100	100	Aminoglycoside
+P27H12	catS	Resistance	chloramphenicol	Chloramphenicol	98.7	100	Phenicol
+P27H12	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.48	100.13	MLS
+P27H12	erm(G)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	64.08	MLS
+P27H12	tet(44)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	98.02	100	Tetracycline
+P27H12	tet(O)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.79	100	Tetracycline
+P42H0	ST- (sthermophilus)	MLST					
+P42H0	ColpVC	Plasmid			98.96	100	
+P42H0	IncI1-I(Alpha)	Plasmid			100	100	
+P42H0	IncN3	Plasmid			99.79	100	
+P42H0	rep14a	Plasmid			99.5	100	
+P42H0	rep29	Plasmid			100	82.79	
+P42H0	rep31	Plasmid			98.47	73.58	
+P42H0	rep6	Plasmid			100	100	
+P42H0	repUS43	Plasmid			100	99.75	
+P42H0	NarA	Resistance	unknown[NarA_1_MN590304]	"Narasin, Salinomycin, Maduramicin"	100	100	Ionophore
+P42H0	NarB	Resistance	unknown[NarB_1_MN590304]	"Narasin, Salinomycin, Maduramicin"	99.88	100	Ionophore
+P42H0	aac(3)-IIa	Resistance	unknown[aac(3)-IIa_6_CP023555]	"Gentamicin, Tobramycin"	100	84.32	Aminoglycoside
+P42H0	aac(6')-Ii	Resistance	"amikacin, tobramycin"	"Tobramycin, Dibekacin, Gentamicin, Sisomicin, Netilmicin"	99.74	69.76	Aminoglycoside
+P42H0	aac(6')-aph(2'')	Resistance	"amikacin, gentamicin, tobramycin"	"Gentamicin, Tobramycin, Netilmicin, Kanamycin, Amikacin, Dibekacin, Isepamicin, Fortimicin, Streptomycin"	99.93	100	Aminoglycoside
+P42H0	ant(6)-Ia	Resistance	streptomycin	Streptomycin	99.88	100	Aminoglycoside
+P42H0	ant(6)-Ia	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+P42H0	ant(6)-Ib	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+P42H0	aph(3'')-Ib	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+P42H0	aph(3')-III	Resistance	"kanamycin, amikacin"	"Kanamycin, Amikacin, Neomycin, Butirosin, Isepamicin, Lividomycin, Paromomycin, Ribostamycin"	100	100	Aminoglycoside
+P42H0	aph(6)-Id	Resistance	kanamycin	Streptomycin	100	100	Aminoglycoside
+P42H0	blaACT-14	Resistance	"ampicillin, amoxicillin/clavulanic acid, cefoxitin, ceftriaxone"	"Amoxicillin, Amoxicillin+Clavulanic acid, Ampicillin, Ampicillin+Clavulanic acid, Cefotaxime, Cefoxitin, Ceftazidime, Piperacillin, Piperacillin+Tazobactam, Ticarcillin, Ticarcillin+Clavulanic acid"	99.62	68.67	Beta-lactam
+P42H0	blaTEM-70	Resistance	ampicillin	Unknown Beta-lactam	100	69.22	Beta-lactam
+P42H0	catB3	Resistance	chloramphenicol	Chloramphenicol	100	69.83	Phenicol
+P42H0	dfrG	Resistance	trimethoprim	Trimethoprim	99.78	93.17	Diaminopyrimidine
+P42H0	erm(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.86	97.13	MLS
+P42H0	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+P42H0	erm(F)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.6	62.05	MLS
+P42H0	erm(Q)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+P42H0	erm(X)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.18	100.12	MLS
+P42H0	lnu(C)	Resistance	lincomycin	Lincomycin	99.19	100	Lincosamide
+P42H0	lnu(P)	Resistance	lincomycin	Lincomycin	99.73	72.85	Lincosamide
+P42H0	lsa(A)	Resistance	"lincomycin, clindamycin"	"Lincomycin, Clindamycin, Dalfopristin, Pristinamycin IIA, Virginiamycin M"	99.56	75.95	Lincosamide
+P42H0	mef(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin"	100	85.06	Macrolide
+P42H0	mph(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Spiramycin, Telithromycin"	100	96.03	Macrolide
+P42H0	sul2	Resistance	sulfisoxazole	Sulfamethoxazole	99.88	100	Sulfonamide
+P42H0	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	100	100	Tetracycline
+P42H0	tet(44)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	98.91	100	Tetracycline
+P42H0	tet(A)	Resistance	tetracycline	"Doxycycline, Tetracycline"	100	100	Tetracycline
+P42H0	tet(L)	Resistance	tetracycline	"Doxycycline, Tetracycline"	100	87.8	Tetracycline
+P42H0	tet(W)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	98.39	93.65	Tetracycline
+P42H0	tetB(P)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	98.52	100	Tetracycline
+P42H12	ST- (llactis_phage)	MLST					
+P42H12	repUS2	Plasmid			98.11	77.68	
+P42H12	ant(6)-Ia	Resistance	streptomycin	Streptomycin	100	73.24	Aminoglycoside
+P42H12	ant(6)-Ia	Resistance	streptomycin	Streptomycin	100	100	Aminoglycoside
+P42H12	aph(3')-III	Resistance	"kanamycin, amikacin"	"Kanamycin, Amikacin, Neomycin, Butirosin, Isepamicin, Lividomycin, Paromomycin, Ribostamycin"	99.87	100	Aminoglycoside
+P42H12	catS	Resistance	chloramphenicol	Chloramphenicol	98.64	95.72	Phenicol
+P42H12	cfr(C)	Resistance	chloramphenicol	"Chloramphenicol, Florfenicol, Clindamycin, Lincomycin, Linezolid, Dalfopristin, Pristinamycin IIA, Virginiamycin M, Tiamulin"	99.81	84.49	Multi-Drug
+P42H12	erm(B)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+P42H12	erm(X)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Lincomycin, Clindamycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	99.06	100.12	MLS
+P42H12	mef(A)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin"	100	100	Macrolide
+P42H12	msr(D)	Resistance	"erythromycin, azithromycin"	"Erythromycin, Azithromycin, Telithromycin, Quinupristin, Pristinamycin IA, Virginiamycin S"	100	100	MLS
+P42H12	tet(40)	Resistance	tetracycline	"Doxycycline, Tetracycline"	99.92	100	Tetracycline
+P42H12	tet(O)	Resistance	tetracycline	"Doxycycline, Tetracycline, Minocycline"	99.32	100	Tetracycline

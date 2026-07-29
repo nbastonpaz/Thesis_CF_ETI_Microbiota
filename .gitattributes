@@ -8,3 +8,6 @@ results/chapter_I/metaproteomics/sputum/Human_pept_final.xlsx filter=lfs diff=lf
 results/chapter_I/metaproteomics/sputum/Peptides.xlsx filter=lfs diff=lfs merge=lfs -text
 results/chapter_I/metaproteomics/sputum/Peptides_final.csv filter=lfs diff=lfs merge=lfs -text
 results/chapter_I/metaproteomics/sputum/Peptides_refined.csv filter=lfs diff=lfs merge=lfs -text
+data/chapter_I/metaproteomics/feces/combined_peptide.tsv filter=lfs diff=lfs merge=lfs -text
+data/chapter_I/metaproteomics/feces/combined_protein.tsv filter=lfs diff=lfs merge=lfs -text
+data/chapter_I/metaproteomics/feces/functions.tsv filter=lfs diff=lfs merge=lfs -text

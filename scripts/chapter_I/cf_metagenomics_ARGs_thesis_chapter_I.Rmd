@@ -1,0 +1,1190 @@
+---
+title: "cf_metagenomics_ARGs_thesis_chapter_I"
+author: "Natalia Bastón-Paz"
+date: '2026'
+output: html_document
+---
+
+# Set up
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+require("knitr")
+opts_knit$set(root.dir = "C:/RProjects/cf_metagenomics_thesis_chapter_I")
+```
+
+# Clean environments
+
+```{#r Clean environments, message=FALSE, warning=FALSE}
+rm(list = ls())
+```
+
+## General introduction
+People with cystic fibrosis (pwCF) are frequently exposed to antibiotics because of recurrent and chronic infections, which may contribute to the selection and persistence of antimicrobial resistance genes (ARGs) within the lung and gut microbiota. Although elexacaftor-tezacaftor-ivacaftor (ETI) improves clinical outcomes, its potential impact on the resistome remains unclear.
+In this script, we compare the presence, prevalence, and total number of ARGs in paired fecal and sputum samples collected before ETI treatment (T0) and after 12 months of treatment (T12). ARGs are also classified according to the corresponding antimicrobial class.
+
+*Questions addressed:*
+-*Do fecal and sputum ARG profiles change after one year of ETI treatment?*
+
+# ------------------------------------------------------------------------------
+# LIBRARIES
+# ------------------------------------------------------------------------------
+
+```{r Libraries, message=FALSE, warning=FALSE}
+library(dplyr)
+library(tidyr)
+library(readr)
+library(stringr)
+library(ggplot2)
+library(tibble)
+library(here)
+library(patchwork)
+library(ggsci)
+
+# if (!require("BiocManager", quietly = TRUE))
+#     install.packages("BiocManager")
+# BiocManager::install("Polychrome")
+```
+
+# ------------------------------------------------------------------------------
+
+# METADATA FILE
+
+```{r Load in metadata file, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+arg_metadata_cf_fc <- read_delim(here("data", "cf_metadata_profiles.txt"), 
+                                "\t", 
+                                escape_double = FALSE, 
+                                trim_ws = TRUE)
+```
+
+#-------------------------------------------------------------------------------
+# FECES
+#-------------------------------------------------------------------------------
+
+# RESISTANCE FILE
+
+```{r Load in resistance file, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+arg_data_cf_fc <- read_delim(here("data", "ARGs_feces.txt"), 
+                                "\t", 
+                                escape_double = FALSE, 
+                                trim_ws = TRUE)
+```
+
+##### Remove samples
+
+```{r Exclude samples, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+samples_to_remove <- c("P3H0","P3H12")
+arg_data_cf_fc <- arg_data_cf_fc %>% filter(!SampleID %in% samples_to_remove)
+arg_data_cf_fc <- arg_data_cf_fc %>% filter(!SampleID %in% samples_to_remove)
+
+colnames(arg_data_cf_fc)
+```
+
+##### Filter resistance genes
+
+```{r Filter resistance genes, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+resistance_genes <- arg_data_cf_fc %>% 
+  filter(Data_Type == 'Resistance') %>%
+  dplyr::select(SampleID, Gene)
+```
+
+##### Convert to binary
+
+```{r Convert to binary, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+binary_data <- resistance_genes %>%
+  mutate(Presence = 1) %>%
+  distinct(SampleID, Gene, .keep_all = TRUE) %>%  
+  pivot_wider(names_from = Gene, values_from = Presence, values_fill = 0)
+```
+
+##### Join with metadata file
+
+```{r Join with metadata, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+binary_data <- binary_data %>%
+  left_join(arg_metadata_cf_fc %>% dplyr::select(SampleID, PatientID, Time), by = "SampleID")
+```
+
+##### Separate data by Time points
+
+```{r Separate data by time points, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+binary_T0 <- binary_data %>% filter(Time == "T0")
+binary_T12 <- binary_data %>% filter(Time == "T12")
+```
+
+# ------------------------------------------------------------------------------
+# PLOTTING
+# ------------------------------------------------------------------------------
+##### Prepare data for plotting
+
+```{r Prepare data for plotting, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+binary_long_T0 <- binary_T0 %>%
+  pivot_longer(cols = -c(SampleID, PatientID, Time), names_to = "Gene", values_to = "Presence") %>%
+  mutate(Time = "T0")
+
+binary_long_T12 <- binary_T12 %>%
+  pivot_longer(cols = -c(SampleID, PatientID, Time), names_to = "Gene", values_to = "Presence") %>%
+  mutate(Time = "T12")
+
+binary_long <- bind_rows(binary_long_T0, binary_long_T12)
+```
+
+
+##### Sort by PatientID
+
+```{r Sort by PatientID, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# Create Sample_order right after binding T0 and T12
+binary_long <- binary_long %>%
+  mutate(Sample_order = paste0(PatientID, "_", Time))
+
+# Sort PatientID alphabetically and numerically
+patient_levels <- binary_long %>%
+  distinct(PatientID) %>%
+  mutate(letter = str_extract(PatientID, "^[A-Za-z]+"),
+         num = as.numeric(str_extract(PatientID, "\\d+"))) %>%
+  arrange(letter, num) %>%
+  pull(PatientID)
+
+# Build ordered Sample_order: A1_T0, A1_T12, A2_T0, A2_T12, etc.
+sample_order <- expand.grid(PatientID = patient_levels,
+                          Time = c("T0", "T12")) %>%
+  arrange(PatientID, Time) %>%
+  mutate(Sample_order = paste0(PatientID, "_", Time)) %>%
+  pull(Sample_order)
+
+# Apply factor levels with the correct order
+binary_long$Sample_order <- factor(binary_long$Sample_order, levels = sample_order)
+```
+
+
+#### Vertical plot
+
+```{r Vertical plot, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+palette20 <- pal_d3("category20")(20)
+
+# === Filter only variable genes ===
+n_samples <- length(unique(binary_long$SampleID))
+
+variable_genes <- binary_long %>%
+  group_by(Gene) %>%
+  summarise(total = sum(Presence), .groups = "drop") %>%
+  filter(total > 0 & total < n_samples) %>%
+  pull(Gene)
+
+
+filtered_binary <- binary_long %>%
+  filter(Gene %in% variable_genes) %>%
+  mutate(
+    Pres_Time = case_when(
+      Presence == 0 ~ "Absent",
+      Presence == 1 & Time == "T0"  ~ "Present_T0",
+      Presence == 1 & Time == "T12" ~ "Present_T12"
+    )
+  )
+
+
+pal_heat <- c("Absent" = "white", 
+              "Present_T0" = "#F4E1A1",
+              "Present_T12" = "#A1E1E1")
+
+# === Heatmap (genes in rows, pacients in columns) ===
+heatmap_plot_fc <- ggplot(filtered_binary,
+                       aes(x = Sample_order, y = Gene, fill = Pres_Time)) +
+  geom_tile(color = "grey85", linewidth = 0.25) +
+  scale_fill_manual(values = pal_heat,
+                    name = "Status",
+                    labels = c("Absent", "Present at T0", "Present at T12")) +
+  labs(title = "ARGs that change between T0 and T12 in feces",
+       x = "PatientID_Time", y = "Gene") +
+  theme_minimal(base_size = 11) +
+  theme(
+    panel.grid = element_blank(),
+    axis.text.x = element_text(angle = 90, hjust = 1, size = 6),
+    axis.text.y = element_text(size = 7)
+  )
+
+# === Calculate proportions per gene ===
+proportions <- filtered_binary %>%
+  group_by(Gene, Time) %>%
+  summarise(Proportion = mean(Presence), .groups = "drop")
+
+# === Barplot lateral (genes in Y, proportion in X) ===
+barplot_fc <- ggplot(proportions, aes(x = Proportion, y = Gene, fill = Time)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  scale_fill_manual(values = c("T0" = "#F4E1A1", "T12" = "#A1E1E1")) +
+  labs(title = "Prevalence", x = "Proportion of samples", y = NULL) +
+  theme_minimal(base_size = 11) +
+  theme(axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        panel.grid.major.y = element_blank())
+
+# === Combine both ===
+final_plot_fc <- heatmap_plot_fc + barplot_fc + plot_layout(widths = c(3, 1))
+
+final_plot_fc
+
+ggsave(here::here("results","ARG_heatmap_bar_vertical_feces_all.svg"),
+       heatmap_plot_fc, width = 8, height = 10, dpi = 300)
+
+ggsave(here::here("results","ARG_heatmap_bar_vertical_combined_feces_all.svg"),
+       final_plot_fc, width = 10, height = 10, dpi = 300)
+```
+
+##### Final plot with classes
+
+```{r Final plot with classes, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+# -------------------------------
+# Objects required:
+# - filtered_binary (with Gene, Sample_order, Pres_Time, Presence, Time)
+# - heatmap_plot_fc
+# - barplot_fc
+# - palette20 (named vector of colors for ATB classes)
+# - arg_data_cf_fc (raw ARG table with ATB_class)
+# -------------------------------
+
+# Ensure Gene order is identical across plots (use the order you already plot)
+gene_levels <- ggplot_build(heatmap_plot_fc)$layout$panel_params[[1]]$y$get_limits()
+filtered_binary <- filtered_binary %>%
+  mutate(Gene = factor(Gene, levels = gene_levels))
+
+# Build Gene -> ATB_class mapping (1 class per gene; otherwise "Multi-class")
+gene_col <- intersect(c("Gene","gene","ARG","arg","feature","featureID","FeatureID","ID","id"), names(arg_data_cf_fc))[1]
+if (is.na(gene_col)) stop("I couldn't find the gene column in arg_data_cf_fc (expected something like Gene/ARG/FeatureID).")
+
+gene_class <- arg_data_cf_fc %>%
+  filter(Data_Type == "Resistance") %>%
+  filter(!is.na(ATB_class) & ATB_class != "") %>%
+  transmute(
+    Gene = .data[[gene_col]],
+    ATB_class
+  ) %>%
+  distinct() %>%
+  group_by(Gene) %>%
+  summarise(
+    ATB_class = if (n_distinct(ATB_class) == 1) first(ATB_class) else "Multi-class",
+    .groups = "drop"
+  ) %>%
+  filter(Gene %in% levels(filtered_binary$Gene)) %>%
+  mutate(
+    Gene = factor(Gene, levels = levels(filtered_binary$Gene)),
+    ATB_class = as.factor(ATB_class)
+  )
+
+# Optional: legend order to follow palette20
+if (!is.null(names(palette20)) && any(nzchar(names(palette20)))) {
+  lvl <- unique(c(intersect(names(palette20), levels(gene_class$ATB_class)),
+                  setdiff(levels(gene_class$ATB_class), names(palette20))))
+  gene_class$ATB_class <- factor(gene_class$ATB_class, levels = lvl)
+}
+
+# Sidebar plot: one tile per gene indicating ATB class
+p_class <- ggplot(gene_class, aes(x = 1, y = Gene, fill = ATB_class)) +
+  geom_tile() +
+  scale_fill_manual(values = palette20, name = "ATB Class") +
+  scale_x_continuous(expand = c(0, 0)) +
+  scale_y_discrete(drop = FALSE) +
+  labs(x = NULL, y = NULL) +
+  theme_minimal(base_size = 11) +
+  theme(
+    panel.grid = element_blank(),
+    axis.text  = element_blank(),
+    axis.ticks = element_blank(),
+    plot.margin = margin(t = 5, r = 4, b = 5, l = 5)
+  )
+
+# Combine: ATB class sidebar + heatmap + prevalence barplot
+final_plot_fc2 <- p_class + heatmap_plot_fc + barplot_fc +
+  plot_layout(widths = c(0.25, 3, 1), guides = "collect") &
+  theme(legend.position = "right")
+
+final_plot_fc2
+
+ggsave(here::here("results","ARG_heatmap_ATBclass_sidebar_bar_vertical_combined_feces_all.svg"),
+       final_plot_fc2, width = 8, height = 10, dpi = 300)
+```
+
+##### Final vertical plot separating by pair
+
+```{r Final plot separating by pair, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+# Filter only variable genes
+n_samples <- length(unique(binary_long$SampleID))
+
+variable_genes <- binary_long %>%
+  group_by(Gene) %>%
+  summarise(total = sum(Presence), .groups = "drop") %>%
+  filter(total > 0 & total < n_samples) %>%
+  pull(Gene)
+
+
+filtered_binary <- binary_long %>%
+  filter(Gene %in% variable_genes) %>%
+  mutate(
+    Pres_Time = case_when(
+      Presence == 0 ~ "Absent",
+      Presence == 1 & Time == "T0"  ~ "Present_T0",
+      Presence == 1 & Time == "T12" ~ "Present_T12"
+    )
+  )
+
+# Add spacing between patient pairs (T0/T12)
+gap <- 0.6
+
+# Build patient order
+patient_levels2 <- filtered_binary %>%
+  distinct(PatientID) %>%
+  mutate(letter = stringr::str_extract(PatientID, "^[A-Za-z]+"),
+         num    = as.numeric(stringr::str_extract(PatientID, "\\d+"))) %>%
+  arrange(letter, num) %>%
+  pull(PatientID)
+
+# Map each Sample_order to a numeric x position with a gap after each patient pair
+x_map <- tidyr::expand_grid(
+  PatientID = patient_levels2,
+  Time      = c("T0","T12")
+) %>%
+  mutate(
+    pid_i = match(PatientID, patient_levels2),
+    Sample_order = paste0(PatientID, "_", Time),
+    x_pos = (pid_i - 1) * (2 + gap) + ifelse(Time == "T0", 1, 2)
+  ) %>%
+  arrange(pid_i, Time)
+
+filtered_binary <- filtered_binary %>%
+  left_join(x_map %>% dplyr::select(Sample_order, x_pos), by = "Sample_order")
+
+
+pal_heat <- c("Absent" = "white", 
+              "Present_T0" = "#F4E1A1",
+              "Present_T12" = "#A1E1E1")
+
+# Heatmap (genes in rows, patients in columns)
+heatmap_plot_fc <- ggplot(filtered_binary,
+                          aes(x = x_pos, y = Gene, fill = Pres_Time)) +
+  geom_tile(color = "grey85", linewidth = 0.25, width = 0.95, height = 0.95) +
+  scale_fill_manual(values = pal_heat,
+                    name = "Status",
+                    labels = c("Absent", "Present at T0", "Present at T12")) +
+  scale_x_continuous(
+    breaks = x_map$x_pos,
+    labels = gsub("_", "\n", x_map$Sample_order),
+    expand = c(0, 0)
+  ) +
+  labs(title = "ARGs that change between T0 and T12 in feces",
+       x = "PatientID_Time", y = "Gene") +
+  theme_minimal(base_size = 11) +
+  theme(
+    panel.grid = element_blank(),
+    axis.text.x = element_text(angle = 90, hjust = 1, size = 6),
+    axis.text.y = element_text(size = 7)
+  )
+
+# Calculate proportions per gene
+proportions <- filtered_binary %>%
+  dplyr::group_by(Gene, Time) %>%
+  dplyr::summarise(Proportion = mean(Presence), .groups = "drop") %>%
+  dplyr::mutate(Time = factor(Time, levels = c("T0", "T12")))
+
+# Barplot lateral (genes in Y, proportion in X)
+barplot_fc <- ggplot2::ggplot(proportions, ggplot2::aes(x = Proportion, y = Gene, fill = Time)) +
+  ggplot2::geom_bar(
+    stat = "identity",
+    position = ggplot2::position_dodge2(width = 0.9, preserve = "single", reverse = TRUE),
+    color = "black", linewidth = 0.1
+  ) +
+  ggplot2::scale_fill_manual(
+    values = c("T0" = "#F4E1A1", "T12" = "#A1E1E1"),
+    breaks = c("T0", "T12")
+  ) +
+  ggplot2::labs(title = "Prevalence", x = "Proportion of samples", y = NULL) +
+  ggplot2::theme_minimal(base_size = 11) +
+  ggplot2::theme(
+    axis.text.y = ggplot2::element_blank(),
+    axis.ticks.y = ggplot2::element_blank(),
+    panel.grid.major.y = ggplot2::element_blank()
+  )
+
+# Ensure Gene order is identical across plots (use the order you already plot)
+gene_levels <- ggplot_build(heatmap_plot_fc)$layout$panel_params[[1]]$y$get_limits()
+filtered_binary <- filtered_binary %>%
+  mutate(Gene = factor(Gene, levels = gene_levels))
+
+# Build Gene -> ATB_class mapping (1 class per gene; otherwise "Multi-class")
+gene_col <- intersect(c("Gene","gene","ARG","arg","feature","featureID","FeatureID","ID","id"), names(arg_data_cf_fc))[1]
+if (is.na(gene_col)) stop("I couldn't find the gene column in arg_data_cf_fc (expected something like Gene/ARG/FeatureID).")
+
+gene_class <- arg_data_cf_fc %>%
+  filter(Data_Type == "Resistance") %>%
+  filter(!is.na(ATB_class) & ATB_class != "") %>%
+  transmute(
+    Gene = .data[[gene_col]],
+    ATB_class
+  ) %>%
+  distinct() %>%
+  group_by(Gene) %>%
+  summarise(
+    ATB_class = if (n_distinct(ATB_class) == 1) first(ATB_class) else "Multi-class",
+    .groups = "drop"
+  ) %>%
+  filter(Gene %in% levels(filtered_binary$Gene)) %>%
+  mutate(
+    Gene = factor(Gene, levels = levels(filtered_binary$Gene)),
+    ATB_class = as.factor(ATB_class)
+  )
+
+# Optional: legend order to follow palette20
+if (!is.null(names(palette20)) && any(nzchar(names(palette20)))) {
+  lvl <- unique(c(intersect(names(palette20), levels(gene_class$ATB_class)),
+                  setdiff(levels(gene_class$ATB_class), names(palette20))))
+  gene_class$ATB_class <- factor(gene_class$ATB_class, levels = lvl)
+}
+
+# Sidebar plot: one tile per gene indicating ATB class
+p_class <- ggplot(gene_class, aes(x = 1, y = Gene, fill = ATB_class)) +
+  geom_tile() +
+  scale_fill_manual(values = palette20, name = "ATB Class") +
+  scale_x_continuous(expand = c(0, 0)) +
+  scale_y_discrete(drop = FALSE) +
+  labs(x = NULL, y = NULL) +
+  theme_minimal(base_size = 11) +
+  theme(
+    panel.grid = element_blank(),
+    axis.text  = element_blank(),
+    axis.ticks = element_blank(),
+    plot.margin = margin(t = 5, r = 4, b = 5, l = 5)
+  )
+
+# Combine: ATB class sidebar + heatmap + prevalence barplot
+final_plot_fc2 <- p_class + heatmap_plot_fc + barplot_fc +
+  plot_layout(widths = c(0.25, 3, 1), guides = "collect") &
+  theme(legend.position = "right")
+
+final_plot_fc2
+
+ggsave(here::here("results","ARG_heatmap_ATBclass_sidebar_bar_vertical_combined_feces_all_wider.svg"),
+       final_plot_fc2, width = 10, height = 10, dpi = 300)
+```
+
+
+# ------------------------------------------------------------------------------
+# STATISTICS
+# ------------------------------------------------------------------------------
+
+## McNemar exact per gene
+
+```{r McNemar exact test per gene, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# Pair T0/T12 per patient for each gene (fill missing as 0, and if duplicates, take max)
+paired_data <- filtered_binary %>%
+  dplyr::select(PatientID, Gene, Time, Presence) %>%
+  dplyr::group_by(PatientID, Gene, Time) %>%
+  dplyr::summarise(Presence = max(Presence, na.rm = TRUE), .groups = "drop") %>%
+  tidyr::pivot_wider(
+    names_from  = Time,
+    values_from = Presence,
+    values_fill = list(Presence = 0)
+  )
+
+# Quick sanity check: should be 9 rows per gene if all patients are paired
+check_n <- paired_data %>%
+  dplyr::count(Gene, name = "n_patients") %>%
+  dplyr::summarise(min_n = min(n_patients), max_n = max(n_patients))
+print(check_n)
+
+# Exact McNemar via binomial test on discordants:
+# b = (T0=1,T12=0), c = (T0=0,T12=1), under H0: b ~ Binom(b+c, 0.5)
+mcnemar_results <- paired_data %>%
+  dplyr::mutate(
+    Lost_1to0   = (T0 == 1 & T12 == 0),
+    Gained_0to1 = (T0 == 0 & T12 == 1)
+  ) %>%
+  dplyr::group_by(Gene) %>%
+  dplyr::summarise(
+    n_paired = dplyr::n(),
+    Prev_T0  = mean(T0),
+    Prev_T12 = mean(T12),
+    DeltaPrev = Prev_T12 - Prev_T0,
+    Lost_1to0   = sum(Lost_1to0),
+    Gained_0to1 = sum(Gained_0to1),
+    Total_Discordant = Lost_1to0 + Gained_0to1,
+    P_value = {
+      b <- sum(T0 == 1 & T12 == 0)
+      c <- sum(T0 == 0 & T12 == 1)
+      if ((b + c) == 0) 1 else stats::binom.test(b, b + c, p = 0.5, alternative = "two.sided")$p.value
+    },
+    .groups = "drop"
+  ) %>%
+  dplyr::mutate(
+    P_adj = p.adjust(P_value, method = "BH")
+  ) %>%
+  dplyr::arrange(P_value)
+
+print(mcnemar_results)
+
+readr::write_excel_csv(mcnemar_results, here("results", "ARG_mcnemar_results_feces_all.csv"))
+```
+
+## Normality and statistical test function
+
+```{r Shapiro on paired differences for t-test or Wilcoxon, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+paired_test_auto <- function(df, col_T0 = "T0", col_T12 = "T12",
+                             id_col = NULL, alpha = 0.05,
+                             shapiro_min_unique = 3, verbose = TRUE) {
+
+  stopifnot(all(c(col_T0, col_T12) %in% names(df)))
+
+  dat <- df %>%
+    dplyr::select(dplyr::all_of(c(id_col, col_T0, col_T12))) %>%
+    dplyr::filter(!is.na(.data[[col_T0]]) & !is.na(.data[[col_T12]])) %>%
+    dplyr::mutate(delta = .data[[col_T12]] - .data[[col_T0]])
+
+  n <- nrow(dat)
+  if (n < 3) stop("Need at least 3 paired observations.")
+
+  can_shapiro <- length(unique(dat$delta)) >= shapiro_min_unique && stats::sd(dat$delta) > 0
+
+  shapiro_p <- NA_real_
+  shapiro_W <- NA_real_
+  chosen <- NA_character_
+
+  if (can_shapiro) {
+    sh <- stats::shapiro.test(dat$delta)
+    shapiro_p <- unname(sh$p.value)
+    shapiro_W <- unname(sh$statistic)
+    use_t <- shapiro_p > alpha
+  } else {
+    use_t <- FALSE
+  }
+
+  if (use_t) {
+    test <- stats::t.test(dat[[col_T12]], dat[[col_T0]], paired = TRUE)
+    chosen <- "paired_t_test"
+    out <- tibble::tibble(
+      test_used = chosen,
+      n_pairs = n,
+      shapiro_W = shapiro_W,
+      shapiro_p = shapiro_p,
+      statistic = unname(test$statistic),
+      df = unname(test$parameter),
+      p_value = unname(test$p.value),
+      estimate_mean_delta = unname(test$estimate),
+      conf_low = unname(test$conf.int[1]),
+      conf_high = unname(test$conf.int[2]),
+      mean_delta_T12_minus_T0 = mean(dat$delta)
+    )
+  } else {
+    test <- stats::wilcox.test(dat[[col_T12]], dat[[col_T0]], paired = TRUE, exact = FALSE)
+    chosen <- "paired_wilcoxon"
+    out <- tibble::tibble(
+      test_used = chosen,
+      n_pairs = n,
+      shapiro_W = shapiro_W,
+      shapiro_p = shapiro_p,
+      statistic = unname(test$statistic),
+      p_value = unname(test$p.value),
+      mean_delta_T12_minus_T0 = mean(dat$delta),
+      median_delta_T12_minus_T0 = stats::median(dat$delta)
+    )
+  }
+
+  if (verbose) {
+    message("Auto test: ", chosen,
+            if (!is.na(shapiro_p)) paste0(" (Shapiro p=", signif(shapiro_p, 3), ")") else " (Shapiro n/a)")
+  }
+
+  list(
+    summary = out,
+    data_used = dat
+  )
+}
+```
+
+### ARG counts
+
+```{r ARG counts, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+arg_counts <- binary_long %>%
+  dplyr::group_by(PatientID, Time) %>%
+  dplyr::summarise(n_ARGs = sum(Presence, na.rm = TRUE), .groups = "drop") %>%
+  tidyr::pivot_wider(names_from = Time, values_from = n_ARGs)
+
+print(arg_counts)
+```
+
+### Run function per gene
+
+```{r Function per gene, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+res_auto_ARG <- paired_test_auto(arg_counts, col_T0 = "T0", col_T12 = "T12", alpha = 0.05)
+
+res_auto_ARG$summary
+
+readr::write_excel_csv(res_auto_ARG$summary,
+  here::here("results", "ARG_counts_paired_test_auto_feces.csv"))
+```
+
+
+#-------------------------------------------------------------------------------
+# SPUTUM WITHOUT A4
+#-------------------------------------------------------------------------------
+
+# METADATA FILE
+
+```{r Load in metadata file, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+arg_metadata_cf_sp <- read_delim(here("data", "cf_metadata_profiles.txt"), 
+                                "\t", 
+                                escape_double = FALSE, 
+                                trim_ws = TRUE)
+```
+
+# RESISTANCE FILE
+
+```{r Load in resistance file, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+arg_data_cf_sp <- read_delim(here("data", "ARGs_sputum.txt"), 
+                                "\t", 
+                                escape_double = FALSE, 
+                                trim_ws = TRUE)
+```
+
+##### Remove samples
+
+```{r Exclude samples, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+samples_to_remove <- c("A4E0","A4E12","A12E0","A12E12","A20E0","A20E12","A26E0","A26E12","P16E0","P16E12","P21E0","P21E12")
+arg_data_cf_sp <- arg_data_cf_sp %>% filter(!SampleID %in% samples_to_remove)
+arg_data_cf_sp <- arg_data_cf_sp %>% filter(!SampleID %in% samples_to_remove)
+
+colnames(arg_data_cf_sp)
+```
+
+##### Filter resistance genes
+
+```{r Filter resistance genes, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+resistance_genes <- arg_data_cf_sp %>% 
+  filter(Data_Type == 'Resistance') %>%
+  dplyr::select(SampleID, Gene)
+```
+
+##### Convert to binary
+
+```{r Convert to binary, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+binary_data <- resistance_genes %>%
+  mutate(Presence = 1) %>%
+  distinct(SampleID, Gene, .keep_all = TRUE) %>%  
+  pivot_wider(names_from = Gene, values_from = Presence, values_fill = 0)
+```
+
+##### Join with metadata file
+
+```{r Join with metadata, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+binary_data <- binary_data %>%
+  left_join(arg_metadata_cf_sp %>% dplyr::select(SampleID, PatientID, Time), by = "SampleID")
+```
+
+##### Separate data by Time points
+
+```{r Separate data by time points, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+binary_T0 <- binary_data %>% filter(Time == "T0")
+binary_T12 <- binary_data %>% filter(Time == "T12")
+```
+
+# ------------------------------------------------------------------------------
+# PLOTTING
+# ------------------------------------------------------------------------------
+##### Prepare data for plotting
+
+```{r Prepare data for plotting, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+binary_long_T0 <- binary_T0 %>%
+  pivot_longer(cols = -c(SampleID, PatientID, Time), names_to = "Gene", values_to = "Presence") %>%
+  mutate(Time = "T0")
+
+binary_long_T12 <- binary_T12 %>%
+  pivot_longer(cols = -c(SampleID, PatientID, Time), names_to = "Gene", values_to = "Presence") %>%
+  mutate(Time = "T12")
+
+binary_long <- bind_rows(binary_long_T0, binary_long_T12)
+```
+
+
+##### Sort by PatientID
+
+```{r Sort by PatientID, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# Create Sample_order right after binding T0 and T12
+binary_long <- binary_long %>%
+  mutate(Sample_order = paste0(PatientID, "_", Time))
+
+# Sort PatientID alphabetically and numerically
+patient_levels <- binary_long %>%
+  distinct(PatientID) %>%
+  mutate(letter = str_extract(PatientID, "^[A-Za-z]+"),
+         num = as.numeric(str_extract(PatientID, "\\d+"))) %>%
+  arrange(letter, num) %>%
+  pull(PatientID)
+
+# Build ordered Sample_order: A1_T0, A1_T12, A2_T0, A2_T12, etc.
+sample_order <- expand.grid(PatientID = patient_levels,
+                          Time = c("T0", "T12")) %>%
+  arrange(PatientID, Time) %>%
+  mutate(Sample_order = paste0(PatientID, "_", Time)) %>%
+  pull(Sample_order)
+
+# Apply factor levels with the correct order
+binary_long$Sample_order <- factor(binary_long$Sample_order, levels = sample_order)
+```
+
+#### Vertical plot
+
+```{r Vertical plot, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+palette20 <- pal_d3("category20")(20)
+
+# === Filter only variable genes ===
+n_samples <- length(unique(binary_long$SampleID))
+
+variable_genes <- binary_long %>%
+  group_by(Gene) %>%
+  summarise(total = sum(Presence), .groups = "drop") %>%
+  filter(total > 0 & total < n_samples) %>%
+  pull(Gene)
+
+
+filtered_binary <- binary_long %>%
+  filter(Gene %in% variable_genes) %>%
+  mutate(
+    Pres_Time = case_when(
+      Presence == 0 ~ "Absent",
+      Presence == 1 & Time == "T0"  ~ "Present_T0",
+      Presence == 1 & Time == "T12" ~ "Present_T12"
+    )
+  )
+
+
+pal_heat <- c("Absent" = "white", 
+              "Present_T0" = "#D9C2E9",
+              "Present_T12" = "#B3E1B6")
+
+# === Heatmap (genes in rows, pacients in columns) ===
+heatmap_plot_sp <- ggplot(filtered_binary,
+                       aes(x = Sample_order, y = Gene, fill = Pres_Time)) +
+  geom_tile(color = "grey85", linewidth = 0.25) +
+  scale_fill_manual(values = pal_heat,
+                    name = "Status",
+                    labels = c("Absent", "Present at T0", "Present at T12")) +
+  labs(title = "ARGs that change between T0 and T12 in sputum",
+       x = "PatientID_Time", y = "Gene") +
+  theme_minimal(base_size = 11) +
+  theme(
+    panel.grid = element_blank(),
+    axis.text.x = element_text(angle = 90, hjust = 1, size = 6),
+    axis.text.y = element_text(size = 7)
+  )
+
+# === Calculate proportions per gene ===
+proportions <- filtered_binary %>%
+  group_by(Gene, Time) %>%
+  summarise(Proportion = mean(Presence), .groups = "drop")
+
+# === Barplot lateral (genes in Y, proportion in X) ===
+barplot_sp <- ggplot(proportions, aes(x = Proportion, y = Gene, fill = Time)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  scale_fill_manual(values = c("T0" = "#D9C2E9", "T12" = "#B3E1B6")) +
+  labs(title = "Prevalence", x = "Proportion of samples", y = NULL) +
+  theme_minimal(base_size = 11) +
+  theme(axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        panel.grid.major.y = element_blank())
+
+# === Combine both ===
+final_plot_sp <- heatmap_plot_sp + barplot_sp + plot_layout(widths = c(3, 1))
+
+final_plot_sp
+
+ggsave(here::here("results","ARG_heatmap_bar_vertical_sputum_all_without_A4.svg"),
+       heatmap_plot_sp, width = 8, height = 10, dpi = 300)
+
+ggsave(here::here("results","ARG_heatmap_bar_vertical_combined_sputum_all_without_A4.svg"),
+       final_plot_sp, width = 10, height = 10, dpi = 300)
+```
+
+##### Final plot with classes
+
+```{r Final plot with classes, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+# -------------------------------
+# Objects required:
+# - filtered_binary (with Gene, Sample_order, Pres_Time, Presence, Time)
+# - heatmap_plot_sp
+# - barplot_sp
+# - palette20 (named vector of colors for ATB classes)
+# - arg_data_cf_sp (raw ARG table with ATB_class)
+# -------------------------------
+
+# Ensure Gene order is identical across plots (use the order you already plot)
+gene_levels <- ggplot_build(heatmap_plot_sp)$layout$panel_params[[1]]$y$get_limits()
+filtered_binary <- filtered_binary %>%
+  mutate(Gene = factor(Gene, levels = gene_levels))
+
+# Build Gene -> ATB_class mapping (1 class per gene; otherwise "Multi-class")
+gene_col <- intersect(c("Gene","gene","ARG","arg","feature","featureID","FeatureID","ID","id"), names(arg_data_cf_sp))[1]
+if (is.na(gene_col)) stop("I couldn't find the gene column in arg_data_cf_sp (expected something like Gene/ARG/FeatureID).")
+
+gene_class <- arg_data_cf_sp %>%
+  filter(Data_Type == "Resistance") %>%
+  filter(!is.na(ATB_class) & ATB_class != "") %>%
+  transmute(
+    Gene = .data[[gene_col]],
+    ATB_class
+  ) %>%
+  distinct() %>%
+  group_by(Gene) %>%
+  summarise(
+    ATB_class = if (n_distinct(ATB_class) == 1) first(ATB_class) else "Multi-class",
+    .groups = "drop"
+  ) %>%
+  filter(Gene %in% levels(filtered_binary$Gene)) %>%
+  mutate(
+    Gene = factor(Gene, levels = levels(filtered_binary$Gene)),
+    ATB_class = as.factor(ATB_class)
+  )
+
+# Optional: legend order to follow palette20
+if (!is.null(names(palette20)) && any(nzchar(names(palette20)))) {
+  lvl <- unique(c(intersect(names(palette20), levels(gene_class$ATB_class)),
+                  setdiff(levels(gene_class$ATB_class), names(palette20))))
+  gene_class$ATB_class <- factor(gene_class$ATB_class, levels = lvl)
+}
+
+# Sidebar plot: one tile per gene indicating ATB class
+p_class <- ggplot(gene_class, aes(x = 1, y = Gene, fill = ATB_class)) +
+  geom_tile() +
+  scale_fill_manual(values = palette20, name = "ATB Class") +
+  scale_x_continuous(expand = c(0, 0)) +
+  scale_y_discrete(drop = FALSE) +
+  labs(x = NULL, y = NULL) +
+  theme_minimal(base_size = 11) +
+  theme(
+    panel.grid = element_blank(),
+    axis.text  = element_blank(),
+    axis.ticks = element_blank(),
+    plot.margin = margin(t = 5, r = 4, b = 5, l = 5)
+  )
+
+# Combine: ATB class sidebar + heatmap + prevalence barplot
+final_plot_sp2 <- p_class + heatmap_plot_sp + barplot_sp +
+  plot_layout(widths = c(0.25, 3, 1), guides = "collect") &
+  theme(legend.position = "right")
+
+final_plot_sp2
+
+ggsave(here::here("results","ARG_heatmap_ATBclass_sidebar_bar_vertical_combined_sputum_all_without_A4.svg"),
+       final_plot_sp2, width = 8, height = 10, dpi = 300)
+```
+
+##### Final vertical plot separating by pair
+
+```{r Final plot separating by pair, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+# Filter only variable genes
+n_samples <- length(unique(binary_long$SampleID))
+
+variable_genes <- binary_long %>%
+  group_by(Gene) %>%
+  summarise(total = sum(Presence), .groups = "drop") %>%
+  filter(total > 0 & total < n_samples) %>%
+  pull(Gene)
+
+
+filtered_binary <- binary_long %>%
+  filter(Gene %in% variable_genes) %>%
+  mutate(
+    Pres_Time = case_when(
+      Presence == 0 ~ "Absent",
+      Presence == 1 & Time == "T0"  ~ "Present_T0",
+      Presence == 1 & Time == "T12" ~ "Present_T12"
+    )
+  )
+
+# Add spacing between patient pairs (T0/T12)
+gap <- 0.6
+
+# Build patient order
+patient_levels2 <- filtered_binary %>%
+  distinct(PatientID) %>%
+  mutate(letter = stringr::str_extract(PatientID, "^[A-Za-z]+"),
+         num    = as.numeric(stringr::str_extract(PatientID, "\\d+"))) %>%
+  arrange(letter, num) %>%
+  pull(PatientID)
+
+# Map each Sample_order to a numeric x position with a gap after each patient pair
+x_map <- tidyr::expand_grid(
+  PatientID = patient_levels2,
+  Time      = c("T0","T12")
+) %>%
+  mutate(
+    pid_i = match(PatientID, patient_levels2),
+    Sample_order = paste0(PatientID, "_", Time),
+    x_pos = (pid_i - 1) * (2 + gap) + ifelse(Time == "T0", 1, 2)
+  ) %>%
+  arrange(pid_i, Time)
+
+filtered_binary <- filtered_binary %>%
+  left_join(x_map %>% dplyr::select(Sample_order, x_pos), by = "Sample_order")
+
+
+pal_heat <- c("Absent" = "white", 
+              "Present_T0" = "#D9C2E9",
+              "Present_T12" = "#B3E1B6")
+
+# Heatmap (genes in rows, patients in columns)
+heatmap_plot_sp <- ggplot(filtered_binary,
+                          aes(x = x_pos, y = Gene, fill = Pres_Time)) +
+  geom_tile(color = "grey85", linewidth = 0.25, width = 0.95, height = 0.95) +
+  scale_fill_manual(values = pal_heat,
+                    name = "Status",
+                    labels = c("Absent", "Present at T0", "Present at T12")) +
+  scale_x_continuous(
+    breaks = x_map$x_pos,
+    labels = gsub("_", "\n", x_map$Sample_order),
+    expand = c(0, 0)
+  ) +
+  labs(title = "ARGs that change between T0 and T12 in sputum",
+       x = "PatientID_Time", y = "Gene") +
+  theme_minimal(base_size = 11) +
+  theme(
+    panel.grid = element_blank(),
+    axis.text.x = element_text(angle = 90, hjust = 1, size = 6),
+    axis.text.y = element_text(size = 7)
+  )
+
+# Calculate proportions per gene
+proportions <- filtered_binary %>%
+  dplyr::group_by(Gene, Time) %>%
+  dplyr::summarise(Proportion = mean(Presence), .groups = "drop") %>%
+  dplyr::mutate(Time = factor(Time, levels = c("T0", "T12")))
+
+# Barplot lateral (genes in Y, proportion in X)
+barplot_sp <- ggplot2::ggplot(proportions, ggplot2::aes(x = Proportion, y = Gene, fill = Time)) +
+  ggplot2::geom_bar(
+    stat = "identity",
+    position = ggplot2::position_dodge2(width = 0.9, preserve = "single", reverse = TRUE),
+    color = "black", linewidth = 0.1
+  ) +
+  ggplot2::scale_fill_manual(
+    values = c("T0" = "#D9C2E9", "T12" = "#B3E1B6"),
+    breaks = c("T0", "T12")
+  ) +
+  ggplot2::labs(title = "Prevalence", x = "Proportion of samples", y = NULL) +
+  ggplot2::theme_minimal(base_size = 11) +
+  ggplot2::theme(
+    axis.text.y = ggplot2::element_blank(),
+    axis.ticks.y = ggplot2::element_blank(),
+    panel.grid.major.y = ggplot2::element_blank()
+  )
+
+# Ensure Gene order is identical across plots (use the order you already plot)
+gene_levels <- ggplot_build(heatmap_plot_sp)$layout$panel_params[[1]]$y$get_limits()
+filtered_binary <- filtered_binary %>%
+  mutate(Gene = factor(Gene, levels = gene_levels))
+
+# Build Gene -> ATB_class mapping (1 class per gene; otherwise "Multi-class")
+gene_col <- intersect(c("Gene","gene","ARG","arg","feature","featureID","FeatureID","ID","id"), names(arg_data_cf_sp))[1]
+if (is.na(gene_col)) stop("I couldn't find the gene column in arg_data_cf_sp (expected something like Gene/ARG/FeatureID).")
+
+gene_class <- arg_data_cf_sp %>%
+  filter(Data_Type == "Resistance") %>%
+  filter(!is.na(ATB_class) & ATB_class != "") %>%
+  transmute(
+    Gene = .data[[gene_col]],
+    ATB_class
+  ) %>%
+  distinct() %>%
+  group_by(Gene) %>%
+  summarise(
+    ATB_class = if (n_distinct(ATB_class) == 1) first(ATB_class) else "Multi-class",
+    .groups = "drop"
+  ) %>%
+  filter(Gene %in% levels(filtered_binary$Gene)) %>%
+  mutate(
+    Gene = factor(Gene, levels = levels(filtered_binary$Gene)),
+    ATB_class = as.factor(ATB_class)
+  )
+
+# Optional: legend order to follow palette20
+if (!is.null(names(palette20)) && any(nzchar(names(palette20)))) {
+  lvl <- unique(c(intersect(names(palette20), levels(gene_class$ATB_class)),
+                  setdiff(levels(gene_class$ATB_class), names(palette20))))
+  gene_class$ATB_class <- factor(gene_class$ATB_class, levels = lvl)
+}
+
+# Sidebar plot: one tile per gene indicating ATB class
+p_class <- ggplot(gene_class, aes(x = 1, y = Gene, fill = ATB_class)) +
+  geom_tile() +
+  scale_fill_manual(values = palette20, name = "ATB Class") +
+  scale_x_continuous(expand = c(0, 0)) +
+  scale_y_discrete(drop = FALSE) +
+  labs(x = NULL, y = NULL) +
+  theme_minimal(base_size = 11) +
+  theme(
+    panel.grid = element_blank(),
+    axis.text  = element_blank(),
+    axis.ticks = element_blank(),
+    plot.margin = margin(t = 5, r = 4, b = 5, l = 5)
+  )
+
+# Combine: ATB class sidebar + heatmap + prevalence barplot
+final_plot_sp2 <- p_class + heatmap_plot_sp + barplot_sp +
+  plot_layout(widths = c(0.25, 3, 1), guides = "collect") &
+  theme(legend.position = "right")
+
+final_plot_sp2
+
+ggsave(here::here("results","ARG_heatmap_ATBclass_sidebar_bar_vertical_combined_sputum_all_wider_without_A4.svg"),
+       final_plot_sp2, width = 10, height = 10, dpi = 300)
+```
+
+
+# ------------------------------------------------------------------------------
+# STATISTICS
+# ------------------------------------------------------------------------------
+
+## McNemar exact per gene
+
+```{r McNemar exact test per gene, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# Pair T0/T12 per patient for each gene (fill missing as 0, and if duplicates, take max)
+paired_data <- filtered_binary %>%
+  dplyr::select(PatientID, Gene, Time, Presence) %>%
+  dplyr::group_by(PatientID, Gene, Time) %>%
+  dplyr::summarise(Presence = max(Presence, na.rm = TRUE), .groups = "drop") %>%
+  tidyr::pivot_wider(
+    names_from  = Time,
+    values_from = Presence,
+    values_fill = list(Presence = 0)
+  )
+
+# Quick sanity check: should be 9 rows per gene if all patients are paired
+check_n <- paired_data %>%
+  dplyr::count(Gene, name = "n_patients") %>%
+  dplyr::summarise(min_n = min(n_patients), max_n = max(n_patients))
+print(check_n)
+
+# Exact McNemar via binomial test on discordants:
+# b = (T0=1,T12=0), c = (T0=0,T12=1), under H0: b ~ Binom(b+c, 0.5)
+mcnemar_results <- paired_data %>%
+  dplyr::mutate(
+    Lost_1to0   = (T0 == 1 & T12 == 0),
+    Gained_0to1 = (T0 == 0 & T12 == 1)
+  ) %>%
+  dplyr::group_by(Gene) %>%
+  dplyr::summarise(
+    n_paired = dplyr::n(),
+    Prev_T0  = mean(T0),
+    Prev_T12 = mean(T12),
+    DeltaPrev = Prev_T12 - Prev_T0,
+    Lost_1to0   = sum(Lost_1to0),
+    Gained_0to1 = sum(Gained_0to1),
+    Total_Discordant = Lost_1to0 + Gained_0to1,
+    P_value = {
+      b <- sum(T0 == 1 & T12 == 0)
+      c <- sum(T0 == 0 & T12 == 1)
+      if ((b + c) == 0) 1 else stats::binom.test(b, b + c, p = 0.5, alternative = "two.sided")$p.value
+    },
+    .groups = "drop"
+  ) %>%
+  dplyr::mutate(
+    P_adj = p.adjust(P_value, method = "BH")
+  ) %>%
+  dplyr::arrange(P_value)
+
+print(mcnemar_results)
+
+readr::write_excel_csv(mcnemar_results, here("results", "ARG_mcnemar_results_sputum_all_without_A4.csv"))
+```
+
+## Normality and statistical test function
+
+```{r Shapiro on paired differences for t-test or Wilcoxon, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+paired_test_auto <- function(df, col_T0 = "T0", col_T12 = "T12",
+                             id_col = NULL, alpha = 0.05,
+                             shapiro_min_unique = 3, verbose = TRUE) {
+
+  stopifnot(all(c(col_T0, col_T12) %in% names(df)))
+
+  dat <- df %>%
+    dplyr::select(dplyr::all_of(c(id_col, col_T0, col_T12))) %>%
+    dplyr::filter(!is.na(.data[[col_T0]]) & !is.na(.data[[col_T12]])) %>%
+    dplyr::mutate(delta = .data[[col_T12]] - .data[[col_T0]])
+
+  n <- nrow(dat)
+  if (n < 3) stop("Need at least 3 paired observations.")
+
+  can_shapiro <- length(unique(dat$delta)) >= shapiro_min_unique && stats::sd(dat$delta) > 0
+
+  shapiro_p <- NA_real_
+  shapiro_W <- NA_real_
+  chosen <- NA_character_
+
+  if (can_shapiro) {
+    sh <- stats::shapiro.test(dat$delta)
+    shapiro_p <- unname(sh$p.value)
+    shapiro_W <- unname(sh$statistic)
+    use_t <- shapiro_p > alpha
+  } else {
+    use_t <- FALSE
+  }
+
+  if (use_t) {
+    test <- stats::t.test(dat[[col_T12]], dat[[col_T0]], paired = TRUE)
+    chosen <- "paired_t_test"
+    out <- tibble::tibble(
+      test_used = chosen,
+      n_pairs = n,
+      shapiro_W = shapiro_W,
+      shapiro_p = shapiro_p,
+      statistic = unname(test$statistic),
+      df = unname(test$parameter),
+      p_value = unname(test$p.value),
+      estimate_mean_delta = unname(test$estimate),
+      conf_low = unname(test$conf.int[1]),
+      conf_high = unname(test$conf.int[2]),
+      mean_delta_T12_minus_T0 = mean(dat$delta)
+    )
+  } else {
+    test <- stats::wilcox.test(dat[[col_T12]], dat[[col_T0]], paired = TRUE, exact = FALSE)
+    chosen <- "paired_wilcoxon"
+    out <- tibble::tibble(
+      test_used = chosen,
+      n_pairs = n,
+      shapiro_W = shapiro_W,
+      shapiro_p = shapiro_p,
+      statistic = unname(test$statistic),
+      p_value = unname(test$p.value),
+      mean_delta_T12_minus_T0 = mean(dat$delta),
+      median_delta_T12_minus_T0 = stats::median(dat$delta)
+    )
+  }
+
+  if (verbose) {
+    message("Auto test: ", chosen,
+            if (!is.na(shapiro_p)) paste0(" (Shapiro p=", signif(shapiro_p, 3), ")") else " (Shapiro n/a)")
+  }
+
+  list(
+    summary = out,
+    data_used = dat
+  )
+}
+```
+
+### ARG counts
+
+```{r ARG counts, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+arg_counts <- binary_long %>%
+  dplyr::group_by(PatientID, Time) %>%
+  dplyr::summarise(n_ARGs = sum(Presence, na.rm = TRUE), .groups = "drop") %>%
+  tidyr::pivot_wider(names_from = Time, values_from = n_ARGs)
+
+print(arg_counts)
+```
+
+### Run function per gene
+
+```{r Run function per gene, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+res_auto_ARG <- paired_test_auto(arg_counts, col_T0 = "T0", col_T12 = "T12", alpha = 0.05)
+
+res_auto_ARG$summary
+
+readr::write_excel_csv(res_auto_ARG$summary,
+  here::here("results", "ARG_counts_paired_test_auto_sputum_without_A4.csv"))
+```
+

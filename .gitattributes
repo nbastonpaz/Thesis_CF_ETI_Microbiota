@@ -1,1 +1,6 @@
 results/chapter_I/metaproteomics/feces/combined_protein.tsv filter=lfs diff=lfs merge=lfs -text
+results/chapter_I/metaproteomics/feces/Micro_pept_final.xlsx filter=lfs diff=lfs merge=lfs -text
+results/chapter_I/metaproteomics/feces/Peptides.xlsx filter=lfs diff=lfs merge=lfs -text
+results/chapter_I/metaproteomics/feces/Proteins.xlsx filter=lfs diff=lfs merge=lfs -text
+results/chapter_I/metaproteomics/feces/Peptides_refined.csv filter=lfs diff=lfs merge=lfs -text
+results/chapter_I/metaproteomics/feces/Peptides_final.csv filter=lfs diff=lfs merge=lfs -text

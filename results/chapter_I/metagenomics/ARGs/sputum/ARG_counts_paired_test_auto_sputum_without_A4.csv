@@ -1,0 +1,2 @@
+﻿"test_used","n_pairs","shapiro_W","shapiro_p","statistic","p_value","mean_delta_T12_minus_T0","median_delta_T12_minus_T0"
+"paired_wilcoxon",29,0.9163862391225549,0.02472006538778628,94,0.9838896104972175,0.034482758620689655,0

@@ -13,3 +13,6 @@ data/chapter_I/metaproteomics/feces/combined_protein.tsv filter=lfs diff=lfs mer
 data/chapter_I/metaproteomics/feces/functions.tsv filter=lfs diff=lfs merge=lfs -text
 data/chapter_I/metaproteomics/sputum/combined_protein.tsv filter=lfs diff=lfs merge=lfs -text
 data/chapter_I/metaproteomics/sputum/combined_modified_peptide.tsv filter=lfs diff=lfs merge=lfs -text
+data/chapter_II/metaproteomics/combined_protein.tsv filter=lfs diff=lfs merge=lfs -text
+data/chapter_II/metaproteomics/combined_peptide.tsv filter=lfs diff=lfs merge=lfs -text
+data/chapter_II/metaproteomics/functions.tsv filter=lfs diff=lfs merge=lfs -text

@@ -471,3 +471,466 @@ if (!dir.exists(here::here("results"))) dir.create(here::here("results"))
 readr::write_excel_csv(clinical_pvals_globalFDR, here::here("results", "clinical_globalFDR_pvalues_SCFAs_without_ratios.csv"))
 ```
 
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+# MICROBIOME CORRELATIONS
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+
+## 0.1. Function: run LMM z(outcome) ~ z(taxon) + Time + (1|PatientID) or z(outcome) ~ z(taxon) + Time + PatientID if singular fit
+```{r Function LMM, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+run_lmm_taxa_vs_outcomes <- function(dat_long,
+                                    taxa_keep,
+                                    outcomes,
+                                    taxon_col = "taxon_val",
+                                    id_col = "PatientID",
+                                    time_col = "Time",
+                                    tol_singular = 1e-4) {
+
+  # safety check
+  missing_out <- setdiff(outcomes, colnames(dat_long))
+  if (length(missing_out) > 0) {
+    stop("These outcomes are missing in dat_long: ", paste(missing_out, collapse = ", "))
+  }
+
+  purrr::map_dfr(outcomes, function(out) {
+
+    out <- as.character(out)[1]
+
+    purrr::map_dfr(taxa_keep, function(tx) {
+
+      tx <- as.character(tx)[1]
+
+      dat_tx <- dat_long %>%
+        dplyr::filter(FeatureID == tx) %>%
+        dplyr::select(FeatureID, dplyr::all_of(c(taxon_col, out, time_col, id_col))) %>%
+        dplyr::filter(stats::complete.cases(.)) %>%
+        dplyr::mutate(
+          !!time_col := factor(.data[[time_col]], levels = c("T0","T12")),
+          !!id_col   := factor(.data[[id_col]])
+        )
+
+      # skip if too few points or no variance
+      if (nrow(dat_tx) < 6 ||
+          sd(dat_tx[[taxon_col]], na.rm = TRUE) == 0 ||
+          sd(dat_tx[[out]],       na.rm = TRUE) == 0) {
+        return(tibble::tibble(
+          Outcome = out, FeatureID = tx, n = nrow(dat_tx),
+          beta_SD = NA_real_, conf.low = NA_real_, conf.high = NA_real_, p = NA_real_,
+          singular_fit = NA, model_used = NA_character_
+        ))
+      }
+
+      # standardize within this model dataset
+      dat_tx <- dat_tx %>%
+        dplyr::mutate(
+          taxon_z = as.numeric(scale(.data[[taxon_col]])),
+          y_z     = as.numeric(scale(.data[[out]]))
+        )
+
+      # 1) Fit LMM first
+      fml_lmm <- stats::as.formula(paste0("y_z ~ taxon_z + ", time_col, " + (1|", id_col, ")"))
+      fit_lmm <- lmerTest::lmer(fml_lmm, data = dat_tx)
+
+      sing <- lme4::isSingular(fit_lmm, tol = tol_singular)
+
+      # 2) If singular, refit with PatientID as fixed effect
+      if (isTRUE(sing)) {
+
+        fml_fe <- stats::as.formula(paste0("y_z ~ taxon_z + ", time_col, " + ", id_col))
+        fit_fe <- stats::lm(fml_fe, data = dat_tx)
+
+        co <- summary(fit_fe)$coefficients
+        ci <- suppressWarnings(stats::confint(fit_fe, parm = "taxon_z"))
+
+        return(tibble::tibble(
+          Outcome   = out,
+          FeatureID = tx,
+          n         = nrow(dat_tx),
+          beta_SD   = unname(co["taxon_z","Estimate"]),
+          conf.low  = ci[1],
+          conf.high = ci[2],
+          p         = unname(co["taxon_z","Pr(>|t|)"]),
+          singular_fit = TRUE,
+          model_used   = "FE_PatientID"
+        ))
+      }
+
+      # 3) Otherwise keep LMM results
+      co <- summary(fit_lmm)$coefficients
+      ci <- suppressWarnings(confint(fit_lmm, parm = "taxon_z", method = "Wald"))
+
+      tibble::tibble(
+        Outcome   = out,
+        FeatureID = tx,
+        n         = nrow(dat_tx),
+        beta_SD   = unname(co["taxon_z","Estimate"]),
+        conf.low  = ci[1],
+        conf.high = ci[2],
+        p         = unname(co["taxon_z","Pr(>|t|)"]),
+        singular_fit = FALSE,
+        model_used   = "LMM"
+      )
+    })
+
+  }) %>%
+    dplyr::group_by(Outcome) %>%
+    dplyr::mutate(p_fdr_outcome = p.adjust(p, method = "BH")) %>%
+    dplyr::ungroup() %>%
+    dplyr::mutate(p_fdr_global = p.adjust(p, method = "BH"))
+}
+```
+
+## 0.2. Helper: build forest dataframe for a given group
+```{r Helper forest, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+prep_forest_df <- function(res_table, outcomes_vec, labels_vec, taxa_order) {
+
+  res_table %>%
+    dplyr::filter(Outcome %in% outcomes_vec, FeatureID %in% taxa_order) %>%
+    dplyr::mutate(
+      Outcome_label = dplyr::recode(Outcome, !!!as.list(labels_vec)),
+      Outcome_label = factor(Outcome_label,
+                             levels = rev(unname(labels_vec[outcomes_vec]))),
+      FeatureID = factor(FeatureID, levels = taxa_order),
+      sig = !is.na(.data[[FDR_COL]]) & .data[[FDR_COL]] < 0.05
+    ) %>%
+    dplyr::filter(!is.na(beta_SD), !is.na(conf.low), !is.na(conf.high))
+}
+```
+
+
+## 0.3. Taxa deltas for microbiota
+```{r Taxa deltas, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# Load the long RA table
+ra <- read_delim(here("data", "RA_plot_relabundance_long.csv"))
+colnames(ra)
+
+# Standardize + keep only the 3 taxa
+taxa_keep <- c("Adlercreutzia_equolifaciens", "Clostridium_SGB6179", "Flavonifractor_plautii")
+
+ra2 <- ra %>%
+  mutate(
+    PatientID = sub("H\\d+$", "", SampleID),
+    Time = case_when(
+      Time %in% c("T0","time0","Time0") ~ "T0",
+      Time %in% c("T12","time12","Time12") ~ "T12",
+      TRUE ~ as.character(Time)
+    ),
+    RelAbundance = as.numeric(RelAbundance)
+  ) %>%
+  filter(FeatureID %in% taxa_keep)
+
+# Build Δ per taxon (log1p handles zeros nicely)
+taxa_delta <- ra2 %>%
+  dplyr::mutate(val = log1p(RelAbundance)) %>%
+  dplyr::select(PatientID, FeatureID, Time, val) %>%
+  tidyr::pivot_wider(names_from = Time, values_from = val) %>%
+  dplyr::filter(complete.cases(T0, T12)) %>%
+  dplyr::mutate(delta = T12 - T0) %>%
+  dplyr::select(PatientID, FeatureID, delta) %>%
+  tidyr::pivot_wider(
+    names_from = FeatureID,
+    values_from = delta,
+    names_glue = "{FeatureID}_delta"
+  )
+
+# Start with taxa deltas; SCFA deltas will be added later
+delta_all_taxa <- taxa_delta
+
+colnames(taxa_delta)
+summary(delta_all_taxa[, grep("_delta$", colnames(delta_all_taxa))])
+```
+
+#----------------
+
+
+# 1. Microbiome composition and SCFAs
+## Deltas
+```{r Microbiota composition and SCFAs, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# SCFA deltas (Δ = T12 - T0)
+scfa_vars <- c("acetate", "propionate", "butyrate")
+
+scfa_delta <- purrr::map(scfa_vars, \(v) {
+  df_scfa %>%
+    dplyr::select(PatientID, Time, dplyr::all_of(v)) %>%
+    tidyr::pivot_wider(names_from = Time, values_from = dplyr::all_of(v)) %>%
+    dplyr::filter(stats::complete.cases(T0, T12)) %>%
+    dplyr::mutate(delta = T12 - T0) %>%
+    dplyr::select(PatientID, delta) %>%
+    dplyr::rename(!!paste0(v, "_delta") := delta)
+}) %>%
+  purrr::reduce(dplyr::left_join, by = "PatientID")
+
+# ---- join to your existing delta_all_taxa ----
+delta_all_taxa <- delta_all_taxa %>%
+  dplyr::left_join(scfa_delta, by = "PatientID")
+
+# check
+colnames(delta_all_taxa)
+```
+
+## Spearman
+```{r Spearman, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+taxa_y <- c(
+  "Adlercreutzia_equolifaciens_delta",
+  "Clostridium_SGB6179_delta",
+  "Flavonifractor_plautii_delta"
+)
+
+vars_x <- c(
+  "acetate_delta",
+  "propionate_delta",
+  "butyrate_delta"
+)
+
+min_n <- 6
+
+res_spear_taxa_scfa <- purrr::map_dfr(taxa_y, \(ty) {
+  purrr::map_dfr(vars_x, \(vx) {
+    tmp <- delta_all_taxa %>%
+      dplyr::select(dplyr::all_of(c(ty, vx))) %>%
+      dplyr::filter(stats::complete.cases(.))
+
+    if (nrow(tmp) < min_n) {
+      return(tibble::tibble(taxon = ty, var = vx, n = nrow(tmp), rho = NA_real_, p = NA_real_))
+    }
+
+    ct <- suppressWarnings(cor.test(tmp[[1]], tmp[[2]], method = "spearman", exact = FALSE))
+    tibble::tibble(taxon = ty, var = vx, n = nrow(tmp), rho = unname(ct$estimate), p = ct$p.value)
+  })
+}) %>%
+  dplyr::mutate(p_fdr = p.adjust(p, method = "fdr")) %>%
+  dplyr::arrange(p_fdr)
+
+res_spear_taxa_scfa
+
+write.csv(res_spear_taxa_scfa, "res_spearman_taxa_scfa_without_ratios.csv", row.names = FALSE)
+```
+
+### Heatmap
+```{r Heatmap, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+vars_heat <- c(
+  "Adlercreutzia_equolifaciens_delta",
+  "Clostridium_SGB6179_delta",
+  "Flavonifractor_plautii_delta",
+  "acetate_delta",
+  "propionate_delta", 
+  "butyrate_delta"
+)
+
+dfh <- delta_all_taxa %>% dplyr::select(dplyr::all_of(vars_heat))
+
+# Spearman rho matrix
+rho_mat <- cor(dfh, method = "spearman", use = "pairwise.complete.obs")
+
+# P-value matrix (pairwise cor.test), only if >= min_n pairs
+min_n <- 6
+p_mat <- matrix(NA_real_, nrow = ncol(dfh), ncol = ncol(dfh),
+                dimnames = list(colnames(dfh), colnames(dfh)))
+
+for (r in seq_len(ncol(dfh))) {
+  for (c in seq_len(ncol(dfh))) {
+    x <- dfh[[r]]
+    y <- dfh[[c]]
+    ok <- complete.cases(x, y)
+    if (sum(ok) >= min_n) {
+      p_mat[r, c] <- suppressWarnings(
+        cor.test(x[ok], y[ok], method = "spearman", exact = FALSE)$p.value
+      )
+    }
+  }
+}
+
+# Convert to long format
+idx <- setNames(seq_along(vars_heat), vars_heat)
+
+rho_long <- as.data.frame(as.table(rho_mat)) %>%
+  dplyr::rename(var_row = Var1, var_col = Var2, rho = Freq)
+
+p_long <- as.data.frame(as.table(p_mat)) %>%
+  dplyr::rename(var_row = Var1, var_col = Var2, p = Freq)
+
+plot_df <- rho_long %>%
+  dplyr::left_join(p_long, by = c("var_row", "var_col")) %>%
+  dplyr::mutate(
+    i = idx[var_row],
+    j = idx[var_col]
+  ) %>%
+  dplyr::filter(i > j) %>%
+  dplyr::mutate(pair_id = paste0(pmin(i, j), "_", pmax(i, j)))
+
+# GLOBAL FDR across all unique pairs shown in the heatmap
+p_unique <- plot_df %>%
+  dplyr::select(pair_id, p) %>%
+  dplyr::distinct() %>%
+  dplyr::mutate(p_fdr = p.adjust(p, method = "fdr"))
+
+plot_df <- plot_df %>%
+  dplyr::left_join(p_unique, by = "pair_id") %>%
+  dplyr::mutate(
+    sig = dplyr::case_when(
+      is.na(p_fdr) ~ "",
+      p_fdr < 0.001 ~ "***",
+      p_fdr < 0.01  ~ "**",
+      p_fdr < 0.05  ~ "*",
+      TRUE ~ ""
+    ),
+    label = paste0(sprintf("%.2f", rho), sig),
+    var_col = factor(var_col, levels = vars_heat),
+    var_row = factor(var_row, levels = rev(vars_heat))
+  )
+
+# Plot heatmap
+p_heat_taxa_scfa <- ggplot(plot_df, aes(x = var_col, y = var_row, fill = rho)) +
+  geom_tile() +
+  geom_text(aes(label = label), size = 3) +
+  scale_fill_gradient2(
+    low = "#2C7BB6",
+    mid = "grey95",
+    high = "#D7191C",
+    midpoint = 0,
+    limits = c(-1, 1),
+    name = "Spearman ρ"
+  ) +
+  coord_fixed() +
+  labs(title = "Spearman correlations of changes (ΔT12–T0): taxa vs SCFAs") +
+  theme_minimal(base_size = 12) +
+  theme(
+    panel.grid = element_blank(),
+    axis.title = element_blank(),
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    plot.title = element_text(hjust = 0.5)
+  )
+
+p_heat_taxa_scfa
+
+# --- Save as SVG ---
+ggsave("heatmap_spearman_deltas_FDR_taxa_SCFAs_without_ratios.svg",
+       plot = p_heat_taxa_scfa, device = "svg", width = 11, height = 9, units = "in")
+```
+
+## LMER
+```{r LMER, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+taxa_keep <- c("Adlercreutzia_equolifaciens", "Clostridium_SGB6179", "Flavonifractor_plautii")
+scfa_outcomes <- c("acetate", "propionate", "butyrate")
+
+# Harmonize Time to "T0"/"T12"
+fix_time <- function(x) {
+  x <- as.character(x)
+  dplyr::case_when(
+    x %in% c("T0","0","Time0","time0","baseline") ~ "T0",
+    x %in% c("T12","12","Time12","time12","followup") ~ "T12",
+    TRUE ~ x
+  )
+}
+
+# ONE row per PatientID-Time for SCFAs
+meta_scfa <- df_scfa %>%
+  dplyr::mutate(Time = fix_time(Time)) %>%
+  dplyr::select(PatientID, Time, dplyr::all_of(scfa_outcomes)) %>%
+  dplyr::group_by(PatientID, Time) %>%
+  dplyr::summarise(
+    dplyr::across(dplyr::all_of(scfa_outcomes), ~ if (all(is.na(.x))) NA_real_ else mean(.x, na.rm = TRUE)),
+    .groups = "drop"
+    )
+
+# Microbiome long table
+dat_long <- ra2 %>%
+  dplyr::select(PatientID, Time, FeatureID, RelAbundance) %>%
+  dplyr::mutate(
+    taxon_val = log1p(RelAbundance)
+  )
+
+# Join SCFAs into microbiome long table (dat_long)
+dat_long_scfa_full <- dat_long %>%
+  dplyr::mutate(
+    Time = fix_time(Time),
+    PatientID = as.character(PatientID)
+  ) %>%
+  dplyr::left_join(meta_scfa, by = c("PatientID","Time")) %>%
+  dplyr::mutate(
+    Time = factor(Time, levels = c("T0","T12")),
+    PatientID = factor(PatientID)
+  )
+
+# Run your SAME function (LMM with FE fallback if singular)
+res_lmm_scfa <- run_lmm_taxa_vs_outcomes(
+  dat_long = dat_long_scfa_full,
+  taxa_keep = taxa_keep,
+  outcomes = scfa_outcomes
+)
+
+res_lmm_scfa
+write.csv(res_lmm_scfa, "res_lmm_taxa_vs_SCFAs_LMM_SD_without_ratios.csv", row.names = FALSE)
+```
+
+### Forest plot
+```{r Forest plot, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+FDR_COL <- "p_fdr_global"   # or "p_fdr_outcome"
+
+scfa_labels <- c(
+  acetate            = "Acetate",
+  propionate         = "Propionate",
+  butyrate           = "Butyrate"
+)
+
+scfa_outcomes <- names(scfa_labels)
+
+prep_forest_df <- function(res_table, outcomes_vec, labels_vec, taxa_order) {
+
+  res_table %>%
+    dplyr::filter(Outcome %in% outcomes_vec, FeatureID %in% taxa_order) %>%
+    dplyr::mutate(
+      Outcome_label = dplyr::recode(Outcome, !!!as.list(labels_vec)),
+      Outcome_label = factor(Outcome_label,
+                             levels = rev(unname(labels_vec[outcomes_vec]))),
+      FeatureID = factor(FeatureID, levels = taxa_order),
+      sig = !is.na(.data[[FDR_COL]]) & .data[[FDR_COL]] < 0.05
+    ) %>%
+    dplyr::filter(!is.na(beta_SD), !is.na(conf.low), !is.na(conf.high))
+}
+
+df_scfa_forest <- prep_forest_df(
+  res_table    = res_lmm_scfa,
+  outcomes_vec = scfa_outcomes,
+  labels_vec   = scfa_labels,
+  taxa_order   = taxa_keep
+) %>%
+  dplyr::mutate(FeatureID = factor(FeatureID, levels = taxa_keep))
+
+p_taxa_scfa <- ggplot(df_scfa_forest, aes(x = beta_SD, y = Outcome_label)) +
+  geom_vline(xintercept = 0, linetype = "dashed", color = "grey40") +
+  geom_errorbar(aes(xmin = conf.low, xmax = conf.high),
+                width = 0.2, linewidth = 0.9, orientation = "y") +
+  geom_point(aes(fill = sig), shape = 21, size = 3.2, color = "black") +
+  facet_grid(. ~ FeatureID) +
+  scale_fill_manual(
+    name = "BH-FDR (q < 0.05)",
+    values = c(`TRUE` = "black", `FALSE` = "white"),
+    breaks = c(TRUE, FALSE),
+    labels = c("Significant", "Not significant")
+  ) +
+  guides(fill = guide_legend(nrow = 1, byrow = TRUE)) +
+  labs(
+    title = "Association between fecal taxa and SCFAs (standardized)",
+    subtitle = "Models adjusted for Time; effect sizes are standardized (SD outcome per 1 SD taxon)",
+    x = "Standardized effect (SD outcome per 1 SD taxon)",
+    y = NULL
+  ) +
+  theme_classic(base_size = 12) +
+  theme(
+    panel.background = element_rect(fill = "white", color = NA),
+    plot.background  = element_rect(fill = "white", color = NA),
+    panel.grid.major = element_line(color = "grey85", linewidth = 0.6),
+    panel.grid.minor = element_line(color = "grey92", linewidth = 0.4),
+    axis.text.x = element_text(size = 10),
+    axis.text.y = element_text(size = 10),
+    strip.text  = element_text(face = "plain"),
+    legend.position = "bottom"
+  )
+
+p_taxa_scfa
+
+ggsave("forest_SCFAs_taxa_SD_without_ratios.svg", plot = p_taxa_scfa, device = "svg",
+       width = 9, height = 6, units = "in")
+```

@@ -1,0 +1,10 @@
+"taxon","var","n","rho","p","p_fdr"
+"Adlercreutzia_equolifaciens_delta","acetate_delta",9,-0.745869853982892,0.0210263031060696,0.189236727954626
+"Flavonifractor_plautii_delta","butyrate_delta",9,-0.559402390487169,0.11733810288497,0.528021462982367
+"Clostridium_SGB6179_delta","butyrate_delta",9,0.423789689763007,0.255658532786948,0.766975598360845
+"Adlercreutzia_equolifaciens_delta","propionate_delta",9,-0.203419051086243,0.599623063924642,0.78205960352689
+"Adlercreutzia_equolifaciens_delta","butyrate_delta",9,0.152564288314682,0.695164092023903,0.78205960352689
+"Clostridium_SGB6179_delta","acetate_delta",9,-0.169515875905203,0.662828040854944,0.78205960352689
+"Clostridium_SGB6179_delta","propionate_delta",9,0.305128576629365,0.424626998262487,0.78205960352689
+"Flavonifractor_plautii_delta","propionate_delta",9,0.271225401448324,0.480224692367622,0.78205960352689
+"Flavonifractor_plautii_delta","acetate_delta",9,-0.101709525543122,0.794576966149737,0.794576966149737

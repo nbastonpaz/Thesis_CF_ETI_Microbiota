@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='576.00pt' height='288.00pt' viewBox='0 0 576.00 288.00'>
+<g class='svglite'>
+<defs>
+  <style type='text/css'><![CDATA[
+    .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {
+      fill: none;
+      stroke: #000000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-miterlimit: 10.00;
+    }
+    .svglite text {
+      white-space: pre;
+    }
+    .svglite g.glyphgroup path {
+      fill: inherit;
+      stroke: none;
+    }
+  ]]></style>
+</defs>
+<rect width='100%' height='100%' style='stroke: none; fill: #FFFFFF;'/>
+<defs>
+  <clipPath id='cpMC4wMHw1NzYuMDB8MC4wMHwyODguMDA='>
+    <rect x='0.00' y='0.00' width='576.00' height='288.00' />
+  </clipPath>
+</defs>
+<g clip-path='url(#cpMC4wMHw1NzYuMDB8MC4wMHwyODguMDA=)'>
+<rect x='0.00' y='0.00' width='576.00' height='288.00' style='stroke-width: 1.16; stroke: #FFFFFF; fill: #FFFFFF;' />
+</g>
+<defs>
+  <clipPath id='cpMTEzLjE0fDQ3MS43MHw0My43M3wyNTMuNjU='>
+    <rect x='113.14' y='43.73' width='358.56' height='209.92' />
+  </clipPath>
+</defs>
+<g clip-path='url(#cpMTEzLjE0fDQ3MS43MHw0My43M3wyNTMuNjU=)'>
+<rect x='113.14' y='43.73' width='358.56' height='209.92' style='stroke-width: 1.16; stroke: none; fill: #FFFFFF;' />
+<polyline points='113.14,148.69 471.70,148.69 ' style='stroke-width: 1.16; stroke: #EBEBEB; stroke-linecap: butt;' />
+<polyline points='113.85,253.65 113.85,43.73 ' style='stroke-width: 1.16; stroke: #EBEBEB; stroke-linecap: butt;' />
+<polyline points='182.16,253.65 182.16,43.73 ' style='stroke-width: 1.16; stroke: #EBEBEB; stroke-linecap: butt;' />
+<polyline points='250.47,253.65 250.47,43.73 ' style='stroke-width: 1.16; stroke: #EBEBEB; stroke-linecap: butt;' />
+<polyline points='318.78,253.65 318.78,43.73 ' style='stroke-width: 1.16; stroke: #EBEBEB; stroke-linecap: butt;' />
+<polyline points='387.09,253.65 387.09,43.73 ' style='stroke-width: 1.16; stroke: #EBEBEB; stroke-linecap: butt;' />
+<polyline points='455.40,253.65 455.40,43.73 ' style='stroke-width: 1.16; stroke: #EBEBEB; stroke-linecap: butt;' />
+<line x1='455.40' y1='253.65' x2='455.40' y2='43.73' style='stroke-width: 1.16; stroke: #B3B3B3; stroke-dasharray: 6.21,6.21; stroke-linecap: butt;' />
+<polyline points='199.31,166.19 199.31,131.20 ' style='stroke-width: 1.71; stroke: #D95F02; stroke-linecap: butt;' />
+<polyline points='199.31,148.69 129.44,148.69 ' style='stroke-width: 1.71; stroke: #D95F02; stroke-linecap: butt;' />
+<polyline points='129.44,166.19 129.44,131.20 ' style='stroke-width: 1.71; stroke: #D95F02; stroke-linecap: butt;' />
+<circle cx='164.37' cy='148.69' r='3.05' style='stroke-width: 0.77; stroke: #D95F02; fill: #D95F02;' />
+<rect x='113.14' y='43.73' width='358.56' height='209.92' style='stroke-width: 1.16; stroke: #333333;' />
+</g>
+<g clip-path='url(#cpMC4wMHw1NzYuMDB8MC4wMHwyODguMDA=)'>
+</g>
+<defs>
+  <clipPath id='cpMTEzLjE0fDQ3MS43MHwyNS4yOHw0My43Mw=='>
+    <rect x='113.14' y='25.28' width='358.56' height='18.45' />
+  </clipPath>
+</defs>
+<g clip-path='url(#cpMTEzLjE0fDQ3MS43MHwyNS4yOHw0My43Mw==)'>
+<rect x='113.14' y='25.28' width='358.56' height='18.45' style='stroke-width: 1.16; stroke: #333333; fill: #E5E5E5;' />
+<text x='292.42' y='37.94' text-anchor='middle' style='font-size: 9.60px;fill: #1A1A1A; font-family: "Arial";' textLength='11.19px' lengthAdjust='spacingAndGlyphs'>T0</text>
+</g>
+<g clip-path='url(#cpMC4wMHw1NzYuMDB8MC4wMHwyODguMDA=)'>
+<polyline points='113.85,256.64 113.85,253.65 ' style='stroke-width: 1.16; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='182.16,256.64 182.16,253.65 ' style='stroke-width: 1.16; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='250.47,256.64 250.47,253.65 ' style='stroke-width: 1.16; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='318.78,256.64 318.78,253.65 ' style='stroke-width: 1.16; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='387.09,256.64 387.09,253.65 ' style='stroke-width: 1.16; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='455.40,256.64 455.40,253.65 ' style='stroke-width: 1.16; stroke: #333333; stroke-linecap: butt;' />
+<text x='113.85' y='265.90' text-anchor='middle' style='font-size: 9.60px;fill: #4D4D4D; font-family: "Arial";' textLength='21.84px' lengthAdjust='spacingAndGlyphs'>-0.05</text>
+<text x='182.16' y='265.90' text-anchor='middle' style='font-size: 9.60px;fill: #4D4D4D; font-family: "Arial";' textLength='21.84px' lengthAdjust='spacingAndGlyphs'>-0.04</text>
+<text x='250.47' y='265.90' text-anchor='middle' style='font-size: 9.60px;fill: #4D4D4D; font-family: "Arial";' textLength='21.84px' lengthAdjust='spacingAndGlyphs'>-0.03</text>
+<text x='318.78' y='265.90' text-anchor='middle' style='font-size: 9.60px;fill: #4D4D4D; font-family: "Arial";' textLength='21.84px' lengthAdjust='spacingAndGlyphs'>-0.02</text>
+<text x='387.09' y='265.90' text-anchor='middle' style='font-size: 9.60px;fill: #4D4D4D; font-family: "Arial";' textLength='21.84px' lengthAdjust='spacingAndGlyphs'>-0.01</text>
+<text x='455.40' y='265.90' text-anchor='middle' style='font-size: 9.60px;fill: #4D4D4D; font-family: "Arial";' textLength='18.66px' lengthAdjust='spacingAndGlyphs'>0.00</text>
+<text x='107.76' y='152.13' text-anchor='end' style='font-size: 9.60px; font-style: italic;fill: #4D4D4D; font-family: "Arial";' textLength='101.78px' lengthAdjust='spacingAndGlyphs'>Staphylococcus_aureus</text>
+<polyline points='110.15,148.69 113.14,148.69 ' style='stroke-width: 1.16; stroke: #333333; stroke-linecap: butt;' />
+<text x='292.42' y='279.50' text-anchor='middle' style='font-size: 12.00px; font-family: "Arial";' textLength='87.80px' lengthAdjust='spacingAndGlyphs'>LFC (coefficient)</text>
+<rect x='483.65' y='125.53' width='86.37' height='46.33' style='stroke-width: 1.16; stroke: none; fill: #FFFFFF;' />
+<text x='489.63' y='141.36' style='font-size: 12.00px; font-family: "Arial";' textLength='64.70px' lengthAdjust='spacingAndGlyphs'>Significance</text>
+<rect x='489.63' y='148.60' width='17.28' height='17.28' style='stroke-width: 1.16; stroke: none; fill: #FFFFFF;' />
+<line x1='491.36' y1='157.24' x2='505.18' y2='157.24' style='stroke-width: 1.71; stroke: #D95F02; stroke-linecap: butt;' />
+<circle cx='498.27' cy='157.24' r='3.05' style='stroke-width: 0.77; stroke: #D95F02; fill: #D95F02;' />
+<text x='512.89' y='160.67' style='font-size: 9.60px; font-family: "Arial";' textLength='51.16px' lengthAdjust='spacingAndGlyphs'>Significative</text>
+<text x='113.14' y='16.28' style='font-size: 14.40px; font-family: "Arial";' textLength='223.17px' lengthAdjust='spacingAndGlyphs'>Forest Plot: Calprotectin in Sputum</text>
+</g>
+</g>
+</svg>

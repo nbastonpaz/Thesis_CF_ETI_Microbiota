@@ -1,0 +1,1590 @@
+---
+title: "cf_clinical_outcomes_associations_thesis_chapter_I"
+author: "Natalia Bastón-Paz"
+date: "2026"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+require("knitr")
+opts_knit$set(root.dir = "C:/RProjects/cf_clinical_outcomes_associations_thesis_chapter_I")
+```
+
+```{#r Clean environments, message=FALSE, warning=FALSE}
+rm(list = ls())
+```
+
+## General introduction
+
+Cystic fibrosis (CF) is a genetic disorder caused by mutations in the CFTR (Cystic Fibrosis Transmembrane Conductance Regulator) gene, leading to impaired chloride and bicarbonate transport across epithelial surfaces. This defect results in thick, viscous secretions in the lungs, gut, pancreas and other organs, and predisposes people with CF (pwCF) to chronic respiratory infections, malabsorption, and systemic complications. The CF lung microbiome is typically characterized by chronic colonisation with pathogens such as *Pseudomonas aeruginosa* and *Staphylococcus aureus*, while the gut microbiota is often altered by pancreatic insufficiency, antibiotic exposure and nutritional factors.
+The introduction of highly effective CFTR modulators, particularly the triple therapy elexacaftor–tezacaftor–ivacaftor (ETI), has markedly improved lung function, nutritional status and quality of life in pwCF. However, the relationships between gut and lung microbiota and clinical markers under ETI treatment remain incompletely understood. In particular, it is relevant to identify which bacterial taxa are associated with lung function and markers of liver injury and intestinal inflammation before and after one year of ETI.
+In this script, we use ANCOM-BC2 on fecal and sputum microbiota data (TreeSummarizedExperiment subsets for feces and sputum at T0 and T12), adjusting for sex and age, to test associations between bacterial taxa and selected clinical variables (ppFEV1, ALT, AST, GGT, fecal elastase and fecal calprotectin).
+
+*Questions addressed:*
+
+- *Which bacterial taxa in fecal and sputum samples are associated with lung function (ppFEV$_1$) at T0 and T12 under ETI treatment?*  
+- *Which bacterial taxa are associated with liver enzymes (ALT, AST, GGT) and markers of intestinal function/inflammation (fecal elastase and fecal calprotectin) at T0 and T12?*
+
+## Libraries
+
+```{r Libraries, message=FALSE, warning=FALSE}
+library(mia)     
+library(miaViz)
+library(tidyverse)         
+library(castor)
+library(readr)
+library(ggpubr)
+library(utils)
+library(ggplot2)          
+library(patchwork)
+library(plotrix)
+library(ComplexUpset)
+library(vegan)
+library(stats)
+library(rstatix)
+library(data.table)
+library(Maaslin2)
+library(MicrobiomeStat)
+library(ANCOMBC)
+library(ALDEx2)
+library(MADAV)
+library(SummarizedExperiment)
+library(tibble)
+library(TreeSummarizedExperiment)
+library(stringr)
+library(here)
+library(svglite)
+library(aplot)
+library(patchwork)
+library(tidyr)
+library(ggsci)
+library(purrr)
+library(openxlsx)
+library(broom)
+library(ggthemes)
+library(RColorBrewer)
+library(gghalves)
+library(scales)
+library(ggdist)
+library(forcats)
+library(eulerr)
+library(dplyr)
+```
+
+## Load the data
+
+Optional: If we want to know which samples have 0 counts:
+
+```{r Samples with 0 counts, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+df <- read.table(here("data", "cf_metaphlan_counts.txt"),
+                 header = TRUE, sep = "\t", 
+                 row.names = 1, stringsAsFactors = FALSE)
+
+print(names(which(colSums(df) == 100000000)))
+```
+
+#### Metadata file
+
+Load in sample metadata file --\> colData_Metaphlan object:
+
+```{r Load in Sample Metadata file, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+Metaphlan_data_cf <- read_delim(here("data", "cf_metadata_models.txt"), 
+                                "\t", 
+                                escape_double = FALSE, 
+                                trim_ws = TRUE)
+# Fix column names
+colnames(Metaphlan_data_cf)[1] <- 'SampleID'
+```
+
+Remove the samples that have 0 counts and others of interest:
+
+```{r Remove samples of choice, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+samples_to_remove <- c("A12E0", "A12E12", "A20E0", "A20E12", "A26E0", "A26E12", "P16E0", "P16E12", "P21E0", "P21E12", "P3H0", "P3H12")  # Replace with actual SampleIDs
+Metaphlan_data_cf <- Metaphlan_data_cf[!Metaphlan_data_cf$SampleID %in% samples_to_remove, ]
+```
+
+Convert the column SampleID into row names:
+
+```{r Convert col SampleID into row names, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+Metaphlan_data_cf <- Metaphlan_data_cf %>%
+  column_to_rownames(var = 'SampleID') %>%                                          
+  data.frame()
+```
+
+#### Abundance file
+
+Load in abundance file (change file name and FeatureID_column) --> assay_Metaphlan object:
+
+```{r Load in abundance file, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+M_assay_cf <- read_delim(here("data", "cf_metaphlan_counts.txt"), "\t", escape_double = FALSE, trim_ws = TRUE)
+colnames(M_assay_cf)[1] <- 'FeatureID'
+```
+
+Get the taxonomy data from the FeatureID column of the assay_Metaphlan object --> rowData_Metaphlan object:
+
+```{r Get the taxonomy data from FeatureID, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+M_rowData_cf <- M_assay_cf[,'FeatureID'] %>% 
+  mutate(split = FeatureID) %>%  
+  separate(col = split, into = c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species",'Type'), sep = "\\|.__") %>%
+  mutate(Kingdom = str_remove_all(Kingdom,'^k__')) %>%  
+  column_to_rownames(var = "FeatureID") %>%        
+  data.frame()
+```
+
+Filter the assay_Metaphlan object (M_assay_cf) using the rowData_Metaphlan (M_rowData_cf) & colData_Metaphlan (Metaphlan_data_cf) objects and create the TSE:
+
+```{r Filter and create the TSE, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+M_assay_cf <- M_assay_cf[,c('FeatureID',rownames(Metaphlan_data_cf))] %>% # The assay data columns are reorder to match the colData
+  column_to_rownames(var = 'FeatureID') %>%        
+  as.matrix()
+M_TSE_cf_unfiltered <- TreeSummarizedExperiment(assays = M_assay_cf, # To create TreeSummarizedExperiment object                                   
+                                                    rowData = M_rowData_cf,
+                                                     colData = Metaphlan_data_cf)
+assayNames(M_TSE_cf_unfiltered) <-'counts'
+```
+
+Rename NA's in 'UNCLASSIFIED' row of rowData(TSE_Metaphlan) --> Replaces NA values (and any other values) with "UNCLASSIFIED" in the UNCLASSIFIED row only:
+
+```{r Rename UNCLASSIFIED, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+rowData(M_TSE_cf_unfiltered)[rowData(M_TSE_cf_unfiltered)$Kingdom == 'UNCLASSIFIED',1:ncol(rowData(M_TSE_cf_unfiltered))] <- 'UNCLASSIFIED' 
+```
+
+Filter to 'Species' level and retain 'UNCLASSIFIED':
+
+```{r Filter to Species and retain UNCLASSIFIED, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+M_TSE_cf_unfiltered <- M_TSE_cf_unfiltered[
+  (!is.na(rowData(M_TSE_cf_unfiltered)$Species) & is.na(rowData(M_TSE_cf_unfiltered)$Type)) | 
+    (rowData(M_TSE_cf_unfiltered)$Kingdom == 'UNCLASSIFIED'),
+]
+```
+
+Optional filtering steps: Remove all non-bacteria taxa (check first whether Bacteria are in the 'Kingdom' or 'Domain' class). Here we also keep unclassified Bacteria and UNCLASSIFIED
+
+```{r Remove non-bacteria taxa, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+M_TSE_cf_bacteria <- M_TSE_cf_unfiltered[rowData(M_TSE_cf_unfiltered)$Kingdom %in% c('UNCLASSIFIED','Bacteria'), ]
+```
+
+Remove all singleton features:
+
+```{r Remove singletons, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+M_TSE_cf_singletons <- M_TSE_cf_bacteria[apply(assay(M_TSE_cf_bacteria), 1, function(x) { sum(x > 0) > 1 }), ]
+```
+
+Remove 'UNCLASSIFIED' feature:
+
+```{r Remove UNCLASSIFIED, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+M_TSE_cf_UN <- M_TSE_cf_singletons
+M_TSE_cf_no_UN <- M_TSE_cf_singletons[rownames(M_TSE_cf_singletons) != 'UNCLASSIFIED',]
+```
+
+## Create subsets
+
+Subsets by Time:
+
+```{r Subset by Time, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+subset_T0 <- M_TSE_cf_UN[, M_TSE_cf_UN$Time %in% 'T0']
+subset_T12 <- M_TSE_cf_UN[, M_TSE_cf_UN$Time %in% 'T12']
+subset_T0_no_UN <- M_TSE_cf_no_UN[, M_TSE_cf_no_UN$Time %in% 'T0']
+subset_T12_no_UN <- M_TSE_cf_no_UN[, M_TSE_cf_no_UN$Time %in% 'T12']
+```
+
+Subsets by SampleType:
+
+```{r Subset by SampleType, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+subset_feces <- M_TSE_cf_UN[, M_TSE_cf_UN$SampleType %in% 'feces']
+subset_sputum <- M_TSE_cf_UN[, M_TSE_cf_UN$SampleType %in% 'sputum']
+subset_feces_no_UN <- M_TSE_cf_no_UN[, M_TSE_cf_no_UN$SampleType %in% 'feces']
+subset_sputum_no_UN <- M_TSE_cf_no_UN[, M_TSE_cf_no_UN$SampleType %in% 'sputum']
+```
+
+Subsets by Time AND SampleType
+
+```{r Subset by SampleType and Time, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+subset_feces_T0 <- subset_feces[, subset_feces$Time %in% 'T0']
+subset_feces_T12 <- subset_feces[, subset_feces$Time %in% 'T12']
+subset_sputum_T0 <- subset_sputum[, subset_sputum$Time %in% 'T0']
+subset_sputum_T12 <- subset_sputum[, subset_sputum$Time %in% 'T12']
+subset_feces_T0_no_UN <- subset_feces_no_UN[, subset_feces_no_UN$Time %in% 'T0']
+subset_feces_T12_no_UN <- subset_feces_no_UN[, subset_feces_no_UN$Time %in% 'T12']
+subset_sputum_T0_no_UN <- subset_sputum_no_UN[, subset_sputum_no_UN$Time %in% 'T0']
+subset_sputum_T12_no_UN <- subset_sputum_no_UN[, subset_sputum_no_UN$Time %in% 'T12']
+```
+
+## Directories
+
+```{r Directories, message=FALSE, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+dir.create(here("results_ancombc_adjusted_feces", "tables"), showWarnings = FALSE, recursive = TRUE)
+dir.create(here("results_ancombc_adjusted_feces", "figures"), showWarnings = FALSE, recursive = TRUE)
+dir.create(here("results_ancombc_adjusted_sputum", "tables"), showWarnings = FALSE, recursive = TRUE)
+dir.create(here("results_ancombc_adjusted_sputum", "figures"), showWarnings = FALSE, recursive = TRUE)
+```
+
+# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
+# FECAL SAMPLES ANALYSIS
+# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
+# LUNG FUNCTION
+# ------------------------------------------------------------------------------
+
+### Run ANCOM-BC2 at T0 and T12
+```{r ppFEV1 feces, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# T0
+out_ppFEV1_fc_T0 <- ancombc2(
+  data         = subset_feces_T0_no_UN,
+  assay_name   = "counts",
+  tax_level    = "Species",
+  fix_formula  = "ppFEV1 + Age + Sex", 
+  rand_formula = NULL, 
+  prv_cut      = 0.10, 
+  lib_cut      = 0,
+  p_adj_method = "BH",
+  struc_zero   = FALSE,
+  neg_lb       = FALSE,
+  pseudo_sens  = TRUE,
+  s0_perc      = 0.05,
+  verbose      = TRUE
+)
+
+# T12
+out_ppFEV1_fc_T12 <- ancombc2(
+  data         = subset_feces_T12_no_UN,
+  assay_name   = "counts",
+  tax_level    = "Species",
+  fix_formula  = "ppFEV1 + Age + Sex", 
+  rand_formula = NULL, 
+  prv_cut      = 0.10, 
+  lib_cut      = 0,
+  p_adj_method = "BH",
+  struc_zero   = FALSE,
+  neg_lb       = FALSE,
+  pseudo_sens  = TRUE,
+  s0_perc      = 0.05,
+  verbose      = TRUE
+)
+```
+
+### Export the results
+```{r Results, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# T0
+## All
+res_all_ppFEV1_fc_T0 <- out_ppFEV1_fc_T0$res
+write_csv(res_all_ppFEV1_fc_T0, here("results_ancombc_adjusted_feces", "tables", "ANCOMBC2_all_ppFEV1_T0_feces.csv"))
+
+## Significant
+res_sig_ppFEV1_fc_T0 <- res_all_ppFEV1_fc_T0 %>%
+  filter(diff_ppFEV1 == TRUE, q_ppFEV1 < 0.05) %>%
+  arrange(lfc_ppFEV1)
+write_csv(res_sig_ppFEV1_fc_T0, here("results_ancombc_adjusted_feces", "tables", "ANCOMBC2_sig_ppFEV1_T0_feces.csv"))
+
+# T12
+## All
+res_all_ppFEV1_fc_T12 <- out_ppFEV1_fc_T12$res
+write_csv(res_all_ppFEV1_fc_T12, here("results_ancombc_adjusted_feces", "tables", "ANCOMBC2_all_ppFEV1_T12_feces.csv"))
+
+## Significant
+res_sig_ppFEV1_fc_T12 <- res_all_ppFEV1_fc_T12 %>%
+  filter(diff_ppFEV1 == TRUE, q_ppFEV1 < 0.05) %>%
+  arrange(lfc_ppFEV1)
+write_csv(res_sig_ppFEV1_fc_T12, here("results_ancombc_adjusted_feces", "tables", "ANCOMBC2_sig_ppFEV1_T12_feces.csv"))
+```
+
+
+# ------------------------------------------------------------------------------
+# TRANSAMINASES
+# ------------------------------------------------------------------------------
+
+## ALT
+
+### Run ANCOM-BC2 at T0 and T12
+```{r ALT feces, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# T0
+out_ALT_fc_T0 <- ancombc2(
+  data         = subset_feces_T0_no_UN,
+  assay_name   = "counts",
+  tax_level    = "Species",
+  fix_formula  = "ALT + Age + Sex", 
+  rand_formula = NULL, 
+  prv_cut      = 0.10, 
+  lib_cut      = 0,
+  p_adj_method = "BH",
+  struc_zero   = FALSE,
+  neg_lb       = FALSE,
+  pseudo_sens  = TRUE,
+  s0_perc      = 0.05,
+  verbose      = TRUE
+)
+
+# T12
+out_ALT_fc_T12 <- ancombc2(
+  data         = subset_feces_T12_no_UN,
+  assay_name   = "counts",
+  tax_level    = "Species",
+  fix_formula  = "ALT + Age + Sex", 
+  rand_formula = NULL, 
+  prv_cut      = 0.10, 
+  lib_cut      = 0,
+  p_adj_method = "BH",
+  struc_zero   = FALSE,
+  neg_lb       = FALSE,
+  pseudo_sens  = TRUE,
+  s0_perc      = 0.05,
+  verbose      = TRUE
+)
+```
+
+### Export the results
+```{r Results, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# T0
+## All
+res_all_ALT_fc_T0 <- out_ALT_fc_T0$res
+write_csv(res_all_ALT_fc_T0, here("results_ancombc_adjusted_feces", "tables", "ANCOMBC2_all_ALT_T0_feces.csv"))
+
+## Significant
+res_sig_ALT_fc_T0 <- res_all_ALT_fc_T0 %>%
+  filter(diff_ALT == TRUE, q_ALT < 0.05) %>%
+  arrange(lfc_ALT)
+write_csv(res_sig_ALT_fc_T0, here("results_ancombc_adjusted_feces", "tables", "ANCOMBC2_sig_ALT_T0_feces.csv"))
+
+# T12
+## All
+res_all_ALT_fc_T12 <- out_ALT_fc_T12$res
+write_csv(res_all_ALT_fc_T12, here("results_ancombc_adjusted_feces", "tables", "ANCOMBC2_all_ALT_T12_feces.csv"))
+
+## Significant
+res_sig_ALT_fc_T12 <- res_all_ALT_fc_T12 %>%
+  filter(diff_ALT == TRUE, q_ALT < 0.05) %>%
+  arrange(lfc_ALT)
+write_csv(res_sig_ALT_fc_T12, here("results_ancombc_adjusted_feces", "tables", "ANCOMBC2_sig_ALT_T12_feces.csv"))
+```
+
+#------
+## AST
+
+### Run ANCOM-BC2 at T0 and T12
+```{r AST feces, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# T0
+out_AST_fc_T0 <- ancombc2(
+  data         = subset_feces_T0_no_UN,
+  assay_name   = "counts",
+  tax_level    = "Species",
+  fix_formula  = "AST + Age + Sex", 
+  rand_formula = NULL, 
+  prv_cut      = 0.10,
+  lib_cut      = 0,
+  p_adj_method = "BH",
+  struc_zero   = FALSE,
+  neg_lb       = FALSE,
+  pseudo_sens  = TRUE,
+  s0_perc      = 0.05,
+  verbose      = TRUE
+)
+
+# T12
+out_AST_fc_T12 <- ancombc2(
+  data         = subset_feces_T12_no_UN,
+  assay_name   = "counts",
+  tax_level    = "Species",
+  fix_formula  = "AST + Age + Sex", 
+  rand_formula = NULL, 
+  prv_cut      = 0.10,
+  lib_cut      = 0,
+  p_adj_method = "BH",
+  struc_zero   = FALSE,
+  neg_lb       = FALSE,
+  pseudo_sens  = TRUE,
+  s0_perc      = 0.05,
+  verbose      = TRUE
+)
+```
+
+### Export the results
+```{r Results, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# T0
+## All
+res_all_AST_fc_T0 <- out_AST_fc_T0$res
+write_csv(res_all_AST_fc_T0, here("results_ancombc_adjusted_feces", "tables", "ANCOMBC2_all_AST_T0_feces.csv"))
+
+## Significant
+res_sig_AST_fc_T0 <- res_all_AST_fc_T0 %>%
+  filter(diff_AST == TRUE, q_AST < 0.05) %>%
+  arrange(lfc_AST)
+write_csv(res_sig_AST_fc_T0, here("results_ancombc_adjusted_feces", "tables", "ANCOMBC2_sig_AST_T0_feces.csv"))
+
+# T12
+## All
+res_all_AST_fc_T12 <- out_AST_fc_T12$res
+write_csv(res_all_AST_fc_T12, here("results_ancombc_adjusted_feces", "tables", "ANCOMBC2_all_AST_T12_feces.csv"))
+
+## Significant
+res_sig_AST_fc_T12 <- res_all_AST_fc_T12 %>%
+  filter(diff_AST == TRUE, q_AST < 0.05) %>%
+  arrange(lfc_AST)
+write_csv(res_sig_AST_fc_T12, here("results_ancombc_adjusted_feces", "tables", "ANCOMBC2_sig_AST_T12_feces.csv"))
+```
+
+#------
+## GGT
+
+### Run ANCOM-BC2 at T0 and T12
+```{r GGT feces, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# T0
+out_GGT_fc_T0 <- ancombc2(
+  data         = subset_feces_T0_no_UN,
+  assay_name   = "counts",
+  tax_level    = "Species",
+  fix_formula  = "GGT + Age + Sex", 
+  rand_formula = NULL, 
+  prv_cut      = 0.10, 
+  lib_cut      = 0,
+  p_adj_method = "BH",
+  struc_zero   = FALSE,
+  neg_lb       = FALSE,
+  pseudo_sens  = TRUE,
+  s0_perc      = 0.05,
+  verbose      = TRUE
+)
+
+# T12
+out_GGT_fc_T12 <- ancombc2(
+  data         = subset_feces_T12_no_UN,
+  assay_name   = "counts",
+  tax_level    = "Species",
+  fix_formula  = "GGT + Age + Sex", 
+  rand_formula = NULL, 
+  prv_cut      = 0.10, 
+  lib_cut      = 0,
+  p_adj_method = "BH",
+  struc_zero   = FALSE,
+  neg_lb       = FALSE,
+  pseudo_sens  = TRUE,
+  s0_perc      = 0.05,
+  verbose      = TRUE
+)
+```
+
+### Export the results
+```{r Results, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+#T0
+## All
+res_all_GGT_fc_T0 <- out_GGT_fc_T0$res
+write_csv(res_all_GGT_fc_T0, here("results_ancombc_adjusted_feces", "tables", "ANCOMBC2_all_GGT_T0_feces.csv"))
+
+## Significant
+res_sig_GGT_fc_T0 <- res_all_GGT_fc_T0 %>%
+  filter(diff_GGT == TRUE, q_GGT < 0.05) %>%
+  arrange(lfc_GGT)
+write_csv(res_sig_GGT_fc_T0, here("results_ancombc_adjusted_feces", "tables", "ANCOMBC2_sig_GGT_T0_feces.csv"))
+
+# T12
+## All
+res_all_GGT_fc_T12 <- out_GGT_fc_T12$res
+write_csv(res_all_GGT_fc_T12, here("results_ancombc_adjusted_feces", "tables", "ANCOMBC2_all_GGT_T12_feces.csv"))
+
+## Significant
+res_sig_GGT_fc_T12 <- res_all_GGT_fc_T12 %>%
+  filter(diff_GGT == TRUE, q_GGT < 0.05) %>%
+  arrange(lfc_GGT)
+write_csv(res_sig_GGT_fc_T12, here("results_ancombc_adjusted_feces", "tables", "ANCOMBC2_sig_GGT_T12_feces.csv"))
+```
+
+
+# ------------------------------------------------------------------------------
+# ELASTASE
+# ------------------------------------------------------------------------------
+
+### Run ANCOM-BC2 at T0 and T12
+```{r Elastase feces, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# T0
+out_elas_fc_T0 <- ancombc2(
+  data         = subset_feces_T0_no_UN,
+  assay_name   = "counts",
+  tax_level    = "Species",
+  fix_formula  = "Elastase + Age + Sex", 
+  rand_formula = NULL, 
+  prv_cut      = 0.10, 
+  lib_cut      = 0,
+  p_adj_method = "BH",
+  struc_zero   = FALSE,
+  neg_lb       = FALSE,
+  pseudo_sens  = TRUE,
+  s0_perc      = 0.05,
+  verbose      = TRUE
+)
+
+# T12
+out_elas_fc_T12 <- ancombc2(
+  data         = subset_feces_T12_no_UN,
+  assay_name   = "counts",
+  tax_level    = "Species",
+  fix_formula  = "Elastase + Age + Sex", 
+  rand_formula = NULL, 
+  prv_cut      = 0.10, 
+  lib_cut      = 0,
+  p_adj_method = "BH",
+  struc_zero   = FALSE,
+  neg_lb       = FALSE,
+  pseudo_sens  = TRUE,
+  s0_perc      = 0.05,
+  verbose      = TRUE
+)
+```
+
+### Export the results
+```{r Results, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# T0
+## All
+res_all_elas_fc_T0 <- out_elas_fc_T0$res
+write_csv(res_all_elas_fc_T0, here("results_ancombc_adjusted_feces", "tables", "ANCOMBC2_all_elas_T0_feces.csv"))
+
+## Significant
+res_sig_elas_fc_T0 <- res_all_elas_fc_T0 %>%
+  filter(diff_Elastase == TRUE, q_Elastase < 0.05) %>%
+  arrange(lfc_Elastase)
+write_csv(res_sig_elas_fc_T0, here("results_ancombc_adjusted_feces", "tables", "ANCOMBC2_sig_elas_T0_feces.csv"))
+
+# T12
+## All
+res_all_elas_fc_T12 <- out_elas_fc_T12$res
+write_csv(res_all_elas_fc_T12, here("results_ancombc_adjusted_feces", "tables", "ANCOMBC2_all_elas_T12_feces.csv"))
+
+## Significant
+res_sig_elas_fc_T12 <- res_all_elas_fc_T12 %>%
+  filter(diff_Elastase == TRUE, q_Elastase < 0.05) %>%
+  arrange(lfc_Elastase)
+write_csv(res_sig_elas_fc_T12, here("results_ancombc_adjusted_feces", "tables", "ANCOMBC2_sig_elas_T12_feces.csv"))
+```
+
+
+# ------------------------------------------------------------------------------
+# CALPROTECTIN
+# ------------------------------------------------------------------------------
+
+### Run ANCOM-BC2 at T0 and T12
+```{r Calprotectin feces, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# T0
+out_calpro_fc_T0 <- ancombc2(
+  data         = subset_feces_T0_no_UN,
+  assay_name   = "counts",
+  tax_level    = "Species",
+  fix_formula  = "Calprotectin + Age + Sex", 
+  rand_formula = NULL, 
+  prv_cut      = 0.10, 
+  lib_cut      = 0,
+  p_adj_method = "BH",
+  struc_zero   = FALSE,
+  neg_lb       = FALSE,
+  pseudo_sens  = TRUE,
+  s0_perc      = 0.05,
+  verbose      = TRUE
+)
+
+# T12
+out_calpro_fc_T12 <- ancombc2(
+  data         = subset_feces_T12_no_UN,
+  assay_name   = "counts",
+  tax_level    = "Species",
+  fix_formula  = "Calprotectin + Age + Sex", 
+  rand_formula = NULL, 
+  prv_cut      = 0.10, 
+  lib_cut      = 0,
+  p_adj_method = "BH",
+  struc_zero   = FALSE,
+  neg_lb       = FALSE,
+  pseudo_sens  = TRUE,
+  s0_perc      = 0.05,
+  verbose      = TRUE
+)
+```
+
+### Export the results
+```{r Results, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# T0
+## All
+res_all_calpro_fc_T0 <- out_calpro_fc_T0$res
+write_csv(res_all_calpro_fc_T0, here("results_ancombc_adjusted_feces", "tables", "ANCOMBC2_all_calpro_T0_feces.csv"))
+
+## Significant
+res_sig_calpro_fc_T0 <- res_all_calpro_fc_T0 %>%
+  filter(diff_Calprotectin == TRUE, q_Calprotectin < 0.05) %>%
+  arrange(lfc_Calprotectin)
+write_csv(res_sig_calpro_fc_T0, here("results_ancombc_adjusted_feces", "tables", "ANCOMBC2_sig_calpro_T0_feces.csv"))
+
+# T12
+## All
+res_all_calpro_fc_T12 <- out_calpro_fc_T12$res
+write_csv(res_all_calpro_fc_T12, here("results_ancombc_adjusted_feces", "tables", "ANCOMBC2_all_calpro_T12_feces.csv"))
+
+## Significant
+res_sig_calpro_fc_T12 <- res_all_calpro_fc_T12 %>%
+  filter(diff_Calprotectin == TRUE, q_Calprotectin < 0.05) %>%
+  arrange(lfc_Calprotectin)
+write_csv(res_sig_calpro_fc_T12, here("results_ancombc_adjusted_feces", "tables", "ANCOMBC2_sig_calpro_T12_feces.csv"))
+```
+
+
+# ------------------------------------------------------------------------------
+## Master Table Consolidation
+# ------------------------------------------------------------------------------
+
+### Create Master table
+```{r Master table, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# List of result objects to consolidate
+items_fc <- list(
+  list(obj = "out_ppFEV1_fc_T0", term = "ppFEV1",      time = "T0",  clin = "ppFEV1"),
+  list(obj = "out_ppFEV1_fc_T12",term = "ppFEV1",      time = "T12", clin = "ppFEV1"),
+  list(obj = "out_ALT_fc_T0",    term = "ALT",         time = "T0",  clin = "ALT"),
+  list(obj = "out_ALT_fc_T12",   term = "ALT",         time = "T12", clin = "ALT"),
+  list(obj = "out_AST_fc_T0",    term = "AST",         time = "T0",  clin = "AST"),
+  list(obj = "out_AST_fc_T12",   term = "AST",         time = "T12", clin = "AST"),
+  list(obj = "out_GGT_fc_T0",    term = "GGT",         time = "T0",  clin = "GGT"),
+  list(obj = "out_GGT_fc_T12",   term = "GGT",         time = "T12", clin = "GGT"),
+  list(obj = "out_elas_fc_T0",   term = "Elastase",    time = "T0",  clin = "Elastase"),
+  list(obj = "out_elas_fc_T12",  term = "Elastase",    time = "T12", clin = "Elastase"),
+  list(obj = "out_calpro_fc_T0", term = "Calprotectin",time = "T0",  clin = "Calprotectin"),
+  list(obj = "out_calpro_fc_T12",term = "Calprotectin",time = "T12", clin = "Calprotectin")
+)
+
+master_all_fc <- list()   
+master_sig_fc <- list()  
+alpha <- 0.05             
+
+for (it in items_fc) {
+  if (!exists(it$obj)) next
+  out <- get(it$obj)
+  res <- out$res
+
+  lfc_col  <- paste0("lfc_",  it$term)
+  q_col    <- paste0("q_",    it$term)
+  diff_col <- paste0("diff_", it$term)
+
+  if (!all(c(lfc_col, q_col, diff_col) %in% names(res))) next
+
+  tab_fc <- data.frame(
+    Taxon = res$taxon,
+    Species = if ("taxon" %in% names(res)) sub(".*\\|s__", "", res$taxon) else NA_character_,
+    Time = it$time,
+    ClinVar = it$clin,
+    lfc = res[[lfc_col]],
+    q   = res[[q_col]],
+    diff = as.logical(res[[diff_col]]),
+    stringsAsFactors = FALSE
+  )
+  tab_fc$sign <- ifelse(is.na(tab_fc$lfc), NA, ifelse(tab_fc$lfc > 0, "+", ifelse(tab_fc$lfc < 0, "-", "0")))
+
+  master_all_fc[[paste(it$clin, it$time, sep = "_")]] <- tab_fc
+
+  sig_fc <- tab_fc[!is.na(tab_fc$q) & tab_fc$q < alpha & tab_fc$diff, , drop = FALSE]
+  if (nrow(sig_fc) > 0) sig_fc <- sig_fc[order(abs(sig_fc$lfc), decreasing = TRUE), ]
+  master_sig_fc[[paste(it$clin, it$time, sep = "_")]] <- sig_fc
+}
+
+master_all_df_fc <- if (length(master_all_fc)) do.call(rbind, master_all_fc) else data.frame()
+master_sig_df_fc <- if (length(master_sig_fc)) do.call(rbind, master_sig_fc) else data.frame()
+
+if (nrow(master_all_df_fc)) write.csv(master_all_df_fc, "ANCOMBC2_master_all_fc.csv", row.names = FALSE)
+if (nrow(master_sig_df_fc)) write.csv(master_sig_df_fc, "ANCOMBC2_master_sig_fc.csv", row.names = FALSE)
+
+cat("Rows in master_all_df_fc:", nrow(master_all_df_fc), "\n")
+cat("Rows in master_sig_df_fc:", nrow(master_sig_df_fc), "\n")
+```
+
+### Summarize top taxa
+```{r Top taxa by clinical variable, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# A) Top taxa by clinical variable (T0 and T12 combined)
+top_by_variable_fc <- list()
+if (nrow(master_sig_df_fc)) {
+  vars <- unique(master_sig_df_fc$ClinVar)
+  for (v in vars) {
+    sub <- master_sig_df_fc[master_sig_df_fc$ClinVar == v, , drop = FALSE]
+    if (nrow(sub) == 0) next
+    sub_ord <- sub[order(abs(sub$lfc), decreasing = TRUE), ]
+    top_by_variable_fc[[v]] <- head(sub_ord, 20)
+  }
+}
+top_by_variable_df_fc <- if (length(top_by_variable_fc)) do.call(rbind, top_by_variable_fc) else data.frame()
+
+# B) Top taxa by clinical variable AND timepoint (T0 and T12 separately)
+top_by_variable_time_fc <- list()
+if (nrow(master_sig_df_fc)) {
+  combos <- unique(master_sig_df_fc[, c("ClinVar","Time")])
+  for (i in seq_len(nrow(combos))) {
+    v <- combos$ClinVar[i]; t <- combos$Time[i]
+    sub <- master_sig_df_fc[master_sig_df_fc$ClinVar == v & master_sig_df_fc$Time == t, , drop = FALSE]
+    if (nrow(sub) == 0) next
+    sub_ord <- sub[order(abs(sub$lfc), decreasing = TRUE), ]
+    top_by_variable_time_fc[[paste(v, t, sep = "_")]] <- head(sub_ord, 20)
+  }
+}
+top_by_variable_time_df_fc <- if (length(top_by_variable_time_fc)) do.call(rbind, top_by_variable_time_fc) else data.frame()
+
+# Save summaries to CSV
+if (nrow(top_by_variable_df_fc))       write.csv(top_by_variable_df_fc,       "ANCOMBC2_top_by_variable_fc.csv", row.names = FALSE)
+if (nrow(top_by_variable_time_df_fc)) write.csv(top_by_variable_time_df_fc, "ANCOMBC2_top_by_variable_time_fc.csv", row.names = FALSE)
+```
+
+### Detailed T0 vs. T12 comparison
+```{r T0 vs T12 comparison, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+comparisons_list_fc <- list()
+summary_counts_fc <- list()
+
+# Define the variable to iterate over from the feces master table
+vars_fc <- sort(unique(master_sig_df_fc$ClinVar))
+
+for (v in vars_fc) {
+  sig_T0  <- master_sig_df_fc %>% dplyr::filter(ClinVar==v, Time=="T0")
+  sig_T12 <- master_sig_df_fc %>% dplyr::filter(ClinVar==v, Time=="T12")
+
+  sp_T0  <- unique(sig_T0$Species)
+  sp_T12 <- unique(sig_T12$Species)
+
+  if (length(sp_T0)==0 && length(sp_T12)==0) {
+    summary_counts_fc[[v]] <- data.frame(
+      ClinVar=v, n_T0_sig=0, n_T12_sig=0,
+      n_common_same=0, n_common_flip=0,
+      n_only_T0=0, n_only_T12=0
+    )
+    next
+  }
+
+  common <- dplyr::inner_join(
+    dplyr::select(sig_T0,  Species, lfc_T0 = lfc,  q_T0 = q,  sign_T0 = sign),
+    dplyr::select(sig_T12, Species, lfc_T12 = lfc, q_T12 = q, sign_T12 = sign),
+    by = "Species"
+  )
+
+  common_same <- common %>% dplyr::filter(sign_T0 %in% c("+","-") & sign_T0 == sign_T12)
+  common_flip <- common %>% dplyr::filter(sign_T0 %in% c("+","-") & sign_T12 %in% c("+","-") & sign_T0 != sign_T12)
+
+  only_T0  <- setdiff(sp_T0,  sp_T12)
+  only_T12 <- setdiff(sp_T12, sp_T0)
+
+  # --- Creating the detailed comparison tables ---
+  only_T0_tab <- sig_T0  %>% dplyr::filter(Species %in% only_T0) %>%
+    dplyr::transmute(ClinVar=v, Category="only_T0", Species,
+                     lfc_T0=lfc, q_T0=q, sign_T0=sign,
+                     lfc_T12=NA_real_, q_T12=NA_real_, sign_T12=NA_character_)
+
+  only_T12_tab <- sig_T12 %>% dplyr::filter(Species %in% only_T12) %>%
+    dplyr::transmute(ClinVar=v, Category="only_T12", Species,
+                     lfc_T0=NA_real_, q_T0=NA_real_, sign_T0=NA_character_,
+                     lfc_T12=lfc, q_T12=q, sign_T12=sign)
+
+  common_same_tab <- common_same %>% dplyr::mutate(ClinVar=v, Category="common_same") %>%
+    dplyr::select(ClinVar, Category, Species, lfc_T0, q_T0, sign_T0, lfc_T12, q_T12, sign_T12)
+
+  common_flip_tab <- common_flip %>% dplyr::mutate(ClinVar=v, Category="common_flip") %>%
+    dplyr::select(ClinVar, Category, Species, lfc_T0, q_T0, sign_T0, lfc_T12, q_T12, sign_T12)
+
+  comparisons_list_fc[[v]] <- dplyr::bind_rows(common_same_tab, common_flip_tab, only_T0_tab, only_T12_tab)
+
+  summary_counts_fc[[v]] <- data.frame(
+    ClinVar = v,
+    n_T0_sig  = length(sp_T0),
+    n_T12_sig = length(sp_T12),
+    n_common_same = nrow(common_same),
+    n_common_flip = nrow(common_flip),
+    n_only_T0  = length(only_T0),
+    n_only_T12 = length(only_T12)
+  )
+}
+
+# Combine the lists into final data frames
+comparisons_df_fc   <- if (length(comparisons_list_fc)) dplyr::bind_rows(comparisons_list_fc) else data.frame()
+summary_counts_df_fc <- if (length(summary_counts_fc))   dplyr::bind_rows(summary_counts_fc)   else data.frame()
+
+# Save the results to CSV files
+if (nrow(comparisons_df_fc)) write.csv(comparisons_df_fc, "ANCOMBC2_T0vsT12_comparisons_fc.csv", row.names=FALSE)
+if (nrow(summary_counts_df_fc)) write.csv(summary_counts_df_fc, "ANCOMBC2_T0vsT12_summary_counts_fc.csv", row.names=FALSE)
+```
+
+### Visualization
+#### Forest plots
+##### Prepare data for forest plots
+```{r Prepare data, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+forest_plot_data_list_fc <- list()
+alpha <- 0.05
+
+for (it in items_fc) {
+  if (!exists(it$obj)) next
+  out <- get(it$obj)
+  res <- out$res
+
+  lfc_col  <- paste0("lfc_",  it$term)
+  q_col    <- paste0("q_",    it$term)
+  se_col   <- paste0("se_",   it$term)
+  diff_col <- paste0("diff_", it$term)
+
+  if (!all(c(lfc_col, q_col, se_col, diff_col) %in% names(res))) next
+
+  temp_df <- data.frame(
+    Taxon = res$taxon,
+    Time = it$time,
+    ClinVar = it$clin,
+    lfc = res[[lfc_col]],
+    se  = res[[se_col]],
+    q   = res[[q_col]],
+    diff = as.logical(res[[diff_col]])
+  )
+  
+  forest_plot_data_list_fc[[it$obj]] <- temp_df
+}
+
+forest_plot_data_full_fc <- bind_rows(forest_plot_data_list_fc) %>%
+  mutate(Species = sub(".*\\|s__", "", Taxon))
+```
+
+##### Generate and save Forest plots
+```{r Generate and save Forest plots, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+dir.create("figures_svg_fc", showWarnings = FALSE)
+
+for (variable_to_plot in unique(forest_plot_data_full_fc$ClinVar)) {
+
+  top_species_for_var_fc <- forest_plot_data_full_fc %>%
+    filter(ClinVar == variable_to_plot) %>%
+    filter(!is.na(q) & q < alpha & diff == TRUE) %>%
+    arrange(q) %>%
+    distinct(Species) %>%
+    slice_head(n = 20) %>%
+    pull(Species)
+
+  if (length(top_species_for_var_fc) == 0) {
+    print(paste("No significant species found for", variable_to_plot, "- skipping plot."))
+    next
+  }
+  
+  plot_data_fc <- forest_plot_data_full_fc %>%
+    filter(ClinVar == variable_to_plot, Species %in% top_species_for_var_fc) %>%
+    mutate(
+      lfc_lower = lfc - 1.96 * se,
+      lfc_upper = lfc + 1.96 * se,
+      is_significant = !is.na(q) & q < alpha & diff == TRUE,
+      Species = factor(Species, levels = rev(unique(Species)))
+    )
+
+  p_fc <- ggplot(plot_data_fc, aes(y = Species, x = lfc, xmin = lfc_lower, xmax = lfc_upper, color = is_significant)) +
+    geom_vline(xintercept = 0, linetype="dashed", color="grey70") +
+    geom_errorbar(width = 0.2, linewidth = 0.8) +
+    geom_point(size = 2.5) +
+    facet_grid(. ~ Time) +
+    scale_color_manual(
+      name = "Significance", 
+      values = c(`TRUE` = "#d95f02", `FALSE` = "grey70"),
+      labels = c(`TRUE` = "Significative", `FALSE` = "Not significative")
+    ) +
+    labs(
+      title = paste("Forest Plot:", variable_to_plot, "in Feces"),
+      x = "LFC (coefficient)", 
+      y = NULL
+    ) +
+    theme_bw(base_size = 12) +
+    theme(
+      panel.grid.minor = element_blank(),
+      axis.text.y = element_text(face = "italic"),
+      strip.background = element_rect(fill = "grey90"),
+      legend.position = "right"
+    )
+
+  plot_height_fc <- max(4, 0.3 * length(top_species_for_var_fc))
+  
+  ggsave(
+    filename = file.path("figures_svg_fc", paste0("Faceted_ForestPlot_", variable_to_plot, "_fc.svg")),
+    plot = p_fc,
+    device = svglite::svglite,
+    width = 8,
+    height = plot_height_fc
+  )
+}
+```
+
+
+
+# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
+# SPUTUM SAMPLES ANALYSIS
+# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
+# LUNG FUNCTION
+# ------------------------------------------------------------------------------
+
+### Run ANCOM-BC2 at T0 and T12
+```{r ppFEV1 sputum, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# T0
+out_ppFEV1_sp_T0 <- ancombc2(
+  data         = subset_sputum_T0_no_UN,
+  assay_name   = "counts",
+  tax_level    = "Species",
+  fix_formula  = "ppFEV1 + Age + Sex", 
+  rand_formula = NULL, 
+  prv_cut      = 0.10, 
+  lib_cut      = 0,
+  p_adj_method = "BH",
+  struc_zero   = FALSE,
+  neg_lb       = FALSE,
+  pseudo_sens  = TRUE,
+  s0_perc      = 0.05,
+  verbose      = TRUE
+)
+
+# T12
+out_ppFEV1_sp_T12 <- ancombc2(
+  data         = subset_sputum_T12_no_UN,
+  assay_name   = "counts",
+  tax_level    = "Species",
+  fix_formula  = "ppFEV1 + Age + Sex", 
+  rand_formula = NULL, 
+  prv_cut      = 0.10, 
+  lib_cut      = 0,
+  p_adj_method = "BH",
+  struc_zero   = FALSE,
+  neg_lb       = FALSE,
+  pseudo_sens  = TRUE,
+  s0_perc      = 0.05,
+  verbose      = TRUE
+)
+```
+
+### Export the results
+```{r Results, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# T0
+## All
+res_all_ppFEV1_sp_T0 <- out_ppFEV1_sp_T0$res
+write_csv(res_all_ppFEV1_sp_T0, here("results_ancombc_adjusted_sputum", "tables", "ANCOMBC2_all_ppFEV1_T0_sputum.csv"))
+
+## Significant
+res_sig_ppFEV1_sp_T0 <- res_all_ppFEV1_sp_T0 %>%
+  filter(diff_ppFEV1 == TRUE, q_ppFEV1 < 0.05) %>%
+  arrange(lfc_ppFEV1)
+write_csv(res_sig_ppFEV1_sp_T0, here("results_ancombc_adjusted_sputum", "tables", "ANCOMBC2_sig_ppFEV1_T0_sputum.csv"))
+
+# T12
+## All
+res_all_ppFEV1_sp_T12 <- out_ppFEV1_sp_T12$res
+write_csv(res_all_ppFEV1_sp_T12, here("results_ancombc_adjusted_sputum", "tables", "ANCOMBC2_all_ppFEV1_T12_sputum.csv"))
+
+## Significant
+res_sig_ppFEV1_sp_T12 <- res_all_ppFEV1_sp_T12 %>%
+  filter(diff_ppFEV1 == TRUE, q_ppFEV1 < 0.05) %>%
+  arrange(lfc_ppFEV1)
+write_csv(res_sig_ppFEV1_sp_T12, here("results_ancombc_adjusted_sputum", "tables", "ANCOMBC2_sig_ppFEV1_T12_sputum.csv"))
+```
+
+
+# ------------------------------------------------------------------------------
+# TRANSAMINASES
+# ------------------------------------------------------------------------------
+
+## ALT
+
+### Run ANCOM-BC2 at T0 and T12
+```{r ALT sputum, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# T0
+out_ALT_sp_T0 <- ancombc2(
+  data         = subset_sputum_T0_no_UN,
+  assay_name   = "counts",
+  tax_level    = "Species",
+  fix_formula  = "ALT + Age + Sex", 
+  rand_formula = NULL, 
+  prv_cut      = 0.10, 
+  lib_cut      = 0,
+  p_adj_method = "BH",
+  struc_zero   = FALSE,
+  neg_lb       = FALSE,
+  pseudo_sens  = TRUE,
+  s0_perc      = 0.05,
+  verbose      = TRUE
+)
+
+# T12
+out_ALT_sp_T12 <- ancombc2(
+  data         = subset_sputum_T12_no_UN,
+  assay_name   = "counts",
+  tax_level    = "Species",
+  fix_formula  = "ALT + Age + Sex", 
+  rand_formula = NULL, 
+  prv_cut      = 0.10, 
+  lib_cut      = 0,
+  p_adj_method = "BH",
+  struc_zero   = FALSE,
+  neg_lb       = FALSE,
+  pseudo_sens  = TRUE,
+  s0_perc      = 0.05,
+  verbose      = TRUE
+)
+```
+
+### Export the results
+```{r Results, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# T0
+## All
+res_all_ALT_sp_T0 <- out_ALT_sp_T0$res
+write_csv(res_all_ALT_sp_T0, here("results_ancombc_adjusted_sputum", "tables", "ANCOMBC2_all_ALT_T0_sputum.csv"))
+
+## Significant
+res_sig_ALT_sp_T0 <- res_all_ALT_sp_T0 %>%
+  filter(diff_ALT == TRUE, q_ALT < 0.05) %>%
+  arrange(lfc_ALT)
+write_csv(res_sig_ALT_sp_T0, here("results_ancombc_adjusted_sputum", "tables", "ANCOMBC2_sig_ALT_T0_sputum.csv"))
+
+# T12
+## All
+res_all_ALT_sp_T12 <- out_ALT_sp_T12$res
+write_csv(res_all_ALT_sp_T12, here("results_ancombc_adjusted_sputum", "tables", "ANCOMBC2_all_ALT_T12_sputum.csv"))
+
+## Significant
+res_sig_ALT_sp_T12 <- res_all_ALT_sp_T12 %>%
+  filter(diff_ALT == TRUE, q_ALT < 0.05) %>%
+  arrange(lfc_ALT)
+write_csv(res_sig_ALT_sp_T12, here("results_ancombc_adjusted_sputum", "tables", "ANCOMBC2_sig_ALT_T12_sputum.csv"))
+```
+
+#------
+## AST
+
+### Run ANCOM-BC2 at T0 and T12
+```{r AST sputum, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# T0
+out_AST_sp_T0 <- ancombc2(
+  data         = subset_sputum_T0_no_UN,
+  assay_name   = "counts",
+  tax_level    = "Species",
+  fix_formula  = "AST + Age + Sex", 
+  rand_formula = NULL, 
+  prv_cut      = 0.10,
+  lib_cut      = 0,
+  p_adj_method = "BH",
+  struc_zero   = FALSE,
+  neg_lb       = FALSE,
+  pseudo_sens  = TRUE,
+  s0_perc      = 0.05,
+  verbose      = TRUE
+)
+
+# T12
+out_AST_sp_T12 <- ancombc2(
+  data         = subset_sputum_T12_no_UN,
+  assay_name   = "counts",
+  tax_level    = "Species",
+  fix_formula  = "AST + Age + Sex", 
+  rand_formula = NULL, 
+  prv_cut      = 0.10,
+  lib_cut      = 0,
+  p_adj_method = "BH",
+  struc_zero   = FALSE,
+  neg_lb       = FALSE,
+  pseudo_sens  = TRUE,
+  s0_perc      = 0.05,
+  verbose      = TRUE
+)
+```
+
+### Export the results
+```{r Results, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# T0
+## All
+res_all_AST_sp_T0 <- out_AST_sp_T0$res
+write_csv(res_all_AST_sp_T0, here("results_ancombc_adjusted_sputum", "tables", "ANCOMBC2_all_AST_T0_sputum.csv"))
+
+## Significant
+res_sig_AST_sp_T0 <- res_all_AST_sp_T0 %>%
+  filter(diff_AST == TRUE, q_AST < 0.05) %>%
+  arrange(lfc_AST)
+write_csv(res_sig_AST_sp_T0, here("results_ancombc_adjusted_sputum", "tables", "ANCOMBC2_sig_AST_T0_sputum.csv"))
+
+# T12
+## All
+res_all_AST_sp_T12 <- out_AST_sp_T12$res
+write_csv(res_all_AST_sp_T12, here("results_ancombc_adjusted_sputum", "tables", "ANCOMBC2_all_AST_T12_sputum.csv"))
+
+## Significant
+res_sig_AST_sp_T12 <- res_all_AST_sp_T12 %>%
+  filter(diff_AST == TRUE, q_AST < 0.05) %>%
+  arrange(lfc_AST)
+write_csv(res_sig_AST_sp_T12, here("results_ancombc_adjusted_sputum", "tables", "ANCOMBC2_sig_AST_T12_sputum.csv"))
+```
+
+#------
+## GGT
+
+### Run ANCOM-BC2 at T0 and T12
+```{r GGT sputum, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# T0
+out_GGT_sp_T0 <- ancombc2(
+  data         = subset_sputum_T0_no_UN,
+  assay_name   = "counts",
+  tax_level    = "Species",
+  fix_formula  = "GGT + Age + Sex", 
+  rand_formula = NULL, 
+  prv_cut      = 0.10, 
+  lib_cut      = 0,
+  p_adj_method = "BH",
+  struc_zero   = FALSE,
+  neg_lb       = FALSE,
+  pseudo_sens  = TRUE,
+  s0_perc      = 0.05,
+  verbose      = TRUE
+)
+
+# T12
+out_GGT_sp_T12 <- ancombc2(
+  data         = subset_sputum_T12_no_UN,
+  assay_name   = "counts",
+  tax_level    = "Species",
+  fix_formula  = "GGT + Age + Sex", 
+  rand_formula = NULL, 
+  prv_cut      = 0.10, 
+  lib_cut      = 0,
+  p_adj_method = "BH",
+  struc_zero   = FALSE,
+  neg_lb       = FALSE,
+  pseudo_sens  = TRUE,
+  s0_perc      = 0.05,
+  verbose      = TRUE
+)
+```
+
+### Export the results
+```{r Results, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+#T0
+## All
+res_all_GGT_sp_T0 <- out_GGT_sp_T0$res
+write_csv(res_all_GGT_sp_T0, here("results_ancombc_adjusted_sputum", "tables", "ANCOMBC2_all_GGT_T0_sputum.csv"))
+
+## Significant
+res_sig_GGT_sp_T0 <- res_all_GGT_sp_T0 %>%
+  filter(diff_GGT == TRUE, q_GGT < 0.05) %>%
+  arrange(lfc_GGT)
+write_csv(res_sig_GGT_sp_T0, here("results_ancombc_adjusted_sputum", "tables", "ANCOMBC2_sig_GGT_T0_sputum.csv"))
+
+# T12
+## All
+res_all_GGT_sp_T12 <- out_GGT_sp_T12$res
+write_csv(res_all_GGT_sp_T12, here("results_ancombc_adjusted_sputum", "tables", "ANCOMBC2_all_GGT_T12_sputum.csv"))
+
+## Significant
+res_sig_GGT_sp_T12 <- res_all_GGT_sp_T12 %>%
+  filter(diff_GGT == TRUE, q_GGT < 0.05) %>%
+  arrange(lfc_GGT)
+write_csv(res_sig_GGT_sp_T12, here("results_ancombc_adjusted_sputum", "tables", "ANCOMBC2_sig_GGT_T12_sputum.csv"))
+```
+
+
+# ------------------------------------------------------------------------------
+# ELASTASE
+# ------------------------------------------------------------------------------
+
+### Run ANCOM-BC2 at T0 and T12
+```{r Elastase sputum, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# T0
+out_elas_sp_T0 <- ancombc2(
+  data         = subset_sputum_T0_no_UN,
+  assay_name   = "counts",
+  tax_level    = "Species",
+  fix_formula  = "Elastase + Age + Sex", 
+  rand_formula = NULL, 
+  prv_cut      = 0.10, 
+  lib_cut      = 0,
+  p_adj_method = "BH",
+  struc_zero   = FALSE,
+  neg_lb       = FALSE,
+  pseudo_sens  = TRUE,
+  s0_perc      = 0.05,
+  verbose      = TRUE
+)
+
+# T12
+out_elas_sp_T12 <- ancombc2(
+  data         = subset_sputum_T12_no_UN,
+  assay_name   = "counts",
+  tax_level    = "Species",
+  fix_formula  = "Elastase + Age + Sex", 
+  rand_formula = NULL, 
+  prv_cut      = 0.10, 
+  lib_cut      = 0,
+  p_adj_method = "BH",
+  struc_zero   = FALSE,
+  neg_lb       = FALSE,
+  pseudo_sens  = TRUE,
+  s0_perc      = 0.05,
+  verbose      = TRUE
+)
+```
+
+### Export the results
+```{r Results, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# T0
+## All
+res_all_elas_sp_T0 <- out_elas_sp_T0$res
+write_csv(res_all_elas_sp_T0, here("results_ancombc_adjusted_sputum", "tables", "ANCOMBC2_all_elas_T0_sputum.csv"))
+
+## Significant
+res_sig_elas_sp_T0 <- res_all_elas_sp_T0 %>%
+  filter(diff_Elastase == TRUE, q_Elastase < 0.05) %>%
+  arrange(lfc_Elastase)
+write_csv(res_sig_elas_sp_T0, here("results_ancombc_adjusted_sputum", "tables", "ANCOMBC2_sig_elas_T0_sputum.csv"))
+
+# T12
+## All
+res_all_elas_sp_T12 <- out_elas_sp_T12$res
+write_csv(res_all_elas_sp_T12, here("results_ancombc_adjusted_sputum", "tables", "ANCOMBC2_all_elas_T12_sputum.csv"))
+
+## Significant
+res_sig_elas_sp_T12 <- res_all_elas_sp_T12 %>%
+  filter(diff_Elastase == TRUE, q_Elastase < 0.05) %>%
+  arrange(lfc_Elastase)
+write_csv(res_sig_elas_sp_T12, here("results_ancombc_adjusted_sputum", "tables", "ANCOMBC2_sig_elas_T12_sputum.csv"))
+```
+
+
+# ------------------------------------------------------------------------------
+# CALPROTECTIN
+# ------------------------------------------------------------------------------
+
+### Run ANCOM-BC2 at T0 and T12
+```{r Calprotectin sputum, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# T0
+out_calpro_sp_T0 <- ancombc2(
+  data         = subset_sputum_T0_no_UN,
+  assay_name   = "counts",
+  tax_level    = "Species",
+  fix_formula  = "Calprotectin + Age + Sex", 
+  rand_formula = NULL, 
+  prv_cut      = 0.10, 
+  lib_cut      = 0,
+  p_adj_method = "BH",
+  struc_zero   = FALSE,
+  neg_lb       = FALSE,
+  pseudo_sens  = TRUE,
+  s0_perc      = 0.05,
+  verbose      = TRUE
+)
+
+# T12
+out_calpro_sp_T12 <- ancombc2(
+  data         = subset_sputum_T12_no_UN,
+  assay_name   = "counts",
+  tax_level    = "Species",
+  fix_formula  = "Calprotectin + Age + Sex", 
+  rand_formula = NULL, 
+  prv_cut      = 0.10, 
+  lib_cut      = 0,
+  p_adj_method = "BH",
+  struc_zero   = FALSE,
+  neg_lb       = FALSE,
+  pseudo_sens  = TRUE,
+  s0_perc      = 0.05,
+  verbose      = TRUE
+)
+```
+
+### Export the results
+```{r Results, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# T0
+## All
+res_all_calpro_sp_T0 <- out_calpro_sp_T0$res
+write_csv(res_all_calpro_sp_T0, here("results_ancombc_adjusted_sputum", "tables", "ANCOMBC2_all_calpro_T0_sputum.csv"))
+
+## Significant
+res_sig_calpro_sp_T0 <- res_all_calpro_sp_T0 %>%
+  filter(diff_Calprotectin == TRUE, q_Calprotectin < 0.05) %>%
+  arrange(lfc_Calprotectin)
+write_csv(res_sig_calpro_sp_T0, here("results_ancombc_adjusted_sputum", "tables", "ANCOMBC2_sig_calpro_T0_sputum.csv"))
+
+# T12
+## All
+res_all_calpro_sp_T12 <- out_calpro_sp_T12$res
+write_csv(res_all_calpro_sp_T12, here("results_ancombc_adjusted_sputum", "tables", "ANCOMBC2_all_calpro_T12_sputum.csv"))
+
+## Significant
+res_sig_calpro_sp_T12 <- res_all_calpro_sp_T12 %>%
+  filter(diff_Calprotectin == TRUE, q_Calprotectin < 0.05) %>%
+  arrange(lfc_Calprotectin)
+write_csv(res_sig_calpro_sp_T12, here("results_ancombc_adjusted_sputum", "tables", "ANCOMBC2_sig_calpro_T12_sputum.csv"))
+```
+
+
+# ------------------------------------------------------------------------------
+## Master Table Consolidation
+# ------------------------------------------------------------------------------
+
+### Create Master table
+```{r Master Table, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# List of result objects to consolidate
+items_sp <- list(
+  list(obj = "out_ppFEV1_sp_T0", term = "ppFEV1",      time = "T0",  clin = "ppFEV1"),
+  list(obj = "out_ppFEV1_sp_T12",term = "ppFEV1",      time = "T12", clin = "ppFEV1"),
+  list(obj = "out_ALT_sp_T0",    term = "ALT",         time = "T0",  clin = "ALT"),
+  list(obj = "out_ALT_sp_T12",   term = "ALT",         time = "T12", clin = "ALT"),
+  list(obj = "out_AST_sp_T0",    term = "AST",         time = "T0",  clin = "AST"),
+  list(obj = "out_AST_sp_T12",   term = "AST",         time = "T12", clin = "AST"),
+  list(obj = "out_GGT_sp_T0",    term = "GGT",         time = "T0",  clin = "GGT"),
+  list(obj = "out_GGT_sp_T12",   term = "GGT",         time = "T12", clin = "GGT"),
+  list(obj = "out_elas_sp_T0",   term = "Elastase",    time = "T0",  clin = "Elastase"),
+  list(obj = "out_elas_sp_T12",  term = "Elastase",    time = "T12", clin = "Elastase"),
+  list(obj = "out_calpro_sp_T0", term = "Calprotectin",time = "T0",  clin = "Calprotectin"),
+  list(obj = "out_calpro_sp_T12",term = "Calprotectin",time = "T12", clin = "Calprotectin")
+)
+
+master_all_sp <- list()  
+master_sig_sp <- list()   
+alpha <- 0.05         
+
+for (it in items_sp) {
+  if (!exists(it$obj)) next
+  out <- get(it$obj)
+  res <- out$res
+
+  lfc_col  <- paste0("lfc_",  it$term)
+  q_col    <- paste0("q_",    it$term)
+  diff_col <- paste0("diff_", it$term)
+
+  # Skip if expected columns aren't present
+  if (!all(c(lfc_col, q_col, diff_col) %in% names(res))) next
+
+  # Create a standardized table
+  tab_sp <- data.frame(
+    Taxon = res$taxon,
+    Species = if ("taxon" %in% names(res)) sub(".*\\|s__", "", res$taxon) else NA_character_,
+    Time = it$time,
+    ClinVar = it$clin,
+    lfc = res[[lfc_col]],
+    q   = res[[q_col]],
+    diff = as.logical(res[[diff_col]]),
+    stringsAsFactors = FALSE
+  )
+  tab_sp$sign <- ifelse(is.na(tab_sp$lfc), NA, ifelse(tab_sp$lfc > 0, "+", ifelse(tab_sp$lfc < 0, "-", "0")))
+
+  master_all_sp[[paste(it$clin, it$time, sep = "_")]] <- tab_sp
+
+  # Filter for significant results
+  sig_sp <- tab_sp[!is.na(tab_sp$q) & tab_sp$q < alpha & tab_sp$diff, , drop = FALSE]
+  if (nrow(sig_sp) > 0) sig_sp <- sig_sp[order(abs(sig_sp$lfc), decreasing = TRUE), ]
+  master_sig_sp[[paste(it$clin, it$time, sep = "_")]] <- sig_sp
+}
+
+# Combine lists into single data frames
+master_all_df_sp <- if (length(master_all_sp)) do.call(rbind, master_all_sp) else data.frame()
+master_sig_df_sp <- if (length(master_sig_sp)) do.call(rbind, master_sig_sp) else data.frame()
+
+# (Optional) Save to CSV files
+if (nrow(master_all_df_sp)) write.csv(master_all_df_sp, "ANCOMBC2_master_all_sp.csv", row.names = FALSE)
+if (nrow(master_sig_df_sp)) write.csv(master_sig_df_sp, "ANCOMBC2_master_sig_sp.csv", row.names = FALSE)
+
+# Quick summary
+cat("Rows in master_all_df_sp:", nrow(master_all_df_sp), "\n")
+cat("Rows in master_sig_df_sp:", nrow(master_sig_df_sp), "\n")
+```
+
+### Summarize top taxa
+```{r Top taxa by clinical variable, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# A) Top taxa by clinical variable (T0 and T12 combined)
+top_by_variable_sp <- list()
+if (nrow(master_sig_df_sp)) {
+  vars <- unique(master_sig_df_sp$ClinVar)
+  for (v in vars) {
+    sub <- master_sig_df_sp[master_sig_df_sp$ClinVar == v, , drop = FALSE]
+    if (nrow(sub) == 0) next
+    sub_ord <- sub[order(abs(sub$lfc), decreasing = TRUE), ]
+    top_by_variable_sp[[v]] <- head(sub_ord, 20)
+  }
+}
+top_by_variable_df_sp <- if (length(top_by_variable_sp)) do.call(rbind, top_by_variable_sp) else data.frame()
+
+# B) Top taxa by clinical variable AND timepoint (T0 and T12 separately)
+top_by_variable_time_sp <- list()
+if (nrow(master_sig_df_sp)) {
+  combos <- unique(master_sig_df_sp[, c("ClinVar","Time")])
+  for (i in seq_len(nrow(combos))) {
+    v <- combos$ClinVar[i]; t <- combos$Time[i]
+    sub <- master_sig_df_sp[master_sig_df_sp$ClinVar == v & master_sig_df_sp$Time == t, , drop = FALSE]
+    if (nrow(sub) == 0) next
+    sub_ord <- sub[order(abs(sub$lfc), decreasing = TRUE), ]
+    top_by_variable_time_sp[[paste(v, t, sep = "_")]] <- head(sub_ord, 20)
+  }
+}
+top_by_variable_time_df_sp <- if (length(top_by_variable_time_sp)) do.call(rbind, top_by_variable_time_sp) else data.frame()
+
+# Save summaries to CSV
+if (nrow(top_by_variable_df_sp))       write.csv(top_by_variable_df_sp,       "ANCOMBC2_top_by_variable_sp.csv", row.names = FALSE)
+if (nrow(top_by_variable_time_df_sp)) write.csv(top_by_variable_time_df_sp, "ANCOMBC2_top_by_variable_time_sp.csv", row.names = FALSE)
+```
+
+### Detailed T0 vs. T12 comparison
+```{r T0 vs T12 comparison, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+comparisons_list_sp <- list()
+summary_counts_sp <- list()
+
+# Define the variable to iterate over from the sputum master table
+vars_sp <- sort(unique(master_sig_df_sp$ClinVar))
+
+for (v in vars_sp) {
+  sig_T0  <- master_sig_df_sp %>% dplyr::filter(ClinVar==v, Time=="T0")
+  sig_T12 <- master_sig_df_sp %>% dplyr::filter(ClinVar==v, Time=="T12")
+
+  sp_T0  <- unique(sig_T0$Species)
+  sp_T12 <- unique(sig_T12$Species)
+
+  if (length(sp_T0)==0 && length(sp_T12)==0) {
+    summary_counts_sp[[v]] <- data.frame(
+      ClinVar=v, n_T0_sig=0, n_T12_sig=0,
+      n_common_same=0, n_common_flip=0,
+      n_only_T0=0, n_only_T12=0
+    )
+    next
+  }
+
+  common <- dplyr::inner_join(
+    dplyr::select(sig_T0,  Species, lfc_T0 = lfc,  q_T0 = q,  sign_T0 = sign),
+    dplyr::select(sig_T12, Species, lfc_T12 = lfc, q_T12 = q, sign_T12 = sign),
+    by = "Species"
+  )
+
+  common_same <- common %>% dplyr::filter(sign_T0 %in% c("+","-") & sign_T0 == sign_T12)
+  common_flip <- common %>% dplyr::filter(sign_T0 %in% c("+","-") & sign_T12 %in% c("+","-") & sign_T0 != sign_T12)
+
+  only_T0  <- setdiff(sp_T0,  sp_T12)
+  only_T12 <- setdiff(sp_T12, sp_T0)
+
+  # --- Creating the detailed comparison tables ---
+  only_T0_tab <- sig_T0  %>% dplyr::filter(Species %in% only_T0) %>%
+    dplyr::transmute(ClinVar=v, Category="only_T0", Species,
+                     lfc_T0=lfc, q_T0=q, sign_T0=sign,
+                     lfc_T12=NA_real_, q_T12=NA_real_, sign_T12=NA_character_)
+
+  only_T12_tab <- sig_T12 %>% dplyr::filter(Species %in% only_T12) %>%
+    dplyr::transmute(ClinVar=v, Category="only_T12", Species,
+                     lfc_T0=NA_real_, q_T0=NA_real_, sign_T0=NA_character_,
+                     lfc_T12=lfc, q_T12=q, sign_T12=sign)
+
+  common_same_tab <- common_same %>% dplyr::mutate(ClinVar=v, Category="common_same") %>%
+    dplyr::select(ClinVar, Category, Species, lfc_T0, q_T0, sign_T0, lfc_T12, q_T12, sign_T12)
+
+  common_flip_tab <- common_flip %>% dplyr::mutate(ClinVar=v, Category="common_flip") %>%
+    dplyr::select(ClinVar, Category, Species, lfc_T0, q_T0, sign_T0, lfc_T12, q_T12, sign_T12)
+
+  comparisons_list_sp[[v]] <- dplyr::bind_rows(common_same_tab, common_flip_tab, only_T0_tab, only_T12_tab)
+
+  summary_counts_sp[[v]] <- data.frame(
+    ClinVar = v,
+    n_T0_sig  = length(sp_T0),
+    n_T12_sig = length(sp_T12),
+    n_common_same = nrow(common_same),
+    n_common_flip = nrow(common_flip),
+    n_only_T0  = length(only_T0),
+    n_only_T12 = length(only_T12)
+  )
+}
+
+# Combine the lists into final data frames
+comparisons_df_sp   <- if (length(comparisons_list_sp)) dplyr::bind_rows(comparisons_list_sp) else data.frame()
+summary_counts_df_sp <- if (length(summary_counts_sp))   dplyr::bind_rows(summary_counts_sp)   else data.frame()
+
+# Save the results to CSV files
+if (nrow(comparisons_df_sp)) write.csv(comparisons_df_sp, "ANCOMBC2_T0vsT12_comparisons_sp.csv", row.names=FALSE)
+if (nrow(summary_counts_df_sp)) write.csv(summary_counts_df_sp, "ANCOMBC2_T0vsT12_summary_counts_sp.csv", row.names=FALSE)
+```
+
+### Visualization
+#### Forest plots
+##### Prepare data for forest plots
+```{r Prepare data, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+forest_plot_data_list_sp <- list()
+alpha <- 0.05
+
+for (it in items_sp) {
+  if (!exists(it$obj)) next
+  out <- get(it$obj)
+  res <- out$res
+
+  lfc_col  <- paste0("lfc_",  it$term)
+  q_col    <- paste0("q_",    it$term)
+  se_col   <- paste0("se_",   it$term)
+  diff_col <- paste0("diff_", it$term)
+
+  if (!all(c(lfc_col, q_col, se_col, diff_col) %in% names(res))) next
+
+  temp_df <- data.frame(
+    Taxon = res$taxon,
+    Time = it$time,
+    ClinVar = it$clin,
+    lfc = res[[lfc_col]],
+    se  = res[[se_col]],
+    q   = res[[q_col]],
+    diff = as.logical(res[[diff_col]])
+  )
+  
+  forest_plot_data_list_sp[[it$obj]] <- temp_df
+}
+
+forest_plot_data_full_sp <- bind_rows(forest_plot_data_list_sp) %>%
+  mutate(Species = sub(".*\\|s__", "", Taxon))
+```
+
+##### Generate and save Forest plots
+```{r Generate and save Forest plots, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+dir.create("figures_svg_sp", showWarnings = FALSE)
+
+for (variable_to_plot in unique(forest_plot_data_full_sp$ClinVar)) {
+
+  top_species_for_var_sp <- forest_plot_data_full_sp %>%
+    filter(ClinVar == variable_to_plot) %>%
+    filter(!is.na(q) & q < alpha & diff == TRUE) %>%
+    arrange(q) %>%
+    distinct(Species) %>%
+    slice_head(n = 20) %>%
+    pull(Species)
+
+  if (length(top_species_for_var_sp) == 0) {
+    print(paste("No significant species found for", variable_to_plot, "- skipping plot."))
+    next
+  }
+  
+  plot_data_sp <- forest_plot_data_full_sp %>%
+    filter(ClinVar == variable_to_plot, Species %in% top_species_for_var_sp) %>%
+    mutate(
+      lfc_lower = lfc - 1.96 * se,
+      lfc_upper = lfc + 1.96 * se,
+      is_significant = !is.na(q) & q < alpha & diff == TRUE,
+      Species = factor(Species, levels = rev(unique(Species)))
+    )
+
+  p_sp <- ggplot(plot_data_sp, aes(y = Species, x = lfc, xmin = lfc_lower, xmax = lfc_upper, color = is_significant)) +
+    geom_vline(xintercept = 0, linetype="dashed", color="grey70") +
+    geom_errorbar(width = 0.2, linewidth = 0.8) +
+    geom_point(size = 2.5) +
+    facet_grid(. ~ Time) +
+    scale_color_manual(
+      name = "Significance", 
+      values = c(`TRUE` = "#d95f02", `FALSE` = "grey70"),
+      labels = c(`TRUE` = "Significative", `FALSE` = "Not significative")
+    ) +
+    labs(
+      title = paste("Forest Plot:", variable_to_plot, "in Sputum"),
+      x = "LFC (coefficient)", 
+      y = NULL
+    ) +
+    theme_bw(base_size = 12) +
+    theme(
+      panel.grid.minor = element_blank(),
+      axis.text.y = element_text(face = "italic"),
+      strip.background = element_rect(fill = "grey90"),
+      legend.position = "right"
+    )
+
+  plot_height_sp <- max(4, 0.3 * length(top_species_for_var_sp))
+  
+  ggsave(
+    filename = file.path("figures_svg_sp", paste0("Faceted_ForestPlot_", variable_to_plot, "_sp.svg")),
+    plot = p_sp,
+    device = svglite::svglite,
+    width = 8,
+    height = plot_height_sp
+  )
+}
+```
+

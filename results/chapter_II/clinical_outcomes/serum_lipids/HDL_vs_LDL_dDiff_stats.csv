@@ -1,0 +1,2 @@
+"comparison","n","shapiro_p","normal","test","statistic","p_value","estimate","sd","effect_size","ci_low","ci_high"
+"dDiff = (ΔHDL) − (ΔLDL)",7,0.0397220106513247,FALSE,"Wilcoxon signed-rank (mu=0)",5,0.128190174345108,-16,NA,0.821428571428571,NA,NA

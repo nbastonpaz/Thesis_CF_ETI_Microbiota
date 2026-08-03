@@ -1,0 +1,16 @@
+﻿"var_row","var_col","rho","p_raw","p_fdr"
+"SD_z_score_BMI_Carrascosa2010_delta","fat_mass_perc_delta",0.7666666666666667,0.015944016578974034,0.15989796092490097
+"lean_mass_perc_delta","fat_mass_index_kgm2_delta",-0.7447763937925935,0.021319728123320128,0.15989796092490097
+"fat_mass_index_kgm2_delta","fat_mass_perc_delta",0.5166666666666667,0.1543901209862251,0.4209935866107997
+"lean_mass_perc_delta","fat_mass_perc_delta",-0.5523060897787772,0.12307662993423875,0.4209935866107997
+"SD_z_score_BMI_Carrascosa2010_delta","fat_mass_index_kgm2_delta",0.6,0.08762282904140234,0.4209935866107997
+"total_body_water_perc_delta","lean_mass_perc_delta",0.5020964452534338,0.1683974346443199,0.4209935866107997
+"total_body_water_perc_delta","fat_mass_perc_delta",-0.4666666666666667,0.205386351105812,0.44011360951245426
+"SD_z_score_BMI_Carrascosa2010_delta","Ingestion_kcalday_delta",0.36666666666666664,0.3317398014330152,0.5930326208363136
+"total_body_water_perc_delta","fat_mass_index_kgm2_delta",-0.35,0.35581957250178814,0.5930326208363136
+"fat_mass_perc_delta","Ingestion_kcalday_delta",0.26666666666666666,0.48792227483870076,0.6653485565982282
+"SD_z_score_BMI_Carrascosa2010_delta","lean_mass_perc_delta",-0.2928895930645031,0.44435469568522534,0.6653485565982282
+"SD_z_score_BMI_Carrascosa2010_delta","total_body_water_perc_delta",-0.13333333333333333,0.7323675052362975,0.9154593815453718
+"fat_mass_index_kgm2_delta","Ingestion_kcalday_delta",0.03333333333333333,0.932156735540504,0.948883729317481
+"lean_mass_perc_delta","Ingestion_kcalday_delta",0.025104822262671692,0.948883729317481,0.948883729317481
+"total_body_water_perc_delta","Ingestion_kcalday_delta",0.06666666666666667,0.8646897846262037,0.948883729317481

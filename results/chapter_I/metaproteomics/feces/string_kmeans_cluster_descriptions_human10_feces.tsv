@@ -1,0 +1,3 @@
+#clustering method	cluster number	cluster color	hex color	gene count	primary description	secondary description	tertiary description	protein names
+kmeans	1	Red	#ff0000	4	Mononeuritis multiplex, and Neutrophil mediated cytotoxicity	-	-	MPO, PRTN3, AZU1, CTSG
+kmeans	2	Green	#65ffa3	1	-	-	-	RETN

@@ -1,0 +1,1788 @@
+#node	identifier	category	term ID	term description
+AZU1	9606.ENSP00000233997	GO Process	GO:0001774	Microglial cell activation
+AZU1	9606.ENSP00000233997	GO Process	GO:0001775	Cell activation
+AZU1	9606.ENSP00000233997	GO Process	GO:0001817	Regulation of cytokine production
+AZU1	9606.ENSP00000233997	GO Process	GO:0001819	Positive regulation of cytokine production
+AZU1	9606.ENSP00000233997	GO Process	GO:0001906	Cell killing
+AZU1	9606.ENSP00000233997	GO Process	GO:0001909	Leukocyte mediated cytotoxicity
+AZU1	9606.ENSP00000233997	GO Process	GO:0001932	Regulation of protein phosphorylation
+AZU1	9606.ENSP00000233997	GO Process	GO:0001934	Positive regulation of protein phosphorylation
+AZU1	9606.ENSP00000233997	GO Process	GO:0002252	Immune effector process
+AZU1	9606.ENSP00000233997	GO Process	GO:0002269	Leukocyte activation involved in inflammatory response
+AZU1	9606.ENSP00000233997	GO Process	GO:0002274	Myeloid leukocyte activation
+AZU1	9606.ENSP00000233997	GO Process	GO:0002376	Immune system process
+AZU1	9606.ENSP00000233997	GO Process	GO:0002443	Leukocyte mediated immunity
+AZU1	9606.ENSP00000233997	GO Process	GO:0002444	Myeloid leukocyte mediated immunity
+AZU1	9606.ENSP00000233997	GO Process	GO:0002446	Neutrophil mediated immunity
+AZU1	9606.ENSP00000233997	GO Process	GO:0003008	System process
+AZU1	9606.ENSP00000233997	GO Process	GO:0003013	Circulatory system process
+AZU1	9606.ENSP00000233997	GO Process	GO:0003018	Vascular process in circulatory system
+AZU1	9606.ENSP00000233997	GO Process	GO:0006508	Proteolysis
+AZU1	9606.ENSP00000233997	GO Process	GO:0006807	Nitrogen compound metabolic process
+AZU1	9606.ENSP00000233997	GO Process	GO:0006935	Chemotaxis
+AZU1	9606.ENSP00000233997	GO Process	GO:0006950	Response to stress
+AZU1	9606.ENSP00000233997	GO Process	GO:0006952	Defense response
+AZU1	9606.ENSP00000233997	GO Process	GO:0006954	Inflammatory response
+AZU1	9606.ENSP00000233997	GO Process	GO:0006955	Immune response
+AZU1	9606.ENSP00000233997	GO Process	GO:0006959	Humoral immune response
+AZU1	9606.ENSP00000233997	GO Process	GO:0007154	Cell communication
+AZU1	9606.ENSP00000233997	GO Process	GO:0007165	Signal transduction
+AZU1	9606.ENSP00000233997	GO Process	GO:0007186	G protein-coupled receptor signaling pathway
+AZU1	9606.ENSP00000233997	GO Process	GO:0007205	Protein kinase C-activating G protein-coupled receptor signaling pathway
+AZU1	9606.ENSP00000233997	GO Process	GO:0007275	Multicellular organism development
+AZU1	9606.ENSP00000233997	GO Process	GO:0007399	Nervous system development
+AZU1	9606.ENSP00000233997	GO Process	GO:0008015	Blood circulation
+AZU1	9606.ENSP00000233997	GO Process	GO:0008152	Metabolic process
+AZU1	9606.ENSP00000233997	GO Process	GO:0008347	Glial cell migration
+AZU1	9606.ENSP00000233997	GO Process	GO:0009605	Response to external stimulus
+AZU1	9606.ENSP00000233997	GO Process	GO:0009607	Response to biotic stimulus
+AZU1	9606.ENSP00000233997	GO Process	GO:0009615	Response to virus
+AZU1	9606.ENSP00000233997	GO Process	GO:0009617	Response to bacterium
+AZU1	9606.ENSP00000233997	GO Process	GO:0009889	Regulation of biosynthetic process
+AZU1	9606.ENSP00000233997	GO Process	GO:0009891	Positive regulation of biosynthetic process
+AZU1	9606.ENSP00000233997	GO Process	GO:0009893	Positive regulation of metabolic process
+AZU1	9606.ENSP00000233997	GO Process	GO:0009987	Cellular process
+AZU1	9606.ENSP00000233997	GO Process	GO:0010468	Regulation of gene expression
+AZU1	9606.ENSP00000233997	GO Process	GO:0010556	Regulation of macromolecule biosynthetic process
+AZU1	9606.ENSP00000233997	GO Process	GO:0010557	Positive regulation of macromolecule biosynthetic process
+AZU1	9606.ENSP00000233997	GO Process	GO:0010562	Positive regulation of phosphorus metabolic process
+AZU1	9606.ENSP00000233997	GO Process	GO:0010604	Positive regulation of macromolecule metabolic process
+AZU1	9606.ENSP00000233997	GO Process	GO:0010628	Positive regulation of gene expression
+AZU1	9606.ENSP00000233997	GO Process	GO:0010799	Regulation of peptidyl-threonine phosphorylation
+AZU1	9606.ENSP00000233997	GO Process	GO:0010800	Positive regulation of peptidyl-threonine phosphorylation
+AZU1	9606.ENSP00000233997	GO Process	GO:0010941	Regulation of cell death
+AZU1	9606.ENSP00000233997	GO Process	GO:0016477	Cell migration
+AZU1	9606.ENSP00000233997	GO Process	GO:0019220	Regulation of phosphate metabolic process
+AZU1	9606.ENSP00000233997	GO Process	GO:0019222	Regulation of metabolic process
+AZU1	9606.ENSP00000233997	GO Process	GO:0019538	Protein metabolic process
+AZU1	9606.ENSP00000233997	GO Process	GO:0019722	Calcium-mediated signaling
+AZU1	9606.ENSP00000233997	GO Process	GO:0019730	Antimicrobial humoral response
+AZU1	9606.ENSP00000233997	GO Process	GO:0019932	Second-messenger-mediated signaling
+AZU1	9606.ENSP00000233997	GO Process	GO:0022008	Neurogenesis
+AZU1	9606.ENSP00000233997	GO Process	GO:0023052	Signaling
+AZU1	9606.ENSP00000233997	GO Process	GO:0030154	Cell differentiation
+AZU1	9606.ENSP00000233997	GO Process	GO:0030155	Regulation of cell adhesion
+AZU1	9606.ENSP00000233997	GO Process	GO:0030595	Leukocyte chemotaxis
+AZU1	9606.ENSP00000233997	GO Process	GO:0031323	Regulation of cellular metabolic process
+AZU1	9606.ENSP00000233997	GO Process	GO:0031325	Positive regulation of cellular metabolic process
+AZU1	9606.ENSP00000233997	GO Process	GO:0031399	Regulation of protein modification process
+AZU1	9606.ENSP00000233997	GO Process	GO:0031401	Positive regulation of protein modification process
+AZU1	9606.ENSP00000233997	GO Process	GO:0032101	Regulation of response to external stimulus
+AZU1	9606.ENSP00000233997	GO Process	GO:0032103	Positive regulation of response to external stimulus
+AZU1	9606.ENSP00000233997	GO Process	GO:0032501	Multicellular organismal process
+AZU1	9606.ENSP00000233997	GO Process	GO:0032502	Developmental process
+AZU1	9606.ENSP00000233997	GO Process	GO:0032642	Regulation of chemokine production
+AZU1	9606.ENSP00000233997	GO Process	GO:0032644	Regulation of fractalkine production
+AZU1	9606.ENSP00000233997	GO Process	GO:0032651	Regulation of interleukin-1 beta production
+AZU1	9606.ENSP00000233997	GO Process	GO:0032652	Regulation of interleukin-1 production
+AZU1	9606.ENSP00000233997	GO Process	GO:0032680	Regulation of tumor necrosis factor production
+AZU1	9606.ENSP00000233997	GO Process	GO:0032722	Positive regulation of chemokine production
+AZU1	9606.ENSP00000233997	GO Process	GO:0032724	Positive regulation of fractalkine production
+AZU1	9606.ENSP00000233997	GO Process	GO:0032731	Positive regulation of interleukin-1 beta production
+AZU1	9606.ENSP00000233997	GO Process	GO:0032732	Positive regulation of interleukin-1 production
+AZU1	9606.ENSP00000233997	GO Process	GO:0032760	Positive regulation of tumor necrosis factor production
+AZU1	9606.ENSP00000233997	GO Process	GO:0032879	Regulation of localization
+AZU1	9606.ENSP00000233997	GO Process	GO:0033674	Positive regulation of kinase activity
+AZU1	9606.ENSP00000233997	GO Process	GO:0035556	Intracellular signal transduction
+AZU1	9606.ENSP00000233997	GO Process	GO:0035584	Calcium-mediated signaling using intracellular calcium source
+AZU1	9606.ENSP00000233997	GO Process	GO:0040011	Locomotion
+AZU1	9606.ENSP00000233997	GO Process	GO:0040012	Regulation of locomotion
+AZU1	9606.ENSP00000233997	GO Process	GO:0040017	Positive regulation of locomotion
+AZU1	9606.ENSP00000233997	GO Process	GO:0042063	Gliogenesis
+AZU1	9606.ENSP00000233997	GO Process	GO:0042116	Macrophage activation
+AZU1	9606.ENSP00000233997	GO Process	GO:0042117	Monocyte activation
+AZU1	9606.ENSP00000233997	GO Process	GO:0042221	Response to chemical
+AZU1	9606.ENSP00000233997	GO Process	GO:0042325	Regulation of phosphorylation
+AZU1	9606.ENSP00000233997	GO Process	GO:0042327	Positive regulation of phosphorylation
+AZU1	9606.ENSP00000233997	GO Process	GO:0042330	Taxis
+AZU1	9606.ENSP00000233997	GO Process	GO:0042742	Defense response to bacterium
+AZU1	9606.ENSP00000233997	GO Process	GO:0042981	Regulation of apoptotic process
+AZU1	9606.ENSP00000233997	GO Process	GO:0043066	Negative regulation of apoptotic process
+AZU1	9606.ENSP00000233997	GO Process	GO:0043067	Regulation of programmed cell death
+AZU1	9606.ENSP00000233997	GO Process	GO:0043069	Negative regulation of programmed cell death
+AZU1	9606.ENSP00000233997	GO Process	GO:0043085	Positive regulation of catalytic activity
+AZU1	9606.ENSP00000233997	GO Process	GO:0043114	Regulation of vascular permeability
+AZU1	9606.ENSP00000233997	GO Process	GO:0043170	Macromolecule metabolic process
+AZU1	9606.ENSP00000233997	GO Process	GO:0043207	Response to external biotic stimulus
+AZU1	9606.ENSP00000233997	GO Process	GO:0043549	Regulation of kinase activity
+AZU1	9606.ENSP00000233997	GO Process	GO:0044093	Positive regulation of molecular function
+AZU1	9606.ENSP00000233997	GO Process	GO:0044238	Primary metabolic process
+AZU1	9606.ENSP00000233997	GO Process	GO:0044403	Biological process involved in symbiotic interaction
+AZU1	9606.ENSP00000233997	GO Process	GO:0044419	Biological process involved in interspecies interaction between organisms
+AZU1	9606.ENSP00000233997	GO Process	GO:0045123	Cellular extravasation
+AZU1	9606.ENSP00000233997	GO Process	GO:0045321	Leukocyte activation
+AZU1	9606.ENSP00000233997	GO Process	GO:0045346	Regulation of MHC class II biosynthetic process
+AZU1	9606.ENSP00000233997	GO Process	GO:0045348	Positive regulation of MHC class II biosynthetic process
+AZU1	9606.ENSP00000233997	GO Process	GO:0045785	Positive regulation of cell adhesion
+AZU1	9606.ENSP00000233997	GO Process	GO:0045859	Regulation of protein kinase activity
+AZU1	9606.ENSP00000233997	GO Process	GO:0045860	Positive regulation of protein kinase activity
+AZU1	9606.ENSP00000233997	GO Process	GO:0045937	Positive regulation of phosphate metabolic process
+AZU1	9606.ENSP00000233997	GO Process	GO:0048246	Macrophage chemotaxis
+AZU1	9606.ENSP00000233997	GO Process	GO:0048518	Positive regulation of biological process
+AZU1	9606.ENSP00000233997	GO Process	GO:0048519	Negative regulation of biological process
+AZU1	9606.ENSP00000233997	GO Process	GO:0048522	Positive regulation of cellular process
+AZU1	9606.ENSP00000233997	GO Process	GO:0048523	Negative regulation of cellular process
+AZU1	9606.ENSP00000233997	GO Process	GO:0048583	Regulation of response to stimulus
+AZU1	9606.ENSP00000233997	GO Process	GO:0048584	Positive regulation of response to stimulus
+AZU1	9606.ENSP00000233997	GO Process	GO:0048731	System development
+AZU1	9606.ENSP00000233997	GO Process	GO:0048856	Anatomical structure development
+AZU1	9606.ENSP00000233997	GO Process	GO:0048869	Cellular developmental process
+AZU1	9606.ENSP00000233997	GO Process	GO:0048870	Cell motility
+AZU1	9606.ENSP00000233997	GO Process	GO:0050764	Regulation of phagocytosis
+AZU1	9606.ENSP00000233997	GO Process	GO:0050766	Positive regulation of phagocytosis
+AZU1	9606.ENSP00000233997	GO Process	GO:0050789	Regulation of biological process
+AZU1	9606.ENSP00000233997	GO Process	GO:0050790	Regulation of catalytic activity
+AZU1	9606.ENSP00000233997	GO Process	GO:0050794	Regulation of cellular process
+AZU1	9606.ENSP00000233997	GO Process	GO:0050829	Defense response to Gram-negative bacterium
+AZU1	9606.ENSP00000233997	GO Process	GO:0050896	Response to stimulus
+AZU1	9606.ENSP00000233997	GO Process	GO:0050900	Leukocyte migration
+AZU1	9606.ENSP00000233997	GO Process	GO:0050920	Regulation of chemotaxis
+AZU1	9606.ENSP00000233997	GO Process	GO:0050921	Positive regulation of chemotaxis
+AZU1	9606.ENSP00000233997	GO Process	GO:0050926	Regulation of positive chemotaxis
+AZU1	9606.ENSP00000233997	GO Process	GO:0050927	Positive regulation of positive chemotaxis
+AZU1	9606.ENSP00000233997	GO Process	GO:0050930	Induction of positive chemotaxis
+AZU1	9606.ENSP00000233997	GO Process	GO:0051049	Regulation of transport
+AZU1	9606.ENSP00000233997	GO Process	GO:0051050	Positive regulation of transport
+AZU1	9606.ENSP00000233997	GO Process	GO:0051171	Regulation of nitrogen compound metabolic process
+AZU1	9606.ENSP00000233997	GO Process	GO:0051173	Positive regulation of nitrogen compound metabolic process
+AZU1	9606.ENSP00000233997	GO Process	GO:0051174	Regulation of phosphorus metabolic process
+AZU1	9606.ENSP00000233997	GO Process	GO:0051239	Regulation of multicellular organismal process
+AZU1	9606.ENSP00000233997	GO Process	GO:0051240	Positive regulation of multicellular organismal process
+AZU1	9606.ENSP00000233997	GO Process	GO:0051246	Regulation of protein metabolic process
+AZU1	9606.ENSP00000233997	GO Process	GO:0051247	Positive regulation of protein metabolic process
+AZU1	9606.ENSP00000233997	GO Process	GO:0051338	Regulation of transferase activity
+AZU1	9606.ENSP00000233997	GO Process	GO:0051347	Positive regulation of transferase activity
+AZU1	9606.ENSP00000233997	GO Process	GO:0051607	Defense response to virus
+AZU1	9606.ENSP00000233997	GO Process	GO:0051702	Biological process involved in interaction with symbiont
+AZU1	9606.ENSP00000233997	GO Process	GO:0051707	Response to other organism
+AZU1	9606.ENSP00000233997	GO Process	GO:0051716	Cellular response to stimulus
+AZU1	9606.ENSP00000233997	GO Process	GO:0051873	Killing by host of symbiont cells
+AZU1	9606.ENSP00000233997	GO Process	GO:0060255	Regulation of macromolecule metabolic process
+AZU1	9606.ENSP00000233997	GO Process	GO:0060326	Cell chemotaxis
+AZU1	9606.ENSP00000233997	GO Process	GO:0060548	Negative regulation of cell death
+AZU1	9606.ENSP00000233997	GO Process	GO:0060627	Regulation of vesicle-mediated transport
+AZU1	9606.ENSP00000233997	GO Process	GO:0061900	Glial cell activation
+AZU1	9606.ENSP00000233997	GO Process	GO:0065007	Biological regulation
+AZU1	9606.ENSP00000233997	GO Process	GO:0065008	Regulation of biological quality
+AZU1	9606.ENSP00000233997	GO Process	GO:0065009	Regulation of molecular function
+AZU1	9606.ENSP00000233997	GO Process	GO:0070528	Protein kinase C signaling
+AZU1	9606.ENSP00000233997	GO Process	GO:0070887	Cellular response to chemical stimulus
+AZU1	9606.ENSP00000233997	GO Process	GO:0070942	Neutrophil mediated cytotoxicity
+AZU1	9606.ENSP00000233997	GO Process	GO:0070943	Neutrophil-mediated killing of symbiont cell
+AZU1	9606.ENSP00000233997	GO Process	GO:0070944	Neutrophil-mediated killing of bacterium
+AZU1	9606.ENSP00000233997	GO Process	GO:0071704	Organic substance metabolic process
+AZU1	9606.ENSP00000233997	GO Process	GO:0080090	Regulation of primary metabolic process
+AZU1	9606.ENSP00000233997	GO Process	GO:0097529	Myeloid leukocyte migration
+AZU1	9606.ENSP00000233997	GO Process	GO:0098542	Defense response to other organism
+AZU1	9606.ENSP00000233997	GO Process	GO:0140546	Defense response to symbiont
+AZU1	9606.ENSP00000233997	GO Process	GO:0150076	Neuroinflammatory response
+AZU1	9606.ENSP00000233997	GO Process	GO:1901564	Organonitrogen compound metabolic process
+AZU1	9606.ENSP00000233997	GO Process	GO:1903555	Regulation of tumor necrosis factor superfamily cytokine production
+AZU1	9606.ENSP00000233997	GO Process	GO:1903557	Positive regulation of tumor necrosis factor superfamily cytokine production
+AZU1	9606.ENSP00000233997	GO Process	GO:1905517	Macrophage migration
+AZU1	9606.ENSP00000233997	GO Function	GO:0003824	Catalytic activity
+AZU1	9606.ENSP00000233997	GO Function	GO:0004175	Endopeptidase activity
+AZU1	9606.ENSP00000233997	GO Function	GO:0004252	Serine-type endopeptidase activity
+AZU1	9606.ENSP00000233997	GO Function	GO:0005488	Binding
+AZU1	9606.ENSP00000233997	GO Function	GO:0005515	Protein binding
+AZU1	9606.ENSP00000233997	GO Function	GO:0005539	Glycosaminoglycan binding
+AZU1	9606.ENSP00000233997	GO Function	GO:0008201	Heparin binding
+AZU1	9606.ENSP00000233997	GO Function	GO:0008233	Peptidase activity
+AZU1	9606.ENSP00000233997	GO Function	GO:0008236	Serine-type peptidase activity
+AZU1	9606.ENSP00000233997	GO Function	GO:0015643	Toxic substance binding
+AZU1	9606.ENSP00000233997	GO Function	GO:0016787	Hydrolase activity
+AZU1	9606.ENSP00000233997	GO Function	GO:0017171	Serine hydrolase activity
+AZU1	9606.ENSP00000233997	GO Function	GO:0043394	Proteoglycan binding
+AZU1	9606.ENSP00000233997	GO Function	GO:0043395	Heparan sulfate proteoglycan binding
+AZU1	9606.ENSP00000233997	GO Function	GO:0097367	Carbohydrate derivative binding
+AZU1	9606.ENSP00000233997	GO Function	GO:0140096	Catalytic activity, acting on a protein
+AZU1	9606.ENSP00000233997	GO Function	GO:1901681	Sulfur compound binding
+AZU1	9606.ENSP00000233997	GO Component	GO:0000323	Lytic vacuole
+AZU1	9606.ENSP00000233997	GO Component	GO:0005576	Extracellular region
+AZU1	9606.ENSP00000233997	GO Component	GO:0005615	Extracellular space
+AZU1	9606.ENSP00000233997	GO Component	GO:0005622	Intracellular anatomical structure
+AZU1	9606.ENSP00000233997	GO Component	GO:0005737	Cytoplasm
+AZU1	9606.ENSP00000233997	GO Component	GO:0005764	Lysosome
+AZU1	9606.ENSP00000233997	GO Component	GO:0005765	Lysosomal membrane
+AZU1	9606.ENSP00000233997	GO Component	GO:0005766	Primary lysosome
+AZU1	9606.ENSP00000233997	GO Component	GO:0005773	Vacuole
+AZU1	9606.ENSP00000233997	GO Component	GO:0005774	Vacuolar membrane
+AZU1	9606.ENSP00000233997	GO Component	GO:0005775	Vacuolar lumen
+AZU1	9606.ENSP00000233997	GO Component	GO:0012505	Endomembrane system
+AZU1	9606.ENSP00000233997	GO Component	GO:0012506	Vesicle membrane
+AZU1	9606.ENSP00000233997	GO Component	GO:0016020	Membrane
+AZU1	9606.ENSP00000233997	GO Component	GO:0019898	Extrinsic component of membrane
+AZU1	9606.ENSP00000233997	GO Component	GO:0030141	Secretory granule
+AZU1	9606.ENSP00000233997	GO Component	GO:0030659	Cytoplasmic vesicle membrane
+AZU1	9606.ENSP00000233997	GO Component	GO:0030667	Secretory granule membrane
+AZU1	9606.ENSP00000233997	GO Component	GO:0031090	Organelle membrane
+AZU1	9606.ENSP00000233997	GO Component	GO:0031410	Cytoplasmic vesicle
+AZU1	9606.ENSP00000233997	GO Component	GO:0031974	Membrane-enclosed lumen
+AZU1	9606.ENSP00000233997	GO Component	GO:0031982	Vesicle
+AZU1	9606.ENSP00000233997	GO Component	GO:0031983	Vesicle lumen
+AZU1	9606.ENSP00000233997	GO Component	GO:0034774	Secretory granule lumen
+AZU1	9606.ENSP00000233997	GO Component	GO:0035577	Azurophil granule membrane
+AZU1	9606.ENSP00000233997	GO Component	GO:0035578	Azurophil granule lumen
+AZU1	9606.ENSP00000233997	GO Component	GO:0042582	Azurophil granule
+AZU1	9606.ENSP00000233997	GO Component	GO:0043226	Organelle
+AZU1	9606.ENSP00000233997	GO Component	GO:0043227	Membrane-bounded organelle
+AZU1	9606.ENSP00000233997	GO Component	GO:0043229	Intracellular organelle
+AZU1	9606.ENSP00000233997	GO Component	GO:0043230	Extracellular organelle
+AZU1	9606.ENSP00000233997	GO Component	GO:0043231	Intracellular membrane-bounded organelle
+AZU1	9606.ENSP00000233997	GO Component	GO:0043233	Organelle lumen
+AZU1	9606.ENSP00000233997	GO Component	GO:0060205	Cytoplasmic vesicle lumen
+AZU1	9606.ENSP00000233997	GO Component	GO:0065010	Extracellular membrane-bounded organelle
+AZU1	9606.ENSP00000233997	GO Component	GO:0070013	Intracellular organelle lumen
+AZU1	9606.ENSP00000233997	GO Component	GO:0070062	Extracellular exosome
+AZU1	9606.ENSP00000233997	GO Component	GO:0097708	Intracellular vesicle
+AZU1	9606.ENSP00000233997	GO Component	GO:0098588	Bounding membrane of organelle
+AZU1	9606.ENSP00000233997	GO Component	GO:0098852	Lytic vacuole membrane
+AZU1	9606.ENSP00000233997	GO Component	GO:0099503	Secretory vesicle
+AZU1	9606.ENSP00000233997	GO Component	GO:0110165	Cellular anatomical entity
+AZU1	9606.ENSP00000233997	GO Component	GO:1903561	Extracellular vesicle
+AZU1	9606.ENSP00000233997	STRING clusters	CL:19114	Mixed, incl. S100/CaBP-9k-type, calcium binding, subdomain, and Cystatin superfamily
+AZU1	9606.ENSP00000233997	STRING clusters	CL:19115	Mixed, incl. Cystatin superfamily, and Specific granule lumen
+AZU1	9606.ENSP00000233997	STRING clusters	CL:19181	Mixed, incl. Specific granule lumen, and Mononeuritis multiplex
+AZU1	9606.ENSP00000233997	STRING clusters	CL:19183	Mixed, incl. Neutrophil mediated cytotoxicity, and Mononeuritis multiplex
+AZU1	9606.ENSP00000233997	STRING clusters	CL:19185	Mixed, incl. Neutrophil mediated cytotoxicity, and Mononeuritis multiplex
+AZU1	9606.ENSP00000233997	STRING clusters	CL:19188	Mixed, incl. Mononeuritis multiplex, and Neutrophil mediated cytotoxicity
+AZU1	9606.ENSP00000233997	STRING clusters	CL:19191	Mononeuritis multiplex, and Neutrophil mediated cytotoxicity
+AZU1	9606.ENSP00000233997	Reactome	HSA-168249	Innate Immune System
+AZU1	9606.ENSP00000233997	Reactome	HSA-168256	Immune System
+AZU1	9606.ENSP00000233997	Reactome	HSA-6798695	Neutrophil degranulation
+AZU1	9606.ENSP00000233997	TISSUES	BTO:0000000	Tissues, cell types and enzyme sources
+AZU1	9606.ENSP00000233997	TISSUES	BTO:0000042	Animal
+AZU1	9606.ENSP00000233997	TISSUES	BTO:0000089	Blood
+AZU1	9606.ENSP00000233997	TISSUES	BTO:0000130	Neutrophil
+AZU1	9606.ENSP00000233997	TISSUES	BTO:0000539	Granulocyte
+AZU1	9606.ENSP00000233997	TISSUES	BTO:0000570	Hematopoietic system
+AZU1	9606.ENSP00000233997	TISSUES	BTO:0000574	Hematopoietic cell
+AZU1	9606.ENSP00000233997	TISSUES	BTO:0000751	Leukocyte
+AZU1	9606.ENSP00000233997	TISSUES	BTO:0001044	Phagocyte
+AZU1	9606.ENSP00000233997	TISSUES	BTO:0001489	Whole body
+AZU1	9606.ENSP00000233997	COMPARTMENTS	GOCC:0000323	Lytic vacuole
+AZU1	9606.ENSP00000233997	COMPARTMENTS	GOCC:0005576	Extracellular region
+AZU1	9606.ENSP00000233997	COMPARTMENTS	GOCC:0005615	Extracellular space
+AZU1	9606.ENSP00000233997	COMPARTMENTS	GOCC:0005622	Intracellular
+AZU1	9606.ENSP00000233997	COMPARTMENTS	GOCC:0005737	Cytoplasm
+AZU1	9606.ENSP00000233997	COMPARTMENTS	GOCC:0005764	Lysosome
+AZU1	9606.ENSP00000233997	COMPARTMENTS	GOCC:0005765	Lysosomal membrane
+AZU1	9606.ENSP00000233997	COMPARTMENTS	GOCC:0005766	Primary lysosome
+AZU1	9606.ENSP00000233997	COMPARTMENTS	GOCC:0005773	Vacuole
+AZU1	9606.ENSP00000233997	COMPARTMENTS	GOCC:0005774	Vacuolar membrane
+AZU1	9606.ENSP00000233997	COMPARTMENTS	GOCC:0005775	Vacuolar lumen
+AZU1	9606.ENSP00000233997	COMPARTMENTS	GOCC:0012505	Endomembrane system
+AZU1	9606.ENSP00000233997	COMPARTMENTS	GOCC:0012506	Vesicle membrane
+AZU1	9606.ENSP00000233997	COMPARTMENTS	GOCC:0016020	Membrane
+AZU1	9606.ENSP00000233997	COMPARTMENTS	GOCC:0019898	Extrinsic component of membrane
+AZU1	9606.ENSP00000233997	COMPARTMENTS	GOCC:0030141	Secretory granule
+AZU1	9606.ENSP00000233997	COMPARTMENTS	GOCC:0030659	Cytoplasmic vesicle membrane
+AZU1	9606.ENSP00000233997	COMPARTMENTS	GOCC:0030667	Secretory granule membrane
+AZU1	9606.ENSP00000233997	COMPARTMENTS	GOCC:0031090	Organelle membrane
+AZU1	9606.ENSP00000233997	COMPARTMENTS	GOCC:0031410	Cytoplasmic vesicle
+AZU1	9606.ENSP00000233997	COMPARTMENTS	GOCC:0031974	Membrane-enclosed lumen
+AZU1	9606.ENSP00000233997	COMPARTMENTS	GOCC:0031982	Vesicle
+AZU1	9606.ENSP00000233997	COMPARTMENTS	GOCC:0031983	Vesicle lumen
+AZU1	9606.ENSP00000233997	COMPARTMENTS	GOCC:0034774	Secretory granule lumen
+AZU1	9606.ENSP00000233997	COMPARTMENTS	GOCC:0035577	Azurophil granule membrane
+AZU1	9606.ENSP00000233997	COMPARTMENTS	GOCC:0035578	Azurophil granule lumen
+AZU1	9606.ENSP00000233997	COMPARTMENTS	GOCC:0042582	Azurophil granule
+AZU1	9606.ENSP00000233997	COMPARTMENTS	GOCC:0043226	Organelle
+AZU1	9606.ENSP00000233997	COMPARTMENTS	GOCC:0043227	Membrane-bounded organelle
+AZU1	9606.ENSP00000233997	COMPARTMENTS	GOCC:0043229	Intracellular organelle
+AZU1	9606.ENSP00000233997	COMPARTMENTS	GOCC:0043230	Extracellular organelle
+AZU1	9606.ENSP00000233997	COMPARTMENTS	GOCC:0043231	Intracellular membrane-bounded organelle
+AZU1	9606.ENSP00000233997	COMPARTMENTS	GOCC:0043233	Organelle lumen
+AZU1	9606.ENSP00000233997	COMPARTMENTS	GOCC:0060205	Cytoplasmic vesicle lumen
+AZU1	9606.ENSP00000233997	COMPARTMENTS	GOCC:0065010	Extracellular membrane-bounded organelle
+AZU1	9606.ENSP00000233997	COMPARTMENTS	GOCC:0070013	Intracellular organelle lumen
+AZU1	9606.ENSP00000233997	COMPARTMENTS	GOCC:0097708	Intracellular vesicle
+AZU1	9606.ENSP00000233997	COMPARTMENTS	GOCC:0098588	Bounding membrane of organelle
+AZU1	9606.ENSP00000233997	COMPARTMENTS	GOCC:0098852	Lytic vacuole membrane
+AZU1	9606.ENSP00000233997	COMPARTMENTS	GOCC:0099503	Secretory vesicle
+AZU1	9606.ENSP00000233997	COMPARTMENTS	GOCC:0110165	Cellular anatomical entity
+AZU1	9606.ENSP00000233997	COMPARTMENTS	GOCC:1903561	Extracellular vesicle
+AZU1	9606.ENSP00000233997	UniProt Keywords	KW-0044	Antibiotic
+AZU1	9606.ENSP00000233997	UniProt Keywords	KW-0145	Chemotaxis
+AZU1	9606.ENSP00000233997	UniProt Keywords	KW-0325	Glycoprotein
+AZU1	9606.ENSP00000233997	UniProt Keywords	KW-0358	Heparin-binding
+AZU1	9606.ENSP00000233997	UniProt Keywords	KW-0472	Membrane
+AZU1	9606.ENSP00000233997	UniProt Keywords	KW-0721	Serine protease homolog
+AZU1	9606.ENSP00000233997	UniProt Keywords	KW-0732	Signal
+AZU1	9606.ENSP00000233997	UniProt Keywords	KW-0865	Zymogen
+AZU1	9606.ENSP00000233997	UniProt Keywords	KW-0929	Antimicrobial
+AZU1	9606.ENSP00000233997	UniProt Keywords	KW-1015	Disulfide bond
+AZU1	9606.ENSP00000233997	InterPro	IPR001254	Serine proteases, trypsin domain
+AZU1	9606.ENSP00000233997	InterPro	IPR001314	Peptidase S1A, chymotrypsin family
+AZU1	9606.ENSP00000233997	InterPro	IPR009003	Peptidase S1, PA clan
+AZU1	9606.ENSP00000233997	InterPro	IPR043504	Peptidase S1, PA clan, chymotrypsin-like fold
+AZU1	9606.ENSP00000233997	SMART	SM00020	Trypsin-like serine protease
+CTSG	9606.ENSP00000216336	GO Process	GO:0001775	Cell activation
+CTSG	9606.ENSP00000216336	GO Process	GO:0001906	Cell killing
+CTSG	9606.ENSP00000216336	GO Process	GO:0001909	Leukocyte mediated cytotoxicity
+CTSG	9606.ENSP00000216336	GO Process	GO:0001990	Regulation of systemic arterial blood pressure by hormone
+CTSG	9606.ENSP00000216336	GO Process	GO:0001991	Regulation of systemic arterial blood pressure by circulatory renin-angiotensin
+CTSG	9606.ENSP00000216336	GO Process	GO:0002002	Regulation of angiotensin levels in blood
+CTSG	9606.ENSP00000216336	GO Process	GO:0002003	Angiotensin maturation
+CTSG	9606.ENSP00000216336	GO Process	GO:0002237	Response to molecule of bacterial origin
+CTSG	9606.ENSP00000216336	GO Process	GO:0002252	Immune effector process
+CTSG	9606.ENSP00000216336	GO Process	GO:0002274	Myeloid leukocyte activation
+CTSG	9606.ENSP00000216336	GO Process	GO:0002376	Immune system process
+CTSG	9606.ENSP00000216336	GO Process	GO:0002443	Leukocyte mediated immunity
+CTSG	9606.ENSP00000216336	GO Process	GO:0002444	Myeloid leukocyte mediated immunity
+CTSG	9606.ENSP00000216336	GO Process	GO:0002446	Neutrophil mediated immunity
+CTSG	9606.ENSP00000216336	GO Process	GO:0002548	Monocyte chemotaxis
+CTSG	9606.ENSP00000216336	GO Process	GO:0002682	Regulation of immune system process
+CTSG	9606.ENSP00000216336	GO Process	GO:0002683	Negative regulation of immune system process
+CTSG	9606.ENSP00000216336	GO Process	GO:0002684	Positive regulation of immune system process
+CTSG	9606.ENSP00000216336	GO Process	GO:0002694	Regulation of leukocyte activation
+CTSG	9606.ENSP00000216336	GO Process	GO:0002695	Negative regulation of leukocyte activation
+CTSG	9606.ENSP00000216336	GO Process	GO:0003008	System process
+CTSG	9606.ENSP00000216336	GO Process	GO:0003013	Circulatory system process
+CTSG	9606.ENSP00000216336	GO Process	GO:0003044	Regulation of systemic arterial blood pressure mediated by a chemical signal
+CTSG	9606.ENSP00000216336	GO Process	GO:0003073	Regulation of systemic arterial blood pressure
+CTSG	9606.ENSP00000216336	GO Process	GO:0003081	Regulation of systemic arterial blood pressure by renin-angiotensin
+CTSG	9606.ENSP00000216336	GO Process	GO:0006468	Protein phosphorylation
+CTSG	9606.ENSP00000216336	GO Process	GO:0006508	Proteolysis
+CTSG	9606.ENSP00000216336	GO Process	GO:0006518	Peptide metabolic process
+CTSG	9606.ENSP00000216336	GO Process	GO:0006793	Phosphorus metabolic process
+CTSG	9606.ENSP00000216336	GO Process	GO:0006796	Phosphate-containing compound metabolic process
+CTSG	9606.ENSP00000216336	GO Process	GO:0006807	Nitrogen compound metabolic process
+CTSG	9606.ENSP00000216336	GO Process	GO:0006935	Chemotaxis
+CTSG	9606.ENSP00000216336	GO Process	GO:0006950	Response to stress
+CTSG	9606.ENSP00000216336	GO Process	GO:0006952	Defense response
+CTSG	9606.ENSP00000216336	GO Process	GO:0006955	Immune response
+CTSG	9606.ENSP00000216336	GO Process	GO:0006959	Humoral immune response
+CTSG	9606.ENSP00000216336	GO Process	GO:0007154	Cell communication
+CTSG	9606.ENSP00000216336	GO Process	GO:0007162	Negative regulation of cell adhesion
+CTSG	9606.ENSP00000216336	GO Process	GO:0007165	Signal transduction
+CTSG	9606.ENSP00000216336	GO Process	GO:0007166	Cell surface receptor signaling pathway
+CTSG	9606.ENSP00000216336	GO Process	GO:0007596	Blood coagulation
+CTSG	9606.ENSP00000216336	GO Process	GO:0007599	Hemostasis
+CTSG	9606.ENSP00000216336	GO Process	GO:0008015	Blood circulation
+CTSG	9606.ENSP00000216336	GO Process	GO:0008152	Metabolic process
+CTSG	9606.ENSP00000216336	GO Process	GO:0008217	Regulation of blood pressure
+CTSG	9606.ENSP00000216336	GO Process	GO:0009605	Response to external stimulus
+CTSG	9606.ENSP00000216336	GO Process	GO:0009607	Response to biotic stimulus
+CTSG	9606.ENSP00000216336	GO Process	GO:0009611	Response to wounding
+CTSG	9606.ENSP00000216336	GO Process	GO:0009617	Response to bacterium
+CTSG	9606.ENSP00000216336	GO Process	GO:0009620	Response to fungus
+CTSG	9606.ENSP00000216336	GO Process	GO:0009987	Cellular process
+CTSG	9606.ENSP00000216336	GO Process	GO:0010033	Response to organic substance
+CTSG	9606.ENSP00000216336	GO Process	GO:0010467	Gene expression
+CTSG	9606.ENSP00000216336	GO Process	GO:0010543	Regulation of platelet activation
+CTSG	9606.ENSP00000216336	GO Process	GO:0010817	Regulation of hormone levels
+CTSG	9606.ENSP00000216336	GO Process	GO:0016043	Cellular component organization
+CTSG	9606.ENSP00000216336	GO Process	GO:0016310	Phosphorylation
+CTSG	9606.ENSP00000216336	GO Process	GO:0016477	Cell migration
+CTSG	9606.ENSP00000216336	GO Process	GO:0016485	Protein processing
+CTSG	9606.ENSP00000216336	GO Process	GO:0016486	Peptide hormone processing
+CTSG	9606.ENSP00000216336	GO Process	GO:0019221	Cytokine-mediated signaling pathway
+CTSG	9606.ENSP00000216336	GO Process	GO:0019538	Protein metabolic process
+CTSG	9606.ENSP00000216336	GO Process	GO:0019730	Antimicrobial humoral response
+CTSG	9606.ENSP00000216336	GO Process	GO:0019731	Antibacterial humoral response
+CTSG	9606.ENSP00000216336	GO Process	GO:0022407	Regulation of cell-cell adhesion
+CTSG	9606.ENSP00000216336	GO Process	GO:0022408	Negative regulation of cell-cell adhesion
+CTSG	9606.ENSP00000216336	GO Process	GO:0022409	Positive regulation of cell-cell adhesion
+CTSG	9606.ENSP00000216336	GO Process	GO:0022411	Cellular component disassembly
+CTSG	9606.ENSP00000216336	GO Process	GO:0022617	Extracellular matrix disassembly
+CTSG	9606.ENSP00000216336	GO Process	GO:0023052	Signaling
+CTSG	9606.ENSP00000216336	GO Process	GO:0030155	Regulation of cell adhesion
+CTSG	9606.ENSP00000216336	GO Process	GO:0030168	Platelet activation
+CTSG	9606.ENSP00000216336	GO Process	GO:0030198	Extracellular matrix organization
+CTSG	9606.ENSP00000216336	GO Process	GO:0030595	Leukocyte chemotaxis
+CTSG	9606.ENSP00000216336	GO Process	GO:0032496	Response to lipopolysaccharide
+CTSG	9606.ENSP00000216336	GO Process	GO:0032501	Multicellular organismal process
+CTSG	9606.ENSP00000216336	GO Process	GO:0033993	Response to lipid
+CTSG	9606.ENSP00000216336	GO Process	GO:0034097	Response to cytokine
+CTSG	9606.ENSP00000216336	GO Process	GO:0034110	Regulation of homotypic cell-cell adhesion
+CTSG	9606.ENSP00000216336	GO Process	GO:0034112	Positive regulation of homotypic cell-cell adhesion
+CTSG	9606.ENSP00000216336	GO Process	GO:0034641	Cellular nitrogen compound metabolic process
+CTSG	9606.ENSP00000216336	GO Process	GO:0035590	Purinergic nucleotide receptor signaling pathway
+CTSG	9606.ENSP00000216336	GO Process	GO:0036211	Protein modification process
+CTSG	9606.ENSP00000216336	GO Process	GO:0036230	Granulocyte activation
+CTSG	9606.ENSP00000216336	GO Process	GO:0040011	Locomotion
+CTSG	9606.ENSP00000216336	GO Process	GO:0042060	Wound healing
+CTSG	9606.ENSP00000216336	GO Process	GO:0042119	Neutrophil activation
+CTSG	9606.ENSP00000216336	GO Process	GO:0042221	Response to chemical
+CTSG	9606.ENSP00000216336	GO Process	GO:0042330	Taxis
+CTSG	9606.ENSP00000216336	GO Process	GO:0042445	Hormone metabolic process
+CTSG	9606.ENSP00000216336	GO Process	GO:0042742	Defense response to bacterium
+CTSG	9606.ENSP00000216336	GO Process	GO:0043062	Extracellular structure organization
+CTSG	9606.ENSP00000216336	GO Process	GO:0043170	Macromolecule metabolic process
+CTSG	9606.ENSP00000216336	GO Process	GO:0043207	Response to external biotic stimulus
+CTSG	9606.ENSP00000216336	GO Process	GO:0043412	Macromolecule modification
+CTSG	9606.ENSP00000216336	GO Process	GO:0043603	Cellular amide metabolic process
+CTSG	9606.ENSP00000216336	GO Process	GO:0044237	Cellular metabolic process
+CTSG	9606.ENSP00000216336	GO Process	GO:0044238	Primary metabolic process
+CTSG	9606.ENSP00000216336	GO Process	GO:0044403	Biological process involved in symbiotic interaction
+CTSG	9606.ENSP00000216336	GO Process	GO:0044419	Biological process involved in interspecies interaction between organisms
+CTSG	9606.ENSP00000216336	GO Process	GO:0045229	External encapsulating structure organization
+CTSG	9606.ENSP00000216336	GO Process	GO:0045321	Leukocyte activation
+CTSG	9606.ENSP00000216336	GO Process	GO:0045785	Positive regulation of cell adhesion
+CTSG	9606.ENSP00000216336	GO Process	GO:0048518	Positive regulation of biological process
+CTSG	9606.ENSP00000216336	GO Process	GO:0048519	Negative regulation of biological process
+CTSG	9606.ENSP00000216336	GO Process	GO:0048522	Positive regulation of cellular process
+CTSG	9606.ENSP00000216336	GO Process	GO:0048523	Negative regulation of cellular process
+CTSG	9606.ENSP00000216336	GO Process	GO:0048583	Regulation of response to stimulus
+CTSG	9606.ENSP00000216336	GO Process	GO:0048584	Positive regulation of response to stimulus
+CTSG	9606.ENSP00000216336	GO Process	GO:0048870	Cell motility
+CTSG	9606.ENSP00000216336	GO Process	GO:0050776	Regulation of immune response
+CTSG	9606.ENSP00000216336	GO Process	GO:0050778	Positive regulation of immune response
+CTSG	9606.ENSP00000216336	GO Process	GO:0050789	Regulation of biological process
+CTSG	9606.ENSP00000216336	GO Process	GO:0050794	Regulation of cellular process
+CTSG	9606.ENSP00000216336	GO Process	GO:0050817	Coagulation
+CTSG	9606.ENSP00000216336	GO Process	GO:0050829	Defense response to Gram-negative bacterium
+CTSG	9606.ENSP00000216336	GO Process	GO:0050830	Defense response to Gram-positive bacterium
+CTSG	9606.ENSP00000216336	GO Process	GO:0050832	Defense response to fungus
+CTSG	9606.ENSP00000216336	GO Process	GO:0050863	Regulation of T cell activation
+CTSG	9606.ENSP00000216336	GO Process	GO:0050865	Regulation of cell activation
+CTSG	9606.ENSP00000216336	GO Process	GO:0050866	Negative regulation of cell activation
+CTSG	9606.ENSP00000216336	GO Process	GO:0050868	Negative regulation of T cell activation
+CTSG	9606.ENSP00000216336	GO Process	GO:0050878	Regulation of body fluid levels
+CTSG	9606.ENSP00000216336	GO Process	GO:0050886	Endocrine process
+CTSG	9606.ENSP00000216336	GO Process	GO:0050896	Response to stimulus
+CTSG	9606.ENSP00000216336	GO Process	GO:0050900	Leukocyte migration
+CTSG	9606.ENSP00000216336	GO Process	GO:0051249	Regulation of lymphocyte activation
+CTSG	9606.ENSP00000216336	GO Process	GO:0051250	Negative regulation of lymphocyte activation
+CTSG	9606.ENSP00000216336	GO Process	GO:0051604	Protein maturation
+CTSG	9606.ENSP00000216336	GO Process	GO:0051702	Biological process involved in interaction with symbiont
+CTSG	9606.ENSP00000216336	GO Process	GO:0051707	Response to other organism
+CTSG	9606.ENSP00000216336	GO Process	GO:0051716	Cellular response to stimulus
+CTSG	9606.ENSP00000216336	GO Process	GO:0051873	Killing by host of symbiont cells
+CTSG	9606.ENSP00000216336	GO Process	GO:0060326	Cell chemotaxis
+CTSG	9606.ENSP00000216336	GO Process	GO:0065007	Biological regulation
+CTSG	9606.ENSP00000216336	GO Process	GO:0065008	Regulation of biological quality
+CTSG	9606.ENSP00000216336	GO Process	GO:0070887	Cellular response to chemical stimulus
+CTSG	9606.ENSP00000216336	GO Process	GO:0070942	Neutrophil mediated cytotoxicity
+CTSG	9606.ENSP00000216336	GO Process	GO:0070943	Neutrophil-mediated killing of symbiont cell
+CTSG	9606.ENSP00000216336	GO Process	GO:0070944	Neutrophil-mediated killing of bacterium
+CTSG	9606.ENSP00000216336	GO Process	GO:0070946	Neutrophil-mediated killing of gram-positive bacterium
+CTSG	9606.ENSP00000216336	GO Process	GO:0071216	Cellular response to biotic stimulus
+CTSG	9606.ENSP00000216336	GO Process	GO:0071219	Cellular response to molecule of bacterial origin
+CTSG	9606.ENSP00000216336	GO Process	GO:0071222	Cellular response to lipopolysaccharide
+CTSG	9606.ENSP00000216336	GO Process	GO:0071310	Cellular response to organic substance
+CTSG	9606.ENSP00000216336	GO Process	GO:0071345	Cellular response to cytokine stimulus
+CTSG	9606.ENSP00000216336	GO Process	GO:0071396	Cellular response to lipid
+CTSG	9606.ENSP00000216336	GO Process	GO:0071674	Mononuclear cell migration
+CTSG	9606.ENSP00000216336	GO Process	GO:0071704	Organic substance metabolic process
+CTSG	9606.ENSP00000216336	GO Process	GO:0071840	Cellular component organization or biogenesis
+CTSG	9606.ENSP00000216336	GO Process	GO:0090330	Regulation of platelet aggregation
+CTSG	9606.ENSP00000216336	GO Process	GO:0097529	Myeloid leukocyte migration
+CTSG	9606.ENSP00000216336	GO Process	GO:0098542	Defense response to other organism
+CTSG	9606.ENSP00000216336	GO Process	GO:0098784	Biofilm matrix organization
+CTSG	9606.ENSP00000216336	GO Process	GO:0098786	Biofilm matrix disassembly
+CTSG	9606.ENSP00000216336	GO Process	GO:0140448	Signaling receptor ligand precursor processing
+CTSG	9606.ENSP00000216336	GO Process	GO:1901564	Organonitrogen compound metabolic process
+CTSG	9606.ENSP00000216336	GO Process	GO:1901700	Response to oxygen-containing compound
+CTSG	9606.ENSP00000216336	GO Process	GO:1901701	Cellular response to oxygen-containing compound
+CTSG	9606.ENSP00000216336	GO Process	GO:1901731	Positive regulation of platelet aggregation
+CTSG	9606.ENSP00000216336	GO Process	GO:1903037	Regulation of leukocyte cell-cell adhesion
+CTSG	9606.ENSP00000216336	GO Process	GO:1903038	Negative regulation of leukocyte cell-cell adhesion
+CTSG	9606.ENSP00000216336	GO Function	GO:0002020	Protease binding
+CTSG	9606.ENSP00000216336	GO Function	GO:0003824	Catalytic activity
+CTSG	9606.ENSP00000216336	GO Function	GO:0004175	Endopeptidase activity
+CTSG	9606.ENSP00000216336	GO Function	GO:0004252	Serine-type endopeptidase activity
+CTSG	9606.ENSP00000216336	GO Function	GO:0005102	Signaling receptor binding
+CTSG	9606.ENSP00000216336	GO Function	GO:0005488	Binding
+CTSG	9606.ENSP00000216336	GO Function	GO:0005515	Protein binding
+CTSG	9606.ENSP00000216336	GO Function	GO:0005539	Glycosaminoglycan binding
+CTSG	9606.ENSP00000216336	GO Function	GO:0008201	Heparin binding
+CTSG	9606.ENSP00000216336	GO Function	GO:0008233	Peptidase activity
+CTSG	9606.ENSP00000216336	GO Function	GO:0008236	Serine-type peptidase activity
+CTSG	9606.ENSP00000216336	GO Function	GO:0016787	Hydrolase activity
+CTSG	9606.ENSP00000216336	GO Function	GO:0017171	Serine hydrolase activity
+CTSG	9606.ENSP00000216336	GO Function	GO:0019899	Enzyme binding
+CTSG	9606.ENSP00000216336	GO Function	GO:0030545	Signaling receptor regulator activity
+CTSG	9606.ENSP00000216336	GO Function	GO:0030546	Signaling receptor activator activity
+CTSG	9606.ENSP00000216336	GO Function	GO:0048018	Receptor ligand activity
+CTSG	9606.ENSP00000216336	GO Function	GO:0089720	Caspase binding
+CTSG	9606.ENSP00000216336	GO Function	GO:0097367	Carbohydrate derivative binding
+CTSG	9606.ENSP00000216336	GO Function	GO:0098772	Molecular function regulator activity
+CTSG	9606.ENSP00000216336	GO Function	GO:0140096	Catalytic activity, acting on a protein
+CTSG	9606.ENSP00000216336	GO Function	GO:1901681	Sulfur compound binding
+CTSG	9606.ENSP00000216336	GO Component	GO:0000323	Lytic vacuole
+CTSG	9606.ENSP00000216336	GO Component	GO:0005576	Extracellular region
+CTSG	9606.ENSP00000216336	GO Component	GO:0005615	Extracellular space
+CTSG	9606.ENSP00000216336	GO Component	GO:0005622	Intracellular anatomical structure
+CTSG	9606.ENSP00000216336	GO Component	GO:0005634	Nucleus
+CTSG	9606.ENSP00000216336	GO Component	GO:0005737	Cytoplasm
+CTSG	9606.ENSP00000216336	GO Component	GO:0005764	Lysosome
+CTSG	9606.ENSP00000216336	GO Component	GO:0005766	Primary lysosome
+CTSG	9606.ENSP00000216336	GO Component	GO:0005773	Vacuole
+CTSG	9606.ENSP00000216336	GO Component	GO:0005775	Vacuolar lumen
+CTSG	9606.ENSP00000216336	GO Component	GO:0005829	Cytosol
+CTSG	9606.ENSP00000216336	GO Component	GO:0005886	Plasma membrane
+CTSG	9606.ENSP00000216336	GO Component	GO:0010494	Cytoplasmic stress granule
+CTSG	9606.ENSP00000216336	GO Component	GO:0012505	Endomembrane system
+CTSG	9606.ENSP00000216336	GO Component	GO:0016020	Membrane
+CTSG	9606.ENSP00000216336	GO Component	GO:0030141	Secretory granule
+CTSG	9606.ENSP00000216336	GO Component	GO:0030312	External encapsulating structure
+CTSG	9606.ENSP00000216336	GO Component	GO:0031012	Extracellular matrix
+CTSG	9606.ENSP00000216336	GO Component	GO:0031410	Cytoplasmic vesicle
+CTSG	9606.ENSP00000216336	GO Component	GO:0031974	Membrane-enclosed lumen
+CTSG	9606.ENSP00000216336	GO Component	GO:0031982	Vesicle
+CTSG	9606.ENSP00000216336	GO Component	GO:0031983	Vesicle lumen
+CTSG	9606.ENSP00000216336	GO Component	GO:0034774	Secretory granule lumen
+CTSG	9606.ENSP00000216336	GO Component	GO:0035578	Azurophil granule lumen
+CTSG	9606.ENSP00000216336	GO Component	GO:0035770	Ribonucleoprotein granule
+CTSG	9606.ENSP00000216336	GO Component	GO:0036464	Cytoplasmic ribonucleoprotein granule
+CTSG	9606.ENSP00000216336	GO Component	GO:0042582	Azurophil granule
+CTSG	9606.ENSP00000216336	GO Component	GO:0043226	Organelle
+CTSG	9606.ENSP00000216336	GO Component	GO:0043227	Membrane-bounded organelle
+CTSG	9606.ENSP00000216336	GO Component	GO:0043228	Non-membrane-bounded organelle
+CTSG	9606.ENSP00000216336	GO Component	GO:0043229	Intracellular organelle
+CTSG	9606.ENSP00000216336	GO Component	GO:0043230	Extracellular organelle
+CTSG	9606.ENSP00000216336	GO Component	GO:0043231	Intracellular membrane-bounded organelle
+CTSG	9606.ENSP00000216336	GO Component	GO:0043232	Intracellular non-membrane-bounded organelle
+CTSG	9606.ENSP00000216336	GO Component	GO:0043233	Organelle lumen
+CTSG	9606.ENSP00000216336	GO Component	GO:0060205	Cytoplasmic vesicle lumen
+CTSG	9606.ENSP00000216336	GO Component	GO:0062023	Collagen-containing extracellular matrix
+CTSG	9606.ENSP00000216336	GO Component	GO:0065010	Extracellular membrane-bounded organelle
+CTSG	9606.ENSP00000216336	GO Component	GO:0070013	Intracellular organelle lumen
+CTSG	9606.ENSP00000216336	GO Component	GO:0070062	Extracellular exosome
+CTSG	9606.ENSP00000216336	GO Component	GO:0071944	Cell periphery
+CTSG	9606.ENSP00000216336	GO Component	GO:0097708	Intracellular vesicle
+CTSG	9606.ENSP00000216336	GO Component	GO:0099080	Supramolecular complex
+CTSG	9606.ENSP00000216336	GO Component	GO:0099503	Secretory vesicle
+CTSG	9606.ENSP00000216336	GO Component	GO:0110165	Cellular anatomical entity
+CTSG	9606.ENSP00000216336	GO Component	GO:1903561	Extracellular vesicle
+CTSG	9606.ENSP00000216336	STRING clusters	CL:19114	Mixed, incl. S100/CaBP-9k-type, calcium binding, subdomain, and Cystatin superfamily
+CTSG	9606.ENSP00000216336	STRING clusters	CL:19115	Mixed, incl. Cystatin superfamily, and Specific granule lumen
+CTSG	9606.ENSP00000216336	STRING clusters	CL:19181	Mixed, incl. Specific granule lumen, and Mononeuritis multiplex
+CTSG	9606.ENSP00000216336	STRING clusters	CL:19183	Mixed, incl. Neutrophil mediated cytotoxicity, and Mononeuritis multiplex
+CTSG	9606.ENSP00000216336	STRING clusters	CL:19185	Mixed, incl. Neutrophil mediated cytotoxicity, and Mononeuritis multiplex
+CTSG	9606.ENSP00000216336	STRING clusters	CL:19188	Mixed, incl. Mononeuritis multiplex, and Neutrophil mediated cytotoxicity
+CTSG	9606.ENSP00000216336	STRING clusters	CL:19191	Mononeuritis multiplex, and Neutrophil mediated cytotoxicity
+CTSG	9606.ENSP00000216336	KEGG	hsa04080	Neuroactive ligand-receptor interaction
+CTSG	9606.ENSP00000216336	KEGG	hsa04142	Lysosome
+CTSG	9606.ENSP00000216336	KEGG	hsa04614	Renin-angiotensin system
+CTSG	9606.ENSP00000216336	KEGG	hsa05146	Amoebiasis
+CTSG	9606.ENSP00000216336	KEGG	hsa05322	Systemic lupus erythematosus
+CTSG	9606.ENSP00000216336	Reactome	HSA-1280215	Cytokine Signaling in Immune system
+CTSG	9606.ENSP00000216336	Reactome	HSA-1474228	Degradation of the extracellular matrix
+CTSG	9606.ENSP00000216336	Reactome	HSA-1474244	Extracellular matrix organization
+CTSG	9606.ENSP00000216336	Reactome	HSA-1592389	Activation of Matrix Metalloproteinases
+CTSG	9606.ENSP00000216336	Reactome	HSA-1643685	Disease
+CTSG	9606.ENSP00000216336	Reactome	HSA-168249	Innate Immune System
+CTSG	9606.ENSP00000216336	Reactome	HSA-168256	Immune System
+CTSG	9606.ENSP00000216336	Reactome	HSA-2022377	Metabolism of Angiotensinogen to Angiotensins
+CTSG	9606.ENSP00000216336	Reactome	HSA-2980736	Peptide hormone metabolism
+CTSG	9606.ENSP00000216336	Reactome	HSA-381426	Regulation of Insulin-like Growth Factor (IGF) transport and uptake by Insulin-like Growth Factor Binding Proteins (IGFBPs)
+CTSG	9606.ENSP00000216336	Reactome	HSA-392499	Metabolism of proteins
+CTSG	9606.ENSP00000216336	Reactome	HSA-446652	Interleukin-1 family signaling
+CTSG	9606.ENSP00000216336	Reactome	HSA-448706	Interleukin-1 processing
+CTSG	9606.ENSP00000216336	Reactome	HSA-449147	Signaling by Interleukins
+CTSG	9606.ENSP00000216336	Reactome	HSA-5663205	Infectious disease
+CTSG	9606.ENSP00000216336	Reactome	HSA-6798695	Neutrophil degranulation
+CTSG	9606.ENSP00000216336	Reactome	HSA-6803157	Antimicrobial peptides
+CTSG	9606.ENSP00000216336	Reactome	HSA-9635465	Suppression of apoptosis
+CTSG	9606.ENSP00000216336	Reactome	HSA-9635486	Infection with Mycobacterium tuberculosis
+CTSG	9606.ENSP00000216336	Reactome	HSA-9637690	Response of Mtb to phagocytosis
+CTSG	9606.ENSP00000216336	Reactome	HSA-9658195	Leishmania infection
+CTSG	9606.ENSP00000216336	Reactome	HSA-9660826	Purinergic signaling in leishmaniasis infection
+CTSG	9606.ENSP00000216336	Reactome	HSA-9664424	Cell recruitment (pro-inflammatory response)
+CTSG	9606.ENSP00000216336	WikiPathways	WP4756	Renin-angiotensin-aldosterone system (RAAS)
+CTSG	9606.ENSP00000216336	WikiPathways	WP4818	Conversion of angiotensinogen to angiotensin II 
+CTSG	9606.ENSP00000216336	WikiPathways	WP554	ACE inhibitor pathway
+CTSG	9606.ENSP00000216336	DISEASES	DOID:0050177	Monogenic disease
+CTSG	9606.ENSP00000216336	DISEASES	DOID:0050737	Autosomal recessive disease
+CTSG	9606.ENSP00000216336	DISEASES	DOID:0050739	Autosomal genetic disease
+CTSG	9606.ENSP00000216336	DISEASES	DOID:1091	Tooth disease
+CTSG	9606.ENSP00000216336	DISEASES	DOID:2121	Ectodermal dysplasia
+CTSG	9606.ENSP00000216336	DISEASES	DOID:225	Syndrome
+CTSG	9606.ENSP00000216336	DISEASES	DOID:3389	Papillon-Lefevre disease
+CTSG	9606.ENSP00000216336	DISEASES	DOID:4	Disease
+CTSG	9606.ENSP00000216336	DISEASES	DOID:403	Mouth disease
+CTSG	9606.ENSP00000216336	DISEASES	DOID:630	Genetic disease
+CTSG	9606.ENSP00000216336	DISEASES	DOID:7	Disease of anatomical entity
+CTSG	9606.ENSP00000216336	DISEASES	DOID:77	Gastrointestinal system disease
+CTSG	9606.ENSP00000216336	TISSUES	BTO:0000000	Tissues, cell types and enzyme sources
+CTSG	9606.ENSP00000216336	TISSUES	BTO:0000042	Animal
+CTSG	9606.ENSP00000216336	TISSUES	BTO:0000089	Blood
+CTSG	9606.ENSP00000216336	TISSUES	BTO:0000130	Neutrophil
+CTSG	9606.ENSP00000216336	TISSUES	BTO:0000539	Granulocyte
+CTSG	9606.ENSP00000216336	TISSUES	BTO:0000570	Hematopoietic system
+CTSG	9606.ENSP00000216336	TISSUES	BTO:0000574	Hematopoietic cell
+CTSG	9606.ENSP00000216336	TISSUES	BTO:0000634	Integument
+CTSG	9606.ENSP00000216336	TISSUES	BTO:0000751	Leukocyte
+CTSG	9606.ENSP00000216336	TISSUES	BTO:0000876	Monocyte
+CTSG	9606.ENSP00000216336	TISSUES	BTO:0000878	Mononuclear cell
+CTSG	9606.ENSP00000216336	TISSUES	BTO:0001044	Phagocyte
+CTSG	9606.ENSP00000216336	TISSUES	BTO:0001253	Skin
+CTSG	9606.ENSP00000216336	TISSUES	BTO:0001433	Mononuclear phagocyte
+CTSG	9606.ENSP00000216336	TISSUES	BTO:0001441	Marrow cell
+CTSG	9606.ENSP00000216336	TISSUES	BTO:0001489	Whole body
+CTSG	9606.ENSP00000216336	COMPARTMENTS	GOCC:0000323	Lytic vacuole
+CTSG	9606.ENSP00000216336	COMPARTMENTS	GOCC:0005576	Extracellular region
+CTSG	9606.ENSP00000216336	COMPARTMENTS	GOCC:0005615	Extracellular space
+CTSG	9606.ENSP00000216336	COMPARTMENTS	GOCC:0005622	Intracellular
+CTSG	9606.ENSP00000216336	COMPARTMENTS	GOCC:0005634	Nucleus
+CTSG	9606.ENSP00000216336	COMPARTMENTS	GOCC:0005737	Cytoplasm
+CTSG	9606.ENSP00000216336	COMPARTMENTS	GOCC:0005764	Lysosome
+CTSG	9606.ENSP00000216336	COMPARTMENTS	GOCC:0005766	Primary lysosome
+CTSG	9606.ENSP00000216336	COMPARTMENTS	GOCC:0005773	Vacuole
+CTSG	9606.ENSP00000216336	COMPARTMENTS	GOCC:0005775	Vacuolar lumen
+CTSG	9606.ENSP00000216336	COMPARTMENTS	GOCC:0005829	Cytosol
+CTSG	9606.ENSP00000216336	COMPARTMENTS	GOCC:0005886	Plasma membrane
+CTSG	9606.ENSP00000216336	COMPARTMENTS	GOCC:0010494	Cytoplasmic stress granule
+CTSG	9606.ENSP00000216336	COMPARTMENTS	GOCC:0012505	Endomembrane system
+CTSG	9606.ENSP00000216336	COMPARTMENTS	GOCC:0016020	Membrane
+CTSG	9606.ENSP00000216336	COMPARTMENTS	GOCC:0030141	Secretory granule
+CTSG	9606.ENSP00000216336	COMPARTMENTS	GOCC:0031410	Cytoplasmic vesicle
+CTSG	9606.ENSP00000216336	COMPARTMENTS	GOCC:0031974	Membrane-enclosed lumen
+CTSG	9606.ENSP00000216336	COMPARTMENTS	GOCC:0031982	Vesicle
+CTSG	9606.ENSP00000216336	COMPARTMENTS	GOCC:0031983	Vesicle lumen
+CTSG	9606.ENSP00000216336	COMPARTMENTS	GOCC:0034774	Secretory granule lumen
+CTSG	9606.ENSP00000216336	COMPARTMENTS	GOCC:0035578	Azurophil granule lumen
+CTSG	9606.ENSP00000216336	COMPARTMENTS	GOCC:0035770	Ribonucleoprotein granule
+CTSG	9606.ENSP00000216336	COMPARTMENTS	GOCC:0036464	Cytoplasmic ribonucleoprotein granule
+CTSG	9606.ENSP00000216336	COMPARTMENTS	GOCC:0042582	Azurophil granule
+CTSG	9606.ENSP00000216336	COMPARTMENTS	GOCC:0043226	Organelle
+CTSG	9606.ENSP00000216336	COMPARTMENTS	GOCC:0043227	Membrane-bounded organelle
+CTSG	9606.ENSP00000216336	COMPARTMENTS	GOCC:0043228	Non-membrane-bounded organelle
+CTSG	9606.ENSP00000216336	COMPARTMENTS	GOCC:0043229	Intracellular organelle
+CTSG	9606.ENSP00000216336	COMPARTMENTS	GOCC:0043230	Extracellular organelle
+CTSG	9606.ENSP00000216336	COMPARTMENTS	GOCC:0043231	Intracellular membrane-bounded organelle
+CTSG	9606.ENSP00000216336	COMPARTMENTS	GOCC:0043232	Intracellular non-membrane-bounded organelle
+CTSG	9606.ENSP00000216336	COMPARTMENTS	GOCC:0043233	Organelle lumen
+CTSG	9606.ENSP00000216336	COMPARTMENTS	GOCC:0043264	Extracellular non-membrane-bounded organelle
+CTSG	9606.ENSP00000216336	COMPARTMENTS	GOCC:0060205	Cytoplasmic vesicle lumen
+CTSG	9606.ENSP00000216336	COMPARTMENTS	GOCC:0065010	Extracellular membrane-bounded organelle
+CTSG	9606.ENSP00000216336	COMPARTMENTS	GOCC:0070013	Intracellular organelle lumen
+CTSG	9606.ENSP00000216336	COMPARTMENTS	GOCC:0070062	Extracellular exosome
+CTSG	9606.ENSP00000216336	COMPARTMENTS	GOCC:0071944	Cell periphery
+CTSG	9606.ENSP00000216336	COMPARTMENTS	GOCC:0097708	Intracellular vesicle
+CTSG	9606.ENSP00000216336	COMPARTMENTS	GOCC:0099080	Supramolecular complex
+CTSG	9606.ENSP00000216336	COMPARTMENTS	GOCC:0099503	Secretory vesicle
+CTSG	9606.ENSP00000216336	COMPARTMENTS	GOCC:0110165	Cellular anatomical entity
+CTSG	9606.ENSP00000216336	COMPARTMENTS	GOCC:1903561	Extracellular vesicle
+CTSG	9606.ENSP00000216336	UniProt Keywords	KW-0044	Antibiotic
+CTSG	9606.ENSP00000216336	UniProt Keywords	KW-0325	Glycoprotein
+CTSG	9606.ENSP00000216336	UniProt Keywords	KW-0378	Hydrolase
+CTSG	9606.ENSP00000216336	UniProt Keywords	KW-0645	Protease
+CTSG	9606.ENSP00000216336	UniProt Keywords	KW-0720	Serine protease
+CTSG	9606.ENSP00000216336	UniProt Keywords	KW-0732	Signal
+CTSG	9606.ENSP00000216336	UniProt Keywords	KW-0865	Zymogen
+CTSG	9606.ENSP00000216336	UniProt Keywords	KW-0929	Antimicrobial
+CTSG	9606.ENSP00000216336	UniProt Keywords	KW-1015	Disulfide bond
+CTSG	9606.ENSP00000216336	InterPro	IPR001254	Serine proteases, trypsin domain
+CTSG	9606.ENSP00000216336	InterPro	IPR001314	Peptidase S1A, chymotrypsin family
+CTSG	9606.ENSP00000216336	InterPro	IPR009003	Peptidase S1, PA clan
+CTSG	9606.ENSP00000216336	InterPro	IPR018114	Serine proteases, trypsin family, histidine active site
+CTSG	9606.ENSP00000216336	InterPro	IPR033116	Serine proteases, trypsin family, serine active site
+CTSG	9606.ENSP00000216336	InterPro	IPR043504	Peptidase S1, PA clan, chymotrypsin-like fold
+CTSG	9606.ENSP00000216336	SMART	SM00020	Trypsin-like serine protease
+EPX	9606.ENSP00000225371	GO Process	GO:0001817	Regulation of cytokine production
+EPX	9606.ENSP00000225371	GO Process	GO:0001818	Negative regulation of cytokine production
+EPX	9606.ENSP00000225371	GO Process	GO:0001819	Positive regulation of cytokine production
+EPX	9606.ENSP00000225371	GO Process	GO:0002215	Defense response to nematode
+EPX	9606.ENSP00000225371	GO Process	GO:0002376	Immune system process
+EPX	9606.ENSP00000225371	GO Process	GO:0002682	Regulation of immune system process
+EPX	9606.ENSP00000225371	GO Process	GO:0002683	Negative regulation of immune system process
+EPX	9606.ENSP00000225371	GO Process	GO:0002697	Regulation of immune effector process
+EPX	9606.ENSP00000225371	GO Process	GO:0002698	Negative regulation of immune effector process
+EPX	9606.ENSP00000225371	GO Process	GO:0002700	Regulation of production of molecular mediator of immune response
+EPX	9606.ENSP00000225371	GO Process	GO:0002701	Negative regulation of production of molecular mediator of immune response
+EPX	9606.ENSP00000225371	GO Process	GO:0002718	Regulation of cytokine production involved in immune response
+EPX	9606.ENSP00000225371	GO Process	GO:0002719	Negative regulation of cytokine production involved in immune response
+EPX	9606.ENSP00000225371	GO Process	GO:0006950	Response to stress
+EPX	9606.ENSP00000225371	GO Process	GO:0006952	Defense response
+EPX	9606.ENSP00000225371	GO Process	GO:0006979	Response to oxidative stress
+EPX	9606.ENSP00000225371	GO Process	GO:0008152	Metabolic process
+EPX	9606.ENSP00000225371	GO Process	GO:0009056	Catabolic process
+EPX	9606.ENSP00000225371	GO Process	GO:0009605	Response to external stimulus
+EPX	9606.ENSP00000225371	GO Process	GO:0009607	Response to biotic stimulus
+EPX	9606.ENSP00000225371	GO Process	GO:0009617	Response to bacterium
+EPX	9606.ENSP00000225371	GO Process	GO:0009636	Response to toxic substance
+EPX	9606.ENSP00000225371	GO Process	GO:0009892	Negative regulation of metabolic process
+EPX	9606.ENSP00000225371	GO Process	GO:0009893	Positive regulation of metabolic process
+EPX	9606.ENSP00000225371	GO Process	GO:0009987	Cellular process
+EPX	9606.ENSP00000225371	GO Process	GO:0010468	Regulation of gene expression
+EPX	9606.ENSP00000225371	GO Process	GO:0010604	Positive regulation of macromolecule metabolic process
+EPX	9606.ENSP00000225371	GO Process	GO:0010605	Negative regulation of macromolecule metabolic process
+EPX	9606.ENSP00000225371	GO Process	GO:0010628	Positive regulation of gene expression
+EPX	9606.ENSP00000225371	GO Process	GO:0010629	Negative regulation of gene expression
+EPX	9606.ENSP00000225371	GO Process	GO:0010935	Regulation of macrophage cytokine production
+EPX	9606.ENSP00000225371	GO Process	GO:0010936	Negative regulation of macrophage cytokine production
+EPX	9606.ENSP00000225371	GO Process	GO:0016477	Cell migration
+EPX	9606.ENSP00000225371	GO Process	GO:0019222	Regulation of metabolic process
+EPX	9606.ENSP00000225371	GO Process	GO:0032653	Regulation of interleukin-10 production
+EPX	9606.ENSP00000225371	GO Process	GO:0032673	Regulation of interleukin-4 production
+EPX	9606.ENSP00000225371	GO Process	GO:0032674	Regulation of interleukin-5 production
+EPX	9606.ENSP00000225371	GO Process	GO:0032693	Negative regulation of interleukin-10 production
+EPX	9606.ENSP00000225371	GO Process	GO:0032714	Negative regulation of interleukin-5 production
+EPX	9606.ENSP00000225371	GO Process	GO:0032753	Positive regulation of interleukin-4 production
+EPX	9606.ENSP00000225371	GO Process	GO:0042221	Response to chemical
+EPX	9606.ENSP00000225371	GO Process	GO:0042742	Defense response to bacterium
+EPX	9606.ENSP00000225371	GO Process	GO:0042743	Hydrogen peroxide metabolic process
+EPX	9606.ENSP00000225371	GO Process	GO:0042744	Hydrogen peroxide catabolic process
+EPX	9606.ENSP00000225371	GO Process	GO:0043207	Response to external biotic stimulus
+EPX	9606.ENSP00000225371	GO Process	GO:0044237	Cellular metabolic process
+EPX	9606.ENSP00000225371	GO Process	GO:0044248	Cellular catabolic process
+EPX	9606.ENSP00000225371	GO Process	GO:0044419	Biological process involved in interspecies interaction between organisms
+EPX	9606.ENSP00000225371	GO Process	GO:0048518	Positive regulation of biological process
+EPX	9606.ENSP00000225371	GO Process	GO:0048519	Negative regulation of biological process
+EPX	9606.ENSP00000225371	GO Process	GO:0048870	Cell motility
+EPX	9606.ENSP00000225371	GO Process	GO:0050789	Regulation of biological process
+EPX	9606.ENSP00000225371	GO Process	GO:0050896	Response to stimulus
+EPX	9606.ENSP00000225371	GO Process	GO:0050900	Leukocyte migration
+EPX	9606.ENSP00000225371	GO Process	GO:0051239	Regulation of multicellular organismal process
+EPX	9606.ENSP00000225371	GO Process	GO:0051240	Positive regulation of multicellular organismal process
+EPX	9606.ENSP00000225371	GO Process	GO:0051241	Negative regulation of multicellular organismal process
+EPX	9606.ENSP00000225371	GO Process	GO:0051707	Response to other organism
+EPX	9606.ENSP00000225371	GO Process	GO:0051716	Cellular response to stimulus
+EPX	9606.ENSP00000225371	GO Process	GO:0060255	Regulation of macromolecule metabolic process
+EPX	9606.ENSP00000225371	GO Process	GO:0065007	Biological regulation
+EPX	9606.ENSP00000225371	GO Process	GO:0070887	Cellular response to chemical stimulus
+EPX	9606.ENSP00000225371	GO Process	GO:0072593	Reactive oxygen species metabolic process
+EPX	9606.ENSP00000225371	GO Process	GO:0072677	Eosinophil migration
+EPX	9606.ENSP00000225371	GO Process	GO:0097237	Cellular response to toxic substance
+EPX	9606.ENSP00000225371	GO Process	GO:0097529	Myeloid leukocyte migration
+EPX	9606.ENSP00000225371	GO Process	GO:0097530	Granulocyte migration
+EPX	9606.ENSP00000225371	GO Process	GO:0098542	Defense response to other organism
+EPX	9606.ENSP00000225371	GO Process	GO:0098754	Detoxification
+EPX	9606.ENSP00000225371	GO Process	GO:0098869	Cellular oxidant detoxification
+EPX	9606.ENSP00000225371	GO Process	GO:1990748	Cellular detoxification
+EPX	9606.ENSP00000225371	GO Function	GO:0003824	Catalytic activity
+EPX	9606.ENSP00000225371	GO Function	GO:0004601	Peroxidase activity
+EPX	9606.ENSP00000225371	GO Function	GO:0005488	Binding
+EPX	9606.ENSP00000225371	GO Function	GO:0016209	Antioxidant activity
+EPX	9606.ENSP00000225371	GO Function	GO:0016491	Oxidoreductase activity
+EPX	9606.ENSP00000225371	GO Function	GO:0016684	Oxidoreductase activity, acting on peroxide as acceptor
+EPX	9606.ENSP00000225371	GO Function	GO:0020037	Heme binding
+EPX	9606.ENSP00000225371	GO Function	GO:0043167	Ion binding
+EPX	9606.ENSP00000225371	GO Function	GO:0043169	Cation binding
+EPX	9606.ENSP00000225371	GO Function	GO:0046872	Metal ion binding
+EPX	9606.ENSP00000225371	GO Function	GO:0046906	Tetrapyrrole binding
+EPX	9606.ENSP00000225371	GO Function	GO:0097159	Organic cyclic compound binding
+EPX	9606.ENSP00000225371	GO Function	GO:1901363	Heterocyclic compound binding
+EPX	9606.ENSP00000225371	GO Component	GO:0005576	Extracellular region
+EPX	9606.ENSP00000225371	GO Component	GO:0005615	Extracellular space
+EPX	9606.ENSP00000225371	GO Component	GO:0005622	Intracellular anatomical structure
+EPX	9606.ENSP00000225371	GO Component	GO:0005737	Cytoplasm
+EPX	9606.ENSP00000225371	GO Component	GO:0012505	Endomembrane system
+EPX	9606.ENSP00000225371	GO Component	GO:0030141	Secretory granule
+EPX	9606.ENSP00000225371	GO Component	GO:0031410	Cytoplasmic vesicle
+EPX	9606.ENSP00000225371	GO Component	GO:0031974	Membrane-enclosed lumen
+EPX	9606.ENSP00000225371	GO Component	GO:0031982	Vesicle
+EPX	9606.ENSP00000225371	GO Component	GO:0031983	Vesicle lumen
+EPX	9606.ENSP00000225371	GO Component	GO:0034774	Secretory granule lumen
+EPX	9606.ENSP00000225371	GO Component	GO:0043226	Organelle
+EPX	9606.ENSP00000225371	GO Component	GO:0043227	Membrane-bounded organelle
+EPX	9606.ENSP00000225371	GO Component	GO:0043229	Intracellular organelle
+EPX	9606.ENSP00000225371	GO Component	GO:0043230	Extracellular organelle
+EPX	9606.ENSP00000225371	GO Component	GO:0043231	Intracellular membrane-bounded organelle
+EPX	9606.ENSP00000225371	GO Component	GO:0043233	Organelle lumen
+EPX	9606.ENSP00000225371	GO Component	GO:0060205	Cytoplasmic vesicle lumen
+EPX	9606.ENSP00000225371	GO Component	GO:0065010	Extracellular membrane-bounded organelle
+EPX	9606.ENSP00000225371	GO Component	GO:0070013	Intracellular organelle lumen
+EPX	9606.ENSP00000225371	GO Component	GO:0070062	Extracellular exosome
+EPX	9606.ENSP00000225371	GO Component	GO:0097708	Intracellular vesicle
+EPX	9606.ENSP00000225371	GO Component	GO:0099503	Secretory vesicle
+EPX	9606.ENSP00000225371	GO Component	GO:0110165	Cellular anatomical entity
+EPX	9606.ENSP00000225371	GO Component	GO:1903561	Extracellular vesicle
+EPX	9606.ENSP00000225371	STRING clusters	CL:19114	Mixed, incl. S100/CaBP-9k-type, calcium binding, subdomain, and Cystatin superfamily
+EPX	9606.ENSP00000225371	STRING clusters	CL:19115	Mixed, incl. Cystatin superfamily, and Specific granule lumen
+EPX	9606.ENSP00000225371	STRING clusters	CL:19181	Mixed, incl. Specific granule lumen, and Mononeuritis multiplex
+EPX	9606.ENSP00000225371	STRING clusters	CL:19183	Mixed, incl. Neutrophil mediated cytotoxicity, and Mononeuritis multiplex
+EPX	9606.ENSP00000225371	STRING clusters	CL:19185	Mixed, incl. Neutrophil mediated cytotoxicity, and Mononeuritis multiplex
+EPX	9606.ENSP00000225371	KEGG	hsa05310	Asthma
+EPX	9606.ENSP00000225371	Reactome	HSA-168249	Innate Immune System
+EPX	9606.ENSP00000225371	Reactome	HSA-168256	Immune System
+EPX	9606.ENSP00000225371	Reactome	HSA-6798695	Neutrophil degranulation
+EPX	9606.ENSP00000225371	DISEASES	DOID:4	Disease
+EPX	9606.ENSP00000225371	DISEASES	DOID:7	Disease of anatomical entity
+EPX	9606.ENSP00000225371	DISEASES	DOID:74	Hematopoietic system disease
+EPX	9606.ENSP00000225371	DISEASES	DOID:9500	Leukocyte disease
+EPX	9606.ENSP00000225371	DISEASES	DOID:999	Hypereosinophilic syndrome
+EPX	9606.ENSP00000225371	TISSUES	BTO:0000000	Tissues, cell types and enzyme sources
+EPX	9606.ENSP00000225371	TISSUES	BTO:0000042	Animal
+EPX	9606.ENSP00000225371	TISSUES	BTO:0000089	Blood
+EPX	9606.ENSP00000225371	TISSUES	BTO:0000399	Eosinophil
+EPX	9606.ENSP00000225371	TISSUES	BTO:0000539	Granulocyte
+EPX	9606.ENSP00000225371	TISSUES	BTO:0000570	Hematopoietic system
+EPX	9606.ENSP00000225371	TISSUES	BTO:0000574	Hematopoietic cell
+EPX	9606.ENSP00000225371	TISSUES	BTO:0000751	Leukocyte
+EPX	9606.ENSP00000225371	TISSUES	BTO:0001489	Whole body
+EPX	9606.ENSP00000225371	COMPARTMENTS	GOCC:0005576	Extracellular region
+EPX	9606.ENSP00000225371	COMPARTMENTS	GOCC:0005622	Intracellular
+EPX	9606.ENSP00000225371	COMPARTMENTS	GOCC:0005737	Cytoplasm
+EPX	9606.ENSP00000225371	COMPARTMENTS	GOCC:0012505	Endomembrane system
+EPX	9606.ENSP00000225371	COMPARTMENTS	GOCC:0030141	Secretory granule
+EPX	9606.ENSP00000225371	COMPARTMENTS	GOCC:0031410	Cytoplasmic vesicle
+EPX	9606.ENSP00000225371	COMPARTMENTS	GOCC:0031982	Vesicle
+EPX	9606.ENSP00000225371	COMPARTMENTS	GOCC:0043226	Organelle
+EPX	9606.ENSP00000225371	COMPARTMENTS	GOCC:0043227	Membrane-bounded organelle
+EPX	9606.ENSP00000225371	COMPARTMENTS	GOCC:0043229	Intracellular organelle
+EPX	9606.ENSP00000225371	COMPARTMENTS	GOCC:0097708	Intracellular vesicle
+EPX	9606.ENSP00000225371	COMPARTMENTS	GOCC:0099503	Secretory vesicle
+EPX	9606.ENSP00000225371	COMPARTMENTS	GOCC:0110165	Cellular anatomical entity
+EPX	9606.ENSP00000225371	UniProt Keywords	KW-0106	Calcium
+EPX	9606.ENSP00000225371	UniProt Keywords	KW-0325	Glycoprotein
+EPX	9606.ENSP00000225371	UniProt Keywords	KW-0349	Heme
+EPX	9606.ENSP00000225371	UniProt Keywords	KW-0376	Hydrogen peroxide
+EPX	9606.ENSP00000225371	UniProt Keywords	KW-0408	Iron
+EPX	9606.ENSP00000225371	UniProt Keywords	KW-0479	Metal-binding
+EPX	9606.ENSP00000225371	UniProt Keywords	KW-0560	Oxidoreductase
+EPX	9606.ENSP00000225371	UniProt Keywords	KW-0575	Peroxidase
+EPX	9606.ENSP00000225371	UniProt Keywords	KW-0732	Signal
+EPX	9606.ENSP00000225371	UniProt Keywords	KW-0944	Nitration
+EPX	9606.ENSP00000225371	UniProt Keywords	KW-1015	Disulfide bond
+EPX	9606.ENSP00000225371	Pfam	PF03098	Animal haem peroxidase
+EPX	9606.ENSP00000225371	InterPro	IPR010255	Haem peroxidase superfamily
+EPX	9606.ENSP00000225371	InterPro	IPR019791	Haem peroxidase, animal-type
+EPX	9606.ENSP00000225371	InterPro	IPR037120	Haem peroxidase domain superfamily, animal type
+ITLN2	9606.ENSP00000357008	GO Function	GO:0005488	Binding
+ITLN2	9606.ENSP00000357008	GO Function	GO:0030246	Carbohydrate binding
+ITLN2	9606.ENSP00000357008	GO Function	GO:0043167	Ion binding
+ITLN2	9606.ENSP00000357008	GO Function	GO:0043169	Cation binding
+ITLN2	9606.ENSP00000357008	GO Function	GO:0046872	Metal ion binding
+ITLN2	9606.ENSP00000357008	GO Function	GO:0070492	Oligosaccharide binding
+ITLN2	9606.ENSP00000357008	GO Component	GO:0005576	Extracellular region
+ITLN2	9606.ENSP00000357008	GO Component	GO:0005615	Extracellular space
+ITLN2	9606.ENSP00000357008	GO Component	GO:0110165	Cellular anatomical entity
+ITLN2	9606.ENSP00000357008	STRING clusters	CL:31465	Mostly uncharacterized, incl. CTLH, C-terminal LisH motif, and Fez1
+ITLN2	9606.ENSP00000357008	STRING clusters	CL:31539	Mostly uncharacterized, incl. Rap/ran-GAP, and Protein Family FAM117
+ITLN2	9606.ENSP00000357008	STRING clusters	CL:31597	Mixed, incl. Autosomal dominant non-syndromic intellectual disability 7, and Galactoside-binding lectin
+ITLN2	9606.ENSP00000357008	DISEASES	DOID:0050161	Lower respiratory tract disease
+ITLN2	9606.ENSP00000357008	DISEASES	DOID:14319	Pleuropneumonia
+ITLN2	9606.ENSP00000357008	DISEASES	DOID:1579	Respiratory system disease
+ITLN2	9606.ENSP00000357008	DISEASES	DOID:4	Disease
+ITLN2	9606.ENSP00000357008	DISEASES	DOID:552	Pneumonia
+ITLN2	9606.ENSP00000357008	DISEASES	DOID:7	Disease of anatomical entity
+ITLN2	9606.ENSP00000357008	DISEASES	DOID:850	Lung disease
+ITLN2	9606.ENSP00000357008	TISSUES	BTO:0000000	Tissues, cell types and enzyme sources
+ITLN2	9606.ENSP00000357008	TISSUES	BTO:0000042	Animal
+ITLN2	9606.ENSP00000357008	TISSUES	BTO:0000058	Alimentary canal
+ITLN2	9606.ENSP00000357008	TISSUES	BTO:0000511	Gastrointestinal tract
+ITLN2	9606.ENSP00000357008	TISSUES	BTO:0000648	Intestine
+ITLN2	9606.ENSP00000357008	TISSUES	BTO:0000651	Small intestine
+ITLN2	9606.ENSP00000357008	TISSUES	BTO:0001489	Whole body
+ITLN2	9606.ENSP00000357008	TISSUES	BTO:0001491	Viscus
+ITLN2	9606.ENSP00000357008	UniProt Keywords	KW-0025	Alternative splicing
+ITLN2	9606.ENSP00000357008	UniProt Keywords	KW-0106	Calcium
+ITLN2	9606.ENSP00000357008	UniProt Keywords	KW-0430	Lectin
+ITLN2	9606.ENSP00000357008	UniProt Keywords	KW-0479	Metal-binding
+ITLN2	9606.ENSP00000357008	UniProt Keywords	KW-0732	Signal
+ITLN2	9606.ENSP00000357008	UniProt Keywords	KW-0964	Secreted
+ITLN2	9606.ENSP00000357008	UniProt Keywords	KW-1015	Disulfide bond
+ITLN2	9606.ENSP00000357008	InterPro	IPR002181	Fibrinogen, alpha/beta/gamma chain, C-terminal globular domain
+ITLN2	9606.ENSP00000357008	InterPro	IPR014716	Fibrinogen, alpha/beta/gamma chain, C-terminal globular, subdomain 1
+ITLN2	9606.ENSP00000357008	InterPro	IPR036056	Fibrinogen-like, C-terminal
+ITLN2	9606.ENSP00000357008	SMART	SM00186	Fibrinogen-related domains (FReDs)
+MPO	9606.ENSP00000225275	GO Process	GO:0000302	Response to reactive oxygen species
+MPO	9606.ENSP00000225275	GO Process	GO:0000303	Response to superoxide
+MPO	9606.ENSP00000225275	GO Process	GO:0000305	Response to oxygen radical
+MPO	9606.ENSP00000225275	GO Process	GO:0001878	Response to yeast
+MPO	9606.ENSP00000225275	GO Process	GO:0002148	Hypochlorous acid metabolic process
+MPO	9606.ENSP00000225275	GO Process	GO:0002149	Hypochlorous acid biosynthetic process
+MPO	9606.ENSP00000225275	GO Process	GO:0002237	Response to molecule of bacterial origin
+MPO	9606.ENSP00000225275	GO Process	GO:0002252	Immune effector process
+MPO	9606.ENSP00000225275	GO Process	GO:0002376	Immune system process
+MPO	9606.ENSP00000225275	GO Process	GO:0002679	Respiratory burst involved in defense response
+MPO	9606.ENSP00000225275	GO Process	GO:0006082	Organic acid metabolic process
+MPO	9606.ENSP00000225275	GO Process	GO:0006801	Superoxide metabolic process
+MPO	9606.ENSP00000225275	GO Process	GO:0006950	Response to stress
+MPO	9606.ENSP00000225275	GO Process	GO:0006952	Defense response
+MPO	9606.ENSP00000225275	GO Process	GO:0006979	Response to oxidative stress
+MPO	9606.ENSP00000225275	GO Process	GO:0007568	Aging
+MPO	9606.ENSP00000225275	GO Process	GO:0008152	Metabolic process
+MPO	9606.ENSP00000225275	GO Process	GO:0009056	Catabolic process
+MPO	9606.ENSP00000225275	GO Process	GO:0009058	Biosynthetic process
+MPO	9606.ENSP00000225275	GO Process	GO:0009605	Response to external stimulus
+MPO	9606.ENSP00000225275	GO Process	GO:0009607	Response to biotic stimulus
+MPO	9606.ENSP00000225275	GO Process	GO:0009612	Response to mechanical stimulus
+MPO	9606.ENSP00000225275	GO Process	GO:0009617	Response to bacterium
+MPO	9606.ENSP00000225275	GO Process	GO:0009620	Response to fungus
+MPO	9606.ENSP00000225275	GO Process	GO:0009628	Response to abiotic stimulus
+MPO	9606.ENSP00000225275	GO Process	GO:0009636	Response to toxic substance
+MPO	9606.ENSP00000225275	GO Process	GO:0009987	Cellular process
+MPO	9606.ENSP00000225275	GO Process	GO:0009991	Response to extracellular stimulus
+MPO	9606.ENSP00000225275	GO Process	GO:0010033	Response to organic substance
+MPO	9606.ENSP00000225275	GO Process	GO:0010035	Response to inorganic substance
+MPO	9606.ENSP00000225275	GO Process	GO:0010941	Regulation of cell death
+MPO	9606.ENSP00000225275	GO Process	GO:0016043	Cellular component organization
+MPO	9606.ENSP00000225275	GO Process	GO:0019430	Removal of superoxide radicals
+MPO	9606.ENSP00000225275	GO Process	GO:0031667	Response to nutrient levels
+MPO	9606.ENSP00000225275	GO Process	GO:0032094	Response to food
+MPO	9606.ENSP00000225275	GO Process	GO:0032496	Response to lipopolysaccharide
+MPO	9606.ENSP00000225275	GO Process	GO:0032501	Multicellular organismal process
+MPO	9606.ENSP00000225275	GO Process	GO:0032502	Developmental process
+MPO	9606.ENSP00000225275	GO Process	GO:0033554	Cellular response to stress
+MPO	9606.ENSP00000225275	GO Process	GO:0033993	Response to lipid
+MPO	9606.ENSP00000225275	GO Process	GO:0034367	Protein-containing complex remodeling
+MPO	9606.ENSP00000225275	GO Process	GO:0034368	Protein-lipid complex remodeling
+MPO	9606.ENSP00000225275	GO Process	GO:0034369	Plasma lipoprotein particle remodeling
+MPO	9606.ENSP00000225275	GO Process	GO:0034374	Low-density lipoprotein particle remodeling
+MPO	9606.ENSP00000225275	GO Process	GO:0034599	Cellular response to oxidative stress
+MPO	9606.ENSP00000225275	GO Process	GO:0034614	Cellular response to reactive oxygen species
+MPO	9606.ENSP00000225275	GO Process	GO:0042221	Response to chemical
+MPO	9606.ENSP00000225275	GO Process	GO:0042742	Defense response to bacterium
+MPO	9606.ENSP00000225275	GO Process	GO:0042743	Hydrogen peroxide metabolic process
+MPO	9606.ENSP00000225275	GO Process	GO:0042744	Hydrogen peroxide catabolic process
+MPO	9606.ENSP00000225275	GO Process	GO:0042981	Regulation of apoptotic process
+MPO	9606.ENSP00000225275	GO Process	GO:0043066	Negative regulation of apoptotic process
+MPO	9606.ENSP00000225275	GO Process	GO:0043067	Regulation of programmed cell death
+MPO	9606.ENSP00000225275	GO Process	GO:0043069	Negative regulation of programmed cell death
+MPO	9606.ENSP00000225275	GO Process	GO:0043207	Response to external biotic stimulus
+MPO	9606.ENSP00000225275	GO Process	GO:0043436	Oxoacid metabolic process
+MPO	9606.ENSP00000225275	GO Process	GO:0043933	Protein-containing complex organization
+MPO	9606.ENSP00000225275	GO Process	GO:0044237	Cellular metabolic process
+MPO	9606.ENSP00000225275	GO Process	GO:0044248	Cellular catabolic process
+MPO	9606.ENSP00000225275	GO Process	GO:0044281	Small molecule metabolic process
+MPO	9606.ENSP00000225275	GO Process	GO:0044283	Small molecule biosynthetic process
+MPO	9606.ENSP00000225275	GO Process	GO:0044419	Biological process involved in interspecies interaction between organisms
+MPO	9606.ENSP00000225275	GO Process	GO:0045730	Respiratory burst
+MPO	9606.ENSP00000225275	GO Process	GO:0048519	Negative regulation of biological process
+MPO	9606.ENSP00000225275	GO Process	GO:0048523	Negative regulation of cellular process
+MPO	9606.ENSP00000225275	GO Process	GO:0050789	Regulation of biological process
+MPO	9606.ENSP00000225275	GO Process	GO:0050794	Regulation of cellular process
+MPO	9606.ENSP00000225275	GO Process	GO:0050832	Defense response to fungus
+MPO	9606.ENSP00000225275	GO Process	GO:0050896	Response to stimulus
+MPO	9606.ENSP00000225275	GO Process	GO:0051707	Response to other organism
+MPO	9606.ENSP00000225275	GO Process	GO:0051716	Cellular response to stimulus
+MPO	9606.ENSP00000225275	GO Process	GO:0060548	Negative regulation of cell death
+MPO	9606.ENSP00000225275	GO Process	GO:0062197	Cellular response to chemical stress
+MPO	9606.ENSP00000225275	GO Process	GO:0065007	Biological regulation
+MPO	9606.ENSP00000225275	GO Process	GO:0070887	Cellular response to chemical stimulus
+MPO	9606.ENSP00000225275	GO Process	GO:0071450	Cellular response to oxygen radical
+MPO	9606.ENSP00000225275	GO Process	GO:0071451	Cellular response to superoxide
+MPO	9606.ENSP00000225275	GO Process	GO:0071704	Organic substance metabolic process
+MPO	9606.ENSP00000225275	GO Process	GO:0071825	Protein-lipid complex subunit organization
+MPO	9606.ENSP00000225275	GO Process	GO:0071827	Plasma lipoprotein particle organization
+MPO	9606.ENSP00000225275	GO Process	GO:0071840	Cellular component organization or biogenesis
+MPO	9606.ENSP00000225275	GO Process	GO:0072593	Reactive oxygen species metabolic process
+MPO	9606.ENSP00000225275	GO Process	GO:0097006	Regulation of plasma lipoprotein particle levels
+MPO	9606.ENSP00000225275	GO Process	GO:0097237	Cellular response to toxic substance
+MPO	9606.ENSP00000225275	GO Process	GO:0098542	Defense response to other organism
+MPO	9606.ENSP00000225275	GO Process	GO:0098754	Detoxification
+MPO	9606.ENSP00000225275	GO Process	GO:0098869	Cellular oxidant detoxification
+MPO	9606.ENSP00000225275	GO Process	GO:1901700	Response to oxygen-containing compound
+MPO	9606.ENSP00000225275	GO Process	GO:1901701	Cellular response to oxygen-containing compound
+MPO	9606.ENSP00000225275	GO Process	GO:1903409	Reactive oxygen species biosynthetic process
+MPO	9606.ENSP00000225275	GO Process	GO:1990267	Response to transition metal nanoparticle
+MPO	9606.ENSP00000225275	GO Process	GO:1990268	Response to gold nanoparticle
+MPO	9606.ENSP00000225275	GO Process	GO:1990748	Cellular detoxification
+MPO	9606.ENSP00000225275	GO Function	GO:0003682	Chromatin binding
+MPO	9606.ENSP00000225275	GO Function	GO:0003824	Catalytic activity
+MPO	9606.ENSP00000225275	GO Function	GO:0004601	Peroxidase activity
+MPO	9606.ENSP00000225275	GO Function	GO:0005488	Binding
+MPO	9606.ENSP00000225275	GO Function	GO:0005539	Glycosaminoglycan binding
+MPO	9606.ENSP00000225275	GO Function	GO:0008201	Heparin binding
+MPO	9606.ENSP00000225275	GO Function	GO:0016209	Antioxidant activity
+MPO	9606.ENSP00000225275	GO Function	GO:0016491	Oxidoreductase activity
+MPO	9606.ENSP00000225275	GO Function	GO:0016684	Oxidoreductase activity, acting on peroxide as acceptor
+MPO	9606.ENSP00000225275	GO Function	GO:0020037	Heme binding
+MPO	9606.ENSP00000225275	GO Function	GO:0043167	Ion binding
+MPO	9606.ENSP00000225275	GO Function	GO:0043169	Cation binding
+MPO	9606.ENSP00000225275	GO Function	GO:0046872	Metal ion binding
+MPO	9606.ENSP00000225275	GO Function	GO:0046906	Tetrapyrrole binding
+MPO	9606.ENSP00000225275	GO Function	GO:0097159	Organic cyclic compound binding
+MPO	9606.ENSP00000225275	GO Function	GO:0097367	Carbohydrate derivative binding
+MPO	9606.ENSP00000225275	GO Function	GO:1901363	Heterocyclic compound binding
+MPO	9606.ENSP00000225275	GO Function	GO:1901681	Sulfur compound binding
+MPO	9606.ENSP00000225275	GO Component	GO:0000323	Lytic vacuole
+MPO	9606.ENSP00000225275	GO Component	GO:0005576	Extracellular region
+MPO	9606.ENSP00000225275	GO Component	GO:0005615	Extracellular space
+MPO	9606.ENSP00000225275	GO Component	GO:0005622	Intracellular anatomical structure
+MPO	9606.ENSP00000225275	GO Component	GO:0005634	Nucleus
+MPO	9606.ENSP00000225275	GO Component	GO:0005654	Nucleoplasm
+MPO	9606.ENSP00000225275	GO Component	GO:0005737	Cytoplasm
+MPO	9606.ENSP00000225275	GO Component	GO:0005764	Lysosome
+MPO	9606.ENSP00000225275	GO Component	GO:0005766	Primary lysosome
+MPO	9606.ENSP00000225275	GO Component	GO:0005773	Vacuole
+MPO	9606.ENSP00000225275	GO Component	GO:0005775	Vacuolar lumen
+MPO	9606.ENSP00000225275	GO Component	GO:0012505	Endomembrane system
+MPO	9606.ENSP00000225275	GO Component	GO:0030139	Endocytic vesicle
+MPO	9606.ENSP00000225275	GO Component	GO:0030141	Secretory granule
+MPO	9606.ENSP00000225275	GO Component	GO:0031410	Cytoplasmic vesicle
+MPO	9606.ENSP00000225275	GO Component	GO:0031974	Membrane-enclosed lumen
+MPO	9606.ENSP00000225275	GO Component	GO:0031981	Nuclear lumen
+MPO	9606.ENSP00000225275	GO Component	GO:0031982	Vesicle
+MPO	9606.ENSP00000225275	GO Component	GO:0031983	Vesicle lumen
+MPO	9606.ENSP00000225275	GO Component	GO:0034774	Secretory granule lumen
+MPO	9606.ENSP00000225275	GO Component	GO:0035578	Azurophil granule lumen
+MPO	9606.ENSP00000225275	GO Component	GO:0042582	Azurophil granule
+MPO	9606.ENSP00000225275	GO Component	GO:0043226	Organelle
+MPO	9606.ENSP00000225275	GO Component	GO:0043227	Membrane-bounded organelle
+MPO	9606.ENSP00000225275	GO Component	GO:0043229	Intracellular organelle
+MPO	9606.ENSP00000225275	GO Component	GO:0043230	Extracellular organelle
+MPO	9606.ENSP00000225275	GO Component	GO:0043231	Intracellular membrane-bounded organelle
+MPO	9606.ENSP00000225275	GO Component	GO:0043233	Organelle lumen
+MPO	9606.ENSP00000225275	GO Component	GO:0045335	Phagocytic vesicle
+MPO	9606.ENSP00000225275	GO Component	GO:0060205	Cytoplasmic vesicle lumen
+MPO	9606.ENSP00000225275	GO Component	GO:0065010	Extracellular membrane-bounded organelle
+MPO	9606.ENSP00000225275	GO Component	GO:0070013	Intracellular organelle lumen
+MPO	9606.ENSP00000225275	GO Component	GO:0070062	Extracellular exosome
+MPO	9606.ENSP00000225275	GO Component	GO:0071682	Endocytic vesicle lumen
+MPO	9606.ENSP00000225275	GO Component	GO:0097013	Phagocytic vesicle lumen
+MPO	9606.ENSP00000225275	GO Component	GO:0097708	Intracellular vesicle
+MPO	9606.ENSP00000225275	GO Component	GO:0099503	Secretory vesicle
+MPO	9606.ENSP00000225275	GO Component	GO:0110165	Cellular anatomical entity
+MPO	9606.ENSP00000225275	GO Component	GO:1903561	Extracellular vesicle
+MPO	9606.ENSP00000225275	STRING clusters	CL:19114	Mixed, incl. S100/CaBP-9k-type, calcium binding, subdomain, and Cystatin superfamily
+MPO	9606.ENSP00000225275	STRING clusters	CL:19115	Mixed, incl. Cystatin superfamily, and Specific granule lumen
+MPO	9606.ENSP00000225275	STRING clusters	CL:19181	Mixed, incl. Specific granule lumen, and Mononeuritis multiplex
+MPO	9606.ENSP00000225275	STRING clusters	CL:19183	Mixed, incl. Neutrophil mediated cytotoxicity, and Mononeuritis multiplex
+MPO	9606.ENSP00000225275	STRING clusters	CL:19185	Mixed, incl. Neutrophil mediated cytotoxicity, and Mononeuritis multiplex
+MPO	9606.ENSP00000225275	STRING clusters	CL:19188	Mixed, incl. Mononeuritis multiplex, and Neutrophil mediated cytotoxicity
+MPO	9606.ENSP00000225275	STRING clusters	CL:19191	Mononeuritis multiplex, and Neutrophil mediated cytotoxicity
+MPO	9606.ENSP00000225275	KEGG	hsa00983	Drug metabolism - other enzymes
+MPO	9606.ENSP00000225275	KEGG	hsa04145	Phagosome
+MPO	9606.ENSP00000225275	KEGG	hsa05202	Transcriptional misregulation in cancer
+MPO	9606.ENSP00000225275	KEGG	hsa05221	Acute myeloid leukemia
+MPO	9606.ENSP00000225275	Reactome	HSA-1222556	ROS and RNS production in phagocytes
+MPO	9606.ENSP00000225275	Reactome	HSA-168249	Innate Immune System
+MPO	9606.ENSP00000225275	Reactome	HSA-168256	Immune System
+MPO	9606.ENSP00000225275	Reactome	HSA-6798695	Neutrophil degranulation
+MPO	9606.ENSP00000225275	Reactome	HSA-8941413	Events associated with phagocytolytic activity of PMN cells
+MPO	9606.ENSP00000225275	WikiPathways	WP15	Selenium micronutrient network
+MPO	9606.ENSP00000225275	WikiPathways	WP1533	Vitamin B12 metabolism
+MPO	9606.ENSP00000225275	WikiPathways	WP176	Folate metabolism
+MPO	9606.ENSP00000225275	WikiPathways	WP3891	Benzene metabolism
+MPO	9606.ENSP00000225275	DISEASES	DOID:0050161	Lower respiratory tract disease
+MPO	9606.ENSP00000225275	DISEASES	DOID:0050686	Organ system cancer
+MPO	9606.ENSP00000225275	DISEASES	DOID:0060049	Autoimmune disease of urogenital tract
+MPO	9606.ENSP00000225275	DISEASES	DOID:0060050	Autoimmune disease of blood
+MPO	9606.ENSP00000225275	DISEASES	DOID:10952	Nephritis
+MPO	9606.ENSP00000225275	DISEASES	DOID:1188	Mononeuropathy
+MPO	9606.ENSP00000225275	DISEASES	DOID:12132	Granulomatosis with polyangiitis
+MPO	9606.ENSP00000225275	DISEASES	DOID:1240	Leukemia
+MPO	9606.ENSP00000225275	DISEASES	DOID:1287	Cardiovascular system disease
+MPO	9606.ENSP00000225275	DISEASES	DOID:13138	Acute proliferative glomerulonephritis
+MPO	9606.ENSP00000225275	DISEASES	DOID:13139	Crescentic glomerulonephritis
+MPO	9606.ENSP00000225275	DISEASES	DOID:14566	Disease of cellular proliferation
+MPO	9606.ENSP00000225275	DISEASES	DOID:1579	Respiratory system disease
+MPO	9606.ENSP00000225275	DISEASES	DOID:16	Integumentary system disease
+MPO	9606.ENSP00000225275	DISEASES	DOID:162	Cancer
+MPO	9606.ENSP00000225275	DISEASES	DOID:178	Vascular disease
+MPO	9606.ENSP00000225275	DISEASES	DOID:18	Urinary system disease
+MPO	9606.ENSP00000225275	DISEASES	DOID:1802	Mononeuritis
+MPO	9606.ENSP00000225275	DISEASES	DOID:1835	Mononeuritis multiplex
+MPO	9606.ENSP00000225275	DISEASES	DOID:2531	Hematologic cancer
+MPO	9606.ENSP00000225275	DISEASES	DOID:2914	Immune system disease
+MPO	9606.ENSP00000225275	DISEASES	DOID:2921	Glomerulonephritis
+MPO	9606.ENSP00000225275	DISEASES	DOID:3049	Churg-Strauss syndrome
+MPO	9606.ENSP00000225275	DISEASES	DOID:37	Skin disease
+MPO	9606.ENSP00000225275	DISEASES	DOID:4	Disease
+MPO	9606.ENSP00000225275	DISEASES	DOID:417	Autoimmune disease
+MPO	9606.ENSP00000225275	DISEASES	DOID:4776	Rapidly progressive glomerulonephritis
+MPO	9606.ENSP00000225275	DISEASES	DOID:557	Kidney disease
+MPO	9606.ENSP00000225275	DISEASES	DOID:572	Mononeuritis of upper limb and mononeuritis multiplex
+MPO	9606.ENSP00000225275	DISEASES	DOID:574	Peripheral nervous system disease
+MPO	9606.ENSP00000225275	DISEASES	DOID:6004	Aleukemic leukemia
+MPO	9606.ENSP00000225275	DISEASES	DOID:612	Primary immunodeficiency disease
+MPO	9606.ENSP00000225275	DISEASES	DOID:7	Disease of anatomical entity
+MPO	9606.ENSP00000225275	DISEASES	DOID:74	Hematopoietic system disease
+MPO	9606.ENSP00000225275	DISEASES	DOID:850	Lung disease
+MPO	9606.ENSP00000225275	DISEASES	DOID:863	Nervous system disease
+MPO	9606.ENSP00000225275	DISEASES	DOID:865	Vasculitis
+MPO	9606.ENSP00000225275	DISEASES	DOID:8683	Myeloid sarcoma
+MPO	9606.ENSP00000225275	DISEASES	DOID:870	Neuropathy
+MPO	9606.ENSP00000225275	DISEASES	DOID:9808	Goodpasture syndrome
+MPO	9606.ENSP00000225275	TISSUES	BTO:0000000	Tissues, cell types and enzyme sources
+MPO	9606.ENSP00000225275	TISSUES	BTO:0000042	Animal
+MPO	9606.ENSP00000225275	TISSUES	BTO:0000089	Blood
+MPO	9606.ENSP00000225275	TISSUES	BTO:0000130	Neutrophil
+MPO	9606.ENSP00000225275	TISSUES	BTO:0000141	Bone marrow
+MPO	9606.ENSP00000225275	TISSUES	BTO:0000345	Digestive gland
+MPO	9606.ENSP00000225275	TISSUES	BTO:0000392	Plasma cell
+MPO	9606.ENSP00000225275	TISSUES	BTO:0000522	Gland
+MPO	9606.ENSP00000225275	TISSUES	BTO:0000539	Granulocyte
+MPO	9606.ENSP00000225275	TISSUES	BTO:0000570	Hematopoietic system
+MPO	9606.ENSP00000225275	TISSUES	BTO:0000574	Hematopoietic cell
+MPO	9606.ENSP00000225275	TISSUES	BTO:0000580	Blood cancer cell
+MPO	9606.ENSP00000225275	TISSUES	BTO:0000751	Leukocyte
+MPO	9606.ENSP00000225275	TISSUES	BTO:0000759	Liver
+MPO	9606.ENSP00000225275	TISSUES	BTO:0001044	Phagocyte
+MPO	9606.ENSP00000225275	TISSUES	BTO:0001202	Saliva
+MPO	9606.ENSP00000225275	TISSUES	BTO:0001271	Leukemia cell
+MPO	9606.ENSP00000225275	TISSUES	BTO:0001486	Skeletal system
+MPO	9606.ENSP00000225275	TISSUES	BTO:0001488	Endocrine gland
+MPO	9606.ENSP00000225275	TISSUES	BTO:0001489	Whole body
+MPO	9606.ENSP00000225275	TISSUES	BTO:0001491	Viscus
+MPO	9606.ENSP00000225275	TISSUES	BTO:0003473	Polymorphonuclear neutrophil
+MPO	9606.ENSP00000225275	TISSUES	BTO:0004850	Bone marrow cell
+MPO	9606.ENSP00000225275	COMPARTMENTS	GOCC:0000323	Lytic vacuole
+MPO	9606.ENSP00000225275	COMPARTMENTS	GOCC:0005576	Extracellular region
+MPO	9606.ENSP00000225275	COMPARTMENTS	GOCC:0005615	Extracellular space
+MPO	9606.ENSP00000225275	COMPARTMENTS	GOCC:0005622	Intracellular
+MPO	9606.ENSP00000225275	COMPARTMENTS	GOCC:0005634	Nucleus
+MPO	9606.ENSP00000225275	COMPARTMENTS	GOCC:0005737	Cytoplasm
+MPO	9606.ENSP00000225275	COMPARTMENTS	GOCC:0005764	Lysosome
+MPO	9606.ENSP00000225275	COMPARTMENTS	GOCC:0005766	Primary lysosome
+MPO	9606.ENSP00000225275	COMPARTMENTS	GOCC:0005773	Vacuole
+MPO	9606.ENSP00000225275	COMPARTMENTS	GOCC:0005775	Vacuolar lumen
+MPO	9606.ENSP00000225275	COMPARTMENTS	GOCC:0012505	Endomembrane system
+MPO	9606.ENSP00000225275	COMPARTMENTS	GOCC:0030139	Endocytic vesicle
+MPO	9606.ENSP00000225275	COMPARTMENTS	GOCC:0030141	Secretory granule
+MPO	9606.ENSP00000225275	COMPARTMENTS	GOCC:0031410	Cytoplasmic vesicle
+MPO	9606.ENSP00000225275	COMPARTMENTS	GOCC:0031974	Membrane-enclosed lumen
+MPO	9606.ENSP00000225275	COMPARTMENTS	GOCC:0031982	Vesicle
+MPO	9606.ENSP00000225275	COMPARTMENTS	GOCC:0031983	Vesicle lumen
+MPO	9606.ENSP00000225275	COMPARTMENTS	GOCC:0034774	Secretory granule lumen
+MPO	9606.ENSP00000225275	COMPARTMENTS	GOCC:0035578	Azurophil granule lumen
+MPO	9606.ENSP00000225275	COMPARTMENTS	GOCC:0042582	Azurophil granule
+MPO	9606.ENSP00000225275	COMPARTMENTS	GOCC:0043226	Organelle
+MPO	9606.ENSP00000225275	COMPARTMENTS	GOCC:0043227	Membrane-bounded organelle
+MPO	9606.ENSP00000225275	COMPARTMENTS	GOCC:0043228	Non-membrane-bounded organelle
+MPO	9606.ENSP00000225275	COMPARTMENTS	GOCC:0043229	Intracellular organelle
+MPO	9606.ENSP00000225275	COMPARTMENTS	GOCC:0043230	Extracellular organelle
+MPO	9606.ENSP00000225275	COMPARTMENTS	GOCC:0043231	Intracellular membrane-bounded organelle
+MPO	9606.ENSP00000225275	COMPARTMENTS	GOCC:0043233	Organelle lumen
+MPO	9606.ENSP00000225275	COMPARTMENTS	GOCC:0043264	Extracellular non-membrane-bounded organelle
+MPO	9606.ENSP00000225275	COMPARTMENTS	GOCC:0045335	Phagocytic vesicle
+MPO	9606.ENSP00000225275	COMPARTMENTS	GOCC:0060205	Cytoplasmic vesicle lumen
+MPO	9606.ENSP00000225275	COMPARTMENTS	GOCC:0065010	Extracellular membrane-bounded organelle
+MPO	9606.ENSP00000225275	COMPARTMENTS	GOCC:0070013	Intracellular organelle lumen
+MPO	9606.ENSP00000225275	COMPARTMENTS	GOCC:0070062	Extracellular exosome
+MPO	9606.ENSP00000225275	COMPARTMENTS	GOCC:0071682	Endocytic vesicle lumen
+MPO	9606.ENSP00000225275	COMPARTMENTS	GOCC:0097013	Phagocytic vesicle lumen
+MPO	9606.ENSP00000225275	COMPARTMENTS	GOCC:0097708	Intracellular vesicle
+MPO	9606.ENSP00000225275	COMPARTMENTS	GOCC:0099503	Secretory vesicle
+MPO	9606.ENSP00000225275	COMPARTMENTS	GOCC:0110165	Cellular anatomical entity
+MPO	9606.ENSP00000225275	COMPARTMENTS	GOCC:1903561	Extracellular vesicle
+MPO	9606.ENSP00000225275	Monarch	EFO:0003892	Pulmonary function measurement
+MPO	9606.ENSP00000225275	Monarch	EFO:0004298	Cardiovascular measurement
+MPO	9606.ENSP00000225275	Monarch	EFO:0004308	Leukocyte count
+MPO	9606.ENSP00000225275	Monarch	EFO:0004503	Hematological measurement
+MPO	9606.ENSP00000225275	Monarch	EFO:0004586	Complete blood cell count
+MPO	9606.ENSP00000225275	Monarch	EFO:0004587	Lymphocyte count
+MPO	9606.ENSP00000225275	Monarch	EFO:0004713	FEV/FEC ratio
+MPO	9606.ENSP00000225275	Monarch	EFO:0004747	Protein measurement
+MPO	9606.ENSP00000225275	Monarch	EFO:0004833	Neutrophil count
+MPO	9606.ENSP00000225275	Monarch	EFO:0004842	Eosinophil count
+MPO	9606.ENSP00000225275	Monarch	EFO:0004872	Inflammatory biomarker measurement
+MPO	9606.ENSP00000225275	Monarch	EFO:0005090	Basophil count
+MPO	9606.ENSP00000225275	Monarch	EFO:0005091	Monocyte count
+MPO	9606.ENSP00000225275	Monarch	EFO:0005243	Myeloperoxidase measurement
+MPO	9606.ENSP00000225275	Monarch	EFO:0005278	Cardiovascular disease biomarker measurement
+MPO	9606.ENSP00000225275	Monarch	EFO:0006841	Respiratory disease biomarker
+MPO	9606.ENSP00000225275	Monarch	EFO:0006843	Infectious disease biomarker
+MPO	9606.ENSP00000225275	Monarch	EFO:0007937	Blood protein measurement
+MPO	9606.ENSP00000225275	Monarch	EFO:0007987	Granulocyte count
+MPO	9606.ENSP00000225275	Monarch	EFO:0007988	Myeloid white cell count
+MPO	9606.ENSP00000225275	Monarch	EFO:0007989	Monocyte percentage of leukocytes
+MPO	9606.ENSP00000225275	Monarch	EFO:0007990	Neutrophil percentage of leukocytes
+MPO	9606.ENSP00000225275	Monarch	EFO:0007992	Basophil percentage of leukocytes
+MPO	9606.ENSP00000225275	Monarch	EFO:0007993	Lymphocyte percentage of leukocytes
+MPO	9606.ENSP00000225275	Monarch	HP:0000118	Phenotypic abnormality
+MPO	9606.ENSP00000225275	Monarch	HP:0001871	Abnormality of blood and blood-forming tissues
+MPO	9606.ENSP00000225275	Monarch	HP:0001939	Abnormality of metabolism/homeostasis
+MPO	9606.ENSP00000225275	Monarch	HP:0002715	Abnormality of the immune system
+MPO	9606.ENSP00000225275	UniProt Keywords	KW-0025	Alternative splicing
+MPO	9606.ENSP00000225275	UniProt Keywords	KW-0106	Calcium
+MPO	9606.ENSP00000225275	UniProt Keywords	KW-0325	Glycoprotein
+MPO	9606.ENSP00000225275	UniProt Keywords	KW-0349	Heme
+MPO	9606.ENSP00000225275	UniProt Keywords	KW-0376	Hydrogen peroxide
+MPO	9606.ENSP00000225275	UniProt Keywords	KW-0408	Iron
+MPO	9606.ENSP00000225275	UniProt Keywords	KW-0458	Lysosome
+MPO	9606.ENSP00000225275	UniProt Keywords	KW-0479	Metal-binding
+MPO	9606.ENSP00000225275	UniProt Keywords	KW-0558	Oxidation
+MPO	9606.ENSP00000225275	UniProt Keywords	KW-0560	Oxidoreductase
+MPO	9606.ENSP00000225275	UniProt Keywords	KW-0575	Peroxidase
+MPO	9606.ENSP00000225275	UniProt Keywords	KW-0732	Signal
+MPO	9606.ENSP00000225275	UniProt Keywords	KW-1015	Disulfide bond
+MPO	9606.ENSP00000225275	Pfam	PF03098	Animal haem peroxidase
+MPO	9606.ENSP00000225275	InterPro	IPR010255	Haem peroxidase superfamily
+MPO	9606.ENSP00000225275	InterPro	IPR019791	Haem peroxidase, animal-type
+MPO	9606.ENSP00000225275	InterPro	IPR037120	Haem peroxidase domain superfamily, animal type
+PRRC1	9606.ENSP00000421965	GO Process	GO:0001932	Regulation of protein phosphorylation
+PRRC1	9606.ENSP00000421965	GO Process	GO:0001934	Positive regulation of protein phosphorylation
+PRRC1	9606.ENSP00000421965	GO Process	GO:0009893	Positive regulation of metabolic process
+PRRC1	9606.ENSP00000421965	GO Process	GO:0010562	Positive regulation of phosphorus metabolic process
+PRRC1	9606.ENSP00000421965	GO Process	GO:0010604	Positive regulation of macromolecule metabolic process
+PRRC1	9606.ENSP00000421965	GO Process	GO:0019220	Regulation of phosphate metabolic process
+PRRC1	9606.ENSP00000421965	GO Process	GO:0019222	Regulation of metabolic process
+PRRC1	9606.ENSP00000421965	GO Process	GO:0031323	Regulation of cellular metabolic process
+PRRC1	9606.ENSP00000421965	GO Process	GO:0031325	Positive regulation of cellular metabolic process
+PRRC1	9606.ENSP00000421965	GO Process	GO:0031399	Regulation of protein modification process
+PRRC1	9606.ENSP00000421965	GO Process	GO:0031401	Positive regulation of protein modification process
+PRRC1	9606.ENSP00000421965	GO Process	GO:0032147	Activation of protein kinase activity
+PRRC1	9606.ENSP00000421965	GO Process	GO:0033674	Positive regulation of kinase activity
+PRRC1	9606.ENSP00000421965	GO Process	GO:0034199	Activation of protein kinase A activity
+PRRC1	9606.ENSP00000421965	GO Process	GO:0042325	Regulation of phosphorylation
+PRRC1	9606.ENSP00000421965	GO Process	GO:0042327	Positive regulation of phosphorylation
+PRRC1	9606.ENSP00000421965	GO Process	GO:0043085	Positive regulation of catalytic activity
+PRRC1	9606.ENSP00000421965	GO Process	GO:0043549	Regulation of kinase activity
+PRRC1	9606.ENSP00000421965	GO Process	GO:0044093	Positive regulation of molecular function
+PRRC1	9606.ENSP00000421965	GO Process	GO:0045859	Regulation of protein kinase activity
+PRRC1	9606.ENSP00000421965	GO Process	GO:0045860	Positive regulation of protein kinase activity
+PRRC1	9606.ENSP00000421965	GO Process	GO:0045937	Positive regulation of phosphate metabolic process
+PRRC1	9606.ENSP00000421965	GO Process	GO:0048518	Positive regulation of biological process
+PRRC1	9606.ENSP00000421965	GO Process	GO:0048522	Positive regulation of cellular process
+PRRC1	9606.ENSP00000421965	GO Process	GO:0050789	Regulation of biological process
+PRRC1	9606.ENSP00000421965	GO Process	GO:0050790	Regulation of catalytic activity
+PRRC1	9606.ENSP00000421965	GO Process	GO:0050794	Regulation of cellular process
+PRRC1	9606.ENSP00000421965	GO Process	GO:0051171	Regulation of nitrogen compound metabolic process
+PRRC1	9606.ENSP00000421965	GO Process	GO:0051173	Positive regulation of nitrogen compound metabolic process
+PRRC1	9606.ENSP00000421965	GO Process	GO:0051174	Regulation of phosphorus metabolic process
+PRRC1	9606.ENSP00000421965	GO Process	GO:0051246	Regulation of protein metabolic process
+PRRC1	9606.ENSP00000421965	GO Process	GO:0051247	Positive regulation of protein metabolic process
+PRRC1	9606.ENSP00000421965	GO Process	GO:0051338	Regulation of transferase activity
+PRRC1	9606.ENSP00000421965	GO Process	GO:0051347	Positive regulation of transferase activity
+PRRC1	9606.ENSP00000421965	GO Process	GO:0060255	Regulation of macromolecule metabolic process
+PRRC1	9606.ENSP00000421965	GO Process	GO:0065007	Biological regulation
+PRRC1	9606.ENSP00000421965	GO Process	GO:0065009	Regulation of molecular function
+PRRC1	9606.ENSP00000421965	GO Process	GO:0080090	Regulation of primary metabolic process
+PRRC1	9606.ENSP00000421965	GO Function	GO:0005488	Binding
+PRRC1	9606.ENSP00000421965	GO Function	GO:0005515	Protein binding
+PRRC1	9606.ENSP00000421965	GO Function	GO:0034237	Protein kinase A regulatory subunit binding
+PRRC1	9606.ENSP00000421965	GO Function	GO:0051018	Protein kinase A binding
+PRRC1	9606.ENSP00000421965	GO Component	GO:0005622	Intracellular anatomical structure
+PRRC1	9606.ENSP00000421965	GO Component	GO:0005737	Cytoplasm
+PRRC1	9606.ENSP00000421965	GO Component	GO:0005794	Golgi apparatus
+PRRC1	9606.ENSP00000421965	GO Component	GO:0012505	Endomembrane system
+PRRC1	9606.ENSP00000421965	GO Component	GO:0043226	Organelle
+PRRC1	9606.ENSP00000421965	GO Component	GO:0043227	Membrane-bounded organelle
+PRRC1	9606.ENSP00000421965	GO Component	GO:0043229	Intracellular organelle
+PRRC1	9606.ENSP00000421965	GO Component	GO:0043231	Intracellular membrane-bounded organelle
+PRRC1	9606.ENSP00000421965	GO Component	GO:0110165	Cellular anatomical entity
+PRRC1	9606.ENSP00000421965	STRING clusters	CL:29789	Mostly uncharacterized, incl. CD20-like family, and GTPase GIMA/IAN/Toc
+PRRC1	9606.ENSP00000421965	STRING clusters	CL:30045	Mixed, incl. CD20-like family, and Peptidase A22B, signal peptide peptidase
+PRRC1	9606.ENSP00000421965	STRING clusters	CL:30141	Mostly uncharacterized, incl. Subvalvular aortic stenosis, and Transcription factor Sp4-like
+PRRC1	9606.ENSP00000421965	STRING clusters	CL:30142	Mostly uncharacterized, incl. Subvalvular aortic stenosis, and Major intrinsically disordered Notch2-binding receptor 1-like
+PRRC1	9606.ENSP00000421965	STRING clusters	CL:30143	Mixed, incl. Subvalvular aortic stenosis, and Major intrinsically disordered Notch2-binding receptor 1-like
+PRRC1	9606.ENSP00000421965	TISSUES	BTO:0000000	Tissues, cell types and enzyme sources
+PRRC1	9606.ENSP00000421965	TISSUES	BTO:0000042	Animal
+PRRC1	9606.ENSP00000421965	TISSUES	BTO:0000080	Male reproductive gland
+PRRC1	9606.ENSP00000421965	TISSUES	BTO:0000081	Reproductive system
+PRRC1	9606.ENSP00000421965	TISSUES	BTO:0000082	Male reproductive system
+PRRC1	9606.ENSP00000421965	TISSUES	BTO:0000083	Female reproductive system
+PRRC1	9606.ENSP00000421965	TISSUES	BTO:0000227	Central nervous system
+PRRC1	9606.ENSP00000421965	TISSUES	BTO:0000522	Gland
+PRRC1	9606.ENSP00000421965	TISSUES	BTO:0001279	Spinal cord
+PRRC1	9606.ENSP00000421965	TISSUES	BTO:0001484	Nervous system
+PRRC1	9606.ENSP00000421965	TISSUES	BTO:0001488	Endocrine gland
+PRRC1	9606.ENSP00000421965	TISSUES	BTO:0001489	Whole body
+PRRC1	9606.ENSP00000421965	TISSUES	BTO:0003091	Urogenital system
+PRRC1	9606.ENSP00000421965	Monarch	EFO:0004747	Protein measurement
+PRRC1	9606.ENSP00000421965	Monarch	EFO:0004873	Cytokine measurement
+PRRC1	9606.ENSP00000421965	Monarch	EFO:0008354	Cognitive function measurement
+PRRC1	9606.ENSP00000421965	Monarch	EFO:0008393	Reaction time measurement
+PRRC1	9606.ENSP00000421965	UniProt Keywords	KW-0025	Alternative splicing
+PRRC1	9606.ENSP00000421965	UniProt Keywords	KW-0333	Golgi apparatus
+PRRC1	9606.ENSP00000421965	UniProt Keywords	KW-0597	Phosphoprotein
+PRRC1	9606.ENSP00000421965	Pfam	PF01931	Protein of unknown function DUF84
+PRRC1	9606.ENSP00000421965	InterPro	IPR026533	Non-canonical purine NTP phosphatase/PRRC1
+PRRC1	9606.ENSP00000421965	InterPro	IPR026534	Protein PRRC1
+PRRC1	9606.ENSP00000421965	InterPro	IPR029001	Inosine triphosphate pyrophosphatase-like
+PRTN3	9606.ENSP00000234347	GO Process	GO:0002376	Immune system process
+PRTN3	9606.ENSP00000234347	GO Process	GO:0002520	Immune system development
+PRTN3	9606.ENSP00000234347	GO Process	GO:0002521	Leukocyte differentiation
+PRTN3	9606.ENSP00000234347	GO Process	GO:0002573	Myeloid leukocyte differentiation
+PRTN3	9606.ENSP00000234347	GO Process	GO:0006508	Proteolysis
+PRTN3	9606.ENSP00000234347	GO Process	GO:0006509	Membrane protein ectodomain proteolysis
+PRTN3	9606.ENSP00000234347	GO Process	GO:0006807	Nitrogen compound metabolic process
+PRTN3	9606.ENSP00000234347	GO Process	GO:0006810	Transport
+PRTN3	9606.ENSP00000234347	GO Process	GO:0006909	Phagocytosis
+PRTN3	9606.ENSP00000234347	GO Process	GO:0006950	Response to stress
+PRTN3	9606.ENSP00000234347	GO Process	GO:0006952	Defense response
+PRTN3	9606.ENSP00000234347	GO Process	GO:0006955	Immune response
+PRTN3	9606.ENSP00000234347	GO Process	GO:0006959	Humoral immune response
+PRTN3	9606.ENSP00000234347	GO Process	GO:0007275	Multicellular organism development
+PRTN3	9606.ENSP00000234347	GO Process	GO:0008152	Metabolic process
+PRTN3	9606.ENSP00000234347	GO Process	GO:0008284	Positive regulation of cell population proliferation
+PRTN3	9606.ENSP00000234347	GO Process	GO:0009056	Catabolic process
+PRTN3	9606.ENSP00000234347	GO Process	GO:0009605	Response to external stimulus
+PRTN3	9606.ENSP00000234347	GO Process	GO:0009607	Response to biotic stimulus
+PRTN3	9606.ENSP00000234347	GO Process	GO:0009987	Cellular process
+PRTN3	9606.ENSP00000234347	GO Process	GO:0016043	Cellular component organization
+PRTN3	9606.ENSP00000234347	GO Process	GO:0016192	Vesicle-mediated transport
+PRTN3	9606.ENSP00000234347	GO Process	GO:0016477	Cell migration
+PRTN3	9606.ENSP00000234347	GO Process	GO:0019538	Protein metabolic process
+PRTN3	9606.ENSP00000234347	GO Process	GO:0019730	Antimicrobial humoral response
+PRTN3	9606.ENSP00000234347	GO Process	GO:0030097	Hemopoiesis
+PRTN3	9606.ENSP00000234347	GO Process	GO:0030099	Myeloid cell differentiation
+PRTN3	9606.ENSP00000234347	GO Process	GO:0030154	Cell differentiation
+PRTN3	9606.ENSP00000234347	GO Process	GO:0030574	Collagen catabolic process
+PRTN3	9606.ENSP00000234347	GO Process	GO:0032501	Multicellular organismal process
+PRTN3	9606.ENSP00000234347	GO Process	GO:0032502	Developmental process
+PRTN3	9606.ENSP00000234347	GO Process	GO:0032879	Regulation of localization
+PRTN3	9606.ENSP00000234347	GO Process	GO:0032963	Collagen metabolic process
+PRTN3	9606.ENSP00000234347	GO Process	GO:0033619	Membrane protein proteolysis
+PRTN3	9606.ENSP00000234347	GO Process	GO:0034330	Cell junction organization
+PRTN3	9606.ENSP00000234347	GO Process	GO:0034331	Cell junction maintenance
+PRTN3	9606.ENSP00000234347	GO Process	GO:0042127	Regulation of cell population proliferation
+PRTN3	9606.ENSP00000234347	GO Process	GO:0043085	Positive regulation of catalytic activity
+PRTN3	9606.ENSP00000234347	GO Process	GO:0043087	Regulation of GTPase activity
+PRTN3	9606.ENSP00000234347	GO Process	GO:0043170	Macromolecule metabolic process
+PRTN3	9606.ENSP00000234347	GO Process	GO:0043207	Response to external biotic stimulus
+PRTN3	9606.ENSP00000234347	GO Process	GO:0043547	Positive regulation of GTPase activity
+PRTN3	9606.ENSP00000234347	GO Process	GO:0043954	Cellular component maintenance
+PRTN3	9606.ENSP00000234347	GO Process	GO:0044093	Positive regulation of molecular function
+PRTN3	9606.ENSP00000234347	GO Process	GO:0044238	Primary metabolic process
+PRTN3	9606.ENSP00000234347	GO Process	GO:0044419	Biological process involved in interspecies interaction between organisms
+PRTN3	9606.ENSP00000234347	GO Process	GO:0045123	Cellular extravasation
+PRTN3	9606.ENSP00000234347	GO Process	GO:0045216	Cell-cell junction organization
+PRTN3	9606.ENSP00000234347	GO Process	GO:0045217	Cell-cell junction maintenance
+PRTN3	9606.ENSP00000234347	GO Process	GO:0048513	Animal organ development
+PRTN3	9606.ENSP00000234347	GO Process	GO:0048518	Positive regulation of biological process
+PRTN3	9606.ENSP00000234347	GO Process	GO:0048519	Negative regulation of biological process
+PRTN3	9606.ENSP00000234347	GO Process	GO:0048522	Positive regulation of cellular process
+PRTN3	9606.ENSP00000234347	GO Process	GO:0048534	Hematopoietic or lymphoid organ development
+PRTN3	9606.ENSP00000234347	GO Process	GO:0048731	System development
+PRTN3	9606.ENSP00000234347	GO Process	GO:0048856	Anatomical structure development
+PRTN3	9606.ENSP00000234347	GO Process	GO:0048869	Cellular developmental process
+PRTN3	9606.ENSP00000234347	GO Process	GO:0048870	Cell motility
+PRTN3	9606.ENSP00000234347	GO Process	GO:0050764	Regulation of phagocytosis
+PRTN3	9606.ENSP00000234347	GO Process	GO:0050765	Negative regulation of phagocytosis
+PRTN3	9606.ENSP00000234347	GO Process	GO:0050789	Regulation of biological process
+PRTN3	9606.ENSP00000234347	GO Process	GO:0050790	Regulation of catalytic activity
+PRTN3	9606.ENSP00000234347	GO Process	GO:0050794	Regulation of cellular process
+PRTN3	9606.ENSP00000234347	GO Process	GO:0050896	Response to stimulus
+PRTN3	9606.ENSP00000234347	GO Process	GO:0050900	Leukocyte migration
+PRTN3	9606.ENSP00000234347	GO Process	GO:0051049	Regulation of transport
+PRTN3	9606.ENSP00000234347	GO Process	GO:0051051	Negative regulation of transport
+PRTN3	9606.ENSP00000234347	GO Process	GO:0051179	Localization
+PRTN3	9606.ENSP00000234347	GO Process	GO:0051234	Establishment of localization
+PRTN3	9606.ENSP00000234347	GO Process	GO:0051336	Regulation of hydrolase activity
+PRTN3	9606.ENSP00000234347	GO Process	GO:0051345	Positive regulation of hydrolase activity
+PRTN3	9606.ENSP00000234347	GO Process	GO:0051707	Response to other organism
+PRTN3	9606.ENSP00000234347	GO Process	GO:0060627	Regulation of vesicle-mediated transport
+PRTN3	9606.ENSP00000234347	GO Process	GO:0065007	Biological regulation
+PRTN3	9606.ENSP00000234347	GO Process	GO:0065009	Regulation of molecular function
+PRTN3	9606.ENSP00000234347	GO Process	GO:0071704	Organic substance metabolic process
+PRTN3	9606.ENSP00000234347	GO Process	GO:0071840	Cellular component organization or biogenesis
+PRTN3	9606.ENSP00000234347	GO Process	GO:0072672	Neutrophil extravasation
+PRTN3	9606.ENSP00000234347	GO Process	GO:0097028	Dendritic cell differentiation
+PRTN3	9606.ENSP00000234347	GO Process	GO:0097029	Mature conventional dendritic cell differentiation
+PRTN3	9606.ENSP00000234347	GO Process	GO:0097529	Myeloid leukocyte migration
+PRTN3	9606.ENSP00000234347	GO Process	GO:0097530	Granulocyte migration
+PRTN3	9606.ENSP00000234347	GO Process	GO:0098542	Defense response to other organism
+PRTN3	9606.ENSP00000234347	GO Process	GO:1901564	Organonitrogen compound metabolic process
+PRTN3	9606.ENSP00000234347	GO Process	GO:1903131	Mononuclear cell differentiation
+PRTN3	9606.ENSP00000234347	GO Process	GO:1990266	Neutrophil migration
+PRTN3	9606.ENSP00000234347	GO Function	GO:0003824	Catalytic activity
+PRTN3	9606.ENSP00000234347	GO Function	GO:0004175	Endopeptidase activity
+PRTN3	9606.ENSP00000234347	GO Function	GO:0004252	Serine-type endopeptidase activity
+PRTN3	9606.ENSP00000234347	GO Function	GO:0005102	Signaling receptor binding
+PRTN3	9606.ENSP00000234347	GO Function	GO:0005488	Binding
+PRTN3	9606.ENSP00000234347	GO Function	GO:0005515	Protein binding
+PRTN3	9606.ENSP00000234347	GO Function	GO:0008233	Peptidase activity
+PRTN3	9606.ENSP00000234347	GO Function	GO:0008236	Serine-type peptidase activity
+PRTN3	9606.ENSP00000234347	GO Function	GO:0016787	Hydrolase activity
+PRTN3	9606.ENSP00000234347	GO Function	GO:0017171	Serine hydrolase activity
+PRTN3	9606.ENSP00000234347	GO Function	GO:0019899	Enzyme binding
+PRTN3	9606.ENSP00000234347	GO Function	GO:0140096	Catalytic activity, acting on a protein
+PRTN3	9606.ENSP00000234347	GO Component	GO:0000323	Lytic vacuole
+PRTN3	9606.ENSP00000234347	GO Component	GO:0005576	Extracellular region
+PRTN3	9606.ENSP00000234347	GO Component	GO:0005615	Extracellular space
+PRTN3	9606.ENSP00000234347	GO Component	GO:0005622	Intracellular anatomical structure
+PRTN3	9606.ENSP00000234347	GO Component	GO:0005737	Cytoplasm
+PRTN3	9606.ENSP00000234347	GO Component	GO:0005764	Lysosome
+PRTN3	9606.ENSP00000234347	GO Component	GO:0005766	Primary lysosome
+PRTN3	9606.ENSP00000234347	GO Component	GO:0005773	Vacuole
+PRTN3	9606.ENSP00000234347	GO Component	GO:0005775	Vacuolar lumen
+PRTN3	9606.ENSP00000234347	GO Component	GO:0005829	Cytosol
+PRTN3	9606.ENSP00000234347	GO Component	GO:0005886	Plasma membrane
+PRTN3	9606.ENSP00000234347	GO Component	GO:0012505	Endomembrane system
+PRTN3	9606.ENSP00000234347	GO Component	GO:0016020	Membrane
+PRTN3	9606.ENSP00000234347	GO Component	GO:0030141	Secretory granule
+PRTN3	9606.ENSP00000234347	GO Component	GO:0031410	Cytoplasmic vesicle
+PRTN3	9606.ENSP00000234347	GO Component	GO:0031974	Membrane-enclosed lumen
+PRTN3	9606.ENSP00000234347	GO Component	GO:0031982	Vesicle
+PRTN3	9606.ENSP00000234347	GO Component	GO:0031983	Vesicle lumen
+PRTN3	9606.ENSP00000234347	GO Component	GO:0034774	Secretory granule lumen
+PRTN3	9606.ENSP00000234347	GO Component	GO:0035578	Azurophil granule lumen
+PRTN3	9606.ENSP00000234347	GO Component	GO:0042582	Azurophil granule
+PRTN3	9606.ENSP00000234347	GO Component	GO:0043226	Organelle
+PRTN3	9606.ENSP00000234347	GO Component	GO:0043227	Membrane-bounded organelle
+PRTN3	9606.ENSP00000234347	GO Component	GO:0043229	Intracellular organelle
+PRTN3	9606.ENSP00000234347	GO Component	GO:0043230	Extracellular organelle
+PRTN3	9606.ENSP00000234347	GO Component	GO:0043231	Intracellular membrane-bounded organelle
+PRTN3	9606.ENSP00000234347	GO Component	GO:0043233	Organelle lumen
+PRTN3	9606.ENSP00000234347	GO Component	GO:0044853	Plasma membrane raft
+PRTN3	9606.ENSP00000234347	GO Component	GO:0045121	Membrane raft
+PRTN3	9606.ENSP00000234347	GO Component	GO:0060205	Cytoplasmic vesicle lumen
+PRTN3	9606.ENSP00000234347	GO Component	GO:0065010	Extracellular membrane-bounded organelle
+PRTN3	9606.ENSP00000234347	GO Component	GO:0070013	Intracellular organelle lumen
+PRTN3	9606.ENSP00000234347	GO Component	GO:0070062	Extracellular exosome
+PRTN3	9606.ENSP00000234347	GO Component	GO:0071944	Cell periphery
+PRTN3	9606.ENSP00000234347	GO Component	GO:0097708	Intracellular vesicle
+PRTN3	9606.ENSP00000234347	GO Component	GO:0098590	Plasma membrane region
+PRTN3	9606.ENSP00000234347	GO Component	GO:0098857	Membrane microdomain
+PRTN3	9606.ENSP00000234347	GO Component	GO:0099503	Secretory vesicle
+PRTN3	9606.ENSP00000234347	GO Component	GO:0110165	Cellular anatomical entity
+PRTN3	9606.ENSP00000234347	GO Component	GO:1903561	Extracellular vesicle
+PRTN3	9606.ENSP00000234347	STRING clusters	CL:19114	Mixed, incl. S100/CaBP-9k-type, calcium binding, subdomain, and Cystatin superfamily
+PRTN3	9606.ENSP00000234347	STRING clusters	CL:19115	Mixed, incl. Cystatin superfamily, and Specific granule lumen
+PRTN3	9606.ENSP00000234347	STRING clusters	CL:19181	Mixed, incl. Specific granule lumen, and Mononeuritis multiplex
+PRTN3	9606.ENSP00000234347	STRING clusters	CL:19183	Mixed, incl. Neutrophil mediated cytotoxicity, and Mononeuritis multiplex
+PRTN3	9606.ENSP00000234347	STRING clusters	CL:19185	Mixed, incl. Neutrophil mediated cytotoxicity, and Mononeuritis multiplex
+PRTN3	9606.ENSP00000234347	STRING clusters	CL:19188	Mixed, incl. Mononeuritis multiplex, and Neutrophil mediated cytotoxicity
+PRTN3	9606.ENSP00000234347	STRING clusters	CL:19191	Mononeuritis multiplex, and Neutrophil mediated cytotoxicity
+PRTN3	9606.ENSP00000234347	Reactome	HSA-109582	Hemostasis
+PRTN3	9606.ENSP00000234347	Reactome	HSA-1280215	Cytokine Signaling in Immune system
+PRTN3	9606.ENSP00000234347	Reactome	HSA-140875	Common Pathway of Fibrin Clot Formation
+PRTN3	9606.ENSP00000234347	Reactome	HSA-140877	Formation of Fibrin Clot (Clotting Cascade)
+PRTN3	9606.ENSP00000234347	Reactome	HSA-168249	Innate Immune System
+PRTN3	9606.ENSP00000234347	Reactome	HSA-168256	Immune System
+PRTN3	9606.ENSP00000234347	Reactome	HSA-449147	Signaling by Interleukins
+PRTN3	9606.ENSP00000234347	Reactome	HSA-449836	Other interleukin signaling
+PRTN3	9606.ENSP00000234347	Reactome	HSA-6798695	Neutrophil degranulation
+PRTN3	9606.ENSP00000234347	Reactome	HSA-6803157	Antimicrobial peptides
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:0014667	Disease of metabolism
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:0040097	Autoimmune vasculitis
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:0050032	Mineral metabolism disease
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:0050117	Disease by infectious agent
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:0050127	Sinusitis
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:0050155	Sensory system disease
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:0050161	Lower respiratory tract disease
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:0050825	Endocardium disease
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:0050828	Artery disease
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:0060000	Infective endocarditis
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:0060049	Autoimmune disease of urogenital tract
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:0060050	Autoimmune disease of blood
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:0060051	Autoimmune disease of cardiovascular system
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:0060056	Hypersensitivity reaction disease
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:0060158	Acquired metabolic disease
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:0080001	Bone disease
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:10314	Endocarditis
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:104	Bacterial infectious disease
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:10499	Orbital granuloma
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:10952	Nephritis
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:11123	Henoch-Schoenlein purpura
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:11343	Scleral disease
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:114	Heart disease
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:1188	Mononeuropathy
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:12118	Pulmonary hemosiderosis
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:12119	Hemosiderosis
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:12132	Granulomatosis with polyangiitis
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:1247	Blood coagulation disease
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:1278	Tolosa-hunt syndrome
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:1279	Ocular motility disease
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:1287	Cardiovascular system disease
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:13138	Acute proliferative glomerulonephritis
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:13139	Crescentic glomerulonephritis
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:13452	Scleritis
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:1352	Paranasal sinus disease
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:13794	Anterior scleritis
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:1397	Chronic orbital inflammation
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:1557	Hypersensitivity reaction type III disease
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:1564	Fungal infectious disease
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:1579	Respiratory system disease
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:16	Integumentary system disease
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:17	Musculoskeletal system disease
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:178	Vascular disease
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:18	Urinary system disease
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:1802	Mononeuritis
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:1835	Mononeuritis multiplex
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:2051	Maxillary sinusitis
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:2213	Hemorrhagic disease
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:2351	Iron metabolism disease
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:2825	Nose disease
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:2914	Immune system disease
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:2921	Glomerulonephritis
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:3049	Churg-Strauss syndrome
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:3326	Purpura
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:37	Skin disease
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:4	Disease
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:417	Autoimmune disease
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:4562	Subacute bacterial endocarditis
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:4776	Rapidly progressive glomerulonephritis
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:519	Aortitis
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:520	Aortic disease
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:557	Kidney disease
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:5614	Eye disease
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:5656	Cranial nerve disease
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:572	Mononeuritis of upper limb and mononeuritis multiplex
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:574	Peripheral nervous system disease
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:612	Primary immunodeficiency disease
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:65	Connective tissue disease
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:7	Disease of anatomical entity
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:74	Hematopoietic system disease
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:850	Lung disease
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:863	Nervous system disease
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:865	Vasculitis
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:870	Neuropathy
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:930	Orbital disease
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:974	Upper respiratory tract disease
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:9808	Goodpasture syndrome
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:9809	Hypersensitivity vasculitis
+PRTN3	9606.ENSP00000234347	DISEASES	DOID:9810	Polyarteritis nodosa
+PRTN3	9606.ENSP00000234347	TISSUES	BTO:0000000	Tissues, cell types and enzyme sources
+PRTN3	9606.ENSP00000234347	TISSUES	BTO:0000042	Animal
+PRTN3	9606.ENSP00000234347	TISSUES	BTO:0000089	Blood
+PRTN3	9606.ENSP00000234347	TISSUES	BTO:0000130	Neutrophil
+PRTN3	9606.ENSP00000234347	TISSUES	BTO:0000539	Granulocyte
+PRTN3	9606.ENSP00000234347	TISSUES	BTO:0000570	Hematopoietic system
+PRTN3	9606.ENSP00000234347	TISSUES	BTO:0000574	Hematopoietic cell
+PRTN3	9606.ENSP00000234347	TISSUES	BTO:0000751	Leukocyte
+PRTN3	9606.ENSP00000234347	TISSUES	BTO:0001044	Phagocyte
+PRTN3	9606.ENSP00000234347	TISSUES	BTO:0001239	Serum
+PRTN3	9606.ENSP00000234347	TISSUES	BTO:0001489	Whole body
+PRTN3	9606.ENSP00000234347	COMPARTMENTS	GOCC:0000323	Lytic vacuole
+PRTN3	9606.ENSP00000234347	COMPARTMENTS	GOCC:0005576	Extracellular region
+PRTN3	9606.ENSP00000234347	COMPARTMENTS	GOCC:0005615	Extracellular space
+PRTN3	9606.ENSP00000234347	COMPARTMENTS	GOCC:0005622	Intracellular
+PRTN3	9606.ENSP00000234347	COMPARTMENTS	GOCC:0005737	Cytoplasm
+PRTN3	9606.ENSP00000234347	COMPARTMENTS	GOCC:0005764	Lysosome
+PRTN3	9606.ENSP00000234347	COMPARTMENTS	GOCC:0005766	Primary lysosome
+PRTN3	9606.ENSP00000234347	COMPARTMENTS	GOCC:0005773	Vacuole
+PRTN3	9606.ENSP00000234347	COMPARTMENTS	GOCC:0005775	Vacuolar lumen
+PRTN3	9606.ENSP00000234347	COMPARTMENTS	GOCC:0005829	Cytosol
+PRTN3	9606.ENSP00000234347	COMPARTMENTS	GOCC:0005886	Plasma membrane
+PRTN3	9606.ENSP00000234347	COMPARTMENTS	GOCC:0012505	Endomembrane system
+PRTN3	9606.ENSP00000234347	COMPARTMENTS	GOCC:0016020	Membrane
+PRTN3	9606.ENSP00000234347	COMPARTMENTS	GOCC:0030141	Secretory granule
+PRTN3	9606.ENSP00000234347	COMPARTMENTS	GOCC:0031410	Cytoplasmic vesicle
+PRTN3	9606.ENSP00000234347	COMPARTMENTS	GOCC:0031974	Membrane-enclosed lumen
+PRTN3	9606.ENSP00000234347	COMPARTMENTS	GOCC:0031982	Vesicle
+PRTN3	9606.ENSP00000234347	COMPARTMENTS	GOCC:0031983	Vesicle lumen
+PRTN3	9606.ENSP00000234347	COMPARTMENTS	GOCC:0032991	Protein-containing complex
+PRTN3	9606.ENSP00000234347	COMPARTMENTS	GOCC:0034774	Secretory granule lumen
+PRTN3	9606.ENSP00000234347	COMPARTMENTS	GOCC:0035578	Azurophil granule lumen
+PRTN3	9606.ENSP00000234347	COMPARTMENTS	GOCC:0042582	Azurophil granule
+PRTN3	9606.ENSP00000234347	COMPARTMENTS	GOCC:0043226	Organelle
+PRTN3	9606.ENSP00000234347	COMPARTMENTS	GOCC:0043227	Membrane-bounded organelle
+PRTN3	9606.ENSP00000234347	COMPARTMENTS	GOCC:0043229	Intracellular organelle
+PRTN3	9606.ENSP00000234347	COMPARTMENTS	GOCC:0043230	Extracellular organelle
+PRTN3	9606.ENSP00000234347	COMPARTMENTS	GOCC:0043231	Intracellular membrane-bounded organelle
+PRTN3	9606.ENSP00000234347	COMPARTMENTS	GOCC:0043233	Organelle lumen
+PRTN3	9606.ENSP00000234347	COMPARTMENTS	GOCC:0043291	RAVE complex
+PRTN3	9606.ENSP00000234347	COMPARTMENTS	GOCC:0044853	Plasma membrane raft
+PRTN3	9606.ENSP00000234347	COMPARTMENTS	GOCC:0045121	Membrane raft
+PRTN3	9606.ENSP00000234347	COMPARTMENTS	GOCC:0060205	Cytoplasmic vesicle lumen
+PRTN3	9606.ENSP00000234347	COMPARTMENTS	GOCC:0065010	Extracellular membrane-bounded organelle
+PRTN3	9606.ENSP00000234347	COMPARTMENTS	GOCC:0070013	Intracellular organelle lumen
+PRTN3	9606.ENSP00000234347	COMPARTMENTS	GOCC:0071944	Cell periphery
+PRTN3	9606.ENSP00000234347	COMPARTMENTS	GOCC:0097708	Intracellular vesicle
+PRTN3	9606.ENSP00000234347	COMPARTMENTS	GOCC:0098590	Plasma membrane region
+PRTN3	9606.ENSP00000234347	COMPARTMENTS	GOCC:0098857	Membrane microdomain
+PRTN3	9606.ENSP00000234347	COMPARTMENTS	GOCC:0099503	Secretory vesicle
+PRTN3	9606.ENSP00000234347	COMPARTMENTS	GOCC:0110165	Cellular anatomical entity
+PRTN3	9606.ENSP00000234347	COMPARTMENTS	GOCC:1903561	Extracellular vesicle
+PRTN3	9606.ENSP00000234347	Monarch	EFO:0000246	Age
+PRTN3	9606.ENSP00000234347	Monarch	EFO:0000719	Temporal measurement
+PRTN3	9606.ENSP00000234347	Monarch	EFO:0004557	Population measurement
+PRTN3	9606.ENSP00000234347	Monarch	EFO:0004747	Protein measurement
+PRTN3	9606.ENSP00000234347	Monarch	EFO:0004847	Age at onset
+PRTN3	9606.ENSP00000234347	Monarch	EFO:0007874	Gut microbiome measurement
+PRTN3	9606.ENSP00000234347	Monarch	EFO:0007882	Microbiome measurement
+PRTN3	9606.ENSP00000234347	Monarch	EFO:0007937	Blood protein measurement
+PRTN3	9606.ENSP00000234347	Monarch	HP:0000118	Phenotypic abnormality
+PRTN3	9606.ENSP00000234347	Monarch	HP:0000478	Abnormality of the eye
+PRTN3	9606.ENSP00000234347	Monarch	HP:0000539	Abnormality of refraction
+PRTN3	9606.ENSP00000234347	Monarch	HP:0000545	Myopia
+PRTN3	9606.ENSP00000234347	Monarch	HP:0012373	Abnormal eye physiology
+PRTN3	9606.ENSP00000234347	UniProt Keywords	KW-0177	Collagen degradation
+PRTN3	9606.ENSP00000234347	UniProt Keywords	KW-0325	Glycoprotein
+PRTN3	9606.ENSP00000234347	UniProt Keywords	KW-0378	Hydrolase
+PRTN3	9606.ENSP00000234347	UniProt Keywords	KW-0472	Membrane
+PRTN3	9606.ENSP00000234347	UniProt Keywords	KW-0645	Protease
+PRTN3	9606.ENSP00000234347	UniProt Keywords	KW-0720	Serine protease
+PRTN3	9606.ENSP00000234347	UniProt Keywords	KW-0732	Signal
+PRTN3	9606.ENSP00000234347	UniProt Keywords	KW-0865	Zymogen
+PRTN3	9606.ENSP00000234347	UniProt Keywords	KW-0964	Secreted
+PRTN3	9606.ENSP00000234347	UniProt Keywords	KW-1003	Cell membrane
+PRTN3	9606.ENSP00000234347	UniProt Keywords	KW-1015	Disulfide bond
+PRTN3	9606.ENSP00000234347	InterPro	IPR001254	Serine proteases, trypsin domain
+PRTN3	9606.ENSP00000234347	InterPro	IPR001314	Peptidase S1A, chymotrypsin family
+PRTN3	9606.ENSP00000234347	InterPro	IPR009003	Peptidase S1, PA clan
+PRTN3	9606.ENSP00000234347	InterPro	IPR018114	Serine proteases, trypsin family, histidine active site
+PRTN3	9606.ENSP00000234347	InterPro	IPR033116	Serine proteases, trypsin family, serine active site
+PRTN3	9606.ENSP00000234347	InterPro	IPR043504	Peptidase S1, PA clan, chymotrypsin-like fold
+PRTN3	9606.ENSP00000234347	SMART	SM00020	Trypsin-like serine protease
+RETN	9606.ENSP00000221515	GO Process	GO:0007154	Cell communication
+RETN	9606.ENSP00000221515	GO Process	GO:0007165	Signal transduction
+RETN	9606.ENSP00000221515	GO Process	GO:0007568	Aging
+RETN	9606.ENSP00000221515	GO Process	GO:0009605	Response to external stimulus
+RETN	9606.ENSP00000221515	GO Process	GO:0009612	Response to mechanical stimulus
+RETN	9606.ENSP00000221515	GO Process	GO:0009628	Response to abiotic stimulus
+RETN	9606.ENSP00000221515	GO Process	GO:0009719	Response to endogenous stimulus
+RETN	9606.ENSP00000221515	GO Process	GO:0009725	Response to hormone
+RETN	9606.ENSP00000221515	GO Process	GO:0009987	Cellular process
+RETN	9606.ENSP00000221515	GO Process	GO:0010033	Response to organic substance
+RETN	9606.ENSP00000221515	GO Process	GO:0010243	Response to organonitrogen compound
+RETN	9606.ENSP00000221515	GO Process	GO:0010646	Regulation of cell communication
+RETN	9606.ENSP00000221515	GO Process	GO:0010647	Positive regulation of cell communication
+RETN	9606.ENSP00000221515	GO Process	GO:0010817	Regulation of hormone levels
+RETN	9606.ENSP00000221515	GO Process	GO:0023051	Regulation of signaling
+RETN	9606.ENSP00000221515	GO Process	GO:0023052	Signaling
+RETN	9606.ENSP00000221515	GO Process	GO:0023056	Positive regulation of signaling
+RETN	9606.ENSP00000221515	GO Process	GO:0030154	Cell differentiation
+RETN	9606.ENSP00000221515	GO Process	GO:0032368	Regulation of lipid transport
+RETN	9606.ENSP00000221515	GO Process	GO:0032370	Positive regulation of lipid transport
+RETN	9606.ENSP00000221515	GO Process	GO:0032502	Developmental process
+RETN	9606.ENSP00000221515	GO Process	GO:0032868	Response to insulin
+RETN	9606.ENSP00000221515	GO Process	GO:0032879	Regulation of localization
+RETN	9606.ENSP00000221515	GO Process	GO:0042221	Response to chemical
+RETN	9606.ENSP00000221515	GO Process	GO:0043434	Response to peptide hormone
+RETN	9606.ENSP00000221515	GO Process	GO:0044057	Regulation of system process
+RETN	9606.ENSP00000221515	GO Process	GO:0044060	Regulation of endocrine process
+RETN	9606.ENSP00000221515	GO Process	GO:0045444	Fat cell differentiation
+RETN	9606.ENSP00000221515	GO Process	GO:0046883	Regulation of hormone secretion
+RETN	9606.ENSP00000221515	GO Process	GO:0046887	Positive regulation of hormone secretion
+RETN	9606.ENSP00000221515	GO Process	GO:0048518	Positive regulation of biological process
+RETN	9606.ENSP00000221515	GO Process	GO:0048519	Negative regulation of biological process
+RETN	9606.ENSP00000221515	GO Process	GO:0048521	Negative regulation of behavior
+RETN	9606.ENSP00000221515	GO Process	GO:0048522	Positive regulation of cellular process
+RETN	9606.ENSP00000221515	GO Process	GO:0048869	Cellular developmental process
+RETN	9606.ENSP00000221515	GO Process	GO:0050789	Regulation of biological process
+RETN	9606.ENSP00000221515	GO Process	GO:0050793	Regulation of developmental process
+RETN	9606.ENSP00000221515	GO Process	GO:0050794	Regulation of cellular process
+RETN	9606.ENSP00000221515	GO Process	GO:0050795	Regulation of behavior
+RETN	9606.ENSP00000221515	GO Process	GO:0050804	Modulation of chemical synaptic transmission
+RETN	9606.ENSP00000221515	GO Process	GO:0050806	Positive regulation of synaptic transmission
+RETN	9606.ENSP00000221515	GO Process	GO:0050896	Response to stimulus
+RETN	9606.ENSP00000221515	GO Process	GO:0051046	Regulation of secretion
+RETN	9606.ENSP00000221515	GO Process	GO:0051047	Positive regulation of secretion
+RETN	9606.ENSP00000221515	GO Process	GO:0051049	Regulation of transport
+RETN	9606.ENSP00000221515	GO Process	GO:0051050	Positive regulation of transport
+RETN	9606.ENSP00000221515	GO Process	GO:0051094	Positive regulation of developmental process
+RETN	9606.ENSP00000221515	GO Process	GO:0051239	Regulation of multicellular organismal process
+RETN	9606.ENSP00000221515	GO Process	GO:0051240	Positive regulation of multicellular organismal process
+RETN	9606.ENSP00000221515	GO Process	GO:0051241	Negative regulation of multicellular organismal process
+RETN	9606.ENSP00000221515	GO Process	GO:0051716	Cellular response to stimulus
+RETN	9606.ENSP00000221515	GO Process	GO:0060259	Regulation of feeding behavior
+RETN	9606.ENSP00000221515	GO Process	GO:0065007	Biological regulation
+RETN	9606.ENSP00000221515	GO Process	GO:0065008	Regulation of biological quality
+RETN	9606.ENSP00000221515	GO Process	GO:0099177	Regulation of trans-synaptic signaling
+RETN	9606.ENSP00000221515	GO Process	GO:1901652	Response to peptide
+RETN	9606.ENSP00000221515	GO Process	GO:1901698	Response to nitrogen compound
+RETN	9606.ENSP00000221515	GO Process	GO:1901700	Response to oxygen-containing compound
+RETN	9606.ENSP00000221515	GO Process	GO:1903530	Regulation of secretion by cell
+RETN	9606.ENSP00000221515	GO Process	GO:1903532	Positive regulation of secretion by cell
+RETN	9606.ENSP00000221515	GO Process	GO:1905939	Regulation of gonad development
+RETN	9606.ENSP00000221515	GO Process	GO:1905941	Positive regulation of gonad development
+RETN	9606.ENSP00000221515	GO Process	GO:1905952	Regulation of lipid localization
+RETN	9606.ENSP00000221515	GO Process	GO:1905954	Positive regulation of lipid localization
+RETN	9606.ENSP00000221515	GO Process	GO:2000026	Regulation of multicellular organismal development
+RETN	9606.ENSP00000221515	GO Process	GO:2000194	Regulation of female gonad development
+RETN	9606.ENSP00000221515	GO Process	GO:2000196	Positive regulation of female gonad development
+RETN	9606.ENSP00000221515	GO Process	GO:2000241	Regulation of reproductive process
+RETN	9606.ENSP00000221515	GO Process	GO:2000243	Positive regulation of reproductive process
+RETN	9606.ENSP00000221515	GO Process	GO:2000252	Negative regulation of feeding behavior
+RETN	9606.ENSP00000221515	GO Process	GO:2000831	Regulation of steroid hormone secretion
+RETN	9606.ENSP00000221515	GO Process	GO:2000833	Positive regulation of steroid hormone secretion
+RETN	9606.ENSP00000221515	GO Process	GO:2000870	Regulation of progesterone secretion
+RETN	9606.ENSP00000221515	GO Process	GO:2000872	Positive regulation of progesterone secretion
+RETN	9606.ENSP00000221515	GO Function	GO:0005102	Signaling receptor binding
+RETN	9606.ENSP00000221515	GO Function	GO:0005179	Hormone activity
+RETN	9606.ENSP00000221515	GO Function	GO:0005488	Binding
+RETN	9606.ENSP00000221515	GO Function	GO:0005515	Protein binding
+RETN	9606.ENSP00000221515	GO Function	GO:0030545	Signaling receptor regulator activity
+RETN	9606.ENSP00000221515	GO Function	GO:0030546	Signaling receptor activator activity
+RETN	9606.ENSP00000221515	GO Function	GO:0048018	Receptor ligand activity
+RETN	9606.ENSP00000221515	GO Function	GO:0098772	Molecular function regulator activity
+RETN	9606.ENSP00000221515	GO Component	GO:0000323	Lytic vacuole
+RETN	9606.ENSP00000221515	GO Component	GO:0005576	Extracellular region
+RETN	9606.ENSP00000221515	GO Component	GO:0005615	Extracellular space
+RETN	9606.ENSP00000221515	GO Component	GO:0005622	Intracellular anatomical structure
+RETN	9606.ENSP00000221515	GO Component	GO:0005634	Nucleus
+RETN	9606.ENSP00000221515	GO Component	GO:0005737	Cytoplasm
+RETN	9606.ENSP00000221515	GO Component	GO:0005764	Lysosome
+RETN	9606.ENSP00000221515	GO Component	GO:0005766	Primary lysosome
+RETN	9606.ENSP00000221515	GO Component	GO:0005773	Vacuole
+RETN	9606.ENSP00000221515	GO Component	GO:0005775	Vacuolar lumen
+RETN	9606.ENSP00000221515	GO Component	GO:0012505	Endomembrane system
+RETN	9606.ENSP00000221515	GO Component	GO:0030141	Secretory granule
+RETN	9606.ENSP00000221515	GO Component	GO:0031410	Cytoplasmic vesicle
+RETN	9606.ENSP00000221515	GO Component	GO:0031974	Membrane-enclosed lumen
+RETN	9606.ENSP00000221515	GO Component	GO:0031982	Vesicle
+RETN	9606.ENSP00000221515	GO Component	GO:0031983	Vesicle lumen
+RETN	9606.ENSP00000221515	GO Component	GO:0034774	Secretory granule lumen
+RETN	9606.ENSP00000221515	GO Component	GO:0035578	Azurophil granule lumen
+RETN	9606.ENSP00000221515	GO Component	GO:0035580	Specific granule lumen
+RETN	9606.ENSP00000221515	GO Component	GO:0042581	Specific granule
+RETN	9606.ENSP00000221515	GO Component	GO:0042582	Azurophil granule
+RETN	9606.ENSP00000221515	GO Component	GO:0043226	Organelle
+RETN	9606.ENSP00000221515	GO Component	GO:0043227	Membrane-bounded organelle
+RETN	9606.ENSP00000221515	GO Component	GO:0043229	Intracellular organelle
+RETN	9606.ENSP00000221515	GO Component	GO:0043230	Extracellular organelle
+RETN	9606.ENSP00000221515	GO Component	GO:0043231	Intracellular membrane-bounded organelle
+RETN	9606.ENSP00000221515	GO Component	GO:0043233	Organelle lumen
+RETN	9606.ENSP00000221515	GO Component	GO:0060205	Cytoplasmic vesicle lumen
+RETN	9606.ENSP00000221515	GO Component	GO:0065010	Extracellular membrane-bounded organelle
+RETN	9606.ENSP00000221515	GO Component	GO:0070013	Intracellular organelle lumen
+RETN	9606.ENSP00000221515	GO Component	GO:0070062	Extracellular exosome
+RETN	9606.ENSP00000221515	GO Component	GO:0097708	Intracellular vesicle
+RETN	9606.ENSP00000221515	GO Component	GO:0099503	Secretory vesicle
+RETN	9606.ENSP00000221515	GO Component	GO:0110165	Cellular anatomical entity
+RETN	9606.ENSP00000221515	GO Component	GO:1903561	Extracellular vesicle
+RETN	9606.ENSP00000221515	STRING clusters	CL:10122	Mixed, incl. Adiponectin binding, and Resistin
+RETN	9606.ENSP00000221515	STRING clusters	CL:10123	Mixed, incl. Adiponectin binding, and Resistin
+RETN	9606.ENSP00000221515	STRING clusters	CL:9982	Mixed, incl. Glycerolipid metabolism, and PPAR signaling pathway
+RETN	9606.ENSP00000221515	STRING clusters	CL:9983	Mixed, incl. Fatty acid metabolism, and Regulation of lipid storage
+RETN	9606.ENSP00000221515	STRING clusters	CL:9984	Mixed, incl. Fatty acid metabolism, and Regulation of lipid storage
+RETN	9606.ENSP00000221515	Reactome	HSA-168249	Innate Immune System
+RETN	9606.ENSP00000221515	Reactome	HSA-168256	Immune System
+RETN	9606.ENSP00000221515	Reactome	HSA-212436	Generic Transcription Pathway
+RETN	9606.ENSP00000221515	Reactome	HSA-6798695	Neutrophil degranulation
+RETN	9606.ENSP00000221515	Reactome	HSA-73857	RNA Polymerase II Transcription
+RETN	9606.ENSP00000221515	Reactome	HSA-74160	Gene expression (Transcription)
+RETN	9606.ENSP00000221515	Reactome	HSA-9614085	FOXO-mediated transcription
+RETN	9606.ENSP00000221515	Reactome	HSA-9615017	FOXO-mediated transcription of oxidative stress, metabolic and neuronal genes
+RETN	9606.ENSP00000221515	WikiPathways	WP236	Adipogenesis
+RETN	9606.ENSP00000221515	WikiPathways	WP4481	Resistin as a regulator of inflammation
+RETN	9606.ENSP00000221515	DISEASES	DOID:0014667	Disease of metabolism
+RETN	9606.ENSP00000221515	DISEASES	DOID:0060158	Acquired metabolic disease
+RETN	9606.ENSP00000221515	DISEASES	DOID:2978	Carbohydrate metabolic disorder
+RETN	9606.ENSP00000221515	DISEASES	DOID:374	Nutrition disease
+RETN	9606.ENSP00000221515	DISEASES	DOID:4	Disease
+RETN	9606.ENSP00000221515	DISEASES	DOID:4194	Glucose metabolism disease
+RETN	9606.ENSP00000221515	DISEASES	DOID:630	Genetic disease
+RETN	9606.ENSP00000221515	DISEASES	DOID:654	Overnutrition
+RETN	9606.ENSP00000221515	DISEASES	DOID:655	Inherited metabolic disorder
+RETN	9606.ENSP00000221515	DISEASES	DOID:9351	Diabetes mellitus
+RETN	9606.ENSP00000221515	DISEASES	DOID:9352	Type 2 diabetes mellitus
+RETN	9606.ENSP00000221515	DISEASES	DOID:9970	Obesity
+RETN	9606.ENSP00000221515	TISSUES	BTO:0000000	Tissues, cell types and enzyme sources
+RETN	9606.ENSP00000221515	TISSUES	BTO:0000020	Abdomen
+RETN	9606.ENSP00000221515	TISSUES	BTO:0000042	Animal
+RETN	9606.ENSP00000221515	TISSUES	BTO:0000421	Connective tissue
+RETN	9606.ENSP00000221515	TISSUES	BTO:0001487	Adipose tissue
+RETN	9606.ENSP00000221515	TISSUES	BTO:0001489	Whole body
+RETN	9606.ENSP00000221515	TISSUES	BTO:0001493	Trunk
+RETN	9606.ENSP00000221515	TISSUES	BTO:0001782	Peritoneal cavity
+RETN	9606.ENSP00000221515	TISSUES	BTO:0004041	Abdominal adipose tissue
+RETN	9606.ENSP00000221515	COMPARTMENTS	GOCC:0000323	Lytic vacuole
+RETN	9606.ENSP00000221515	COMPARTMENTS	GOCC:0005576	Extracellular region
+RETN	9606.ENSP00000221515	COMPARTMENTS	GOCC:0005615	Extracellular space
+RETN	9606.ENSP00000221515	COMPARTMENTS	GOCC:0005622	Intracellular
+RETN	9606.ENSP00000221515	COMPARTMENTS	GOCC:0005737	Cytoplasm
+RETN	9606.ENSP00000221515	COMPARTMENTS	GOCC:0005764	Lysosome
+RETN	9606.ENSP00000221515	COMPARTMENTS	GOCC:0005766	Primary lysosome
+RETN	9606.ENSP00000221515	COMPARTMENTS	GOCC:0005773	Vacuole
+RETN	9606.ENSP00000221515	COMPARTMENTS	GOCC:0005775	Vacuolar lumen
+RETN	9606.ENSP00000221515	COMPARTMENTS	GOCC:0012505	Endomembrane system
+RETN	9606.ENSP00000221515	COMPARTMENTS	GOCC:0030141	Secretory granule
+RETN	9606.ENSP00000221515	COMPARTMENTS	GOCC:0031410	Cytoplasmic vesicle
+RETN	9606.ENSP00000221515	COMPARTMENTS	GOCC:0031974	Membrane-enclosed lumen
+RETN	9606.ENSP00000221515	COMPARTMENTS	GOCC:0031982	Vesicle
+RETN	9606.ENSP00000221515	COMPARTMENTS	GOCC:0031983	Vesicle lumen
+RETN	9606.ENSP00000221515	COMPARTMENTS	GOCC:0034774	Secretory granule lumen
+RETN	9606.ENSP00000221515	COMPARTMENTS	GOCC:0035578	Azurophil granule lumen
+RETN	9606.ENSP00000221515	COMPARTMENTS	GOCC:0035580	Specific granule lumen
+RETN	9606.ENSP00000221515	COMPARTMENTS	GOCC:0042581	Specific granule
+RETN	9606.ENSP00000221515	COMPARTMENTS	GOCC:0042582	Azurophil granule
+RETN	9606.ENSP00000221515	COMPARTMENTS	GOCC:0043226	Organelle
+RETN	9606.ENSP00000221515	COMPARTMENTS	GOCC:0043227	Membrane-bounded organelle
+RETN	9606.ENSP00000221515	COMPARTMENTS	GOCC:0043229	Intracellular organelle
+RETN	9606.ENSP00000221515	COMPARTMENTS	GOCC:0043230	Extracellular organelle
+RETN	9606.ENSP00000221515	COMPARTMENTS	GOCC:0043231	Intracellular membrane-bounded organelle
+RETN	9606.ENSP00000221515	COMPARTMENTS	GOCC:0043233	Organelle lumen
+RETN	9606.ENSP00000221515	COMPARTMENTS	GOCC:0060205	Cytoplasmic vesicle lumen
+RETN	9606.ENSP00000221515	COMPARTMENTS	GOCC:0065010	Extracellular membrane-bounded organelle
+RETN	9606.ENSP00000221515	COMPARTMENTS	GOCC:0070013	Intracellular organelle lumen
+RETN	9606.ENSP00000221515	COMPARTMENTS	GOCC:0070062	Extracellular exosome
+RETN	9606.ENSP00000221515	COMPARTMENTS	GOCC:0097708	Intracellular vesicle
+RETN	9606.ENSP00000221515	COMPARTMENTS	GOCC:0099503	Secretory vesicle
+RETN	9606.ENSP00000221515	COMPARTMENTS	GOCC:0110165	Cellular anatomical entity
+RETN	9606.ENSP00000221515	COMPARTMENTS	GOCC:1903561	Extracellular vesicle
+RETN	9606.ENSP00000221515	Monarch	EFO:0004747	Protein measurement
+RETN	9606.ENSP00000221515	Monarch	EFO:0004819	Resistin measurement
+RETN	9606.ENSP00000221515	Monarch	EFO:0004873	Cytokine measurement
+RETN	9606.ENSP00000221515	Monarch	EFO:0006842	Diabetes mellitus biomarker
+RETN	9606.ENSP00000221515	UniProt Keywords	KW-0025	Alternative splicing
+RETN	9606.ENSP00000221515	UniProt Keywords	KW-0219	Diabetes mellitus
+RETN	9606.ENSP00000221515	UniProt Keywords	KW-0372	Hormone
+RETN	9606.ENSP00000221515	UniProt Keywords	KW-0550	Obesity
+RETN	9606.ENSP00000221515	UniProt Keywords	KW-0732	Signal
+RETN	9606.ENSP00000221515	UniProt Keywords	KW-0964	Secreted
+RETN	9606.ENSP00000221515	UniProt Keywords	KW-1015	Disulfide bond
+RETN	9606.ENSP00000221515	Pfam	PF06954	Resistin
+RETN	9606.ENSP00000221515	InterPro	IPR009714	Resistin-like molecule hormone family
+RETN	9606.ENSP00000221515	InterPro	IPR036262	Resistin-like superfamily

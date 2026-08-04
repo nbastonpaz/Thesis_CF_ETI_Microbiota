@@ -1,0 +1,2 @@
+﻿"test_used","n_pairs","shapiro_W","shapiro_p","statistic","df","p_value","estimate_mean_delta","conf_low","conf_high","mean_delta_T12_minus_T0"
+"paired_t_test",9,0.9552393006775883,0.7474229351093691,1.7999999999999998,8,0.10955300864412823,6,-1.6866804506805548,13.686680450680555,-6

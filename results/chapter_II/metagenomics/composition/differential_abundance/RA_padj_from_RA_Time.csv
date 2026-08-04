@@ -1,0 +1,4 @@
+FeatureID,n_pairs,n_T0,n_T12,p,padj,padj_signif
+Adlercreutzia_equolifaciens,9,9,9,0.05917206782585943,0.05917206782585943,ns
+Clostridium_SGB6179,9,9,9,0.05917206782585943,0.05917206782585943,ns
+Flavonifractor_plautii,9,9,9,0.036031686218233556,0.05917206782585943,ns

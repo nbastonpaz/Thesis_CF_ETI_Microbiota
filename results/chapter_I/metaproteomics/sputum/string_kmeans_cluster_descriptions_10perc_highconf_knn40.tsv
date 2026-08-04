@@ -1,0 +1,41 @@
+#clustering method	cluster number	cluster color	hex color	gene count	primary description	secondary description	tertiary description	protein names
+kmeans	1	Red	#ff0000	353	Infectious disease	Organonitrogen compound biosynthesis	Extracellular exosome	ACOT7, ACOT2, FBP1, HK1, H6PD, G6PD, PGM2, PRPS2, PRPSAP1, PRPS1, NUDT9, PRPSAP2, AGL, PYGB, TPI1, PFKP, SHMT2, PSPH, ADSL, ADK, NT5E, TYMP, NT5C, DTYMK, NME1, GUK1, NME3, CTPS2, NUDT16, CD44, CDC42, CTNND1, AFDN, F11R, TJP1, CTTN, ACTR2, ARPC4, ARPC1B, GMFG, ARPC5L, ARPC2, ACTR3, ARPC1A, ARPC3, PTK2B, NPHP4, RPGRIP1L, TMEM67, TMEM231, B9D2, PSMD2, PSMD6, PSMB3, PSMD13, PSMA7, UCHL5, RUVBL2, ANP32E, RUVBL1, DKC1, FBL, RPS6, RPL28, RPS28, RPL11, RPS17, EIF3L, RPS7, RPL17, RPL18, RPS13, EIF3M, EIF3F, RPS20, RPLP2, RPL30, RPL10, RPL6, GSPT1, RPS18, EFTUD2, IK, LSM2, SNRNP70, PRPF40A, RBM25, NCBP1, EIF4E, EIF4G2, CYFIP1, NCKAP1, RAC1, NCF2, NCF4, EIF4ENIF1, SF3A3, SNRNP200, USP39, LSM6, SF3B3, YBX1, CSDE1, ILF2, ILF3, HNRNPH2, HNRNPM, SRSF3, SRSF7, U2AF1, SRSF1, SRSF10, HNRNPA0, SNRPD3, PRPF19, PTPN11, SYK, BTK, IKBKB, IRAK4, PPP2R1B, MAP2K2, MAPK14, RPS6KA5, CARD9, CASP8, BCAP31, APAF1, HSP90AA1, FKBP8, RHEB, DNAJA1, HSPH1, HSPA4, BAG3, DNAJB6, SP100, PPID, SLC25A4, POLG, AHSA1, HSPBP1, RPL5, RPS4X, RPS9, RPS14, RPL10A, RPL7A, ETF1, RPS3A, EIF3A, RPS21, RPL27A, RPL3, RPS2, RPL7, RPS15A, EIF3C, ABCE1, RPS11, EEF2, RPL15, EPRS1, GARS1, TARS1, VARS1, DARS2, KARS1, NARS1, AIMP2, RPL8, SEC61A1, SSR1, SEC61B, RPL19, RPL18A, CCDC47, EIF3G, EIF2S3, EIF2B1, EIF2B4, EIF3E, ST13, VCP, UBXN2B, YOD1, DYNC1H1, DYNC1I2, DYNC2LI1, DYNLL1, DYNC1LI1, DYNC1LI2, ACTR1A, CAPZA2, ACTR10, ACTR1B, TCP1, CCT4, TUBB2A, TBCD, TUBA3D, TUBB, CCT2, CCT3, CCT8, CCT5, CCT7, NLRC4, GSDMD, HMGB1, PLG, ANXA2, AHNAK, S100A4, MYH9, MYL12B, MYH14, MYH10, CTSB, LGMN, CTSL, CLEC3B, F12, PLGRKT, HMGB2, IL1B, ICAM1, CD99, SELPLG, TRADD, CFLAR, FADD, CASP10, TNFSF10, EIF2AK2, ISG15, FLNB, PXN, ILK, PARVG, CSK, DOK3, OAS2, UBE2N, DUSP3, IRAK3, LAT2, PIK3AP1, S100A8, S100A9, CDH1, CTNNA1, CTNNA2, PRMT5, WDR77, PRPF38A, LUC7L2, KHDRBS1, PCBP1, PURA, PAPSS1, C17orf49, TELO2, PSMB5, PSMD3, PSMD7, PSME2, RAD23B, ERCC2, CIAO2B, CIAO2A, XRCC5, XRCC6, FGR, ARHGEF1, SHANK2, CGN, ARHGEF18-2, RAPGEF6, LMO7, RRAS2, PARD6B, RABIF, CDC42BPB, LGALS9, COL6A1, COL6A2, MMP7, TIMP2, MMP10, LGALS3, AK1, PAICS, ASL, ASS1, NOS2, GCSH, HLA-DRA, HLA-DPA1, HLA-DRB5, GFPT1, GAA, SORD, AKR1B1, CBR1, CBR3, AKR1C3, AKR1C2, SPR, ALDH3A2, MAOB, ALDH3A1, ALDH3B1, MAOA, ALDH7A1, ALDH6A1, PCCB, DBT, OGDH, SUCLG2, CS, ME1, ACAT2, ECI2, HSDL2, AACS, HMGCS1, FDFT1, DHCR7, CNDP2, ADH1C, ALDH1A1, CYP2S1, EPHX1, GSTA2, PRDX6, GSTP1, MGST3, GGT6, GCLC, GCLM, NQO1, CRYZ, GGT1, GSTA1, HNMT, GK, MGLL, NDUFA5, UQCRB, NDUFA4, AKR7A2, TECR
+kmeans	2	Salmon	#ff7865	14	Vesicle fusion	SNARE interactions in vesicular transport	SNAP receptor activity	SNAP23, STX3, VAMP2, VTI1B, STX12, VAMP7, AGFG1, STXBP1, STX11, RAB27A, UNC13D, VAPA, CERT1, OSBP
+kmeans	3	Fire Brick	#b22a00	10	Complement cascade	-	-	CRP, CFH, C4A, C4B, PROS1, CD46, CD59, C8A, C8B, C6
+kmeans	4	Brown	#ff9d65	8	Clathrin vesicle coat	-	-	AP1G1, AP1M1, AP2S1, CLTC, CLTB, CLTA, FCHO2, NECAP2
+kmeans	5	Dark Golden Rod 3	#b25500	7	Protein deneddylation	Signalosome	COP9 signalosome	COPS2, COPS6, GPS1, COPS3, CUL3, CAND1, ELOB
+kmeans	6	Sandy Brown	#ffc165	7	Iron ion transport	Ferroptosis	Intracellular ferritin complex	TFRC, B2M, MR1, FTL, FTH1, SCARB2, CD47
+kmeans	7	Dark Golden Rod	#b28000	5	Retromer complex	-	-	SNX3, VPS26A, SNX27, SNX1, TBC1D5
+kmeans	8	Yellow	#ffe665	5	Mucin type O-glycan biosynthesis	O-linked glycosylation of mucins	-	ST3GAL1, ST6GALNAC1, GALNT6, GALNT5, GALNT4
+kmeans	9	Dark Golden Rod 2	#b2ab00	5	Septin ring	-	-	SEPTIN2, SEPTIN11, SEPTIN7, SEPTIN9, SEPTIN8
+kmeans	10	Khaki	#f2ff65	4	Mixed, incl. Mononeuritis multiplex, and Neutrophil mediated cytotoxicity	-	-	MPO, PRTN3, CES1, CEACAM8
+kmeans	11	Green	#75efa6	4	Kartagener syndrome	-	-	DNALI1, DNAAF1, DNAI1, RSPH9
+kmeans	12	Aquamarine 4	#75efb4	4	Multivesicular body assembly	Budding and maturation of HIV virion	ESCRT complex	MVB12B, VPS28, UBAP1, CHMP2B
+kmeans	13	Aquamarine 2	#75efc3	4	Non-integrin membrane-ECM interactions	-	-	AGRN, DAG1, HSPG2, FBLN1
+kmeans	14	Cyan	#75efd2	3	Glycosphingolipid biosynthesis - lacto and neolacto series	-	-	FUT3, B3GNT3, B3GNT2
+kmeans	15	Aquamarine	#75efe1	3	Mixed, incl. Nitric-oxide synthase complex, and Defective CYP11A1 causes AICSR	-	-	CYB5A, CYB5R3, CYB5R1
+kmeans	16	Aquamarine 3	#75efef	3	Peptide cross-linking	Cornified envelope	Ichthyosis vulgaris, and Epidermolytic acanthoma	IVL, FLG, SPRR1A
+kmeans	17	Sky Blue 3	#75e1ef	3	Protein K69-linked ufmylation	Ubiquitin-like modifier activating enzyme activity	-	UFL1, UBA5, UBA3
+kmeans	18	Sky Blue	#75d2ef	3	Axonemal microtubule	-	-	EFHC1, CFAP52, CFAP20
+kmeans	19	Sky Blue 2	#75c3ef	3	Dipeptidyl-peptidase activity, and Meprin A complex	-	-	PRCP, PREP, DPP9
+kmeans	20	Sky Blue 4	#75b4ef	2	Aicardi-Goutieres syndrome	-	-	RNASEH2A, SAMHD1
+kmeans	21	Cornflower Blue 2	#75a6ef	2	Procollagen-lysine 5-dioxygenase activity	Vitamin C	-	PLOD3, PLOD1
+kmeans	22	Blue	#7597ef	2	Acute phase	Alpha-1-acid glycoprotein, and Protein-losing enteropathy	-	ORM1, ORM2
+kmeans	23	Cornflower Blue	#7588ef	2	Maturation of nucleoprotein	Beta-catenin destruction complex	-	CSNK1A1, GSK3A
+kmeans	24	Medium Slate Blue	#757aef	2	Biliverdin reductase (NADP+) activity	Heme degradation	-	BLVRB, BLVRA
+kmeans	25	Purple	#7f75ef	2	Nicotinate and nicotinamide metabolism	-	-	BST1, NADSYN1
+kmeans	26	Medium Purple	#8d75ef	2	SERine  Proteinase INhibitors	Mixed, incl. Pachyonychia congenita, and Epidermolysis bullosa simplex Dowling-Meara type	-	SERPINB3, SERPINB4
+kmeans	27	Medium Purple 2	#9c75ef	2	Oxidoreductase activity, acting on single donors with incorporation of molecular oxygen, incorporation of two atoms of oxygen	Arachidonic acid metabolism, and Leukotriene receptor activity	-	ALOX15, PTGS1
+kmeans	28	Medium Purple 3	#ab75ef	2	Insulin receptor recycling	Vacuolar proton-transporting V-type ATPase complex	Golgi lumen acidification, and V-type ATPase subunit E	ATP6V0A4, ATP6V1H
+kmeans	29	Medium Orchid	#b975ef	2	Activation of AMPK downstream of NMDARs	-	-	CAMKK2, PRKAB1
+kmeans	30	Orchid 4	#c875ef	2	Intraciliary transport particle B	-	-	IFT22, HSPB11
+kmeans	31	Orchid 2	#d775ef	2	Pancreatic ribonuclease	-	-	ANG, RNASE2
+kmeans	32	Violet 2	#e575ef	2	Positive regulation of lamellipodium morphogenesis	This set of domains is found in various eukaryotic proteins. Function is unknown.	-	CORO1B, CORO1C
+kmeans	33	Violet	#ef75ea	2	COPII-coated vesicle cargo loading	Gelsolin repeat	-	SEC24C, SEC23B
+kmeans	34	Orchid	#ef75dc	2	Mixed, incl. Exocyst, and FIP domain	-	-	RAB25, MYO5B
+kmeans	35	Orchid 3	#ef75cd	2	Defective NEU1 causes sialidosis	-	-	CTSA, NEU1
+kmeans	36	Hot Pink 2	#ef75be	2	-	-	-	PPP3CC, SSH2
+kmeans	37	Hot Pink	#ef75b0	2	Ether lipid metabolism, and Kennedy pathway from sphingolipids	-	-	PAFAH1B3, LPCAT1
+kmeans	38	Pale Violet Red	#ef75a1	2	Proximal tubule bicarbonate reclamation	Photoreceptor inner segment membrane	Response to glycoside	ATP1A1, ATP1A3
+kmeans	39	Pink	#ef7592	2	-	-	-	CFD, RETN
+kmeans	40	Light Coral	#ef7583	2	Signal regulatory protein family interactions	-	-	FYB1, SKAP2

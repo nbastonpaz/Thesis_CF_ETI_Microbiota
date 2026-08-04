@@ -1,0 +1,2461 @@
+---
+title: "cf_metaproteomics_thesis_chapter_II"
+author: "Natalia Bastón-Paz"
+date: "2026"
+output: html_document
+---
+## Set up
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+require("knitr")
+opts_knit$set(root.dir = "C:/RProjects/cf_metaproteomics_thesis_chapter_II")
+```
+
+## Clean environments
+```{#r Clean environments}
+rm(list = ls())
+```
+
+## General introduction
+
+Cystic Fibrosis (CF) is a genetic disorder caused by mutations in the CFTR (Cystic Fibrosis Transmembrane Conductance Regulator) gene, leading to defective ion transport and thick mucus in organs such as the lungs and gut. People with CF (pwCF) frequently develop chronic lung infections and gastrointestinal complications.
+
+In recent years, CFTR modulator therapies, particularly the triple combination elexacaftor–tezacaftor–ivacaftor (ETI), have significantly improved clinical outcomes. However, their impact on the gut and lung microbiota, especially at the functional (proteomic) level, remains unclear.
+
+In this script, we analyse fecal metaproteomic data from pwCF before (T0) and after one year of ETI treatment (T12) to explore changes in microbial and human protein profiles.
+
+*Main question:*
+
+- *Has the functional profile of the gut and lung microbiota changed after one year of treatment with ETI?*
+
+
+## Libraries
+```{r Libraries, message=FALSE, warning=FALSE}
+library(readr)
+library(readxl)
+library(tidyverse)
+library(factoextra)
+library(ggrepel)
+library(gplots)
+library(shape)
+library(openxlsx)
+library(ggpubr)
+library(vegan)
+library(ggplot2)
+library(fBasics)
+library(purrr)
+library(stringr)
+library(patchwork)
+library(tidyr)
+library(dplyr)
+```
+
+# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
+# INTESTINAL MICROBIOTA SAMPLES ANALYSIS
+# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
+# PROTEINS
+# ------------------------------------------------------------------------------
+
+## Load the data and pre-processing
+
+### Data
+```{r Load in data, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+Proteins <- readr::read_tsv("C:/RProjects/cf_metaproteomics_thesis_chapter_II/combined_protein.tsv")
+```
+
+### Remove MaxLFQ column
+```{r Remove MaxLFQ, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+indices <- grep("MaxLFQ Intensity", colnames(Proteins))
+Proteins <- Proteins[, -indices]
+```
+
+### Remove rows where all intensities are 0
+```{r Remove rows with intensity 0, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+intensity_cols <- grep("Intensity", colnames(Proteins))
+intensity_sum <- rowSums(Proteins[, intensity_cols])
+Proteins <- Proteins[intensity_sum != 0, ]
+```
+
+### Filter by number of peptides and unique spectral counts
+```{r Filter number peptides and unique spectral counts, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+###### By number of peptides: use column "Combined Total Peptides"
+indices_filtered <- Proteins$`Combined Total Peptides` < 2
+Proteins <- subset(Proteins, !indices_filtered)
+
+###### By number of unique spectra (unique peptides): use "Combined Unique Spectral Count"
+indices_filtered <- Proteins$`Combined Unique Spectral Count` < 1
+Proteins <- subset(Proteins, !indices_filtered)
+```
+
+### Save protein file (this is our master file) and copy it
+```{r Save proteins file, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+write.xlsx(Proteins, "Proteins.xlsx") # SUPPLEMENTARY TABLE
+file.copy("Proteins.xlsx", "Proteins_backup.xlsx", overwrite = TRUE)
+```
+
+### Remove non-relevant columns and change names if necessary
+```{r Remove non-relevant colums, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+colnames(Proteins)
+Proteins <- Proteins[ , -c(2, 4, 6, 7, 8)]
+colnames(Proteins)
+Proteins <- Proteins[, -(10:228)]
+
+# Rename one sample
+colnames(Proteins)[colnames(Proteins) == "24_177_7b Intensity"] <- "24_177_7 Intensity"
+```
+
+### Save new protein file
+```{r Save new proteins file, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+write.xlsx(Proteins, "Proteins_final.xlsx") # Manipulate this
+```
+
+### Filter samples
+```{r Filter samples, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+remove_samples <- c(
+  "24_177_1 Intensity","24_177_2 Intensity","24_177_3 Intensity","24_177_4 Intensity","24_177_5 Intensity", "24_177_6 Intensity","24_177_9 Intensity","24_177_10 Intensity","24_177_11 Intensity","24_177_12 Intensity",
+  "24_177_13 Intensity","24_177_17 Intensity","24_177_18 Intensity","24_177_19 Intensity","24_177_20 Intensity", "24_177_21 Intensity", "24_177_22 Intensity", "24_177_23 Intensity","24_177_25 Intensity","24_177_26 Intensity","24_177_29 Intensity","24_177_30 Intensity",
+  "24_177_31 Intensity","24_177_32 Intensity","24_177_33 Intensity", "24_177_35 Intensity", "24_177_36 Intensity","24_177_37 Intensity","24_177_38 Intensity", "24_177_39 Intensity","24_177_40 Intensity","24_177_41 Intensity","24_177_42 Intensity","24_177_45 Intensity",
+  "24_177_46 Intensity","24_177_47 Intensity","24_177_48 Intensity","24_177_49 Intensity","24_177_53 Intensity", "24_177_54 Intensity","24_177_55 Intensity","24_177_56 Intensity","24_177_57 Intensity", "24_177_58 Intensity", "24_177_59 Intensity", "24_177_61 Intensity", "24_177_62 Intensity","24_177_65 Intensity","24_177_66 Intensity","24_177_67 Intensity","24_177_68 Intensity",
+  "24_177_69 Intensity","24_177_70 Intensity", "24_177_72 Intensity", "24_177_73 Intensity")
+Proteins <- Proteins[, setdiff(colnames(Proteins), remove_samples)]
+colnames(Proteins)
+
+# Remove rows where all intensities are 0
+intensity_cols <- grep("Intensity", colnames(Proteins))
+intensity_sum <- rowSums(Proteins[, intensity_cols])
+Proteins <- Proteins[intensity_sum != 0, ]
+```
+
+### Save refined protein file
+```{r Save refined file, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+write.xlsx(Proteins, "Proteins_refined.xlsx")
+```
+
+# ------------------------------------------------------------------------------
+# ----- Human proteins -----
+# ------------------------------------------------------------------------------
+
+### Selection of human proteins from filtered protein table ("Protein")
+```{r Select human proteins, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+human <- grep("HUMAN", Proteins$Protein)
+Proteins_human <- Proteins[human,]
+```
+
+### Save final human protein file
+```{r Save final file of human proteins, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+write.xlsx(Proteins_human, "Human_final.xlsx")
+```
+
+##### Number of human proteins per sample
+```{r Number of human proteins per sample, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+intensity_cols <- Proteins_human[, grepl("Intensity", colnames(Proteins_human))]
+
+num_proteins <- colSums(intensity_cols > 0)
+num_proteins
+num_proteins <- as.data.frame(num_proteins)
+write.xlsx(num_proteins, "num_proteins_human.xlsx") # Open the file and copy (transpose) the values into a table created manually called "Table_prots_and_pepts.xlsx"
+```
+
+#### Number of human proteins per group
+```{r Number of human proteins per group, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+Sample_data <- read_excel("Samples_CF_paired.xlsx")
+
+Time0 <- Sample_data[Sample_data$Group == "time0", ]
+Time0 <- Time0$Name
+Time12 <- Sample_data[Sample_data$Group == "time12", ]
+Time12 <- Time12$Name
+dim(Proteins_human[rowSums(Proteins_human[, Time0] != 0) > 0, ])
+dim(Proteins_human[rowSums(Proteins_human[, Time12] != 0) > 0, ])
+```
+
+# ------------------------------------------------------------------------------
+# ----- Microbial proteins -----
+# ------------------------------------------------------------------------------
+
+### Selection of microbial proteins
+```{r Select mirobial proteins, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+Proteins_microb <- Proteins[-human,]
+```
+
+### Save final microbial protein file
+```{r Save microbial proteins file, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+write.xlsx(Proteins_microb, "Micro_final.xlsx")
+```
+
+##### Number of microbial proteins per sample
+```{r Number of microbial proteins per sample, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+intensity_cols <- Proteins_microb[, grepl("Intensity", colnames(Proteins_microb))]
+
+num_proteins <- colSums(intensity_cols > 0)
+num_proteins
+num_proteins <- as.data.frame(num_proteins)
+write.xlsx(num_proteins, "num_proteins_microb.xlsx") # Open the file and copy (transpose) the values into a table created manually called "Table_prots_and_pepts.xlsx"
+```
+
+#### Number of microbial proteins per group
+```{r Number of microbial proteins per group, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# We already have the Time0 and Time12 mini tables, so we just need dim as for human proteins
+dim(Proteins_microb[rowSums(Proteins_microb[, Time0] != 0) > 0, ])
+dim(Proteins_microb[rowSums(Proteins_microb[, Time12] != 0) > 0, ])
+```
+
+# ------------------------------------------------------------------------------
+# PEPTIDES
+# ------------------------------------------------------------------------------
+  
+## Load the data and pre-processing
+
+### Data
+```{r Load in peptides data, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+Peptides <- readr::read_tsv("C:/RProjects/cf_metaproteomics_thesis_chapter_II/combined_peptide.tsv")
+```
+
+
+### Remove MaxLFQ column
+```{r Remove column MaxLFQ, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+indices <- grep("MaxLFQ Intensity", colnames(Peptides))
+Peptides <- Peptides[, -indices]
+```
+
+### Remove rows where all intensities are 0
+```{r Remove rows with intensity 0, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+intensity_cols <- grep("Intensity", colnames(Peptides))
+intensity_sum <- rowSums(Peptides[, intensity_cols])
+Peptides <- Peptides[intensity_sum != 0, ]
+```
+
+### Remove rows with NA values
+```{r Remove rows with NA values, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# Usually they are the same rows across the table, but to be safe we select all intensity columns
+intensity_columns <- grep("Intensity", names(Peptides), value = TRUE)
+Peptides <- Peptides[complete.cases(Peptides[, intensity_columns]), ]
+```
+
+
+### Save final peptide file --> WARNING: saving as xlsx may crash R and it restarts
+```{r Save peptides final file, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+write.xlsx(Peptides, "Peptides.xlsx")
+```
+
+### Remove non-relevant columns
+```{r Remove non-relevant columns, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+colnames(Peptides)
+# Remove Spectral Count and Match Type columns
+indices <- grep("Spectral Count", colnames(Peptides))
+Peptides <- Peptides[, -indices]
+indices <- grep("Match Type", colnames(Peptides))
+Peptides <- Peptides[, -indices]
+```
+
+### Save final peptide file
+```{r Save peptides final file, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+write.csv(Peptides, "Peptides_final.csv")
+```
+
+### Filter samples
+```{r Filter samples, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+Peptides <- read_csv("C:/RProjects/cf_metaproteomics_thesis_chapter_II/Peptides_final.csv")
+# Rename sample
+colnames(Peptides)[colnames(Peptides) == "24_177_7b Intensity"] <- "24_177_7 Intensity"
+
+remove_samples <- c(
+  "24_177_1 Intensity","24_177_2 Intensity","24_177_3 Intensity","24_177_4 Intensity","24_177_5 Intensity", "24_177_6 Intensity","24_177_9 Intensity","24_177_10 Intensity","24_177_11 Intensity","24_177_12 Intensity",
+  "24_177_13 Intensity","24_177_17 Intensity","24_177_18 Intensity","24_177_19 Intensity","24_177_20 Intensity", "24_177_21 Intensity", "24_177_22 Intensity", "24_177_23 Intensity","24_177_25 Intensity","24_177_26 Intensity","24_177_29 Intensity","24_177_30 Intensity",
+  "24_177_31 Intensity","24_177_32 Intensity","24_177_33 Intensity", "24_177_35 Intensity", "24_177_36 Intensity","24_177_37 Intensity","24_177_38 Intensity", "24_177_39 Intensity","24_177_40 Intensity","24_177_41 Intensity","24_177_42 Intensity","24_177_45 Intensity",
+  "24_177_46 Intensity","24_177_47 Intensity","24_177_48 Intensity","24_177_49 Intensity","24_177_53 Intensity", "24_177_54 Intensity","24_177_55 Intensity","24_177_56 Intensity","24_177_57 Intensity", "24_177_58 Intensity", "24_177_59 Intensity", "24_177_61 Intensity", "24_177_62 Intensity","24_177_65 Intensity","24_177_66 Intensity","24_177_67 Intensity","24_177_68 Intensity",
+  "24_177_69 Intensity","24_177_70 Intensity", "24_177_72 Intensity", "24_177_73 Intensity")
+Peptides <- Peptides[, setdiff(colnames(Peptides), remove_samples)]
+
+# Remove rows where all intensities are 0
+intensity_cols <- grep("Intensity", colnames(Peptides))
+intensity_sum <- rowSums(Peptides[, intensity_cols])
+Peptides <- Peptides[intensity_sum != 0, ]
+```
+
+### Save final peptide file --> It still crashes when saving as xlsx due to one row with many characters --> save as csv
+```{r Save peptides refined, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+write.csv(Peptides, "Peptides_refined.csv")
+```
+
+# ------------------------------------------------------------------------------
+# ----- Human peptides -----
+# ------------------------------------------------------------------------------
+
+### Selection of human peptides
+```{r Select human peptides, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+human <- grep("HUMAN", Peptides$Protein)
+Peptides_human <- Peptides[human,]
+```
+
+### Save final human peptide file
+```{r Save final human_peptides, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+write.xlsx(Peptides_human, "Human_pept_final.xlsx")
+```
+
+#### Number of human peptides per sample
+```{r Number of human peptides per sample, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+intensity_cols <- Peptides_human[, grepl("Intensity", colnames(Peptides_human))]
+
+num_peptides <- colSums(intensity_cols > 0)
+num_peptides
+num_peptides <- as.data.frame(num_peptides)
+write.xlsx(num_peptides, "num_peptides_human.xlsx")
+```
+
+#### Total intensity of human peptides per sample
+```{r Intensity of human peptides, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+intensity_cols <- Peptides_human[, grepl("Intensity", colnames(Peptides_human))]
+sum_intensities <- colSums(intensity_cols, na.rm = TRUE)
+print(sum_intensities)
+sum_intensities <- as.data.frame(sum_intensities)
+write.xlsx(sum_intensities, "intensity_peptides_human.xlsx")
+```
+
+#### Number of human peptides per group
+```{r Number of human peptides per group, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+dim(Peptides_human[rowSums(Peptides_human[, Time0] != 0) > 0, ])
+dim(Peptides_human[rowSums(Peptides_human[, Time12] != 0) > 0, ])
+```
+
+#### Total intensity of human peptides per group
+```{r Intensity of human peptides per group, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+filtered_rows <- Peptides_human[rowSums(Peptides_human[, Time0] != 0) > 0, ]
+sum(filtered_rows[, Time0]) # Sum of intensities of all peptides at time 0
+
+filtered_rows <- Peptides_human[rowSums(Peptides_human[, Time12] != 0) > 0, ]
+sum(filtered_rows[, Time12]) # Sum of intensities of all peptides at time 12
+```
+
+# ------------------------------------------------------------------------------
+# ----- Microbial peptides -----
+# ------------------------------------------------------------------------------
+
+### Selection of microbial peptides
+```{r Select microbial peptides, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+Peptides_microb <- Peptides[-human,]
+```
+
+### Save final microbial peptide file
+```{r Save file micro_peptides, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+write.xlsx(Peptides_microb, "Micro_pept_final.xlsx")
+```
+
+#### Number of microbial peptides per sample
+```{r Number of microbial peptides per sample, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+intensity_cols <- Peptides_microb[, grepl("Intensity", colnames(Peptides_microb))]
+
+num_peptides <- colSums(intensity_cols > 0)
+num_peptides
+num_peptides <- as.data.frame(num_peptides)
+write.xlsx(num_peptides, "num_peptides_microb.xlsx")
+```
+
+#### Total intensity of microbial peptides per sample
+```{r Intensity of microbial peptides, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+intensity_cols <- Peptides_microb[, grepl("Intensity", colnames(Peptides_microb))]
+sum_intensities <- colSums(intensity_cols, na.rm = TRUE)
+print(sum_intensities)
+sum_intensities <- as.data.frame(sum_intensities)
+write.xlsx(sum_intensities, "intensity_peptides_microb.xlsx")
+```
+
+#### Number of microbial peptides per group
+```{r Number of microbial peptides per group, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+dim(Peptides_microb[rowSums(Peptides_microb[, Time0] != 0) > 0, ])
+dim(Peptides_microb[rowSums(Peptides_microb[, Time12] != 0) > 0, ])
+```
+
+#### Total intensity of microbial peptides per group
+```{r Intensity of microbial peptides per group, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+filtered_rows <- Peptides_microb[rowSums(Peptides_microb[, Time0] != 0) > 0, ]
+sum(filtered_rows[, Time0])
+
+filtered_rows <- Peptides_microb[rowSums(Peptides_microb[, Time12] != 0) > 0, ]
+sum(filtered_rows[, Time12])
+```
+
+# ------------------------------------------------------------------------------
+# PLOTS
+# ------------------------------------------------------------------------------
+
+### Plot number of identifications (proteins/peptides)
+
+#### Prepare table proteins and peptides
+```{r Prepare table proteins and peptides, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# Table is created outside R
+Table_prots_and_pepts <- read_excel("Table_prots_and_pepts.xlsx")
+
+# Reshape table
+data_long <- Table_prots_and_pepts %>%
+  pivot_longer(cols = -Name, names_to = "SampleID", values_to = "Count") %>%
+  mutate(Count = as.numeric(Count))
+
+data_long <- data_long %>%
+  mutate(Group = case_when(
+    SampleID %in% c("24_177_7 Intensity", "24_177_8 Intensity", "24_177_14 Intensity", "24_177_15 Intensity", "24_177_16 Intensity", "24_177_24 Intensity", "24_177_27 Intensity", "24_177_28 Intensity", "24_177_34 Intensity") ~ "Time0",
+    SampleID %in% c("24_177_43 Intensity", "24_177_44 Intensity", "24_177_50 Intensity", "24_177_51 Intensity", "24_177_52 Intensity", "24_177_60 Intensity", "24_177_63 Intensity", "24_177_64 Intensity", "24_177_71 Intensity") ~ "Time12",
+    TRUE ~ "Other"
+  ))
+
+# Order factor levels
+order_groups <- c("Microbial peptides", "Human peptides", "Microbial proteins", "Human proteins")
+order_time <- c("Time0", "Time12")
+data_long$Name <- factor(data_long$Name, levels = order_groups)
+data_long$Group <- factor(data_long$Group, levels = order_time)
+```
+
+#### Select the data of interest and apply statistics
+```{r Select the data of interest, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# Subset human and microbial
+Data_all <- subset(data_long,(Name == "Human proteins" | Name == "Human peptides"| Name == "Microbial proteins" | Name == "Microbial peptides"))
+Data_all$Name <- factor(Data_all$Name, levels = order_groups)
+
+# Calculate all metrics
+summary_data_full <- Data_all %>%
+  group_by(Name, Group) %>%
+  summarise(
+    median_count = median(Count, na.rm = TRUE),
+    Q1 = quantile(Count, 0.25, na.rm = TRUE),
+    Q3 = quantile(Count, 0.75, na.rm = TRUE),
+    mean_count = mean(Count, na.rm = TRUE),
+    sd_count = sd(Count, na.rm = TRUE),
+    .groups = 'drop'
+  )
+View(summary_data_full)
+write.xlsx(summary_data_full, "summary_data_full.xlsx")
+
+# Normality test
+shapiro_results <- Data_all %>%
+  group_by(Name, Group) %>%
+  summarise(
+    p_value = shapiro.test(Count)$p.value
+    ) %>%
+  ungroup()
+
+shapiro_results <- shapiro_results %>%
+  mutate(
+  Normality = ifelse(p_value > 0.05, "Normal", "Not Normal")
+  )
+
+print(shapiro_results) 
+
+# Determine if both Time0 and Time12 are normal for each Name
+normality_summary <- shapiro_results %>%
+  group_by(Name) %>%
+  summarise(is_normal = all(Normality == "Normal"), .groups = "drop")
+
+# Join normality info to the main data
+Data_all_with_norm <- Data_all %>%
+  left_join(normality_summary, by = "Name")
+
+# Split by Name and is_normal (1 group per test)
+split_data <- Data_all_with_norm %>%
+  group_by(Name, is_normal) %>%
+  group_split()
+
+# Run t-test or Wilcoxon depending on normality
+run_test <- function(df, is_normal) {
+  df <- df %>% filter(!is.na(Count), !is.na(Group))
+  df$Group <- factor(df$Group)
+
+  if (nlevels(df$Group) != 2) {
+    return(tibble(p_value = NA, test_type = NA))
+  }
+
+  x <- df$Count[df$Group == "Time0"]
+  y <- df$Count[df$Group == "Time12"]
+
+  p_val <- tryCatch({
+    if (is_normal) {
+      t.test(x, y, paired = TRUE)$p.value
+    } else {
+      wilcox.test(x, y, paired = TRUE)$p.value
+    }
+  }, error = function(e) NA)
+
+  test_type <- ifelse(is_normal, "Paired t-test", "Paired Wilcoxon test")
+
+  tibble(p_value = p_val, test_type = test_type)
+}
+
+test_results <- Data_all_with_norm %>%
+  group_by(Name, is_normal) %>%
+  group_split() %>%
+  map_dfr(~{
+    result <- run_test(.x, unique(.x$is_normal))
+    result$Name <- unique(.x$Name)
+    result$is_normal <- unique(.x$is_normal)
+    result
+  })
+
+print(test_results)
+write.xlsx(test_results, "Statistical_test_results.xlsx")  # Optional export
+
+
+# Join with the normality results (shapiro_results)
+summary_data_adaptable <- summary_data_full %>%
+  left_join(shapiro_results, by = c("Name", "Group"))
+
+# Create the adaptable columns
+summary_data_final <- summary_data_adaptable %>%
+  mutate(
+    # Plot center (Median or Mean)
+    center_plot = ifelse(Normality == "Normal", mean_count, median_count),
+    
+    # Lower error line (Mean - SD or Q1)
+    error_min = ifelse(Normality == "Normal", mean_count - sd_count, Q1),
+    
+    # Upper error line (Mean + SD or Q3)
+    error_max = ifelse(Normality == "Normal", mean_count + sd_count, Q3)
+  )
+View(summary_data_final)
+```
+
+#### OPTIONAL: Plot results
+```{r Optional Plot results, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# Prepare test_results for plotting
+## Set y.position just above the top of each bar group
+y_positions <- summary_data_final %>%
+  group_by(Name) %>%
+  summarise(y.position = max(error_max) * 1.1)
+
+## Merge with p-values
+plot_pvalues <- test_results %>%
+  left_join(y_positions, by = "Name") %>%
+  mutate(
+    group1 = "Time0",
+    group2 = "Time12",
+    p = round(p_value, 4)
+  ) %>%
+   dplyr::select(Name, group1, group2, p_value, y.position)
+
+# Plot
+p <- ggplot(summary_data_final, aes(x = Name, y = center_plot, fill = Group)) + 
+  geom_bar(stat = "identity", 
+           position = position_dodge(width = 0.8), 
+           width = 0.7,
+           color = "black", 
+           size = 0.3) + 
+  geom_errorbar(aes(ymin = error_min, ymax = error_max), 
+                position = position_dodge(width = 0.8), 
+                width = 0.2) + 
+  scale_fill_manual(values = c("Time0" = "#F4E1A1", "Time12" = "#A1E1E1")) +
+  labs(y = "Number of peptides/proteins",
+       fill = "Group") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+ggsave("Prot_pept_sum_feces.svg", p, width = 8, height = 6, units = "in", dpi = 300)
+```
+
+
+### Plot values of intensities (proteins/peptides)
+
+#### Prepare table proteins and peptides
+```{r Prepare table proteins and peptides, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+data_long <- Table_prots_and_pepts %>%
+  pivot_longer(cols = -Name, names_to = "SampleID", values_to = "Count") %>%
+  mutate(Count = as.numeric(Count))
+
+data_long <- data_long %>%
+  mutate(Group = case_when(
+    SampleID %in% c("24_177_7 Intensity", "24_177_8 Intensity", "24_177_14 Intensity", "24_177_15 Intensity", "24_177_16 Intensity", "24_177_24 Intensity", "24_177_27 Intensity", "24_177_28 Intensity", "24_177_34 Intensity") ~ "Time0",
+    SampleID %in% c("24_177_43 Intensity", "24_177_44 Intensity", "24_177_50 Intensity", "24_177_51 Intensity", "24_177_52 Intensity", "24_177_60 Intensity", "24_177_63 Intensity", "24_177_64 Intensity", "24_177_71 Intensity") ~ "Time12",
+    TRUE ~ "Other"
+  ))
+
+# Order factor levels
+order_groups <- c("Microbial peptides intensity", "Human peptides intensity")
+order_time <- c("Time0", "Time12")
+data_long$Name <- factor(data_long$Name, levels = order_groups)
+data_long$Group <- factor(data_long$Group, levels = order_time)
+```
+
+#### Select the data of interest and apply statistics
+```{r Select the data of interest, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# Subset human and microbial
+Data_all <- subset(data_long,(Name == "Human peptides intensity"| Name == "Microbial peptides intensity"))
+Data_all$Name <- factor(Data_all$Name, levels = order_groups)
+
+# Calculate all metrics
+summary_data_full <- Data_all %>%
+  group_by(Name, Group) %>%
+  summarise(
+    median_count = median(Count, na.rm = TRUE),
+    Q1 = quantile(Count, 0.25, na.rm = TRUE),
+    Q3 = quantile(Count, 0.75, na.rm = TRUE),
+    mean_count = mean(Count, na.rm = TRUE),
+    sd_count = sd(Count, na.rm = TRUE),
+    .groups = 'drop'
+  )
+View(summary_data_full)
+write.xlsx(summary_data_full, "summary_data_full_intensity.xlsx")
+
+# Normality test
+shapiro_results <- Data_all %>%
+  group_by(Name, Group) %>%
+  summarise(
+    p_value = shapiro.test(Count)$p.value
+    ) %>%
+  ungroup()
+
+shapiro_results <- shapiro_results %>%
+  mutate(
+  Normality = ifelse(p_value > 0.05, "Normal", "Not Normal")
+  )
+
+print(shapiro_results)
+
+# Determine if both Time0 and Time12 are normal for each Name
+normality_summary <- shapiro_results %>%
+  group_by(Name) %>%
+  summarise(is_normal = all(Normality == "Normal"), .groups = "drop")
+
+# Join normality info to the main data
+Data_all_with_norm <- Data_all %>%
+  left_join(normality_summary, by = "Name")
+
+# Split by Name and is_normal (1 group per test)
+split_data <- Data_all_with_norm %>%
+  group_by(Name, is_normal) %>%
+  group_split()
+
+# Run t-test or Wilcoxon depending on normality
+run_test <- function(df, is_normal) {
+  df <- df %>% filter(!is.na(Count), !is.na(Group))
+  df$Group <- factor(df$Group)
+
+  if (nlevels(df$Group) != 2) {
+    return(tibble(p_value = NA, test_type = NA))
+  }
+
+  x <- df$Count[df$Group == "Time0"]
+  y <- df$Count[df$Group == "Time12"]
+
+  p_val <- tryCatch({
+    if (is_normal) {
+      t.test(x, y, paired = TRUE)$p.value
+    } else {
+      wilcox.test(x, y, paired = TRUE)$p.value
+    }
+  }, error = function(e) NA)
+
+  test_type <- ifelse(is_normal, "Paired t-test", "Paired Wilcoxon test")
+
+  tibble(p_value = p_val, test_type = test_type)
+}
+
+test_results <- Data_all_with_norm %>%
+  group_by(Name, is_normal) %>%
+  group_split() %>%
+  map_dfr(~{
+    result <- run_test(.x, unique(.x$is_normal))
+    result$Name <- unique(.x$Name)
+    result$is_normal <- unique(.x$is_normal)
+    result
+  })
+
+print(test_results)
+write.xlsx(test_results, "Statistical_test_results_intensity.xlsx")  # Optional export
+
+
+# Join with the normality results (shapiro_results)
+summary_data_adaptable <- summary_data_full %>%
+  left_join(shapiro_results, by = c("Name", "Group"))
+
+# Create the adaptable columns
+summary_data_final <- summary_data_adaptable %>%
+  mutate(
+    # Plot center (Median or Mean)
+    center_plot = ifelse(Normality == "Normal", mean_count, median_count),
+    
+    # Lower error line (Mean - SD or Q1)
+    error_min = ifelse(Normality == "Normal", mean_count - sd_count, Q1),
+    
+    # Upper error line (Mean + SD or Q3)
+    error_max = ifelse(Normality == "Normal", mean_count + sd_count, Q3)
+  )
+View(summary_data_final)
+```
+
+#### OPTIONAL: Plot results
+```{r Optional Plot results, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# Prepare test_results for plotting
+## Set y.position just above the top of each bar group
+y_positions <- summary_data_final %>%
+  group_by(Name) %>%
+  summarise(y.position = max(error_max) * 1.1)
+
+## Merge with p-values
+plot_pvalues <- test_results %>%
+  left_join(y_positions, by = "Name") %>%
+  mutate(
+    group1 = "Time0",
+    group2 = "Time12",
+    p = round(p_value, 4)
+  ) %>%
+  dplyr::select(Name, group1, group2, p_value, y.position)
+
+# Plot
+p2 <- ggplot(summary_data_final, aes(x = Name, y = center_plot, fill = Group)) + 
+  geom_bar(stat = "identity", 
+           position = position_dodge(width = 0.8), 
+           width = 0.7,
+           color = "black", 
+           size = 0.3) + 
+  geom_errorbar(aes(ymin = error_min, ymax = error_max), 
+                position = position_dodge(width = 0.8), 
+                width = 0.2) + 
+  scale_fill_manual(values = c("Time0" = "#F4E1A1", "Time12" = "#A1E1E1")) +
+  labs(y = "Peptides intensity",
+       fill = "Group") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+ggsave("Pept_intensity_sum_feces.svg", p2, width = 8, height = 6, units = "in", dpi = 300)
+```
+
+
+### Plot Number of identifications
+```{r Number of identifications, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# Load the CSV file exported from Table_prots_and_pepts.xlsx (created outside R)
+data <- read.csv("C:/RProjects/cf_metaproteomics_thesis_chapter_II/identifications_summary_paired.csv", stringsAsFactors = FALSE)
+
+# Add column for Peptides vs Proteins
+data$Type <- ifelse(grepl("peptides", data$Category, ignore.case = TRUE), "Peptides", "Proteins")
+
+# Define color palette
+custom_colors <- c("Time 0" = "#F4E1A1", "Time 12" = "#A1E1E1")
+
+# Plot
+p_final <- ggplot(data, aes(x = Category, y = Identifications, fill = Time)) +
+  geom_bar(stat = "identity", position = "dodge", color = "black", linewidth = 0.25) +
+  facet_wrap(~Type, scales = "free") +
+  scale_fill_manual(values = custom_colors) +
+  labs(
+    x = NULL,
+    y = "Number of identifications",
+    fill = "Time"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(axis.text.x = element_text(angle = 20, hjust = 1))
+
+ggsave("Prot_pept_human_micro_feces.svg", p_final, width = 8, height = 6, units = "in", dpi = 300)
+```
+
+
+# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
+# HUMAN PROTEINS
+# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
+
+## Load the data
+```{r Load in data, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# Load protein data
+data <- read_excel("Human_final.xlsx")
+colnames(data) <- gsub("[[:space:]]+", "_", colnames(data))
+
+# Load sample data
+Sample_data <- read_excel("Samples_CF_paired.xlsx")
+Sample_data$Name <- gsub("[[:space:]]+", "_", Sample_data$Name)
+
+# Create sample vectors according to group
+time0 <- Sample_data$Name[Sample_data$Group == "time0"]
+time12 <- Sample_data$Name[Sample_data$Group == "time12"]
+
+colnames(data)
+```
+
+## Presence filter
+### Presence filter 10 %
+```{r Presence filter 10 perc, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# Keep only proteins present in ≥10% of samples in time0 or time12
+threshold_Group1 <- ceiling(length(time0) * 0.1) 
+threshold_Group2 <- ceiling(length(time12) * 0.1)
+
+colnames(data) <- gsub("[[:space:]]+", "_", colnames(data))
+data10 <- data %>%
+  filter(rowSums(select(., all_of(time0)) > 0) >= threshold_Group1 | 
+           rowSums(select(., all_of(time12)) > 0) >= threshold_Group2)
+
+write.xlsx(data10, "Human_refined_10.xlsx")
+
+Table_prots_human10 <- data10
+```
+
+# ------------------------------------------------------------------------------
+# ---------- STATISTICS ----------
+# ------------------------------------------------------------------------------
+
+### Normality in the 10 % subset
+```{r Normality in the 10 percent subset, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# Select numeric columns only
+numeric_data_10 <- Table_prots_human10 %>% 
+  dplyr::select(where(is.numeric))
+
+# Function for the Shapiro test
+shapiro_p <- function(x) {
+  x <- x[!is.na(x)]
+  n <- length(x)
+  if (n < 3)    return(NA_real_)           
+  if (n > 5000) x <- sample(x, 5000)       
+  if (sd(x) == 0) return(NA_real_)         
+  shapiro.test(x)$p.value
+}
+
+# Apply to all numeric columns
+results_10 <- numeric_data_10 %>%
+  summarise(across(everything(), shapiro_p))
+
+# Convert to long format and create summary
+normality_summary_10 <- tidyr::pivot_longer(results_10, 
+                                           cols = everything(),
+                                           names_to = "Column",
+                                           values_to = "P_Value")
+
+# 5) Non-normal columns (p < 0.05)
+non_normal_columns_10 <- normality_summary_10 %>% 
+  filter(!is.na(P_Value), P_Value < 0.05)
+
+print(normality_summary_10)
+print(non_normal_columns_10)
+```
+
+### Relative abundance matrix 10 %
+```{r Relative abundance matrix 10 perc, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# Normalize intensities by the total intensity of each sample (relative abundance)
+colnames(data10)
+
+data_relativ10 <- data10[, 10:27]
+data_relativ10 <- sweep(data_relativ10, 2, colSums(data_relativ10, na.rm = TRUE), FUN = "/")
+
+data_matrix10 <- as.matrix(data_relativ10)
+```
+
+
+### Wilcoxon test
+#### Wilcoxon test 10 %
+```{r Wilcoxon 10 perc, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+res10 <- apply(data_matrix10, 1, function(x) {
+  p_val <- wilcox.test(x[time0], x[time12], paired = TRUE)$p.value
+  return(p_val)
+})
+res_adj10 <- p.adjust(res10, method = "fdr")
+
+# Create one column per group with the median abundance per protein
+data_relativ10$time0_median <- apply(data_relativ10[, time0], 1, median)
+data_relativ10$time12_median <- apply(data_relativ10[, time12], 1, median)
+
+# Create the results table
+results10 <- data.frame(
+  Name = Table_prots_human10$Entry_Name,
+  p_value = res10,
+  p_adj =res_adj10,
+  time0 = data_relativ10$time0_median,
+  time12 = data_relativ10$time12_median)
+View(results10)
+write.csv(results10, file = "wilcoxon_human10.csv")
+
+# Define a pseudocount to avoid log(0) or division by zero
+pseudocount <- 1e-10 
+results10$Logfc <- log2((results10[,"time12"] + pseudocount) / (results10[,"time0"] + pseudocount))
+
+# Create a new column indicating in which group the protein intensity is higher
+results10$Group <- ifelse(results10$time0 > results10$time12, "time0", "time12")
+
+# Filter by adjusted p-value < 0.05
+results_pvalue10 <- results10[results10$p_adj < 0.05,]
+
+# Filter by LogFC < -0.5 or > 0.5
+results_pvaluelog10 <- results_pvalue10[results_pvalue10$Logfc > 0.5 | results_pvalue10$Logfc < -0.5, ]
+
+# Inspect the results and save the logFC-filtered table
+View(results_pvalue10)
+write.csv(results_pvalue10, file = "wilcoxon_human10_sig.csv")
+View(results_pvaluelog10)
+write.csv(results_pvaluelog10, file = "wilcoxon_human10_sig_log.csv") # This is the results table that will be imported into STRING-db for network analysis
+```
+
+
+# ------------------------------------------------------------------------------
+### PCA
+# ------------------------------------------------------------------------------
+###------------- All ------------
+```{r Matrix for PCA all human proteins, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+Table_prots_human <- data
+colnames(Table_prots_human)
+
+data_pca <- Table_prots_human[, -c(1:9,28)]
+
+data_pca <- t(data_pca) # transpose
+pca1 <- prcomp(data_pca, scale = T) # scale to normalize
+summary(pca1)
+
+pca_df <- as.data.frame(pca1$x)
+pca_df$Name <- row.names(pca_df)
+pca_df$sample_name <- pca_df$Name
+
+Sample_data <- read_excel("Samples_CF_paired.xlsx")
+Sample_data$Name <- gsub("[[:space:]]+", "_", Sample_data$Name)
+
+Time0  <- Sample_data$Name[Sample_data$Group == "time0"]
+Time12 <- Sample_data$Name[Sample_data$Group == "time12"]
+
+pca_df$Group <- ifelse(pca_df$Name %in% Time0, "Time 0",
+                  ifelse(pca_df$Name %in% Time12, "Time 12", NA))
+
+pca_df$Group <- factor(pca_df$Group, levels = c("Time 0", "Time 12"))
+
+# sanity check linking
+table(pca_df$Group, useNA = "ifany")
+
+# PERMANOVA (euclidian distances)
+distances <- dist(pca_df[, c("PC1", "PC2")])
+set.seed(150)
+adonis_result <- adonis2(distances ~ Group, data = pca_df)
+print(adonis_result)
+
+# --- Save PCA summary (like summary(pca1)) ---
+imp <- summary(pca1)$importance
+summary_pca1 <- tibble(
+  PC = colnames(imp),
+  standard_deviation     = as.numeric(imp["Standard deviation", ]),
+  proportion_of_variance = as.numeric(imp["Proportion of Variance", ]),
+  cumulative_proportion  = as.numeric(imp["Cumulative Proportion", ])
+)
+
+write.csv(summary_pca1, file = "PCA_human_summary.csv")
+
+# --- Save PERMANOVA (adonis2) table ---
+adonis_results <- as.data.frame(adonis_result) %>%
+  tibble::rownames_to_column("term")
+
+write.csv(adonis_results, file = "PCA_human_adonis.csv")
+```
+
+#### Variance
+```{r Plot PCA variance all human proteins, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# Extract axis variance (%) from prcomp()
+var_expl <- (pca1$sdev^2) / sum(pca1$sdev^2) * 100
+pc1_perc <- round(var_expl[1], 2)
+pc2_perc <- round(var_expl[2], 2)
+
+# PERMANOVA stats
+F_value  <- adonis_result$F[1]
+R2_value <- adonis_result$R2[1]
+p_value  <- adonis_result$`Pr(>F)`[1]
+
+F_txt  <- signif(F_value, 3)
+R2_txt <- signif(R2_value, 3)
+p_txt  <- if (is.na(p_value)) "NA" else if (p_value < 1e-3) "< 0.001" else signif(p_value, 3)
+cap_text <- paste0("F = ", F_txt, "   •   R\u00B2 = ", R2_txt, "   •   p = ", p_txt)
+
+# Group labels
+pca_df$Group_plot <- factor(pca_df$Group, levels = c("Time 0", "Time 12"))
+
+# Labels
+pca_df$label_short <- sub(".*24_177_([0-9]+).*", "\\1", pca_df$Name)
+
+# Colors
+col_ellipse <- c("Time 0" = "#F4E1A1", "Time 12" = "#A1E1E1")
+col_point   <- c("Time 0" = "#FAF3DC", "Time 12" = "#D6F5F5")
+
+PCA_human_all <- ggplot(pca_df, aes(x = PC1, y = PC2)) +
+  stat_ellipse(
+    aes(fill = Group_plot, color = Group_plot),
+    geom = "polygon", level = 0.95,
+    alpha = 0.35, linewidth = 0.6, show.legend = TRUE
+  ) +
+  geom_point(
+    data  = subset(pca_df, Group_plot == "Time 0"),
+    shape = 21, size = 3, stroke = 0.3,
+    color = "black", fill = col_point["Time 0"]
+  ) +
+  geom_point(
+    data  = subset(pca_df, Group_plot == "Time 12"),
+    shape = 21, size = 3, stroke = 0.3,
+    color = "black", fill = col_point["Time 12"]
+  ) +
+  ggrepel::geom_text_repel(
+    aes(label = label_short),
+    color = "black",
+    size = 3,
+    box.padding = 0.35,
+    point.padding = 0.15,
+    max.overlaps = Inf,
+    show.legend = FALSE
+  ) +
+  scale_fill_manual(values = col_ellipse, name = "Time", drop = FALSE) +
+  scale_color_manual(values = col_ellipse, guide = "none", drop = FALSE) +
+  guides(fill = guide_legend(override.aes = list(alpha = 0.35, linewidth = 0.6))) +
+  labs(
+    x = paste0("PC1 (", pc1_perc, "%)"),
+    y = paste0("PC2 (", pc2_perc, "%)"),
+    title = "PCA - All human proteins",
+    caption = cap_text
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    panel.grid.minor      = element_blank(),
+    legend.position       = "right",
+    plot.title            = element_text(size = 14),
+    plot.caption.position = "plot",
+    plot.caption          = element_text(hjust = 0, size = 11)
+  )
+
+ggsave("PCA_prots_human_all_variance.svg", PCA_human_all, width = 8, height = 6, units = "in", dpi = 300)
+```
+
+###------------- 10% ------------
+#### 10% human proteins
+
+```{r Matrix for PCA 10 human proteins, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+Table_prots_human10 <- data10
+colnames(Table_prots_human10)
+
+data_pca10 <- Table_prots_human10[, -c(1:9,28)]
+
+data_pca10 <- t(data_pca10) # transpose
+pca1_10 <- prcomp(data_pca10, scale = T) # scale to normalize
+summary(pca1_10)
+
+pca10_df <- as.data.frame(pca1_10$x)
+pca10_df$Name <- row.names(pca10_df)
+pca10_df$sample_name <- pca10_df$Name
+
+Sample_data <- read_excel("Samples_CF_paired.xlsx")
+Sample_data$Name <- gsub("[[:space:]]+", "_", Sample_data$Name)
+
+Time0  <- Sample_data$Name[Sample_data$Group == "time0"]
+Time12 <- Sample_data$Name[Sample_data$Group == "time12"]
+
+pca10_df$Group <- ifelse(pca10_df$Name %in% Time0, "Time 0",
+                  ifelse(pca10_df$Name %in% Time12, "Time 12", NA))
+
+pca10_df$Group <- factor(pca10_df$Group, levels = c("Time 0", "Time 12"))
+
+# sanity check linking
+table(pca10_df$Group, useNA = "ifany")
+
+# PERMANOVA (euclidian distances)
+distances10 <- dist(pca10_df[, c("PC1", "PC2")])
+set.seed(150)
+adonis_result10 <- adonis2(distances10 ~ Group, data = pca10_df)
+print(adonis_result10)
+
+# --- Save PCA summary (like summary(pca1_10)) ---
+imp <- summary(pca1_10)$importance
+summary_pca1_10 <- tibble(
+  PC = colnames(imp),
+  standard_deviation     = as.numeric(imp["Standard deviation", ]),
+  proportion_of_variance = as.numeric(imp["Proportion of Variance", ]),
+  cumulative_proportion  = as.numeric(imp["Cumulative Proportion", ])
+)
+
+write.csv(summary_pca1_10, file = "PCA_human10_summary.csv")
+
+# --- Save PERMANOVA (adonis2) table ---
+adonis_results10 <- as.data.frame(adonis_result10) %>%
+  tibble::rownames_to_column("term")
+
+write.csv(adonis_results10, file = "PCA_human10_adonis.csv")
+```
+
+#### Variance
+```{r Plot PCA variance 10 human proteins, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# Extract axis variance (%) from prcomp()
+var_expl <- (pca1_10$sdev^2) / sum(pca1_10$sdev^2) * 100
+pc1_perc <- round(var_expl[1], 2)
+pc2_perc <- round(var_expl[2], 2)
+
+# Extract PERMANOVA stats from adonis2()
+F_value  <- adonis_result10$F[1]
+R2_value <- adonis_result10$R2[1]
+p_value  <- adonis_result10$`Pr(>F)`[1]
+
+F_txt  <- signif(F_value, 3)
+R2_txt <- signif(R2_value, 3)
+p_txt  <- if (is.na(p_value)) "NA" else if (p_value < 1e-3) "< 0.001" else signif(p_value, 3)
+cap_text <- paste0("F = ", F_txt, "   •   R\u00B2 = ", R2_txt, "   •   p = ", p_txt)
+
+# Group labels
+pca10_df$Group_plot <- factor(pca10_df$Group, levels = c("Time 0", "Time 12"))
+
+# Labels
+pca10_df$label_short <- sub(".*24_177_([0-9]+).*", "\\1", pca10_df$Name)
+
+# Colors
+col_ellipse <- c("Time 0" = "#F4E1A1", "Time 12" = "#A1E1E1")
+col_point   <- c("Time 0" = "#FAF3DC", "Time 12" = "#D6F5F5")
+
+PCA_human_10_var <- ggplot(pca10_df, aes(x = PC1, y = PC2)) +
+  stat_ellipse(
+    aes(fill = Group_plot, color = Group_plot),
+    geom = "polygon", level = 0.95,
+    alpha = 0.35, linewidth = 0.6, show.legend = TRUE
+  ) +
+  geom_point(
+    data  = subset(pca10_df, Group_plot == "Time 0"),
+    shape = 21, size = 3, stroke = 0.3,
+    color = "black", fill = col_point["Time 0"]
+  ) +
+  geom_point(
+    data  = subset(pca10_df, Group_plot == "Time 12"),
+    shape = 21, size = 3, stroke = 0.3,
+    color = "black", fill = col_point["Time 12"]
+  ) +
+  ggrepel::geom_text_repel(
+    aes(label = label_short),
+    color = "black",
+    size = 3,
+    box.padding = 0.35,
+    point.padding = 0.15,
+    max.overlaps = Inf,
+    show.legend = FALSE
+  ) +
+  scale_fill_manual(values = col_ellipse, name = "Time", drop = FALSE) +
+  scale_color_manual(values = col_ellipse, guide = "none", drop = FALSE) +
+  guides(fill = guide_legend(override.aes = list(alpha = 0.35, linewidth = 0.6))) +
+  labs(
+    x = paste0("PC1 (", pc1_perc, "%)"),
+    y = paste0("PC2 (", pc2_perc, "%)"),
+    title = "PCA - 10% human proteins",
+    caption = cap_text
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    panel.grid.minor      = element_blank(),
+    legend.position       = "right",
+    plot.title            = element_text(size = 14),
+    plot.caption.position = "plot",
+    plot.caption          = element_text(hjust = 0, size = 11)
+  )
+
+ggsave("PCA_prots_human_10_variance.svg", PCA_human_10_var, width = 8, height = 6, units = "in", dpi = 300)
+```
+
+
+# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
+# MICROBIAL PROTEINS
+# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
+
+## Load the data
+```{r Load in data, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# Load protein data
+data <- read_excel("Micro_final.xlsx")
+colnames(data) <- gsub("[[:space:]]+", "_", colnames(data))
+
+# Load sample data
+Sample_data <- read_excel("Samples_CF_paired.xlsx")
+Sample_data$Name <- gsub("[[:space:]]+", "_", Sample_data$Name)
+
+# Create sample vectors according to group
+time0 <- Sample_data$Name[Sample_data$Group == "time0"]
+time12 <- Sample_data$Name[Sample_data$Group == "time12"]
+
+colnames(data)
+Table_prots_micro <- data
+```
+
+## Presence filter
+### Presence filter 10 %
+```{r Presence filter 10 perc, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# Keep only proteins present in ≥10% of samples in time0 or time12
+threshold_Group1 <- ceiling(length(time0) * 0.1) 
+threshold_Group2 <- ceiling(length(time12) * 0.1)
+
+colnames(data) <- gsub("[[:space:]]+", "_", colnames(data))
+data10 <- data %>%
+  filter(rowSums(select(., all_of(time0)) > 0) >= threshold_Group1 | 
+           rowSums(select(., all_of(time12)) > 0) >= threshold_Group2)
+
+write.xlsx(data10, "Micro_refined_10.xlsx")
+
+Table_prots_micro10 <- data10
+```
+
+# ------------------------------------------------------------------------------
+# ---------- STATISTICS ----------
+# ------------------------------------------------------------------------------
+
+### Normality in the 10 % subset
+```{r Normality in the 10 percent subset, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# Select numeric columns only
+numeric_data_10 <- Table_prots_micro10 %>% 
+  dplyr::select(where(is.numeric))
+
+# Function for the Shapiro test
+shapiro_p <- function(x) {
+  x <- x[!is.na(x)]
+  n <- length(x)
+  if (n < 3)    return(NA_real_)           
+  if (n > 5000) x <- sample(x, 5000)       
+  if (sd(x) == 0) return(NA_real_)         
+  shapiro.test(x)$p.value
+}
+
+# Apply to all numeric columns
+results_10 <- numeric_data_10 %>%
+  summarise(across(everything(), shapiro_p))
+
+# Convert to long format and create summary
+normality_summary_10 <- tidyr::pivot_longer(results_10, 
+                                           cols = everything(),
+                                           names_to = "Column",
+                                           values_to = "P_Value")
+
+# 5) Non-normal columns (p < 0.05)
+non_normal_columns_10 <- normality_summary_10 %>% 
+  filter(!is.na(P_Value), P_Value < 0.05)
+
+print(normality_summary_10)
+print(non_normal_columns_10)
+```
+
+### Relative abundance matrix 10 %
+```{r Relative abundance matrix 10 perc, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# Normalize intensities by the total intensity of each sample (relative abundance)
+colnames(data10)
+
+data_relativ10 <- data10[, 10:27]
+data_relativ10 <- sweep(data_relativ10, 2, colSums(data_relativ10, na.rm = TRUE), FUN = "/")
+
+data_matrix10 <- as.matrix(data_relativ10)
+```
+
+### Wilcoxon test
+#### Wilcoxon test 10 %
+```{r Wilcoxon 10 perc, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+res10 <- apply(data_matrix10, 1, function(x) {
+  p_val <- wilcox.test(x[time0], x[time12], paired = TRUE)$p.value
+  return(p_val)
+})
+res_adj10 <- p.adjust(res10, method = "fdr")
+
+# Create one column per group with the median abundance per protein
+data_relativ10$time0_median <- apply(data_relativ10[, time0], 1, median)
+data_relativ10$time12_median <- apply(data_relativ10[, time12], 1, median)
+
+# Create the results table
+results10 <- data.frame(
+  Name = Table_prots_micro10$Entry_Name,
+  p_value = res10,
+  p_adj =res_adj10,
+  time0 = data_relativ10$time0_median,
+  time12 = data_relativ10$time12_median)
+View(results10)
+write.csv(results10, file = "wilcoxon_micro10.csv")
+
+# Define a pseudocount to avoid log(0) or division by zero
+pseudocount <- 1e-10 
+results10$Logfc <- log2((results10[,"time12"] + pseudocount) / (results10[,"time0"] + pseudocount))
+
+# Create a new column indicating in which group the protein intensity is higher
+results10$Group <- ifelse(results10$time0 > results10$time12, "time0", "time12")
+
+# Filter by adjusted p-value < 0.05
+results_pvalue10 <- results10[results10$p_adj < 0.05,]
+
+# Filter by LogFC < -0.5 or > 0.5
+results_pvaluelog10 <- results_pvalue10[results_pvalue10$Logfc > 0.5 | results_pvalue10$Logfc < -0.5, ]
+
+# Inspect the results and save the logFC-filtered table
+View(results_pvalue10)
+write.csv(results_pvalue10, file = "wilcoxon_micro10_sig.csv")
+View(results_pvaluelog10)
+write.csv(results_pvaluelog10, file = "wilcoxon_micro10_sig_log.csv")
+```
+
+# ------------------------------------------------------------------------------
+### PCA
+# ------------------------------------------------------------------------------
+###------------- All ------------
+#### All microbial proteins
+
+```{r Matrix for PCA micro proteins, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+Table_prots_micro <- data
+colnames(Table_prots_micro)
+
+data_pca <- Table_prots_micro[, -c(1:9,28)]
+
+data_pca <- t(data_pca) # transpose
+pca1 <- prcomp(data_pca, scale = T) # scale to normalize
+summary(pca1)
+
+pca_df <- as.data.frame(pca1$x)
+pca_df$Name <- row.names(pca_df)
+pca_df$sample_name <- pca_df$Name
+
+Sample_data <- read_excel("Samples_CF_paired.xlsx")
+Sample_data$Name <- gsub("[[:space:]]+", "_", Sample_data$Name)
+
+Time0  <- Sample_data$Name[Sample_data$Group == "time0"]
+Time12 <- Sample_data$Name[Sample_data$Group == "time12"]
+
+pca_df$Group <- ifelse(pca_df$Name %in% Time0, "Time 0",
+                  ifelse(pca_df$Name %in% Time12, "Time 12", NA))
+
+pca_df$Group <- factor(pca_df$Group, levels = c("Time 0", "Time 12"))
+
+# sanity check linking
+table(pca_df$Group, useNA = "ifany")
+
+# PERMANOVA (euclidian distances)
+distances <- dist(pca_df[, c("PC1", "PC2")])
+set.seed(150)
+adonis_result <- adonis2(distances ~ Group, data = pca_df)
+print(adonis_result)
+
+# --- Save PCA summary (like summary(pca1)) ---
+imp <- summary(pca1)$importance
+summary_pca1 <- tibble(
+  PC = colnames(imp),
+  standard_deviation     = as.numeric(imp["Standard deviation", ]),
+  proportion_of_variance = as.numeric(imp["Proportion of Variance", ]),
+  cumulative_proportion  = as.numeric(imp["Cumulative Proportion", ])
+)
+
+write.csv(summary_pca1, file = "PCA_micro_summary.csv")
+
+# --- Save PERMANOVA (adonis2) table ---
+adonis_results <- as.data.frame(adonis_result) %>%
+  tibble::rownames_to_column("term")
+
+write.csv(adonis_results, file = "PCA_micro_adonis.csv")
+```
+
+#### Variance
+```{r Plot PCA variance all micro proteins, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# Extract axis variance (%) from prcomp()
+var_expl <- (pca1$sdev^2) / sum(pca1$sdev^2) * 100
+pc1_perc <- round(var_expl[1], 2)
+pc2_perc <- round(var_expl[2], 2)
+
+# PERMANOVA stats
+F_value  <- adonis_result$F[1]
+R2_value <- adonis_result$R2[1]
+p_value  <- adonis_result$`Pr(>F)`[1]
+
+F_txt  <- signif(F_value, 3)
+R2_txt <- signif(R2_value, 3)
+p_txt  <- if (is.na(p_value)) "NA" else if (p_value < 1e-3) "< 0.001" else signif(p_value, 3)
+cap_text <- paste0("F = ", F_txt, "   •   R\u00B2 = ", R2_txt, "   •   p = ", p_txt)
+
+# Group labels
+pca_df$Group_plot <- factor(pca_df$Group, levels = c("Time 0", "Time 12"))
+
+# Labels
+pca_df$label_short <- sub(".*24_177_([0-9]+).*", "\\1", pca_df$Name)
+
+# Colors
+col_ellipse <- c("Time 0" = "#F4E1A1", "Time 12" = "#A1E1E1")
+col_point   <- c("Time 0" = "#FAF3DC", "Time 12" = "#D6F5F5")
+
+PCA_micro_all <- ggplot(pca_df, aes(x = PC1, y = PC2)) +
+  stat_ellipse(
+    aes(fill = Group_plot, color = Group_plot),
+    geom = "polygon", level = 0.95,
+    alpha = 0.35, linewidth = 0.6, show.legend = TRUE
+  ) +
+  geom_point(
+    data  = subset(pca_df, Group_plot == "Time 0"),
+    shape = 21, size = 3, stroke = 0.3,
+    color = "black", fill = col_point["Time 0"]
+  ) +
+  geom_point(
+    data  = subset(pca_df, Group_plot == "Time 12"),
+    shape = 21, size = 3, stroke = 0.3,
+    color = "black", fill = col_point["Time 12"]
+  ) +
+  ggrepel::geom_text_repel(
+    aes(label = label_short),
+    color = "black",
+    size = 3,
+    box.padding = 0.35,
+    point.padding = 0.15,
+    max.overlaps = Inf,
+    show.legend = FALSE
+  ) +
+  scale_fill_manual(values = col_ellipse, name = "Time", drop = FALSE) +
+  scale_color_manual(values = col_ellipse, guide = "none", drop = FALSE) +
+  guides(fill = guide_legend(override.aes = list(alpha = 0.35, linewidth = 0.6))) +
+  labs(
+    x = paste0("PC1 (", pc1_perc, "%)"),
+    y = paste0("PC2 (", pc2_perc, "%)"),
+    title = "PCA - All microbial proteins",
+    caption = cap_text
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    panel.grid.minor      = element_blank(),
+    legend.position       = "right",
+    plot.title            = element_text(size = 14),
+    plot.caption.position = "plot",
+    plot.caption          = element_text(hjust = 0, size = 11)
+  )
+
+ggsave("PCA_prots_micro_all_variance.svg", PCA_micro_all, width = 8, height = 6, units = "in", dpi = 300)
+```
+
+###------------- 10% ------------
+#### 10% microbial proteins
+
+```{r Matrix for PCA 10 micro proteins, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+Table_prots_micro10 <- data10
+colnames(Table_prots_micro10)
+
+data_pca10 <- Table_prots_micro10[, -c(1:9,28)]
+
+data_pca10 <- t(data_pca10) # transpose
+pca1_10 <- prcomp(data_pca10, scale = T) # scale to normalize
+summary(pca1_10)
+
+pca10_df <- as.data.frame(pca1_10$x)
+pca10_df$Name <- row.names(pca10_df)
+pca10_df$sample_name <- pca10_df$Name
+
+Sample_data <- read_excel("Samples_CF_paired.xlsx")
+Sample_data$Name <- gsub("[[:space:]]+", "_", Sample_data$Name)
+
+Time0  <- Sample_data$Name[Sample_data$Group == "time0"]
+Time12 <- Sample_data$Name[Sample_data$Group == "time12"]
+
+pca10_df$Group <- ifelse(pca10_df$Name %in% Time0, "Time 0",
+                  ifelse(pca10_df$Name %in% Time12, "Time 12", NA))
+
+pca10_df$Group <- factor(pca10_df$Group, levels = c("Time 0", "Time 12"))
+
+# sanity check linking
+table(pca10_df$Group, useNA = "ifany")
+
+# PERMANOVA (euclidian distances)
+distances10 <- dist(pca10_df[, c("PC1", "PC2")])
+set.seed(150)
+adonis_result10 <- adonis2(distances10 ~ Group, data = pca10_df)
+print(adonis_result10)
+
+# --- Save PCA summary (like summary(pca1_10)) ---
+imp <- summary(pca1_10)$importance
+summary_pca1_10 <- tibble(
+  PC = colnames(imp),
+  standard_deviation     = as.numeric(imp["Standard deviation", ]),
+  proportion_of_variance = as.numeric(imp["Proportion of Variance", ]),
+  cumulative_proportion  = as.numeric(imp["Cumulative Proportion", ])
+)
+
+write.csv(summary_pca1_10, file = "PCA_micro10_summary.csv")
+
+# --- Save PERMANOVA (adonis2) table ---
+adonis_results10 <- as.data.frame(adonis_result10) %>%
+  tibble::rownames_to_column("term")
+
+write.csv(adonis_results10, file = "PCA_micro10_adonis.csv")
+```
+
+#### Variance
+```{r Plot PCA variance 10 micro proteins, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# Extract axis variance (%) from prcomp()
+var_expl <- (pca1_10$sdev^2) / sum(pca1_10$sdev^2) * 100
+pc1_perc <- round(var_expl[1], 2)
+pc2_perc <- round(var_expl[2], 2)
+
+# Extract PERMANOVA stats from adonis2()
+F_value  <- adonis_result10$F[1]
+R2_value <- adonis_result10$R2[1]
+p_value  <- adonis_result10$`Pr(>F)`[1]
+
+F_txt  <- signif(F_value, 3)
+R2_txt <- signif(R2_value, 3)
+p_txt  <- if (is.na(p_value)) "NA" else if (p_value < 1e-3) "< 0.001" else signif(p_value, 3)
+cap_text <- paste0("F = ", F_txt, "   •   R\u00B2 = ", R2_txt, "   •   p = ", p_txt)
+
+# Group labels
+pca10_df$Group_plot <- factor(pca10_df$Group, levels = c("Time 0", "Time 12"))
+
+# Labels
+pca10_df$label_short <- sub(".*24_177_([0-9]+).*", "\\1", pca10_df$Name)
+
+# Colors
+col_ellipse <- c("Time 0" = "#F4E1A1", "Time 12" = "#A1E1E1")
+col_point   <- c("Time 0" = "#FAF3DC", "Time 12" = "#D6F5F5")
+
+PCA_micro_10_var <- ggplot(pca10_df, aes(x = PC1, y = PC2)) +
+  stat_ellipse(
+    aes(fill = Group_plot, color = Group_plot),
+    geom = "polygon", level = 0.95,
+    alpha = 0.35, linewidth = 0.6, show.legend = TRUE
+  ) +
+  geom_point(
+    data  = subset(pca10_df, Group_plot == "Time 0"),
+    shape = 21, size = 3, stroke = 0.3,
+    color = "black", fill = col_point["Time 0"]
+  ) +
+  geom_point(
+    data  = subset(pca10_df, Group_plot == "Time 12"),
+    shape = 21, size = 3, stroke = 0.3,
+    color = "black", fill = col_point["Time 12"]
+  ) +
+  ggrepel::geom_text_repel(
+    aes(label = label_short),
+    color = "black",
+    size = 3,
+    box.padding = 0.35,
+    point.padding = 0.15,
+    max.overlaps = Inf,
+    show.legend = FALSE
+  ) +
+  scale_fill_manual(values = col_ellipse, name = "Time", drop = FALSE) +
+  scale_color_manual(values = col_ellipse, guide = "none", drop = FALSE) +
+  guides(fill = guide_legend(override.aes = list(alpha = 0.35, linewidth = 0.6))) +
+  labs(
+    x = paste0("PC1 (", pc1_perc, "%)"),
+    y = paste0("PC2 (", pc2_perc, "%)"),
+    title = "PCA - 10% microbial proteins",
+    caption = cap_text
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    panel.grid.minor      = element_blank(),
+    legend.position       = "right",
+    plot.title            = element_text(size = 14),
+    plot.caption.position = "plot",
+    plot.caption          = element_text(hjust = 0, size = 11)
+  )
+
+ggsave("PCA_prots_micro_10_variance.svg", PCA_micro_10_var, width = 8, height = 6, units = "in", dpi = 300)
+```
+
+
+# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
+# MICROBIAL FUNCTIONS
+# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
+
+## Load the data and pre-processing
+
+### Samples data
+```{r Samples data and vectors, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# Load functions data
+Sample_data <- read_excel("Samples_CF_paired_intensity.xlsx")
+Sample_data$Name <- gsub("[[:space:]]+", "_", Sample_data$Name)
+
+# Create sample vectors according to group
+time0 <- Sample_data$Name[Sample_data$Time == "time0"] # Carmen en vez de Time tiene Group (es el archivo Samples_FQ)
+time12 <- Sample_data$Name[Sample_data$Time == "time12"] # Carmen en vez de Time tiene Group (es el archivo Samples_FQ)
+```
+
+### Functions data
+```{r Load in data, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# Load functions data
+data <- read_delim("functions.tsv", 
+                   delim = "\t", escape_double = FALSE, trim_ws = TRUE)
+```
+
+### Remove MaxLFQ column
+```{r Remove MaxLFQ, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+indices <- grep("MaxLFQ", colnames(data))
+data <- data[, -indices]
+```
+
+### Remove rows where all intensities are 0
+```{r Remove rows with intensity 0, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+intensity_cols <- grep("Intensity", colnames(data))
+intensity_sum <- rowSums(data[, intensity_cols])
+data <- data[intensity_sum != 0, ]
+```
+
+### Load in Micro_final file and filter by Protein
+```{r Load in Micro_final file, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+Proteins_filtered <- read_excel("C:/RProjects/cf_metaproteomics_thesis_chapter_II/Micro_final.xlsx")
+
+# Filter by column Protein
+filtered_data <- data %>%
+  filter(Name %in% Proteins_filtered$Protein)
+colnames(filtered_data) <- gsub("[[:space:]]+", "_", colnames(filtered_data))
+
+# Rename sample
+colnames(filtered_data)[colnames(filtered_data) == "Intensity_24_177_7b"] <- "Intensity_24_177_7"
+```
+
+### Convert colums to UTF-8 and save file
+```{r Convert colums to UTF-8 and save file, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+filtered_data <- filtered_data %>%
+  mutate(across(where(is.character), ~ iconv(., to = "UTF-8")))
+write.xlsx(filtered_data, "Functions_filtered.xlsx")
+```
+
+### Remove samples and save new file
+```{r Remove samples, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# Rename remove_samples from "24_177_X Intensity" -> "Intensity_24_177_X"
+remove_samples <- c(
+  "Intensity_24_177_1","Intensity_24_177_2","Intensity_24_177_3","Intensity_24_177_4","Intensity_24_177_5",
+  "Intensity_24_177_6","Intensity_24_177_9","Intensity_24_177_10","Intensity_24_177_11","Intensity_24_177_12",
+  "Intensity_24_177_13","Intensity_24_177_17","Intensity_24_177_18","Intensity_24_177_19","Intensity_24_177_20",
+  "Intensity_24_177_21","Intensity_24_177_22","Intensity_24_177_23","Intensity_24_177_25","Intensity_24_177_26",
+  "Intensity_24_177_29","Intensity_24_177_30","Intensity_24_177_31","Intensity_24_177_32","Intensity_24_177_33",
+  "Intensity_24_177_35","Intensity_24_177_36","Intensity_24_177_37","Intensity_24_177_38","Intensity_24_177_39",
+  "Intensity_24_177_40","Intensity_24_177_41","Intensity_24_177_42","Intensity_24_177_45","Intensity_24_177_46",
+  "Intensity_24_177_47","Intensity_24_177_48","Intensity_24_177_49","Intensity_24_177_53","Intensity_24_177_54",
+  "Intensity_24_177_55","Intensity_24_177_56","Intensity_24_177_57","Intensity_24_177_58","Intensity_24_177_59",
+  "Intensity_24_177_61","Intensity_24_177_62","Intensity_24_177_65","Intensity_24_177_66","Intensity_24_177_67",
+  "Intensity_24_177_68","Intensity_24_177_69","Intensity_24_177_70","Intensity_24_177_72","Intensity_24_177_73")
+
+filtered_data_clean <- filtered_data[, setdiff(colnames(filtered_data), remove_samples)]
+
+filtered_data_clean <- filtered_data_clean %>%
+  mutate(across(where(is.character), ~ iconv(., to = "UTF-8")))
+write.xlsx(filtered_data_clean, "Functions_refined.xlsx")
+```
+
+### Presence filter
+#### Presence filter 10 %
+```{r Presence filter 10 perc, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# Keep only proteins present in ≥10% of samples in time0 or time12
+threshold_Group1 <- ceiling(length(time0) * 0.1)
+threshold_Group2 <- ceiling(length(time12) * 0.1)
+
+filtered_data10 <- filtered_data_clean %>%
+  filter(rowSums(select(., all_of(time0)) > 0) >= threshold_Group1 | 
+           rowSums(select(., all_of(time12)) > 0) >= threshold_Group2)
+
+write.xlsx(filtered_data10, "Functions_refined_10.xlsx")
+```
+
+# ------------------------------------------------------------------------------
+# ---------- STATISTICS ----------
+# ------------------------------------------------------------------------------
+
+### Normality in the 10 % subset
+```{r Normality in the 10 percent subset, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# Select numeric columns only
+colnames(filtered_data10)
+numeric_data_10 <- filtered_data10 [, c(7:24)]
+
+# Function for the Shapiro test
+shapiro_p <- function(x) {
+  x <- x[!is.na(x)]
+  n <- length(x)
+  if (n < 3)    return(NA_real_)           
+  if (n > 5000) x <- sample(x, 5000)       
+  if (sd(x) == 0) return(NA_real_)         
+  shapiro.test(x)$p.value
+}
+
+# Apply to all numeric columns
+results_10 <- numeric_data_10 %>%
+  summarise(across(everything(), shapiro_p))
+
+# Convert to long format and create summary
+normality_summary_10 <- tidyr::pivot_longer(results_10, 
+                                           cols = everything(),
+                                           names_to = "Column",
+                                           values_to = "P_Value")
+
+# 5) Non-normal columns (p < 0.05)
+non_normal_columns_10 <- normality_summary_10 %>% 
+  filter(!is.na(P_Value), P_Value < 0.05)
+
+print(normality_summary_10)
+print(non_normal_columns_10)
+```
+
+### Relative abundance matrix 10 %
+```{r Relative abundance matrix 10 perc, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# Normalize intensities by the total intensity of each sample (relative abundance)
+colnames(filtered_data10)
+
+data_relativ10 <- filtered_data10[, c(7:24)]
+data_relativ10 <- sweep(data_relativ10, 2, colSums(data_relativ10, na.rm = TRUE), FUN = "/")
+
+data_matrix10 <- as.matrix(data_relativ10)
+
+# Relative abundance matrix (proteins x samples)
+write_csv(
+  tibble::rownames_to_column(as.data.frame(data_relativ10), var = "ProteinID"),
+  file = "microbial_proteins_rel_abundance_10perc.csv")
+```
+
+###------------- 10% ------------
+### General representation (plot before doing statistics)
+
+```{r General representation, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# Group by group and COG and create columns for number of proteins and intensity
+data_representation10 <- data_relativ10
+data_representation10$Name <- filtered_data10$Name
+data_representation10$Taxonomy <- filtered_data10$Taxonomy_name
+data_representation10$KEGG_ko <- filtered_data10$KEGG_ko
+data_representation10$KEGG_Pathway_Entry <- filtered_data10$KEGG_Pathway_Entry
+data_representation10$COG_accession <- filtered_data10$COG_accession
+data_representation10$COG_category <- filtered_data10$COG_category
+data_representation10$COG_name <- filtered_data10$COG_name
+
+# Remove categories separated by ";" and keep only the first value
+data_representation10 <- data_representation10 %>%
+  mutate(COG_category = map_chr(str_split(COG_category, ";"), ~ .x[1]))
+
+
+# Calculate the mean of time0 and time12
+data_representation10$time0_mean <- rowMeans(data_relativ10[, time0])
+data_representation10$time12_mean <- rowMeans(data_relativ10[, time12])
+
+# Calculate summed values grouped by COG_category
+summary_data <- data_representation10 %>%
+  group_by(COG_category) %>%
+  summarize(
+    time0 = sum(time0_mean, na.rm = TRUE),
+    time12 = sum(time12_mean, na.rm = TRUE)
+    )
+
+# Summed COG-category relative abundance at each timepoint
+write_csv(
+  summary_data,
+  file = "COG_category_summed_rel_abundance_T0_T12_10perc.csv")
+
+
+data_long <- summary_data %>%
+  pivot_longer(cols = c(time0, time12), names_to = "Group", values_to = "Value")
+
+# Change the names in the 'Group' column for plotting
+data_long <- data_long %>%
+  mutate(Group = case_when(
+    Group == "time0" ~ "Time 0",
+    Group == "time12" ~ "Time 12"
+  ))
+
+
+# Group and calculate totals per category
+data_long <- data_long %>%
+  group_by(COG_category) %>%
+  mutate(Order = sum(Value)) %>% # Compute the sum per category (or desired metric)
+  ungroup()
+
+# Reorder 'COG_category' based on 'Order' in decreasing order
+data_long <- data_long %>%
+  mutate(COG_category = reorder(COG_category, -Order))
+
+# Select the top 20 categories
+top_20 <- data_long %>%
+  group_by(COG_category) %>%
+  summarise(Order = sum(Value)) %>%
+  slice_max(Order, n = 20)
+
+# Filter the original data by these categories
+data_top_20 <- data_long %>%
+  filter(COG_category %in% top_20$COG_category)
+
+# Create a mapping dictionary
+mappings <- list(
+  J = "[J]: Translation, ribosomal structure and biogenesis",
+  A = "[A]: RNA processing and modification",
+  K = "[K]: Transcription",
+  L = "[L]: Replication, recombination and repair",
+  B = "[B]: Chromatin structure and dynamics",
+  D = "[D]: Cell cycle control, cell division, chromosome partitioning",
+  Y = "[Y]: Nuclear structure",
+  V = "[V]: Defense mechanisms",
+  T = "[T]: Signal transduction mechanisms",
+  M = "[M]: Cell wall/membrane/envelope biogenesis",
+  N = "[N]: Cell motility",
+  Z = "[Z]: Cytoskeleton",
+  W = "[W]: Extracellular structures",
+  U = "[U]: Intracellular trafficking, secretion, and vesicular transport",
+  O = "[O]: Posttranslational modification, protein turnover, chaperones",
+  C = "[C]: Energy production and conversion",
+  G = "[G]: Carbohydrate transport and metabolism",
+  E = "[E]: Amino acid transport and metabolism",
+  F = "[F]: Nucleotide transport and metabolism",
+  H = "[H]: Coenzyme transport and metabolism",
+  I = "[I]: Lipid transport and metabolism",
+  P = "[P]: Inorganic ion transport and metabolism",
+  Q = "[Q]: Secondary metabolites biosynthesis, transport and catabolism",
+  R = "[R]: General function prediction only",
+  S = "[S]: Function unknown"
+)
+
+# Create the new column 'cog_names', handling NA values
+data_top_20_2 <- data_top_20 %>%
+  rowwise() %>%
+  mutate(
+    cog_names = ifelse(
+      COG_category == "NA", 
+      NA_character_,  
+      str_split(COG_category, "") %>%    
+        unlist() %>%                     
+        map_chr(~ mappings[[.x]]) %>%    
+        paste(collapse = " / ")          
+    )
+  ) %>%
+  ungroup()
+
+# Reorder 'cog_names' based on 'Order' in decreasing order
+data_top_20_2 <- data_top_20_2 %>%
+  mutate(cog_names = reorder(cog_names, -Order))
+
+# Plot with restructured data
+p20_COG_10 <- ggplot(data_top_20_2, aes(x = cog_names, y = Value, fill = Group)) +
+  geom_bar(stat = "identity", 
+           position = position_dodge(width = 0.8), 
+           color = "black") +   
+  labs(
+    x = "COG category",
+    y = "Relative abundance"
+  ) +
+  scale_fill_manual(values = c("Time 0" = "#F4E1A1", "Time 12" = "#A1E1E1"), name = "Group") +
+  theme_classic() +
+  theme(
+    axis.text.x = element_text(angle = 40, hjust = 1, vjust = 1) 
+  ) +
+  scale_x_discrete(labels = function(x) str_wrap(x, width = 25))
+ggsave("top20_COG_bars_functmicro10.svg", plot = p20_COG_10, width = 12, height = 8, dpi = 300)
+
+# Data used for the “top 20 COG categories” barplot
+# (includes COG_category, Group, Value, Order, cog_names after mapping)
+write_csv(data_top_20_2, file = "COG_top20_barplot_data_10perc.csv")
+```
+
+#### PANELS PCAs + Top 20
+```{r Panels PCA, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+panel_prot10_hum_micro <- (PCA_human_10_var | PCA_micro_10_var) /
+                (p20_COG_10) + plot_layout(guides = "collect") #& theme(legend.position = "bottom")
+
+panel_prot10_hum_micro <- panel_prot10_hum_micro + plot_annotation(tag_levels = "A")
+
+ggsave("panel_proteins_PCA10_hum_micro_top20_micro10_var.svg", plot = panel_prot10_hum_micro, width = 10, height = 10, bg = "white")
+```
+
+
+### Wilcoxon test
+```{r Wilcoxon, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+res10 <- apply(data_matrix10, 1, function(x) {
+  p_val <- wilcox.test(x[time0], x[time12], paired = TRUE)$p.value
+  return(p_val)
+})
+res_adj10 <- p.adjust(res10, method = "fdr")
+
+# Create one column per group with the median abundance per protein
+data_relativ10$time0_median <- apply(data_relativ10[, time0], 1, median)
+data_relativ10$time12_median <- apply(data_relativ10[, time12], 1, median)
+
+# Create the results table
+results10 <- data.frame(
+  Name = filtered_data10$Name,
+  p_value = res10,
+  p_adj =res_adj10,
+  Taxonomy = filtered_data10$Taxonomy_name,
+  COG_category = filtered_data10$COG_category,
+  COG_accession = filtered_data10$COG_accession,
+  COG_name = filtered_data10$COG_name,
+  KEGG_ko = filtered_data10$KEGG_ko,
+  KEGG_pathway = filtered_data10$KEGG_Pathway_Entry,
+  time0 = data_relativ10$time0_median,
+  time12 = data_relativ10$time12_median)
+View(results10)
+write.csv(results10, file = "wilcoxon_functmicro10_COG.csv")
+
+# Define a pseudocount to avoid log(0) or division by zero
+pseudocount <- 1e-10 
+results10$Logfc <- log2((results10[,"time12"] + pseudocount) / (results10[,"time0"] + pseudocount))
+
+# Create a new column indicating in which group the protein intensity is higher
+results10$Group <- ifelse(results10$time0 > results10$time12, "time0", "time12")
+
+# Filter by adjusted p-value < 0.05
+results_pvalue10 <- results10[results10$p_adj < 0.05,]
+write.csv(results_pvalue10, file = "wilcoxon_functmicro10_COG_sig.csv")
+
+# Filter by LogFC < -0.5 or > 0.5
+results_pvaluelog10 <- results_pvalue10[results_pvalue10$Logfc > 0.5 | results_pvalue10$Logfc < -0.5, ]
+
+# Remove categories separated by ";" and keep only the first value
+results_pvaluelog10 <- results_pvaluelog10 %>%
+  mutate(COG_category = map_chr(str_split(COG_category, ";"), ~ .x[1]))
+
+# Save the logFC-filtered table
+View(results_pvaluelog10)
+write.csv(results_pvaluelog10, file = "wilcoxon_functmicro10_COG_sig_log.csv")
+```
+
+### Plot p-value log
+#### Data preparation for plotting
+```{r Data preparation for plotting, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+df_combined10 <- results_pvaluelog10
+
+summary_proteins10 <- df_combined10 %>%
+  pivot_longer(cols = c(time0, time12), 
+               names_to = "Group1", 
+               values_to = "Intensity")
+
+summary_proteins10 <- summary_proteins10 %>%
+  mutate(Intensity = as.numeric(Intensity))
+```
+
+#### Dot plot
+```{r Dot plot, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# Group by COG and obtain the number of proteins and the sum of intensity
+summary_proteins_agg10 <- summary_proteins10 %>%
+  group_by(COG_category, Group) %>% 
+  summarise(
+    Sum_Intensity = sum(Intensity, na.rm = TRUE), 
+    Num_Proteins = n() 
+    ) %>%
+  ungroup()
+
+# Create a mapping dictionary
+mappings <- list(
+  J = "[J]: Translation, ribosomal structure and biogenesis",
+  A = "[A]: RNA processing and modification",
+  K = "[K]: Transcription",
+  L = "[L]: Replication, recombination and repair",
+  B = "[B]: Chromatin structure and dynamics",
+  D = "[D]: Cell cycle control, cell division, chromosome partitioning",
+  Y = "[Y]: Nuclear structure",
+  V = "[V]: Defense mechanisms",
+  T = "[T]: Signal transduction mechanisms",
+  M = "[M]: Cell wall/membrane/envelope biogenesis",
+  N = "[N]: Cell motility",
+  Z = "[Z]: Cytoskeleton",
+  W = "[W]: Extracellular structures",
+  U = "[U]: Intracellular trafficking, secretion, and vesicular transport",
+  O = "[O]: Posttranslational modification, protein turnover, chaperones",
+  C = "[C]: Energy production and conversion",
+  G = "[G]: Carbohydrate transport and metabolism",
+  E = "[E]: Amino acid transport and metabolism",
+  F = "[F]: Nucleotide transport and metabolism",
+  H = "[H]: Coenzyme transport and metabolism",
+  I = "[I]: Lipid transport and metabolism",
+  P = "[P]: Inorganic ion transport and metabolism",
+  Q = "[Q]: Secondary metabolites biosynthesis, transport and catabolism",
+  R = "[R]: General function prediction only",
+  S = "[S]: Function unknown",
+  X = "[X]: NAN"
+)
+
+# Create the new column 'cog_names', handling NA values
+summary_proteins_agg10 <- summary_proteins_agg10 %>%
+  rowwise() %>%
+  mutate(
+    cog_names = ifelse(
+      COG_category == "NA", 
+      NA_character_,  
+      str_split(COG_category, "") %>%                     
+        unlist() %>%                                       
+        map_chr(~ mappings[[.x]]) %>%                      
+        paste(collapse = " / ")                           
+    )
+  ) %>%
+  ungroup()
+
+write.xlsx(summary_proteins_agg10, "Summary_prot_functmicro10_COG_sig_log.xlsx")
+
+# Plot
+p_COG_10 <- ggplot(summary_proteins_agg10, 
+                aes(x = Group, y = cog_names, 
+                    size = Num_Proteins, fill = Sum_Intensity)) + 
+  geom_point(alpha = 0.7, 
+             shape = 21,       
+             color = "black",  
+             stroke = 0.3) +   
+  scale_size_continuous(range = c(2, 10), name = "Number of Proteins") +
+  scale_fill_gradient(low = "#499894", high = "#E15759", name = "Intensity") + 
+  labs(
+    x = "Group",
+    y = "COG Category"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "right",
+    legend.title = element_text(size = 12, face = "bold"),
+    legend.text = element_text(size = 10),
+    axis.text.y = element_text(size = 8),
+    axis.text.x = element_text(size = 10, face = "bold"),
+    plot.title = element_text(size = 14, face = "bold", hjust = 0.5)
+  ) +
+  scale_y_discrete(labels = function(x) str_wrap(x, width = 50))
+
+ggsave("COG_dotplot_prot_functmicro10_COG_sig_log.svg", plot = p_COG_10, width = 6, height = 4, dpi = 300)
+```
+
+#### Optional: using KEGG_ko and Taxonomy
+```{r KEGG_ko and Taxonomy, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# KEGG_ko
+# Group by KEGG_ko and obtain the number of proteins and the sum of intensity
+summary_proteins3_10 <- summary_proteins10 %>%
+  separate_rows(KEGG_ko, sep = ",")  
+
+summary_proteins_agg3_10 <- summary_proteins3_10 %>%
+  group_by(KEGG_ko, Group) %>%
+  summarise(
+    Sum_Intensity = sum(Intensity, na.rm = TRUE), 
+    Num_Proteins = n() 
+    ) %>%
+  ungroup()
+write.xlsx(summary_proteins_agg3_10, "Summary_prot_functmicro10_KEGG_ko_sig_log.xlsx")
+
+
+p_KEGGko_10 <- ggplot(summary_proteins_agg3_10, 
+                   aes(x = Group, y = KEGG_ko, 
+                       size = Num_Proteins, fill = Sum_Intensity)) +
+  geom_point(alpha = 0.7,
+             shape = 21,        
+             color = "black",   
+             stroke = 0.3) +    
+  scale_size_continuous(range = c(2, 10), name = "Number of Proteins") +
+  scale_fill_gradient(low = "#499894", high = "#E15759", name = "Intensity") +
+  labs(
+    x = "Group",
+    y = "KEGG_ko"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "right",
+    legend.title = element_text(size = 12, face = "bold"),
+    legend.text = element_text(size = 10),
+    axis.text.y = element_text(size = 8),
+    axis.text.x = element_text(size = 10, face = "bold"),
+    plot.title = element_text(size = 14, face = "bold", hjust = 0.5)
+  ) +
+  scale_y_discrete(labels = function(x) str_wrap(x, width = 40))
+
+ggsave("KEGG_ko_dotplot_prot_functmicro10_KEGG_ko_sig_log.svg", plot = p_KEGGko_10, width = 6, height = 4, dpi = 300)
+
+
+# Taxonomy
+summary_proteins_agg1_10 <- summary_proteins10 %>%
+  group_by(Taxonomy, Group) %>%
+  summarise(
+    Sum_Intensity = sum(Intensity, na.rm = TRUE), 
+    Num_Proteins = n() 
+    ) %>%
+  ungroup()
+
+write.xlsx(summary_proteins_agg1_10, "Summary_prot_functmicro10_Taxonomy_sig_log.xlsx")
+
+
+p_TAX_10 <- ggplot(summary_proteins_agg1_10, 
+                aes(x = Group, y = Taxonomy, 
+                    size = Num_Proteins, fill = Sum_Intensity)) +
+  geom_point(alpha = 0.7,
+             shape = 21,        
+             color = "black",   
+             stroke = 0.3) +    
+  scale_size_continuous(range = c(2, 10), name = "Number of Proteins") +
+  scale_fill_gradient(low = "#499894", high = "#E15759", name = "Intensity") +
+  labs(
+    x = "Group",
+    y = "Taxonomy"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "right",
+    legend.title = element_text(size = 12, face = "bold"),
+    legend.text = element_text(size = 10),
+    axis.text.y = element_text(size = 8),
+    axis.text.x = element_text(size = 10, face = "bold"),
+    plot.title = element_text(size = 14, face = "bold", hjust = 0.5)
+)
+
+ggsave("Taxonomy_dotplot_prot_functmicro10_TAX_sig_log.svg", plot = p_TAX_10, width = 6, height = 4, dpi = 300)
+```
+
+
+# ------------------------------------------------------------------------------
+# FUNCTIONAL GROUPING
+# ------------------------------------------------------------------------------
+
+Instead of performing the analysis at the individual protein level, we will aggregate the data by functional groups:
+- COG_category
+- COG_accession
+- KEGG_ko
+- KEGG_pathway
+
+This allows us to summarize and compare changes in broader functional categories (e.g. metabolic functions, pathways) rather than focusing on single proteins, which can make the biological interpretation more robust and easier to understand.
+
+###------------- 10% ------------
+
+## COG_category
+### Collapse protein-level data to COG categories:
+```{r Collapse protein-level data to COG categories, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+summary_COGcat10 <- filtered_data10 %>%
+  mutate(COG_category = map_chr(str_split(COG_category, ";"), ~ .x[1]))
+
+summary_COGcat10 <- summary_COGcat10 %>%
+  group_by(COG_category) %>%
+  summarise(across(starts_with("Intensity"), sum, .names = "{col}"))
+```
+
+### Relative abundance calculation
+```{r Relative abundance calculation, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+colnames(summary_COGcat10)
+data_relativ10 <- summary_COGcat10[, c(2:19)]
+data_relativ10 <- sweep(data_relativ10, 2, colSums(data_relativ10, na.rm = TRUE), FUN = "/")
+
+data_matrix10 <- as.matrix(data_relativ10)
+```
+
+### Wilcoxon test
+```{r Wilcoxon COGcat, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+res10 <- apply(data_matrix10, 1, function(x) {
+  p_val <- wilcox.test(x[time0], x[time12], paired = TRUE)$p.value
+  return(p_val)
+})
+res_adj10 <- p.adjust(res10, method = "fdr")
+
+# Create one column per group with the median abundance per protein
+data_relativ10$time0_median <- apply(data_relativ10[, time0], 1, median)
+data_relativ10$time12_median <- apply(data_relativ10[, time12], 1, median)
+
+# Create the results table
+results10 <- data.frame(
+  Name = summary_COGcat10$COG_category,
+  p_value = res10,
+  p_adj =res_adj10,
+  time0 = data_relativ10$time0_median,
+  time12 = data_relativ10$time12_median)
+View(results10)
+write.csv(results10, file = "wilcoxon_functmicrogroup10_COGcat.csv")
+
+# Define a pseudocount to avoid log(0) or division by zero
+pseudocount <- 1e-10 
+results10$Logfc <- log2((results10[,"time12"] + pseudocount) / (results10[,"time0"] + pseudocount))
+
+# Create a new column indicating in which group the protein intensity is higher
+results10$Group <- ifelse(results10$time0 > results10$time12, "time0", "time12")
+
+# Filter by adjusted p-value < 0.05
+results_pvalue10 <- results10[results10$p_adj < 0.05,]
+View(results_pvalue10)
+
+# Filter by LogFC < -0.5 or > 0.5
+results_pvaluelog10 <- results_pvalue10[results_pvalue10$Logfc > 0.5 | results_pvalue10$Logfc < -0.5, ]
+
+# Save the logFC-filtered table
+write.csv(results_pvalue10, file = "wilcoxon_functmicrogroup10_COGcat_sig.csv")
+write.csv(results_pvaluelog10, file = "wilcoxon_functmicrogroup10_COGcat_sig_log.csv")
+```
+
+### Optional: volcano plot
+```{r Volcano plot, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+results10 <- results10 %>%
+  mutate(Significance = case_when(
+    p_adj < 0.05 & Logfc > 0.5  ~ "Upregulated",
+    p_adj < 0.05 & Logfc < -0.5 ~ "Downregulated",
+    TRUE ~ "Not significant"
+  ))
+results10$neg_log10_padj <- -log10(results10$p_adj)
+
+# Volcano plot
+vp_COGcat_10 <- ggplot(results10, aes(x = Logfc, y = neg_log10_padj)) +
+  geom_point(aes(color = Significance), size = 2, alpha = 0.8) +
+  scale_color_manual(values = c("Upregulated" = "red", "Downregulated" = "blue", "Not significant" = "grey")) +
+  geom_vline(xintercept = c(-0.5, 0.5), linetype = "dotted") +
+  geom_hline(yintercept = -log10(0.05), linetype = "dotted") +
+  labs(x = expression(log[2]~FC), y = expression(-log[10]~FDR), title = "Volcano plot") +
+  theme_minimal()
+ggsave("COGcat_volcanoplot_functmicrogroup10_COGcat_sig_log.svg", plot = vp_COGcat_10, width = 8, height = 6, dpi = 300)
+
+# With labels
+N <- 10  # change this to the number of labels you want
+
+labels_df <- results10 %>%
+  arrange(p_adj) %>%
+  slice_head(n = N)
+
+vp_COGcat_10_lab <- vp_COGcat_10 +
+  geom_text(data = labels_df, aes(label = Name), vjust = -0.6, size = 3, check_overlap = TRUE)
+
+ggsave("COGcat_volcanoplot_labeled_functmicrogroup10_COGcat_sig_log.svg", plot = vp_COGcat_10_lab, width = 8, height = 6, dpi = 300)
+```
+
+## COG_accession
+### Collapse protein-level data to COG accession:
+```{r Collapse protein-level data to COG accession, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+summary_COGacc10 <- filtered_data10 %>%
+  mutate(COG_accession = map_chr(str_split(COG_accession, ";"), ~ .x[1]))
+
+summary_COGacc10 <- summary_COGacc10 %>%
+  group_by(COG_accession) %>%
+  summarise(across(starts_with("Intensity"), sum, .names = "{col}"))
+```
+
+### Relative abundance calculation
+```{r Relative abundance calculation, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+colnames(summary_COGacc10)
+data_relativ10 <- summary_COGacc10[, c(2:19)]
+data_relativ10 <- sweep(data_relativ10, 2, colSums(data_relativ10, na.rm = TRUE), FUN = "/")
+
+data_matrix10 <- as.matrix(data_relativ10)
+```
+
+### Wilcoxon test
+```{r Wilcoxon COGacc, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+res10 <- apply(data_matrix10, 1, function(x) {
+  p_val <- wilcox.test(x[time0], x[time12], paired = TRUE)$p.value
+  return(p_val)
+})
+res_adj10 <- p.adjust(res10, method = "fdr")
+
+# Create one column per group with the median abundance per protein
+data_relativ10$time0_median <- apply(data_relativ10[, time0], 1, median)
+data_relativ10$time12_median <- apply(data_relativ10[, time12], 1, median)
+
+# Create the results table
+results10 <- data.frame(
+  Name = summary_COGacc10$COG_accession,
+  p_value = res10,
+  p_adj =res_adj10,
+  time0 = data_relativ10$time0_median,
+  time12 = data_relativ10$time12_median)
+View(results10)
+write.csv(results10, file = "wilcoxon_functmicrogroup10_COGacc.csv")
+
+# Define a pseudocount to avoid log(0) or division by zero
+pseudocount <- 1e-10 
+results10$Logfc <- log2((results10[,"time12"] + pseudocount) / (results10[,"time0"] + pseudocount))
+
+# Create a new column indicating in which group the protein intensity is higher
+results10$Group <- ifelse(results10$time0 > results10$time12, "time0", "time12")
+
+# Filter by adjusted p-value < 0.05
+results_pvalue10 <- results10[results10$p_adj < 0.05,]
+View(results_pvalue10)
+
+# Filter by LogFC < -0.5 or > 0.5
+results_pvaluelog10 <- results_pvalue10[results_pvalue10$Logfc > 0.5 | results_pvalue10$Logfc < -0.5, ]
+
+# Save the logFC-filtered table
+write.csv(results_pvalue10, file = "wilcoxon_functmicrogroup10_COGacc_sig.csv")
+write.csv(results_pvaluelog10, file = "wilcoxon_functmicrogroup10_COGacc_sig_log.csv")
+```
+
+### Optional: volcano plot
+```{r Volcano plot, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+results10 <- results10 %>%
+  mutate(Significance = case_when(
+    p_adj < 0.05 & Logfc > 0.5  ~ "Upregulated",
+    p_adj < 0.05 & Logfc < -0.5 ~ "Downregulated",
+    TRUE ~ "Not significant"
+  ))
+results10$neg_log10_padj <- -log10(results10$p_adj)
+
+# Volcano plot
+vp_COGacc_10 <- ggplot(results10, aes(x = Logfc, y = neg_log10_padj)) +
+  geom_point(aes(color = Significance), size = 2, alpha = 0.8) +
+  scale_color_manual(values = c("Upregulated" = "red", "Downregulated" = "blue", "Not significant" = "grey")) +
+  geom_vline(xintercept = c(-0.5, 0.5), linetype = "dotted") +
+  geom_hline(yintercept = -log10(0.05), linetype = "dotted") +
+  labs(x = expression(log[2]~FC), y = expression(-log[10]~FDR), title = "Volcano plot") +
+  theme_minimal()
+ggsave("COGacc_volcanoplot_functmicrogroup10_COGacc_sig_log.svg", plot = vp_COGacc_10, width = 8, height = 6, dpi = 300)
+
+# With labels
+N <- 10  # change this to the number of labels you want
+
+labels_df <- results10 %>%
+  arrange(p_adj) %>%
+  slice_head(n = N)
+
+vp_COGacc_10_lab <- vp_COGacc_10 +
+  geom_text(data = labels_df, aes(label = Name), vjust = -0.6, size = 3, check_overlap = TRUE)
+
+ggsave("COGacc_volcanoplot_labeled_functmicrogroup10_COGacc_sig_log.svg", plot = vp_COGacc_10_lab, width = 8, height = 6, dpi = 300)
+```
+
+# KEGG_ko
+### Collapse protein-level data to KEGG_ko:
+```{r Collapse protein-level data to KEGG_ko, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+summary_KEGGko10 <- filtered_data10 %>%
+  separate_rows(KEGG_ko, sep = ",")
+
+summary_KEGGko10 <- summary_KEGGko10 %>%
+  group_by(KEGG_ko) %>%
+  summarise(across(starts_with("Intensity"), sum, .names = "{col}"))
+```
+
+### Relative abundance calculation
+```{r Relative abundance calculation, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+colnames(summary_KEGGko10)
+data_relativ10 <- summary_KEGGko10[, c(2:19)]
+data_relativ10 <- sweep(data_relativ10, 2, colSums(data_relativ10, na.rm = TRUE), FUN = "/")
+
+data_matrix10 <- as.matrix(data_relativ10)
+```
+
+### Wilcoxon test
+```{r Wilcoxon KEGG_ko, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+res10 <- apply(data_matrix10, 1, function(x) {
+  p_val <- wilcox.test(x[time0], x[time12], paired = TRUE)$p.value
+  return(p_val)
+})
+res_adj10 <- p.adjust(res10, method = "fdr")
+
+# Create one column per group with the median abundance per protein
+data_relativ10$time0_median <- apply(data_relativ10[, time0], 1, median)
+data_relativ10$time12_median <- apply(data_relativ10[, time12], 1, median)
+
+# Create the results table
+results10 <- data.frame(
+  Name = summary_KEGGko10$KEGG_ko,
+  p_value = res10,
+  p_adj =res_adj10,
+  time0 = data_relativ10$time0_median,
+  time12 = data_relativ10$time12_median)
+View(results10)
+write.csv(results10, file = "wilcoxon_functmicrogroup10_KEGGko.csv")
+
+# Define a pseudocount to avoid log(0) or division by zero
+pseudocount <- 1e-10 
+results10$Logfc <- log2((results10[,"time12"] + pseudocount) / (results10[,"time0"] + pseudocount))
+
+# Create a new column indicating in which group the protein intensity is higher
+results10$Group <- ifelse(results10$time0 > results10$time12, "time0", "time12")
+
+# Filter by adjusted p-value < 0.05
+results_pvalue10 <- results10[results10$p_adj < 0.05,]
+View(results_pvalue10)
+
+# Filter by LogFC < -0.5 or > 0.5
+results_pvaluelog10 <- results_pvalue10[results_pvalue10$Logfc > 0.5 | results_pvalue10$Logfc < -0.5, ]
+
+# Save the logFC-filtered table
+write.csv(results_pvalue10, file = "wilcoxon_functmicrogroup10_KEGGko_sig.csv")
+write.csv(results_pvaluelog10, file = "wilcoxon_functmicrogroup10_KEGGko_sig_log.csv")
+```
+
+### Optional: volcano plot
+```{r Volcano plot, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+results10 <- results10 %>%
+  mutate(Significance = case_when(
+    p_adj < 0.05 & Logfc > 0.5  ~ "Upregulated",
+    p_adj < 0.05 & Logfc < -0.5 ~ "Downregulated",
+    TRUE ~ "Not significant"
+  ))
+results10$neg_log10_padj <- -log10(results10$p_adj)
+
+# Volcano plot
+vp_KEGGko_10 <- ggplot(results10, aes(x = Logfc, y = neg_log10_padj)) +
+  geom_point(aes(color = Significance), size = 2, alpha = 0.8) +
+  scale_color_manual(values = c("Upregulated" = "red", "Downregulated" = "blue", "Not significant" = "grey")) +
+  geom_vline(xintercept = c(-0.5, 0.5), linetype = "dotted") +
+  geom_hline(yintercept = -log10(0.05), linetype = "dotted") +
+  labs(x = expression(log[2]~FC), y = expression(-log[10]~FDR), title = "Volcano plot") +
+  theme_minimal()
+ggsave("KEGGko_volcanoplot_functmicrogroup10_KEGGko_sig_log.svg", plot = vp_KEGGko_10, width = 8, height = 6, dpi = 300)
+
+# With labels
+N <- 10  # change this to the number of labels you want
+
+labels_df <- results10 %>%
+  arrange(p_adj) %>%
+  slice_head(n = N)
+
+vp_KEGGko_10_lab <- vp_KEGGko_10 +
+  geom_text(data = labels_df, aes(label = Name), vjust = -0.6, size = 3, check_overlap = TRUE)
+
+ggsave("KEGGko_volcanoplot_labeled_functmicrogroup10_KEGGko_sig_log.svg", plot = vp_KEGGko_10_lab, width = 8, height = 6, dpi = 300)
+```
+
+# KEGG_pathway
+### Collapse protein-level data to KEGG_pathway:
+```{r Collapse protein-level data to KEGG_pathway, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+summary_KEGG_path10 <- filtered_data10 %>%
+  separate_rows(KEGG_Pathway_Entry, sep = ",")
+
+summary_KEGG_path10 <- summary_KEGG_path10 %>%
+  filter(!grepl("^map", KEGG_Pathway_Entry, ignore.case = TRUE))
+
+summary_KEGG_path10 <- summary_KEGG_path10 %>%
+  group_by(KEGG_Pathway_Entry) %>%
+  summarise(across(starts_with("Intensity"), sum, .names = "{col}"))
+```
+
+### Relative abundance calculation
+```{r Relative abundance calculation, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+colnames(summary_KEGG_path10)
+data_relativ10 <- summary_KEGG_path10[, c(2:19)]
+data_relativ10 <- sweep(data_relativ10, 2, colSums(data_relativ10, na.rm = TRUE), FUN = "/")
+
+data_matrix10 <- as.matrix(data_relativ10)
+```
+
+### Wilcoxon test
+```{r Wilcoxon KEGG_pw, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+res10 <- apply(data_matrix10, 1, function(x) {
+  p_val <- wilcox.test(x[time0], x[time12], paired = TRUE)$p.value
+  return(p_val)
+})
+res_adj10 <- p.adjust(res10, method = "fdr")
+
+# Create one column per group with the median abundance per protein
+data_relativ10$time0_median <- apply(data_relativ10[, time0], 1, median)
+data_relativ10$time12_median <- apply(data_relativ10[, time12], 1, median)
+
+# Create the results table
+results10 <- data.frame(
+  Name = summary_KEGG_path10$KEGG_Pathway_Entry,
+  p_value = res10,
+  p_adj =res_adj10,
+  time0 = data_relativ10$time0_median,
+  time12 = data_relativ10$time12_median)
+View(results10)
+write.csv(results10, file = "wilcoxon_functmicrogroup10_KEGGpw.csv")
+
+# Define a pseudocount to avoid log(0) or division by zero
+pseudocount <- 1e-10 
+results10$Logfc <- log2((results10[,"time12"] + pseudocount) / (results10[,"time0"] + pseudocount))
+
+# Create a new column indicating in which group the protein intensity is higher
+results10$Group <- ifelse(results10$time0 > results10$time12, "time0", "time12")
+
+# Filter by adjusted p-value < 0.05
+results_pvalue10 <- results10[results10$p_adj < 0.05,]
+View(results_pvalue10)
+
+# Filter by LogFC < -0.5 or > 0.5
+results_pvaluelog10 <- results_pvalue10[results_pvalue10$Logfc > 0.5 | results_pvalue10$Logfc < -0.5, ]
+
+# Save the logFC-filtered table
+write.csv(results_pvalue10, file = "wilcoxon_functmicrogroup10_KEGGpw_sig.csv")
+write.csv(results_pvaluelog10, file = "wilcoxon_functmicrogroup10_KEGGpw_sig_log.csv")
+```
+
+### Optional: volcano plot
+```{r Volcano plot, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+results10 <- results10 %>%
+  mutate(Significance = case_when(
+    p_adj < 0.05 & Logfc > 0.5  ~ "Upregulated",
+    p_adj < 0.05 & Logfc < -0.5 ~ "Downregulated",
+    TRUE ~ "Not significant"
+  ))
+results10$neg_log10_padj <- -log10(results10$p_adj)
+
+# Volcano plot
+vp_KEGGpw_10 <- ggplot(results10, aes(x = Logfc, y = neg_log10_padj)) +
+  geom_point(aes(color = Significance), size = 2, alpha = 0.8) +
+  scale_color_manual(values = c("Upregulated" = "red", "Downregulated" = "blue", "Not significant" = "grey")) +
+  geom_vline(xintercept = c(-0.5, 0.5), linetype = "dotted") +
+  geom_hline(yintercept = -log10(0.05), linetype = "dotted") +
+  labs(x = expression(log[2]~FC), y = expression(-log[10]~FDR), title = "Volcano plot") +
+  theme_minimal()
+ggsave("KEGGpw_volcanoplot_functmicrogroup10_KEGGpw_sig_log.svg", plot = vp_KEGGpw_10, width = 8, height = 6, dpi = 300)
+
+# With labels
+N <- 10  # change this to the number of labels you want
+
+labels_df <- results10 %>%
+  arrange(p_adj) %>%
+  slice_head(n = N)
+
+vp_KEGGpw_10_lab <- vp_KEGGpw_10 +
+  geom_text(data = labels_df, aes(label = Name), vjust = -0.6, size = 3, check_overlap = TRUE)
+
+ggsave("KEGGpw_volcanoplot_labeled_functmicrogroup10_KEGGpw_sig_log.svg", plot = vp_KEGGpw_10_lab, width = 8, height = 6, dpi = 300)
+```
+

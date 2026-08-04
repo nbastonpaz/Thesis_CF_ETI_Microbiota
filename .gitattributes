@@ -16,3 +16,8 @@ data/chapter_I/metaproteomics/sputum/combined_modified_peptide.tsv filter=lfs di
 data/chapter_II/metaproteomics/combined_protein.tsv filter=lfs diff=lfs merge=lfs -text
 data/chapter_II/metaproteomics/combined_peptide.tsv filter=lfs diff=lfs merge=lfs -text
 data/chapter_II/metaproteomics/functions.tsv filter=lfs diff=lfs merge=lfs -text
+results/chapter_II/metaproteomics/Micro_pept_final.xlsx filter=lfs diff=lfs merge=lfs -text
+results/chapter_II/metaproteomics/Peptides.xlsx filter=lfs diff=lfs merge=lfs -text
+results/chapter_II/metaproteomics/Peptides_final.csv filter=lfs diff=lfs merge=lfs -text
+results/chapter_II/metaproteomics/Peptides_refined.csv filter=lfs diff=lfs merge=lfs -text
+results/chapter_II/metaproteomics/Proteins.xlsx filter=lfs diff=lfs merge=lfs -text

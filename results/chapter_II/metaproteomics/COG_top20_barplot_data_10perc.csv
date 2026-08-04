@@ -1,0 +1,41 @@
+COG_category,Group,Value,Order,cog_names
+C,Time 0,0.1203801001242419,0.24838267679669934,[C]: Energy production and conversion
+C,Time 12,0.12800257667245743,0.24838267679669934,[C]: Energy production and conversion
+D,Time 0,0.017115535558045226,0.03769040999859229,"[D]: Cell cycle control, cell division, chromosome partitioning"
+D,Time 12,0.020574874440547068,0.03769040999859229,"[D]: Cell cycle control, cell division, chromosome partitioning"
+E,Time 0,0.08372148684551638,0.17464091934531462,[E]: Amino acid transport and metabolism
+E,Time 12,0.09091943249979825,0.17464091934531462,[E]: Amino acid transport and metabolism
+EH,Time 0,0.005320595567873584,0.011047108821302977,[E]: Amino acid transport and metabolism / [H]: Coenzyme transport and metabolism
+EH,Time 12,0.005726513253429392,0.011047108821302977,[E]: Amino acid transport and metabolism / [H]: Coenzyme transport and metabolism
+ER,Time 0,0.005860061131855053,0.013457774470922232,[E]: Amino acid transport and metabolism / [R]: General function prediction only
+ER,Time 12,0.00759771333906718,0.013457774470922232,[E]: Amino acid transport and metabolism / [R]: General function prediction only
+F,Time 0,0.03013067422050813,0.061747248867601454,[F]: Nucleotide transport and metabolism
+F,Time 12,0.031616574647093325,0.061747248867601454,[F]: Nucleotide transport and metabolism
+G,Time 0,0.2565258535715652,0.5105332619052894,[G]: Carbohydrate transport and metabolism
+G,Time 12,0.2540074083337242,0.5105332619052894,[G]: Carbohydrate transport and metabolism
+H,Time 0,0.014401008912772484,0.03085392700388412,[H]: Coenzyme transport and metabolism
+H,Time 12,0.016452918091111633,0.03085392700388412,[H]: Coenzyme transport and metabolism
+I,Time 0,0.043902803868168715,0.09210447523535015,[I]: Lipid transport and metabolism
+I,Time 12,0.04820167136718144,0.09210447523535015,[I]: Lipid transport and metabolism
+J,Time 0,0.135289884889389,0.2644325931556758,"[J]: Translation, ribosomal structure and biogenesis"
+J,Time 12,0.12914270826628677,0.2644325931556758,"[J]: Translation, ribosomal structure and biogenesis"
+K,Time 0,0.01431933764748496,0.02925040827499606,[K]: Transcription
+K,Time 12,0.014931070627511098,0.02925040827499606,[K]: Transcription
+L,Time 0,0.004686900839600109,0.008593508201935732,"[L]: Replication, recombination and repair"
+L,Time 12,0.003906607362335623,0.008593508201935732,"[L]: Replication, recombination and repair"
+M,Time 0,0.04579264467127404,0.0797186938406475,[M]: Cell wall/membrane/envelope biogenesis
+M,Time 12,0.03392604916937346,0.0797186938406475,[M]: Cell wall/membrane/envelope biogenesis
+O,Time 0,0.0822803427873283,0.14622521290763496,"[O]: Posttranslational modification, protein turnover, chaperones"
+O,Time 12,0.06394487012030667,0.14622521290763496,"[O]: Posttranslational modification, protein turnover, chaperones"
+P,Time 0,0.025287108861909383,0.05246252067175772,[P]: Inorganic ion transport and metabolism
+P,Time 12,0.02717541180984833,0.05246252067175772,[P]: Inorganic ion transport and metabolism
+Q,Time 0,0.004678432112485078,0.008217082035218117,"[Q]: Secondary metabolites biosynthesis, transport and catabolism"
+Q,Time 12,0.0035386499227330385,0.008217082035218117,"[Q]: Secondary metabolites biosynthesis, transport and catabolism"
+R,Time 0,0.027680778548864117,0.0625313393232812,[R]: General function prediction only
+R,Time 12,0.034850560774417075,0.0625313393232812,[R]: General function prediction only
+S,Time 0,0.018724539118357832,0.03572897685378118,[S]: Function unknown
+S,Time 12,0.017004437735423344,0.03572897685378118,[S]: Function unknown
+T,Time 0,0.0069276873416576935,0.013737204106294004,[T]: Signal transduction mechanisms
+T,Time 12,0.006809516764636311,0.013737204106294004,[T]: Signal transduction mechanisms
+NA,Time 0,0.014877074223211122,0.03244473799340457,NA
+NA,Time 12,0.017567663770193444,0.03244473799340457,NA

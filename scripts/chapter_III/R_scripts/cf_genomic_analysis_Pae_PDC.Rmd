@@ -1,0 +1,122 @@
+---
+title: "cf_genomic_analysis_Pae_PDC"
+author: "Natalia Bastón-Paz"
+date: "2026"
+output: html_document
+---
+
+# Set up
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+require("knitr")
+opts_knit$set(root.dir = "C:/RProjects/cf_genomic_analysis")
+```
+
+# Clean environments
+
+```{#r Clean environments, message=FALSE, warning=FALSE}
+rm(list = ls())
+```
+
+# ------------------------------------------------------------------------------
+# LIBRARIES
+# ------------------------------------------------------------------------------
+
+```{r Libraries, message=FALSE, warning=FALSE}
+library(here)
+library(readr)
+library(tidyr)
+library(dplyr)
+library(ggplot2)
+```
+
+### Load in the data
+```{r Load in data, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+pdc_data <- read_csv(here("data", "cf_genomic_analysis_Pae_PDC.csv"), show_col_types = FALSE)
+```
+
+### Prepare data
+```{r Prepare data, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+pdc_data <- pdc_data %>%
+  mutate(
+    Time = factor(Time, levels = c("T0", "T3", "T6", "T9", "T12")),
+    PatientID = factor(PatientID, levels = c("A7", "A19", "P3", "P11", "P42")),
+    PDC = factor(PDC)
+  )
+```
+
+### Plot sorted by PatientID
+```{r Plot sorted, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+pdc_plot <- pdc_data %>%
+  mutate(
+    Time = factor(Time, levels = c("T0", "T3", "T6", "T9", "T12")),
+    PatientID = factor(PatientID, levels = c("A7", "A19", "P3", "P11", "P42")),
+    PDC = as.character(PDC)
+  ) %>%
+  group_by(PatientID, Time) %>%
+  summarise(
+    PDC_label = paste(unique(PDC), collapse = "\n"),
+    PDC_fill = ifelse(n_distinct(PDC) == 1, as.character(first(PDC)), "Mixed"),
+    n_isolates = n(),
+    .groups = "drop"
+  ) %>%
+  complete(
+    PatientID,
+    Time,
+    fill = list(
+      PDC_label = "",
+      PDC_fill = "No isolate",
+      n_isolates = NA_integer_
+    )
+  ) %>%
+  mutate(
+    label = case_when(
+      PDC_label == "" ~ "",
+      !is.na(n_isolates) & n_isolates > 1 ~ paste0(PDC_label, "\n(n=", n_isolates, ")"),
+      TRUE ~ PDC_label
+    ),
+    PDC_fill = factor(
+      PDC_fill,
+      levels = c("PDC-3", "PDC-5", "PDC-8", "PDC-52", "PDC-53", "Mixed", "No isolate")
+    )
+  )
+
+pdc_plot_sorted <- ggplot(pdc_plot, aes(x = Time, y = PatientID, fill = PDC_fill)) +
+  geom_tile(color = "white", linewidth = 0.8, width = 0.9, height = 0.8) +
+  geom_text(aes(label = label), size = 4, color = "black") +
+  scale_y_discrete(
+    limits = rev(c("A7", "A19", "P3", "P11", "P42"))
+  ) +
+  scale_fill_manual(
+    values = c(
+      "PDC-3"  = "#a6611a",  
+      "PDC-5"  = "#dfc27d",  
+      "PDC-8"  = "#c2a5cf",  
+      "PDC-52" = "#80cdc1",  
+      "PDC-53" = "#018571",  
+      "Mixed" = "grey60",
+      "No isolate" = "grey95"
+    ),
+    name = "PDC variant"
+  ) +
+  labs(
+    x = "Timepoint",
+    y = "Participant"
+  ) +
+  theme_bw() +
+  theme(
+    panel.grid = element_blank(),
+    axis.text = element_text(size = 12),
+    axis.title = element_text(size = 13),
+    legend.title = element_text(size = 12),
+    legend.text = element_text(size = 11)
+  )
+
+ggsave(
+  filename = here("results", "Pae_PDC.svg"), plot = pdc_plot_sorted, width = 7,
+  height = 5, dpi = 300)
+```
+
+
+

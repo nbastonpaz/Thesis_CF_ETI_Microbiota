@@ -1,0 +1,90 @@
+---
+title: "cf_genomic_analysis_Pae_mashtree.R"
+author: "Natalia Bastón-Paz"
+date: '2025'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+require("knitr")
+opts_knit$set(root.dir = "C:/RProjects/cf_genomic_analysis_all")
+```
+
+```{#r Clean environments, message=FALSE, warning=FALSE}
+rm(list = ls())
+```
+
+## General introduction
+
+Whole-genome sequencing enables the comparison of genetic relatedness among bacterial isolates. Mash uses MinHash-based genome sketches to estimate pairwise genomic distances efficiently, which can then be used to construct a similarity tree.
+
+In this script, we generate a Mash-based tree to explore the genomic relatedness among longitudinal Pseudomonas aeruginosa isolates obtained from people with cystic fibrosis during elexacaftor-tezacaftor-ivacaftor treatment. The resulting tree is exported for visualization and annotation in iTOL.
+
+
+## Libraries
+
+```{r Libraries, message=FALSE, warning=FALSE}
+library(here)
+library(dplyr)
+library(tidyr)
+library(tibble)
+library(ape)
+library(phangorn)
+library(ggplot2)
+library(ggtree)
+```
+
+With MASH, we generate trees based on similarity rather than phylogeny. Phylogenetic trees are built using the core genome of the strains, so if one strain is very distant from the others, the core genome becomes very small and the resulting tree may not be representative.
+
+# Load in data 
+
+```{r Data, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# Read the distance matrix and open it as a table and assign names to the columns
+T <- read.table(here("data", "All.matrix"))
+T = T %>% column_to_rownames("V1")
+colnames(T) = rownames(T)
+
+# gsub('.fasta',' ',T)
+
+# Remove ".fasta" from row and column names
+rownames(T) <- gsub("\\.fasta$", "", rownames(T))
+colnames(T) <- gsub("\\.fasta$", "", colnames(T))
+```
+
+
+## UPGMA
+Unweighted Pair Group Method with Arithmetic Mean: hierarchical clustering method that groups samples based on pairwise distances using arithmetic averages. It produces an ultrametric similarity tree.
+
+```{r Distance, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+T %>% as.dist() %>% hclust(method = "average" ) %>% plot()
+```
+
+
+## NJ
+Neighbor joining: distance-based tree-building method that joins the closest samples or clusters while minimizing the total branch length. Unlike UPGMA, it does not assume a constant rate of change across all lineages.
+Midpoint rooting places the root at the midpoint of the longest distance between two tips.
+
+```{r NJ, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+T %>% as.dist() %>% nj() %>% midpoint() %>% plot()
+```
+
+
+## ggtree
+
+Visualize the tree and explore the distances between isolates based on branch lengths.
+
+```{r ggtree, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+T %>% as.dist() %>% nj() %>% midpoint() %>% ggtree() + geom_treescale() + geom_tiplab()
+```
+
+
+# Export the tree (.tree)
+
+```{r Export tree, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+tree = T %>% as.dist() %>% nj() %>% midpoint()
+write.tree(tree, here("results", "Pa_CF.tree"))
+```
+
+
+

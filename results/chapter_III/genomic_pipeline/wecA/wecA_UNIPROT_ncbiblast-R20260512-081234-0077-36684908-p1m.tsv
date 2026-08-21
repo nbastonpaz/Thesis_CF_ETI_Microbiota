@@ -1,0 +1,251 @@
+Hit	DB	Accession	Description	Organism	Length	Score(Bits)	Identities(%)	Positives(%)	E()
+1	TR	A0A1H6U4S1	Fuc2NAc and GlcNAc transferase OS=Pseudomonas linyingensis OX=915471 GN=SAMN05216201_102345 PE=4 SV=1	Pseudomonas linyingensis	344	1321	71.7	81.0	0.0
+2	TR	A0ABV3YSW9	Glycosyltransferase family 4 protein OS=Pseudomonas zhanjiangensis OX=3239015 GN=AB5S05_08865 PE=4 SV=1	Pseudomonas zhanjiangensis	344	1299	71.4	81.0	1.5e-177
+3	TR	A0ABU5P7G3	Glycosyltransferase family 4 protein OS=Pseudomonas spirodelae OX=3101751 GN=SOP97_06175 PE=4 SV=1	Pseudomonas spirodelae	344	1298	72.7	80.6	2.2e-177
+4	TR	A0A9X1N4C5	Glycosyltransferase family 4 protein OS=Stutzerimonas kunmingensis OX=1211807 GN=K7H17_12970 PE=4 SV=1	Stutzerimonas kunmingensis	344	1293	71.7	82.4	1.2e-176
+5	TR	A0ABT4XJV2	Glycosyltransferase family 4 protein OS=Pseudomonas aestuarii OX=3018340 GN=PH586_19145 PE=4 SV=1	Pseudomonas aestuarii	347	1285	70.8	81.1	2.3e-175
+6	TR	A0A1I3CU10	Fuc2NAc and GlcNAc transferase OS=Pseudomonas guineae OX=425504 GN=SAMN05216206_0232 PE=4 SV=1	Pseudomonas guineae	340	1281	70.3	80.2	7.2e-175
+7	TR	A0A4T1ZU22	Glycosyltransferase family 4 protein OS=Pseudomonas leptonychotis OX=2448482 GN=D8779_19160 PE=4 SV=1	Pseudomonas leptonychotis	343	1276	70.6	79.9	4.6e-174
+8	TR	A0A1H0Z386	Fuc2NAc and GlcNAc transferase OS=Pseudomonas moorei OX=395599 GN=SAMN04490195_0975 PE=4 SV=1	Pseudomonas moorei	336	1275	70.1	83.0	5.1e-174
+9	TR	A0ABY5H5B4	Glycosyltransferase family 4 protein OS=Pseudomonas benzenivorans OX=556533 GN=KDW96_20515 PE=4 SV=1	Pseudomonas benzenivorans	341	1271	70.4	80.9	2.5e-173
+10	TR	A0ABS6MXZ3	Glycosyltransferase family 4 protein OS=Geopseudomonas aromaticivorans OX=2849492 GN=KRX52_12590 PE=4 SV=1	Geopseudomonas aromaticivorans	342	1253	68.6	80.6	1.4e-170
+11	TR	A0ABT4YB93	Glycosyltransferase family 4 protein OS=Metapseudomonas resinovorans OX=53412 GN=NNO07_24170 PE=4 SV=1	Metapseudomonas resinovorans	336	1249	70.5	80.7	4.6e-170
+12	TR	A0A6N1CE73	Glycosyltransferase family 4 protein OS=Pseudomonas bijieensis OX=2681983 GN=GN234_09850 PE=4 SV=1	Pseudomonas bijieensis	338	1246	69.5	80.4	1.4e-169
+13	TR	A0ABX4QQG0	Fuc2NAc and GlcNAc transferase OS=Pseudomonas tolaasii NCPPB 2192 OX=564423 GN=ATI14_6123 PE=4 SV=1	Pseudomonas tolaasii NCPPB 2192	338	1245	68.9	80.4	2e-169
+14	TR	A0ABY8N0D5	Glycosyltransferase family 4 protein OS=Pseudomonas migulae OX=78543 GN=MOQ58_08815 PE=4 SV=1	Pseudomonas migulae	337	1241	68.1	79.5	7.9e-169
+15	TR	A0A4V0YKK1	Glycosyl transferase OS=Pseudomonas arsenicoxydans OX=702115 GN=CUN61_27305 PE=4 SV=1	Pseudomonas arsenicoxydans	336	1240	68.9	79.8	1.1e-168
+16	TR	A0A1B1YT15	Glycosyl transferase OS=Immundisolibacter cernigliae OX=1810504 GN=PG2T_06265 PE=4 SV=1	Immundisolibacter cernigliae	346	1240	68.1	79.8	1.5e-168
+17	TR	A0A1H0JSL7	Fuc2NAc and GlcNAc transferase OS=Pseudomonas reinekei OX=395598 GN=BVK86_27375 PE=4 SV=1	Pseudomonas reinekei	336	1238	68.9	80.4	2.2e-168
+18	TR	A0AAD1FEU3	Undecaprenyl-phosphate N-acetylglucosaminyl 1-phosphate transferase OS=Metapseudomonas furukawaii OX=1149133 GN=KF707C_17360 PE=4 SV=1	Metapseudomonas furukawaii	336	1237	69.2	79.8	3.1e-168
+19	TR	A0A9X0Y7C5	Glycosyltransferase family 4 protein OS=Pseudomonas lactucae OX=2813360 GN=JWR99_02390 PE=4 SV=1	Pseudomonas lactucae	338	1234	69.3	79.8	9.5e-168
+20	TR	A0A2T5PBN0	Glycosyl transferase OS=Pseudomonas mangrovi OX=2161748 GN=DBO85_06255 PE=4 SV=1	Pseudomonas mangrovi	341	1232	68.5	81.8	2.1e-167
+21	TR	A0A385Z5D5	Glycosyltransferase family 4 protein OS=Pseudomonas cavernae OX=2320867 GN=D3880_13415 PE=4 SV=1	Pseudomonas cavernae	336	1231	69.3	80.4	2.5e-167
+22	TR	A0ABS0G4H4	Glycosyltransferase family 4 protein OS=Pseudomonas pudica OX=272772 GN=IRZ77_18205 PE=4 SV=1	Pseudomonas pudica	337	1229	69.5	79.8	5.3e-167
+23	TR	A0ABY1B9Q6	Fuc2NAc and GlcNAc transferase OS=Pseudomonas cuatrocienegasensis OX=543360 GN=SAMN05216600_10522 PE=4 SV=1	Pseudomonas cuatrocienegasensis	339	1229	70.8	78.8	5.7e-167
+24	TR	A0ABY0Z7K3	Fuc2NAc and GlcNAc transferase OS=Pseudomonas kilonensis OX=132476 GN=SAMN04490188_3702 PE=4 SV=1	Pseudomonas kilonensis	337	1227	69.6	80.2	1.1e-166
+25	TR	A0A2T5PLM1	Glycosyl transferase OS=Ectopseudomonas oleovorans OX=301 GN=DBO86_13525 PE=4 SV=1	Ectopseudomonas oleovorans	341	1226	67.2	79.5	1.7e-166
+26	TR	A0ABM7EJ04	Glycosyltransferase WbpL OS=Pseudomonas putida NBRC 14164 OX=1211579 GN=wbpL PE=4 SV=1	Pseudomonas putida NBRC 14164	337	1225	69.2	79.2	2.1e-166
+27	TR	A0A1M7M3X9	Fuc2NAc and GlcNAc transferase OS=Phytopseudomonas punonensis OX=1220495 GN=SAMN05216288_4447 PE=4 SV=1	Phytopseudomonas punonensis	338	1224	68.8	81.0	3.2e-166
+28	TR	A0A418X9S4	Glycosyltransferase family 4 protein OS=Pseudomonas cavernicola OX=2320866 GN=D3879_25855 PE=4 SV=1	Pseudomonas cavernicola	336	1220	67.7	79.2	1.2e-165
+29	TR	A0A1I3L1L5	Fuc2NAc and GlcNAc transferase OS=Phytopseudomonas argentinensis OX=289370 GN=SAMN05216602_2830 PE=4 SV=1	Phytopseudomonas argentinensis	338	1220	69.6	80.2	1.3e-165
+30	TR	A0ABT9CM16	Glycosyltransferase family 4 protein OS=Pseudomonas serbiensis OX=3064350 GN=Q6A51_07050 PE=4 SV=1	Pseudomonas serbiensis	338	1219	69.6	80.2	1.8e-165
+31	TR	A0ABS0VMD5	Glycosyltransferase family 4 protein OS=Pseudomonas veronii OX=76761 GN=YA0849_20150 PE=4 SV=1	Pseudomonas veronii	338	1218	68.0	79.5	2.6e-165
+32	TR	A0ABT3F5J5	Glycosyltransferase family 4 protein OS=Pseudomonas agronomica OX=2979328 GN=OC610_07860 PE=4 SV=1	Pseudomonas agronomica	338	1218	69.7	79.9	2.6e-165
+33	TR	A0ABS6P229	Glycosyltransferase family 4 protein OS=Pseudomonas azadiae OX=2843612 GN=KVG91_18185 PE=4 SV=1	Pseudomonas azadiae	341	1214	67.4	78.9	1.2e-164
+34	TR	A0A839SZA8	Fuc2NAc and GlcNAc transferase OS=Azomonas macrocytogenes OX=69962 GN=FHR87_001054 PE=4 SV=1	Azomonas macrocytogenes	340	1213	66.4	79.4	1.6e-164
+35	TR	A0ABY9FIX9	Glycosyltransferase family 4 protein OS=Pseudomonas beijingensis OX=2954101 GN=PSH92_08355 PE=4 SV=1	Pseudomonas beijingensis	338	1212	67.2	78.9	2.1e-164
+36	TR	A0ABR6UMV9	Glycosyltransferase family 4 protein OS=Pseudomonas tehranensis OX=2745502 GN=HU811_04315 PE=4 SV=1	Pseudomonas tehranensis	339	1210	69.7	80.3	4.4e-164
+37	TR	A0A7Z0BN75	Fuc2NAc and GlcNAc transferase OS=Phytopseudomonas flavescens OX=29435 GN=FHR27_001907 PE=4 SV=1	Phytopseudomonas flavescens	338	1208	68.9	79.3	8.6e-164
+38	TR	A0ABX7K1J5	Glycosyltransferase family 4 protein OS=Pseudomonas hygromyciniae OX=2812000 GN=JTY93_09030 PE=4 SV=1	Pseudomonas hygromyciniae	346	1208	67.0	77.7	1.1e-163
+39	TR	A0ABY9EGN2	Glycosyltransferase family 4 protein OS=Microbulbifer spongiae OX=2944933 GN=M8T91_08395 PE=4 SV=1	Microbulbifer spongiae	341	1205	64.8	78.1	2.7e-163
+40	TR	A0ABX8HPB1	Glycosyltransferase family 4 protein OS=Pseudomonas lijiangensis OX=2995658 GN=KQP88_17735 PE=4 SV=1	Pseudomonas lijiangensis	338	1204	68.4	79.4	3.5e-163
+41	TR	A0A1H2MHK4	Glycosyltransferase family 4 protein OS=Pseudomonas vancouverensis OX=95300 GN=EIY72_13550 PE=4 SV=1	Pseudomonas vancouverensis	342	1203	66.1	80.4	5.7e-163
+42	TR	A0ABY7RCR3	Glycosyltransferase family 4 protein OS=Pseudomonas capeferrum OX=1495066 GN=PMC74_06665 PE=4 SV=1	Pseudomonas capeferrum	337	1202	67.5	79.8	6.8e-163
+43	TR	A0ACC5UUY6	Glycosyltransferase family 4 protein OS=Pseudomonas kurunegalensis OX=485880 GN=HU758_023855 PE=4 SV=1	Pseudomonas kurunegalensis	337	1202	67.2	78.9	6.8e-163
+44	TR	A0ABT3C1S1	Glycosyltransferase family 4 protein OS=Pseudomonas capsici OX=2810614 GN=OH718_20715 PE=4 SV=1	Pseudomonas capsici	338	1201	68.4	79.4	9.9e-163
+45	TR	A0ABT5NJN0	Glycosyltransferase family 4 protein OS=Pseudomonas shahriarae OX=2745512 GN=M5G21_26145 PE=4 SV=1	Pseudomonas shahriarae	346	1201	66.8	78.3	1.3e-162
+46	TR	A0A1H0W0Q3	Fuc2NAc and GlcNAc transferase OS=Pseudomonas extremorientalis OX=169669 GN=BFN10_07200 PE=4 SV=1	Pseudomonas extremorientalis	340	1200	64.7	77.8	1.5e-162
+47	TR	A0A239HD40	Fuc2NAc and GlcNAc transferase OS=Pseudomonas japonica OX=256466 GN=SAMN05444352_11544 PE=4 SV=1	Pseudomonas japonica	336	1199	69.0	79.1	1.9e-162
+48	TR	A0ABU7HBN5	Glycosyltransferase family 4 protein OS=Pseudomonas carassii OX=3115855 GN=V0R62_13805 PE=4 SV=1	Pseudomonas carassii	337	1198	67.2	78.9	2.7e-162
+49	TR	A0ABY0V9B9	Fuc2NAc and GlcNAc transferase OS=Pseudomonas mandelii OX=75612 GN=SAMN04489801_0239 PE=4 SV=1	Pseudomonas mandelii	368	1201	64.2	78.5	2.9e-162
+50	TR	A0AAQ1P7N7	Glycosyl transferase OS=Pseudomonas inefficax OX=2078786 GN=JV551A3_V1_740081 PE=4 SV=1	Pseudomonas inefficax	339	1198	65.9	79.3	2.9e-162
+51	TR	A0ABY8PIQ1	Glycosyltransferase family 4 protein OS=Pseudomonas viciae OX=2505979 GN=QCD61_08380 PE=4 SV=1	Pseudomonas viciae	338	1197	66.8	79.0	4e-162
+52	TR	A0ABW7M919	Glycosyltransferase family 4 protein OS=Ectopseudomonas khazarica OX=2502979 GN=ACEVAQ_04125 PE=4 SV=1	Ectopseudomonas khazarica	338	1197	66.9	79.4	4e-162
+53	TR	A0ABU5BXM1	Glycosyltransferase family 4 protein OS=Halopseudomonas formosensis OX=1002526 GN=RED13_001965 PE=4 SV=1	Halopseudomonas formosensis	338	1196	67.4	78.9	5.7e-162
+54	TR	A0A1H3GC77	Fuc2NAc and GlcNAc transferase OS=Pseudomonas kuykendallii OX=1007099 GN=SAMN05216287_4314 PE=4 SV=1	Pseudomonas kuykendallii	336	1195	68.4	79.8	7.6e-162
+55	TR	A0ABY9QNV9	Glycosyltransferase family 4 protein OS=Pseudomonas entomophila OX=312306 GN=RAH46_21180 PE=4 SV=1	Pseudomonas entomophila	336	1194	68.8	79.2	1.1e-161
+56	TR	A0ABT9BSD3	Glycosyltransferase family 4 protein OS=Pseudomonas citrulli OX=3064347 GN=Q6A48_00985 PE=4 SV=1	Pseudomonas citrulli	338	1194	66.8	77.3	1.2e-161
+57	TR	A0ABY9SV73	Glycosyltransferase family 4 protein OS=Pseudomonas shirazica OX=1940636 GN=QR297_05830 PE=4 SV=1	Pseudomonas shirazica	336	1193	66.6	78.6	1.5e-161
+58	TR	A0A1Y3P6A7	Glycosyl transferase OS=Pseudomonas caspiana OX=1451454 GN=AUC60_18515 PE=4 SV=1	Pseudomonas caspiana	344	1193	68.6	77.5	2e-161
+59	TR	A0ABT9JZU1	Glycosyltransferase family 4 protein OS=Pseudomonas iranensis OX=2745503 GN=RAM78_06045 PE=4 SV=1	Pseudomonas iranensis	338	1192	67.9	79.0	2.3e-161
+60	TR	A0ABS5XC15	Glycosyltransferase family 4 protein OS=Metapseudomonas boanensis OX=2822138 GN=J7302_00835 PE=4 SV=1	Metapseudomonas boanensis	339	1191	67.7	78.3	3.4e-161
+61	TR	A0ABR7AWD2	Glycosyltransferase family 4 protein OS=Pseudomonas folii OX=2762593 GN=H8S59_05570 PE=4 SV=1	Pseudomonas folii	344	1191	69.5	77.7	4.1e-161
+62	TR	A0A0J6H6N8	Fuc2NAc and GlcNAc transferase OS=Pseudomonas lini OX=163011 GN=F7R14_03660 PE=4 SV=1	Pseudomonas lini	340	1189	63.4	78.2	7.1e-161
+63	TR	A0A917Q3N8	Glycosyltransferase WbpL OS=Pseudomonas matsuisoli OX=1515666 GN=wbpL PE=4 SV=1	Pseudomonas matsuisoli	341	1187	66.9	78.9	1.5e-160
+64	TR	A0ABN5G2E5	Glycosyl transferase OS=Pseudomonas ogarae (strain DSM 112162 / CECT 30235 / F113) OX=1114970 GN=C1C98_08810 PE=4 SV=1	Pseudomonas ogarae (strain DSM 112162 / CECT 30235 / F113)	342	1187	65.7	77.7	1.5e-160
+65	TR	A0A176NHG5	Glycosyl transferase OS=Pseudomonas thivervalensis OX=86265 GN=CEQ51_11330 PE=4 SV=1	Pseudomonas thivervalensis	338	1186	65.8	77.8	1.9e-160
+66	TR	A0ACC7PDU2	Glycosyltransferase family 4 protein OS=Pseudomonas imrae OX=2992837 GN=OOJ96_09835 PE=4 SV=1	Pseudomonas imrae	340	1186	66.2	78.4	2e-160
+67	TR	A0ABX6SCS3	Glycosyltransferase family 4 protein OS=Pseudomonas sediminis OX=1691904 GN=HNQ25_14915 PE=4 SV=1	Pseudomonas sediminis	338	1185	65.7	79.4	2.7e-160
+68	TR	A0ABT5PHX6	Glycosyltransferase family 4 protein OS=Pseudomonas aphyarum OX=2942629 GN=M5G18_02380 PE=4 SV=1	Pseudomonas aphyarum	341	1185	66.6	78.5	3e-160
+69	TR	A0ABU1CNG4	Glycosyltransferase family 4 protein OS=Pseudomonas yamanorum OX=515393 GN=RCO22_07440 PE=4 SV=1	Pseudomonas yamanorum	341	1185	66.1	78.7	3e-160
+70	TR	A0A5N7KR82	Glycosyltransferase family 4 protein OS=Pseudomonas kitaguniensis OX=2607908 GN=F0169_20085 PE=4 SV=1	Pseudomonas kitaguniensis	339	1184	65.2	77.5	4e-160
+71	TR	A0A1H5G9P6	Fuc2NAc and GlcNAc transferase OS=Pseudomonas palleroniana OX=191390 GN=C9383_02040 PE=4 SV=1	Pseudomonas palleroniana	341	1183	66.5	77.8	6e-160
+72	TR	A0ABX2QMR6	Glycosyltransferase family 4 protein OS=Pseudomonas reactans OX=117680 GN=HX871_01525 PE=4 SV=1	Pseudomonas reactans	337	1182	66.4	78.7	7.4e-160
+73	TR	A0ABU8R9F4	Glycosyltransferase family 4 protein OS=Pseudomonas kermanshahensis OX=2745482 GN=V7V80_17700 PE=4 SV=1	Pseudomonas kermanshahensis	337	1181	64.9	78.7	1.1e-159
+74	TR	A0ABY5EJZ9	Glycosyltransferase family 4 protein OS=Pseudomonas nunensis OX=2961896 GN=NK667_04065 PE=4 SV=1	Pseudomonas nunensis	342	1181	66.1	78.9	1.3e-159
+75	TR	A0ACC6L6L6	Glycosyltransferase family 4 protein OS=Pseudomonas allii OX=2740531 GN=RJC98_02550 PE=4 SV=1	Pseudomonas allii	337	1180	67.0	78.9	1.5e-159
+76	TR	A0ACC7LTH6	Glycosyltransferase family 4 protein OS=Pseudomonas caricapapayae OX=46678 GN=ACIKP7_09620 PE=4 SV=1	Pseudomonas caricapapayae	344	1179	65.4	77.7	2.7e-159
+77	TR	A0A239A7D2	Fuc2NAc and GlcNAc transferase OS=Pseudomonas segetis OX=298908 GN=SAMN05216255_0919 PE=4 SV=1	Pseudomonas segetis	340	1176	65.4	77.6	6.8e-159
+78	TR	A0ABS6QY56	Glycosyltransferase family 4 protein OS=Pseudomonas azerbaijanoccidentalis OX=2842347 GN=KVG88_27745 PE=4 SV=1	Pseudomonas azerbaijanoccidentalis	342	1176	63.7	77.2	7.3e-159
+79	TR	A0ABU6BQ07	Glycosyltransferase family 4 protein OS=Pseudomonas paracarnis OX=2750625 GN=LLW09_05130 PE=4 SV=1	Pseudomonas paracarnis	337	1175	65.7	76.5	8.6e-159
+80	TR	A0ABX4DXK7	Glycosyl transferase OS=Pseudomonas umsongensis OX=198618 GN=PSUM_15515 PE=4 SV=1	Pseudomonas umsongensis	347	1176	67.2	77.5	8.7e-159
+81	TR	A0ABW8E2D7	Glycosyltransferase family 4 protein OS=Pseudomonas sivasensis OX=1880678 GN=ACIOWJ_11835 PE=4 SV=1	Pseudomonas sivasensis	341	1175	65.1	78.3	9.9e-159
+82	TR	A0ABM7RMK8	Glycosyltransferase family 4 protein OS=Pseudomonas izuensis OX=2684212 GN=LAB08_R15180 PE=4 SV=1	Pseudomonas izuensis	342	1175	63.2	78.9	1e-158
+83	TR	A0ABS6PA74	Glycosyltransferase family 4 protein OS=Pseudomonas ekonensis OX=2842353 GN=KVG96_05395 PE=4 SV=1	Pseudomonas ekonensis	342	1175	66.7	76.2	1e-158
+84	TR	A0ABS3AER2	Glycosyltransferase family 4 protein OS=Pseudomonas gregormendelii OX=1628277 GN=IMW75_10225 PE=4 SV=1	Pseudomonas gregormendelii	344	1175	62.7	79.0	1.1e-158
+85	TR	A0ABZ1AAI5	Glycosyltransferase family 4 protein OS=Pseudomonas canadensis OX=915099 GN=SPL95_08925 PE=4 SV=1	Pseudomonas canadensis	337	1174	66.1	78.1	1.2e-158
+86	TR	A0ABX1Q2V9	Glycosyl transferase OS=Aromatoleum toluvorans OX=92002 GN=GPA22_20165 PE=4 SV=1	Aromatoleum toluvorans	340	1174	66.1	78.1	1.4e-158
+87	TR	A0ABS9ZKM4	Glycosyl transferase OS=Pseudomonas maioricensis OX=1766623 GN=AUC61_12675 PE=4 SV=1	Pseudomonas maioricensis	336	1173	64.2	76.5	1.7e-158
+88	TR	A0A1G8BPS4	Fuc2NAc and GlcNAc transferase OS=Pseudomonas abietaniphila OX=89065 GN=SAMN05216605_10635 PE=4 SV=1	Pseudomonas abietaniphila	338	1173	65.5	77.2	1.8e-158
+89	TR	A0ABT3YW41	Glycosyltransferase family 4 protein OS=Pseudomonas monsensis OX=2745509 GN=NQF78_15460 PE=4 SV=1	Pseudomonas monsensis	338	1173	68.1	78.6	1.8e-158
+90	TR	A0ABY0U6Q8	Fuc2NAc and GlcNAc transferase OS=Pseudomonas cedrina OX=651740 GN=SAMN04490182_0877 PE=4 SV=1	Pseudomonas cedrina	341	1173	65.7	77.4	2e-158
+91	TR	A0ABY9G6G8	Glycosyltransferase family 4 protein OS=Pseudomonas hefeiensis OX=2738125 GN=PSH57_20375 PE=4 SV=1	Pseudomonas hefeiensis	340	1170	66.2	77.6	5.5e-158
+92	TR	A0A2T4FS74	Glycosyl transferase OS=Pseudomonas aylmerensis OX=1869229 GN=BBG20_07465 PE=4 SV=1	Pseudomonas aylmerensis	345	1170	65.8	75.7	6.6e-158
+93	TR	A0A6I5RNP1	Glycosyltransferase family 4 protein OS=Pseudomonas laurentiana OX=2364649 GN=G3O07_04900 PE=4 SV=1	Pseudomonas laurentiana	336	1169	64.9	77.9	6.8e-158
+94	TR	A0A380SX29	Phospho-N-acetylmuramoyl-pentapeptide-transferas e OS=Pseudomonas wadenswilerensis OX=1785161 GN=mraY PE=4 SV=1	Pseudomonas wadenswilerensis	337	1169	63.5	77.5	7e-158
+95	TR	A0ABS9G8I7	Glycosyl transferase OS=Pseudomonas simiae OX=321846 GN=GIW13_16200 PE=4 SV=1	Pseudomonas simiae	337	1168	66.1	78.4	1e-157
+96	TR	A0ABX4GLI3	Glycosyl transferase OS=Pseudomonas lundensis OX=86185 GN=CJF38_11130 PE=4 SV=1	Pseudomonas lundensis	339	1166	64.0	77.0	2.2e-157
+97	TR	A0A5C5Q8K2	Fuc2NAc and GlcNAc transferase OS=Pseudomonas extremaustralis OX=359110 GN=FIV36_24135 PE=4 SV=1	Pseudomonas extremaustralis	341	1166	64.3	77.3	2.3e-157
+98	TR	A0ABX8Q9C1	Glycosyltransferase family 4 protein OS=Pseudomonas canavaninivorans OX=2842348 GN=KSS97_20630 PE=4 SV=1	Pseudomonas canavaninivorans	337	1164	65.5	76.7	4.1e-157
+99	TR	A0A0M9GEH7	UDP-N-acetylmuramyl pentapeptide phosphotransferase/UDP-N-acetylglucosamine-1-phosphate transferase OS=Pseudomonas asplenii OX=53407 GN=PF66_04689 PE=4 SV=1	Pseudomonas asplenii	338	1164	66.4	76.7	4.2e-157
+100	TR	A0A1X0N1Y0	Glycosyl transferase OS=Pseudomonas floridensis OX=1958950 GN=BZK31_19995 PE=4 SV=1	Pseudomonas floridensis	338	1164	65.8	79.9	4.2e-157
+101	TR	A0A1H2FVQ9	Fuc2NAc and GlcNAc transferase OS=Pseudomonas pohangensis OX=364197 GN=SAMN05216296_1851 PE=4 SV=1	Pseudomonas pohangensis	345	1164	65.8	78.8	5.4e-157
+102	TR	A0A7X1GHG1	Glycosyltransferase family 4 protein OS=Pseudomonas kielensis OX=2762577 GN=H7995_22435 PE=4 SV=1	Pseudomonas kielensis	339	1163	64.3	76.0	6.2e-157
+103	TR	A0ABX8PU54	Glycosyltransferase family 4 protein OS=Pseudomonas tensinigenes OX=2745511 GN=HU718_021805 PE=4 SV=1	Pseudomonas tensinigenes	342	1163	65.5	75.1	6.9e-157
+104	TR	A0A1H9QYU7	Fuc2NAc and GlcNAc transferase OS=Halopseudomonas bauzanensis OX=653930 GN=SAMN04487855_0409 PE=4 SV=1	Halopseudomonas bauzanensis	338	1162	66.3	77.1	8.5e-157
+105	TR	A0ABW7DF04	Glycosyltransferase family 4 protein OS=Pseudomonas retamae OX=702110 GN=ACGSLL_17665 PE=4 SV=1	Pseudomonas retamae	343	1161	65.2	78.1	1.4e-156
+106	TR	A0ABT0EDN2	Glycosyltransferase family 4 protein OS=Pseudomonas emilianonis OX=2915812 GN=L9Z73_05465 PE=4 SV=1	Pseudomonas emilianonis	338	1160	64.2	78.0	1.7e-156
+107	TR	A0ABS6QGN1	Glycosyltransferase family 4 protein OS=Pseudomonas oryzicola OX=485876 GN=HU760_022545 PE=4 SV=1	Pseudomonas oryzicola	334	1158	63.4	77.6	3e-156
+108	TR	A0AAW5ALS2	Glycosyl transferase OS=Pseudomonas proteolytica OX=219574 GN=GIW75_27655 PE=4 SV=1	Pseudomonas proteolytica	336	1158	61.9	77.1	3.2e-156
+109	TR	A0ABY5CB57	Glycosyltransferase family 4 protein OS=Pseudomonas siliginis OX=2842346 GN=NF677_18700 PE=4 SV=1	Pseudomonas siliginis	337	1158	65.9	77.0	3.3e-156
+110	TR	A0A1H5IRP9	Fuc2NAc and GlcNAc transferase OS=Pseudomonas anguilliseptica OX=53406 GN=SAMN05421553_4774 PE=4 SV=1	Pseudomonas anguilliseptica	338	1158	68.8	78.4	3.4e-156
+111	TR	A0A923JHT9	Glycosyltransferase family 4 protein OS=Pseudomonas zanjanensis OX=2745496 GN=HU715_003425 PE=4 SV=1	Pseudomonas zanjanensis	338	1157	66.1	76.9	4.9e-156
+112	TR	A0A191YXK2	Glycosyl transferase OS=Pseudomonas silesiensis OX=1853130 GN=PMA3_20835 PE=4 SV=1	Pseudomonas silesiensis	339	1157	62.8	76.5	5.1e-156
+113	TR	A0A9X2XGE8	Glycosyltransferase family 4 protein OS=Pseudomonas koreensis OX=198620 GN=OC940_12855 PE=4 SV=1	Pseudomonas koreensis	342	1157	62.3	76.2	5.6e-156
+114	TR	A0ABS9FBS1	Glycosyl transferase OS=Pseudomonas gessardii OX=78544 GN=GIW56_18535 PE=4 SV=1	Pseudomonas gessardii	337	1156	65.8	76.7	6.7e-156
+115	TR	A0ABX6HFT4	Glycosyl transferase OS=Pseudomonas asturiensis OX=1190415 GN=N015_19220 PE=4 SV=1	Pseudomonas asturiensis	338	1156	65.1	79.1	6.9e-156
+116	TR	A0A8H9YTW2	Glycosyltransferase family 4 protein OS=Pseudomonas tritici OX=2745518 GN=HU722_0009250 PE=4 SV=1	Pseudomonas tritici	338	1156	65.8	76.3	6.9e-156
+117	TR	A0ABX4Q5U2	Fuc2NAc and GlcNAc transferase OS=Pseudomonas baetica OX=674054 GN=ATI02_5195 PE=4 SV=1	Pseudomonas baetica	341	1156	63.4	75.9	7.7e-156
+118	TR	A0ABS4CCN8	Glycosyltransferase family 4 protein OS=Pseudomonas alliivorans OX=2810613 GN=JTJ32_22150 PE=4 SV=1	Pseudomonas alliivorans	338	1155	64.9	78.2	9.8e-156
+119	TR	A0A1S2V6C3	Fuc2NAc and GlcNAc transferase OS=Pseudomonas costantinii OX=168469 GN=BFL40_08490 PE=4 SV=1	Pseudomonas costantinii	338	1155	65.3	76.7	9.8e-156
+120	TR	A0ABS9FWE9	Glycosyl transferase OS=Pseudomonas lactis OX=1615674 GN=GIW47_28730 PE=4 SV=1	Pseudomonas lactis	340	1155	63.9	78.4	1.1e-155
+121	TR	A0A089WKW9	Glycosyl transferase OS=Pseudomonas cremoricolorata OX=157783 GN=LK03_11930 PE=4 SV=1	Pseudomonas cremoricolorata	342	1155	63.4	77.0	1.1e-155
+122	TR	A0A6M8MFM0	Putative undecaprenyl-phosphate N-acetylglucosaminyl 1-phosphate transferase OS=Pseudomonas graminis OX=158627 GN=FX982_00131 PE=4 SV=1	Pseudomonas graminis	338	1154	63.9	76.5	1.4e-155
+123	TR	A0A383RRP7	Putative undecaprenyl-phosphate N-acetylglucosaminyl 1-phosphate transferase OS=Pseudomonas reidholzensis OX=1785162 GN=tagO PE=4 SV=1	Pseudomonas reidholzensis	338	1154	63.8	77.3	1.4e-155
+124	TR	A0ABY6FBL7	Glycosyltransferase family 4 protein OS=Pseudomonas phytophila OX=2867264 GN=K3169_22120 PE=4 SV=1	Pseudomonas phytophila	336	1153	65.1	76.2	1.8e-155
+125	TR	A0A6A7ZIR2	Glycosyl transferase OS=Pseudomonas helleri OX=1608996 GN=GHO28_22040 PE=4 SV=1	Pseudomonas helleri	337	1153	63.8	77.6	1.9e-155
+126	TR	A0ABX8EZ97	Glycosyltransferase family 4 protein OS=Pseudomonas hormoni OX=3093767 GN=KJF94_05395 PE=4 SV=1	Pseudomonas hormoni	341	1153	64.1	77.0	2.2e-155
+127	TR	A0ABV7T5U5	Glycosyltransferase family 4 protein OS=Stutzerimonas tarimensis OX=1507735 GN=ACFOMF_11690 PE=4 SV=1	Stutzerimonas tarimensis	341	1153	64.0	76.0	2.2e-155
+128	TR	A0ACC7MP72	MraY family glycosyltransferase OS=Pseudomonas neuropathica OX=2730425 GN=ACJEBM_06690 PE=4 SV=1	Pseudomonas neuropathica	347	1153	66.3	76.3	2.7e-155
+129	TR	A0ABT0JM54	Glycosyltransferase family 4 protein OS=Pseudomonas morbosilactucae OX=2938197 GN=M1B35_22955 PE=4 SV=1	Pseudomonas morbosilactucae	349	1153	66.7	78.6	2.9e-155
+130	TR	A0A1H7NYY8	Fuc2NAc and GlcNAc transferase OS=Atopomonas hussainii OX=1429083 GN=SAMN05216214_11061 PE=4 SV=1	Atopomonas hussainii	342	1152	67.7	77.7	3.2e-155
+131	TR	A0A923FLT7	Glycosyltransferase family 4 protein OS=Pseudomonas marvdashtae OX=2745500 GN=HU742_017830 PE=4 SV=1	Pseudomonas marvdashtae	325	1150	66.4	80.0	3.6e-155
+132	TR	A0ABV0DB05	Glycosyltransferase family 4 protein OS=Pseudomonas sichuanensis OX=2213015 GN=ABFE88_04695 PE=4 SV=1	Pseudomonas sichuanensis	336	1151	64.1	76.5	3.7e-155
+133	TR	A0A1H2N1S6	Fuc2NAc and GlcNAc transferase OS=Pseudomonas mucidolens OX=46679 GN=SAMN05216202_2805 PE=4 SV=1	Pseudomonas mucidolens	346	1152	64.9	76.9	3.7e-155
+134	TR	A0ABX8NGB7	Glycosyltransferase family 4 protein OS=Pseudomonas maumuensis OX=2842354 GN=KSS90_19065 PE=4 SV=1	Pseudomonas maumuensis	337	1151	65.4	76.8	3.8e-155
+135	TR	A0A1H2I2Z1	Fuc2NAc and GlcNAc transferase OS=Pseudomonas orientalis OX=76758 GN=SAMN04490197_5537 PE=4 SV=1	Pseudomonas orientalis	342	1151	63.8	75.4	4.6e-155
+136	TR	A0A5B2UYK1	Fuc2NAc and GlcNAc transferase OS=Pseudomonas brenneri OX=129817 GN=F1720_08845 PE=4 SV=1	Pseudomonas brenneri	337	1150	63.3	75.1	5.5e-155
+137	TR	A0A7X0ERU3	Fuc2NAc and GlcNAc transferase OS=Pseudomonas fluvialis OX=1793966 GN=HNP49_001960 PE=4 SV=1	Pseudomonas fluvialis	338	1150	63.2	77.2	5.7e-155
+138	TR	A0ABR6V790	Glycosyltransferase family 4 protein OS=Pseudomonas taiwanensis OX=470150 GN=HU747_11990 PE=4 SV=1	Pseudomonas taiwanensis	338	1150	65.6	78.1	5.7e-155
+139	TR	A0ABY6QBB5	Glycosyltransferase family 4 protein OS=Pseudomonas quebecensis OX=2995174 GN=OSC50_16345 PE=4 SV=1	Pseudomonas quebecensis	339	1150	64.9	77.5	5.9e-155
+140	TR	A0ABU5L071	Glycosyltransferase family 4 protein OS=Pseudomonas asiatica OX=2219225 GN=SOW75_15280 PE=4 SV=1	Pseudomonas asiatica	334	1149	63.7	78.3	7e-155
+141	TR	A0ABU7N603	Glycosyltransferase family 4 protein OS=Pseudomonas viridiflava OX=33069 GN=V2I87_07665 PE=4 SV=1	Pseudomonas viridiflava	338	1149	64.9	77.9	8e-155
+142	TR	A0A4Z0B0S5	Glycosyl transferase OS=Pseudomonas nabeulensis OX=2293833 GN=DYL61_17665 PE=4 SV=1	Pseudomonas nabeulensis	338	1148	64.2	77.4	1.1e-154
+143	TR	A0ABS9I8S7	Glycosyltransferase family 4 protein OS=Pseudomonas petrae OX=2912190 GN=L4G47_18290 PE=4 SV=1	Pseudomonas petrae	338	1148	64.5	76.8	1.1e-154
+144	TR	A0ABT2XVI1	Glycosyltransferase family 4 protein OS=Pseudomonas mercuritolerans OX=2951809 GN=ND528_14105 PE=4 SV=1	Pseudomonas mercuritolerans	346	1148	62.6	76.0	1.5e-154
+145	TR	A0ABY2VCT5	Glycosyltransferase family 4 protein OS=Pseudomonas protegens OX=380021 GN=FEF10_18540 PE=4 SV=1	Pseudomonas protegens	339	1147	66.1	78.1	1.7e-154
+146	TR	A0A5J6QKC0	Glycosyltransferase family 4 protein OS=Metapseudomonas lalkuanensis OX=2604832 GN=FXN65_09160 PE=4 SV=1	Metapseudomonas lalkuanensis	336	1145	62.0	78.1	3e-154
+147	TR	A0ABR7BDP6	Glycosyltransferase family 4 protein OS=Pseudomonas triticifolii OX=2762592 GN=H8S56_09785 PE=4 SV=1	Pseudomonas triticifolii	338	1145	63.9	78.5	3.3e-154
+148	TR	A0A1H0CRQ5	Fuc2NAc and GlcNAc transferase OS=Pseudomonas antarctica OX=219572 GN=tagO PE=4 SV=1	Pseudomonas antarctica	338	1145	63.6	76.5	3.3e-154
+149	TR	A0ABS0BIY8	Glycosyltransferase family 4 protein OS=Pseudomonas neuropathica OX=2730425 GN=H8F23_08430 PE=4 SV=1	Pseudomonas neuropathica	339	1145	64.2	76.6	3.4e-154
+150	TR	A0A1H9FQR0	Fuc2NAc and GlcNAc transferase OS=Pseudomonas soli OX=1306993 GN=SAMN05216230_102619 PE=4 SV=1	Pseudomonas soli	340	1145	64.9	76.5	3.5e-154
+151	TR	A0ABR9SRT7	Glycosyltransferase family 4 protein OS=Pseudomonas cyclaminis OX=2781239 GN=IQK56_12060 PE=4 SV=1	Pseudomonas cyclaminis	338	1143	63.6	78.1	6.6e-154
+152	TR	A0ABW8DG61	Glycosyltransferase family 4 protein OS=Pseudomonas iridis OX=2710587 GN=ACIOUF_07635 PE=4 SV=1	Pseudomonas iridis	341	1143	63.1	75.3	7.3e-154
+153	TR	A0ABM7CNK9	Glycosyltransferase family 4 protein OS=Pseudomonas oryziphila OX=2894079 GN=EI693_07430 PE=4 SV=1	Pseudomonas oryziphila	336	1142	64.1	76.2	8.7e-154
+154	TR	A0A5R8Z5X1	Glycosyltransferase family 4 protein OS=Pseudomonas mosselii OX=78327 GN=FEM01_11205 PE=4 SV=1	Pseudomonas mosselii	336	1142	64.7	75.9	8.7e-154
+155	TR	A0ABU8QU60	Glycosyltransferase family 4 protein OS=Pseudomonas farsensis OX=2745492 GN=V7S98_13040 PE=4 SV=1	Pseudomonas farsensis	337	1142	64.0	75.7	9e-154
+156	TR	A0A4R3M7N1	Fuc2NAc and GlcNAc transferase OS=Paralcaligenes ureilyticus OX=627131 GN=EDC26_104242 PE=4 SV=1	Paralcaligenes ureilyticus	341	1141	63.3	75.7	1.5e-153
+157	TR	A0A9Q2XFL4	Glycosyltransferase family 4 protein OS=Pseudomonas aegrilactucae OX=2854028 GN=KUO17_02570 PE=4 SV=1	Pseudomonas aegrilactucae	335	1139	64.5	77.8	2.4e-153
+158	TR	A0ABZ2GYX6	Glycosyltransferase family 4 protein OS=Pseudomonas bubulae OX=2316085 GN=V6B39_12140 PE=4 SV=1	Pseudomonas bubulae	339	1139	65.0	78.5	2.8e-153
+159	TR	A0ABT4WMP6	Glycosyltransferase family 4 protein OS=Pseudomonas fragi OX=296 GN=PI499_00860 PE=4 SV=1	Pseudomonas fragi	339	1139	65.0	78.5	2.8e-153
+160	TR	A0ABX4YC92	Glycosyl transferase OS=Pseudomonas gingeri NCPPB 3146 = LMG 5327 OX=707248 GN=CCU68_00290 PE=4 SV=1	Pseudomonas gingeri NCPPB 3146 = LMG 5327	339	1139	64.8	75.7	2.8e-153
+161	TR	A0ABX8YKE9	Glycosyltransferase family 4 protein OS=Pseudomonas germanica OX=2815720 GN=J0G10_21675 PE=4 SV=1	Pseudomonas germanica	339	1139	64.2	76.0	2.8e-153
+162	TR	A0ABV7APR1	Glycosyltransferase family 4 protein OS=Azotobacter bryophylli OX=1986537 GN=ACFOJE_04450 PE=4 SV=1	Azotobacter bryophylli	350	1139	64.6	76.9	4.1e-153
+163	TR	A0A3L8D0A2	Glycosyl transferase OS=Pseudomonas prosekii OX=1148509 GN=CS076_05985 PE=4 SV=1	Pseudomonas prosekii	341	1138	64.7	78.3	4.2e-153
+164	TR	A0A085VL09	Glycosyl transferase OS=Pseudomonas syringae OX=317 GN=IV01_09955 PE=4 SV=1	Pseudomonas syringae	337	1137	63.3	77.4	5.2e-153
+165	TR	A0ABS1XED2	Glycosyltransferase family 4 protein OS=Pseudomonas cannabina pv. alisalensis OX=757414 GN=JHZ66_13755 PE=4 SV=1	Pseudomonas cannabina pv. alisalensis	338	1137	65.7	77.2	5.3e-153
+166	TR	A0ABT5QAV1	Glycosyltransferase family 4 protein OS=Pseudomonas idahonensis OX=2942628 GN=M5G25_23870 PE=4 SV=1	Pseudomonas idahonensis	339	1136	64.5	76.0	7.9e-153
+167	TR	A0ABY5ADC0	Glycosyltransferase family 4 protein OS=Ectopseudomonas hydrolytica OX=2493633 GN=L1F06_008965 PE=4 SV=1	Ectopseudomonas hydrolytica	335	1132	64.3	77.8	2.8e-152
+168	TR	A0A6I3W8U8	Glycosyl transferase OS=Pseudomonas spelaei OX=1055469 GN=GNF76_17080 PE=4 SV=1	Pseudomonas spelaei	337	1132	63.9	76.0	3e-152
+169	TR	A0ABR9ABB8	Glycosyltransferase family 4 protein OS=Pseudomonas lutea OX=243924 GN=IFT62_19000 PE=4 SV=1	Pseudomonas lutea	338	1132	63.3	76.0	3.1e-152
+170	TR	A0A5C8NZN2	Glycosyltransferase family 4 protein OS=Zeimonas arvi OX=2498847 GN=FHP08_09845 PE=4 SV=1	Zeimonas arvi	324	1130	66.6	79.0	3.8e-152
+171	TR	A0ABT2V9A4	Glycosyltransferase family 4 protein OS=Pseudomonas peradeniyensis OX=2745488 GN=OC929_07450 PE=4 SV=1	Pseudomonas peradeniyensis	339	1131	62.8	76.5	4.5e-152
+172	TR	A0ACD2UCV2	Fuc2NAc and GlcNAc transferase OS=Pseudomonas helmanticensis OX=1471381 GN=SAMN04488483_5221 PE=4 SV=1	Pseudomonas helmanticensis	336	1130	64.6	77.8	5.8e-152
+173	TR	A0A1H1WC04	Fuc2NAc and GlcNAc transferase OS=Pseudomonas asplenii OX=53407 GN=SAMN05216598_3347 PE=4 SV=1	Pseudomonas asplenii	338	1130	65.8	76.1	6.2e-152
+174	TR	A0ABX0YK17	Glycosyltransferase family 4 protein OS=Pseudomonas quercus OX=2722792 GN=HBH25_16035 PE=4 SV=1	Pseudomonas quercus	339	1130	63.3	75.7	6.4e-152
+175	TR	A0ABY6AV17	Glycosyltransferase family 4 protein OS=Pseudomonas promysalinigenes OX=485898 GN=N5C08_07220 PE=4 SV=1	Pseudomonas promysalinigenes	334	1129	62.1	75.7	7.6e-152
+176	TR	A0AAE9VND9	Glycosyltransferase family 4 protein OS=Denitrificimonas caeni OX=521720 GN=O6P33_11940 PE=4 SV=1	Denitrificimonas caeni	340	1129	65.4	75.4	9.4e-152
+177	TR	A0ABS1ZHE4	Glycosyltransferase family 4 protein OS=Pseudomonas weihenstephanensis OX=1608994 GN=GYN02_09505 PE=4 SV=1	Pseudomonas weihenstephanensis	340	1129	63.3	76.4	9.4e-152
+178	TR	A0A1V2JCX2	Glycosyl transferase OS=Pseudomonas azotoformans OX=47878 GN=BLL37_05730 PE=4 SV=1	Pseudomonas azotoformans	341	1129	62.8	75.5	9.8e-152
+179	TR	A0A9E6NYU2	Glycosyltransferase family 4 protein OS=Pseudomonas hamedanensis OX=2745504 GN=HU739_020855 PE=4 SV=1	Pseudomonas hamedanensis	338	1128	61.3	75.4	1.2e-151
+180	TR	A0A0W0HB29	Glycosyl transferase OS=Pseudomonas viridiflava ICMP 13104 OX=1198305 GN=AO067_08730 PE=4 SV=1	Pseudomonas viridiflava ICMP 13104	338	1128	65.1	76.3	1.2e-151
+181	TR	A0ABR5JKX5	Glycosyl transferase OS=Pseudomonas coronafaciens pv. porri OX=83964 GN=OX90_17855 PE=4 SV=1	Pseudomonas coronafaciens pv. porri	338	1127	65.8	77.0	1.8e-151
+182	TR	A0ACC5MFP3	Fuc2NAc and GlcNAc transferase OS=Pseudomonas umsongensis OX=198618 GN=FHR69_003261 PE=4 SV=1	Pseudomonas umsongensis	341	1127	62.2	75.9	2e-151
+183	TR	A0A0P9NH97	Glycosyl transferase family protein OS=Pseudomonas syringae pv. coryli OX=317659 GN=ALO75_00703 PE=4 SV=1	Pseudomonas syringae pv. coryli	336	1126	61.8	77.5	2.3e-151
+184	TR	A0ABW7M2X3	Glycosyltransferase family 4 protein OS=Pseudomonas kulmbachensis OX=3043408 GN=ACHMWK_15050 PE=4 SV=1	Pseudomonas kulmbachensis	338	1126	63.3	76.7	2.5e-151
+185	TR	A0ABV4PAD3	Glycosyltransferase family 4 protein OS=Pseudomonas tremae OX=200454 GN=ACDH53_06185 PE=4 SV=1	Pseudomonas tremae	338	1126	65.5	76.7	2.5e-151
+186	TR	A0ABT3LLD9	Glycosyltransferase family 4 protein OS=Pseudomonas fragariae (ex Marin et al. 2024) OX=3080056 GN=K7K06_16590 PE=4 SV=1	Pseudomonas fragariae (ex Marin et al. 2024)	336	1124	61.8	77.2	4.7e-151
+187	TR	A0ABU5B1F4	Glycosyltransferase family 4 protein OS=Pseudomonas fragariae (ex Marin et al. 2024) OX=3080056 GN=SLT84_05910 PE=4 SV=1	Pseudomonas fragariae (ex Marin et al. 2024)	336	1124	61.8	77.2	4.7e-151
+188	TR	A0ABQ1DJ22	Glycosyl transferase OS=Pseudomonas cichorii OX=36746 GN=PSCICP_09790 PE=4 SV=1	Pseudomonas cichorii	308	1120	68.9	79.2	7.1e-151
+189	TR	A0A0X1T6F2	Glycosyl transferase OS=Pseudomonas agarici OX=46677 GN=AWM79_21205 PE=4 SV=1	Pseudomonas agarici	339	1123	64.3	74.9	7.4e-151
+190	TR	A0A4Z0B068	Glycosyl transferase OS=Pseudomonas kairouanensis OX=2293832 GN=DYL59_02690 PE=4 SV=1	Pseudomonas kairouanensis	341	1123	63.6	75.7	8e-151
+191	TR	A0ABY3DED3	Glycosyltransferase family 4 protein OS=Pseudomonas alloputida OX=1940621 GN=DZA28_09995 PE=4 SV=1	Pseudomonas alloputida	336	1122	66.0	79.8	9.5e-151
+192	TR	A0A193SLT6	Glycosyl transferase OS=Pseudomonas cerasi OX=1583341 GN=PL963_01683 PE=4 SV=1	Pseudomonas cerasi	336	1122	62.1	76.9	9.5e-151
+193	TR	A0A0P9UCC5	Glycosyl transferase, group 4 family protein OS=Pseudomonas meliae OX=86176 GN=ALO64_02286 PE=4 SV=1	Pseudomonas meliae	338	1122	62.8	77.1	1e-150
+194	TR	A0AAI8PC93	Glycosyl transferase OS=Pseudomonas parafulva OX=157782 GN=DZC75_15110 PE=4 SV=1	Pseudomonas parafulva	336	1121	62.8	77.3	1.3e-150
+195	TR	A0ABW9HAJ9	MraY family glycosyltransferase OS=Pseudomonas monachiensis OX=3060212 GN=ACKKH4_18190 PE=4 SV=1	Pseudomonas monachiensis	341	1121	62.8	75.1	1.6e-150
+196	TR	A0ABX4YZM4	Glycosyl transferase OS=Pseudomonas avellanae pv. morsprunorum OX=3380385 GN=BKM26_10035 PE=4 SV=1	Pseudomonas avellanae pv. morsprunorum	338	1120	63.8	76.8	2.1e-150
+197	TR	G3XD50	Glycosyltransferase WbpL OS=Pseudomonas aeruginosa (strain ATCC 15692 / DSM 22644 / CIP 104116 / JCM 14847 / LMG 12228 / 1C / PRS 101 / PAO1) OX=208964 GN=wbpL PE=4 SV=1	Pseudomonas aeruginosa (strain ATCC 15692 / DSM 22644 / CIP 104116 / JCM 14847 / LMG 12228 / 1C / PRS 101 / PAO1)	339	1120	64.0	74.9	2.1e-150
+198	TR	A0ABZ2DJ80	Glycosyltransferase family 4 protein OS=Pseudomonas khavaziana OX=2842351 GN=QYQ93_09155 PE=4 SV=1	Pseudomonas khavaziana	340	1120	64.1	75.1	2.2e-150
+199	TR	A0A231GKK4	Fuc2NAc and GlcNAc transferase OS=Pseudomonas jessenii OX=77298 GN=SAMN04490187_5533 PE=4 SV=1	Pseudomonas jessenii	341	1120	62.8	74.8	2.3e-150
+200	TR	A0A9W6K755	Glycosyl transferase OS=Pseudomonas turukhanskensis OX=1806536 GN=GCM10017655_20020 PE=4 SV=1	Pseudomonas turukhanskensis	336	1119	64.5	76.5	2.7e-150
+201	TR	A0ABX7GC69	Glycosyltransferase family 4 protein OS=Pseudomonas granadensis OX=1421430 GN=JN757_20070 PE=4 SV=1	Pseudomonas granadensis	338	1119	62.9	78.1	2.9e-150
+202	TR	A0ABV4Z7I3	Glycosyltransferase family 4 protein OS=Pseudomonas boreofloridensis OX=3064348 GN=ACE1YR_09120 PE=4 SV=1	Pseudomonas boreofloridensis	336	1117	62.8	77.3	5.5e-150
+203	TR	Q885S6	Glycosyl transferase, group 4 family protein OS=Pseudomonas syringae pv. tomato (strain ATCC BAA-871 / DC3000) OX=223283 GN=PSPTO_1755 PE=4 SV=1	Pseudomonas syringae pv. tomato (strain ATCC BAA-871 / DC3000)	338	1116	62.6	76.8	8.3e-150
+204	TR	A0ABT6QK51	Glycosyltransferase family 4 protein OS=Pseudomonas fungipugnans OX=3024217 GN=POF45_07440 PE=4 SV=1	Pseudomonas fungipugnans	338	1114	64.0	76.3	1.7e-149
+205	TR	A0A2S3VIG4	Glycosyl transferase OS=Pseudomonas laurylsulfativorans OX=1943631 GN=B0D71_23960 PE=4 SV=1	Pseudomonas laurylsulfativorans	341	1114	62.5	75.1	1.9e-149
+206	TR	A0A923K4J9	Glycosyltransferase family 4 protein OS=Pseudomonas vlassakiae OX=485888 GN=HU738_000865 PE=4 SV=1	Pseudomonas vlassakiae	339	1113	63.2	75.7	2.5e-149
+207	TR	A0ABX8P530	Glycosyltransferase family 4 protein OS=Pseudomonas asgharzadehiana OX=2842349 GN=KSS96_08820 PE=4 SV=1	Pseudomonas asgharzadehiana	342	1112	63.3	75.1	3.9e-149
+208	TR	A0A840G5N4	Fuc2NAc and GlcNAc transferase OS=Rhodocyclus tenuis OX=1066 GN=GGD90_000657 PE=4 SV=1	Rhodocyclus tenuis	333	1110	65.6	76.0	5.7e-149
+209	TR	Q88LX3	Glycosyl transferase WbpL OS=Pseudomonas putida (strain ATCC 47054 / DSM 6125 / CFBP 8728 / NCIMB 11950 / KT2440) OX=160488 GN=wbpL PE=4 SV=1	Pseudomonas putida (strain ATCC 47054 / DSM 6125 / CFBP 8728 / NCIMB 11950 / KT2440)	334	1110	61.9	76.4	5.9e-149
+210	TR	A0A6J4E1F5	Glycosyltransferase WbpL OS=Pseudomonas tohonis OX=2725477 GN=wbpL PE=4 SV=1	Pseudomonas tohonis	335	1110	62.8	75.2	6.1e-149
+211	TR	A0A0N8R1S4	Fuc2NAc and GlcNAc transferase OS=Pseudomonas congelans OX=200452 GN=ALO92_01989 PE=4 SV=1	Pseudomonas congelans	336	1110	61.4	77.3	6.3e-149
+212	TR	A0ABV4PYT5	Glycosyltransferase family 4 protein OS=Pseudomonas ficuserectae OX=53410 GN=ACDH57_20525 PE=4 SV=1	Pseudomonas ficuserectae	338	1110	62.5	77.1	6.8e-149
+213	TR	A0A0N0X690	Glycosyl transferase OS=Pseudomonas amygdali pv. lachrymans OX=53707 GN=AC499_1995 PE=4 SV=1	Pseudomonas amygdali pv. lachrymans	338	1110	62.5	77.1	6.8e-149
+214	TR	A0A2S6FLH5	Glycosyl transferase OS=Pseudomonas laurylsulfatiphila OX=2011015 GN=CD175_10850 PE=4 SV=1	Pseudomonas laurylsulfatiphila	341	1110	62.5	74.2	7.5e-149
+215	TR	A0ABS2C8C0	Glycosyltransferase family 4 protein OS=Pseudomonas arcuscaelestis OX=2710591 GN=H8F21_28975 PE=4 SV=1	Pseudomonas arcuscaelestis	342	1110	59.3	74.4	7.8e-149
+216	TR	A0A0Q0YZV9	Glycosyl transferase OS=Pseudomonas endophytica OX=1563157 GN=AQS70_05555 PE=4 SV=1	Pseudomonas endophytica	343	1110	62.1	75.1	8.1e-149
+217	TR	A0ABY1U3X4	Glycosyl transferase OS=Pseudomonas syringae pv. avii OX=663959 GN=CFBP3846_01641 PE=4 SV=1	Pseudomonas syringae pv. avii	338	1108	62.4	76.5	1.4e-148
+218	TR	A0A0N8RPY2	Glycosyl transferase OS=Pseudomonas savastanoi pv. glycinea OX=318 GN=AC496_0964 PE=4 SV=1	Pseudomonas savastanoi pv. glycinea	338	1107	62.2	77.1	1.9e-148
+219	TR	A0ABT0F6C7	Glycosyltransferase family 4 protein OS=Pseudomonas violetae OX=2915813 GN=L9059_26000 PE=4 SV=1	Pseudomonas violetae	339	1105	61.6	75.7	4e-148
+220	TR	A0ABY9FZY2	Glycosyltransferase family 4 protein OS=Pseudomonas lurida OX=244566 GN=PSH67_09510 PE=4 SV=1	Pseudomonas lurida	336	1104	62.1	75.1	5.2e-148
+221	TR	A0ABT5NVK4	Glycosyltransferase family 4 protein OS=Pseudomonas fontis OX=2942633 GN=M5G11_16660 PE=4 SV=1	Pseudomonas fontis	341	1104	60.7	76.0	6.2e-148
+222	TR	A0ACD4PC10	Glycosyltransferase family 4 protein OS=Pseudomonas fortuita OX=3233375 GN=OZ911_06635 PE=4 SV=1	Pseudomonas fortuita	334	1103	62.2	76.4	6.8e-148
+223	TR	A0A9X4C470	Glycosyltransferase family 4 protein OS=Pseudomonas shahriarae OX=2745512 GN=M5G27_20840 PE=4 SV=1	Pseudomonas shahriarae	342	1103	61.0	74.5	9.1e-148
+224	TR	A0ABM6J083	Glycosyl transferase OS=Pseudomonas parafulva OX=157782 GN=B2J77_06000 PE=4 SV=1	Pseudomonas parafulva	334	1102	62.6	76.4	9.7e-148
+225	TR	A0A7L9G977	Glycosyltransferase family 4 protein OS=Pseudomonas taiwanensis OX=470150 GN=ICN73_13270 PE=4 SV=1	Pseudomonas taiwanensis	334	1101	62.2	76.8	1.4e-147
+226	TR	A0A562I0U0	Fuc2NAc and GlcNAc transferase OS=Azomonas agilis OX=116849 GN=LX59_02328 PE=4 SV=1	Azomonas agilis	345	1102	63.7	75.4	1.4e-147
+227	TR	A0A0N8T2E0	Glycosyl transferase, group 4 family protein OS=Pseudomonas syringae pv. tagetis OX=129140 GN=ALO44_100538 PE=4 SV=1	Pseudomonas syringae pv. tagetis	338	1100	61.7	77.0	2.2e-147
+228	TR	A0A1N6UV27	Fuc2NAc and GlcNAc transferase OS=Aromatoleum tolulyticum OX=34027 GN=SAMN05421829_10650 PE=4 SV=1	Aromatoleum tolulyticum	341	1100	63.7	76.3	2.5e-147
+229	TR	A0AAX0VSV1	Glycosyl transferase OS=Pseudomonas guariconensis OX=1288410 GN=CXG49_20440 PE=4 SV=1	Pseudomonas guariconensis	339	1098	60.5	76.1	4.7e-147
+230	TR	A0A5R9QIB9	Glycosyl transferase OS=Stutzerimonas nosocomialis OX=1056496 GN=DN820_04415 PE=4 SV=1	Stutzerimonas nosocomialis	344	1098	62.5	73.9	5.6e-147
+231	TR	A0ACA7P3N7	Glycosyl transferase OS=Pseudomonas gorinensis OX=3240790 GN=U771_09380 PE=4 SV=1	Pseudomonas gorinensis	337	1096	60.4	74.2	8.8e-147
+232	TR	A0ABZ1AL05	Glycosyltransferase family 4 protein OS=Aromatoleum evansii OX=59406 GN=U5817_21155 PE=4 SV=1	Aromatoleum evansii	341	1095	65.7	75.7	1.4e-146
+233	TR	A0ABY6ZTJ1	Glycosyltransferase family 4 protein OS=Pseudomonas triclosanedens OX=2961893 GN=OU419_20220 PE=4 SV=1	Pseudomonas triclosanedens	341	1088	60.7	75.7	1.7e-145
+234	TR	A0A1V0B5T6	Glycosyl transferase OS=Halopseudomonas phragmitis OX=1931241 GN=BVH74_11215 PE=4 SV=1	Halopseudomonas phragmitis	341	1088	61.9	75.3	1.7e-145
+235	TR	A0A6A7Z1Y1	Glycosyl transferase OS=Pseudomonas helleri OX=1608996 GN=GHN41_04920 PE=4 SV=1	Pseudomonas helleri	344	1088	60.9	74.1	1.8e-145
+236	TR	A0A0S2TI18	Glycosyl transferase OS=Candidatus Tenderia electrophaga OX=1748243 GN=Tel_08655 PE=4 SV=1	Candidatus Tenderia electrophaga	340	1087	61.3	74.1	2.3e-145
+237	TR	A0ABR5Z500	Glycosyltransferase family 4 protein OS=Stutzerimonas azotifigens OX=291995 GN=G7026_17880 PE=4 SV=1	Stutzerimonas azotifigens	336	1085	61.3	74.5	4e-145
+238	TR	A0A1H5SWW8	Undecaprenyl-phosphate N-acetylglucosaminyl 1-phosphate transferase OS=Thauera chlorobenzoica OX=96773 GN=Tchl_1202 PE=4 SV=1	Thauera chlorobenzoica	341	1085	62.6	73.6	4.7e-145
+239	TR	G3IVS6	Glycosyl transferase, family 4, conserved region-containing protein OS=Methylobacter tundripaludum (strain ATCC BAA-1195 / DSM 17260 / SV96) OX=697282 GN=Mettu_1767 PE=4 SV=1	Methylobacter tundripaludum (strain ATCC BAA-1195 / DSM 17260 / SV96)	344	1085	60.0	73.9	5.3e-145
+240	TR	A0A7V7GN77	Glycosyl transferase OS=Halopseudomonas laoshanensis OX=2268758 GN=DT594_17670 PE=4 SV=1	Halopseudomonas laoshanensis	339	1084	60.8	75.3	6.3e-145
+241	TR	A0ABW8WAN7	MraY family glycosyltransferase OS=Pseudomonas azerbaijanorientalis OX=2842350 GN=ACJ8NA_25485 PE=4 SV=1	Pseudomonas azerbaijanorientalis	341	1083	61.4	72.5	9.6e-145
+242	TR	A0ABY3C7Z7	Glycosyltransferase family 4 protein OS=Candidatus Methylobacter oryzae OX=2497749 GN=EKO24_016105 PE=4 SV=1	Candidatus Methylobacter oryzae	344	1082	62.5	74.4	1.5e-144
+243	TR	A0A1Q2M5F3	Glycosyl transferase OS=Microbulbifer agarilyticus OX=260552 GN=Mag101_07600 PE=4 SV=1	Microbulbifer agarilyticus	346	1082	59.1	73.1	1.6e-144
+244	TR	A0A396S2C7	Glycosyl transferase OS=Pseudomonas jilinensis OX=2078689 GN=C2846_15260 PE=4 SV=1	Pseudomonas jilinensis	344	1081	62.2	75.0	2.1e-144
+245	TR	A0A2R3IRR8	Glycosyl transferase 4 family protein OS=Pseudomonas paraeruginosa OX=2994495 GN=CSB93_3163 PE=4 SV=1	Pseudomonas paraeruginosa	339	1077	62.3	75.1	7.3e-144
+246	TR	A0A915U1K6	Glycosyl transferase OS=Desulfolithobacter dissulfuricans OX=2795293 GN=GF1_21140 PE=4 SV=1	Desulfolithobacter dissulfuricans	336	1074	61.4	74.6	1.9e-143
+247	TR	A0A1G9YI11	Fuc2NAc and GlcNAc transferase OS=Pseudomonas jinjuensis OX=198616 GN=SAMN05216193_10143 PE=4 SV=1	Pseudomonas jinjuensis	341	1074	60.9	73.5	2.2e-143
+248	TR	A0A2R4BS28	Undecaprenyl-phosphate N-acetylglucosaminyl 1-phosphate transferase OS=Thauera aromatica K172 OX=44139 GN=Tharo_3267 PE=4 SV=1	Thauera aromatica K172	341	1073	61.5	73.4	3.2e-143
+249	TR	A0A6I6H5M7	Glycosyl transferase OS=Pseudomonas alkylphenolica OX=237609 GN=GPJ81_07465 PE=4 SV=1	Pseudomonas alkylphenolica	344	1072	58.7	75.5	5e-143
+250	TR	A0ABS2IFX4	Glycosyltransferase family 4 protein OS=Zestomonas insulae OX=2809017 GN=JQX08_08995 PE=4 SV=1	Zestomonas insulae	339	1071	60.2	72.7	5.9e-143

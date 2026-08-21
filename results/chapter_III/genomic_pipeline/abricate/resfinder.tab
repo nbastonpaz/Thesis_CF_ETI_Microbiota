@@ -1,0 +1,123 @@
+#FILE	SEQUENCE	START	END	STRAND	GENE	COVERAGE	COVERAGE_MAP	GAPS	%COVERAGE	%IDENTITY	DATABASE	ACCESSION	PRODUCT	RESISTANCE
+A19P0.fasta	NODE_16_length_126728_cov_141.760760	52921	53559	-	catB7_1	1-639/639	===============	0/0	100.00	98.91	resfinder	AF036933	catB7	Chloramphenicol
+A19P0.fasta	NODE_17_length_108143_cov_103.286806	25256	26059	+	aph(3')-IIb_2	1-807/807	========/======	1/3	99.63	99.01	resfinder	CP006832	aph(3')-IIb	
+A19P0.fasta	NODE_17_length_108143_cov_103.286806	38415	39608	-	blaPAO_1	1-1194/1194	===============	0/0	100.00	99.67	resfinder	AY083595	blaPAO	Amoxicillin;Ampicillin;Cefepime;Ceftazidime
+A19P0.fasta	NODE_1_length_864414_cov_94.078432	639211	639618	-	fosA_4	1-408/408	===============	0/0	100.00	99.27	resfinder	ACWU01000146	fosA	Fosfomycin
+A19P0.fasta	NODE_5_length_394464_cov_118.219906	33180	36274	+	tmexD2_1	1-3095/3135	========/======	8/20	98.41	80.71	resfinder	MN175502	tmexD2	Doxycycline;Minocycline;Tetracycline;Tigecycline
+A19P0.fasta	NODE_6_length_327373_cov_129.507183	164143	164931	-	blaOXA-396_1	1-789/789	===============	0/0	100.00	99.75	resfinder	AY306134	blaOXA-396	Amoxicillin;Ampicillin;Meropenem
+A19P12.fasta	NODE_10_length_251463_cov_343.028029	197697	198335	+	catB7_1	1-639/639	===============	0/0	100.00	99.53	resfinder	AF036933	catB7	Chloramphenicol
+A19P12.fasta	NODE_1_length_1066988_cov_409.588718	64476	65282	+	aph(3')-IIb_2	1-807/807	===============	0/0	100.00	99.75	resfinder	CP006832	aph(3')-IIb	
+A19P12.fasta	NODE_1_length_1066988_cov_409.588718	77638	78831	-	blaPAO_1	1-1194/1194	===============	0/0	100.00	99.67	resfinder	AY083595	blaPAO	Amoxicillin;Ampicillin;Cefepime;Ceftazidime
+A19P12.fasta	NODE_2_length_925253_cov_311.923690	703585	703992	-	fosA_4	1-408/408	===============	0/0	100.00	99.02	resfinder	ACWU01000146	fosA	Fosfomycin
+A19P12.fasta	NODE_7_length_330520_cov_366.227446	33511	36605	+	tmexD2_1	1-3095/3135	========/======	8/20	98.41	80.77	resfinder	MN175502	tmexD2	Doxycycline;Minocycline;Tetracycline;Tigecycline
+A19P12.fasta	NODE_8_length_261862_cov_481.217778	162027	162815	+	blaOXA-396_1	1-789/789	===============	0/0	100.00	99.75	resfinder	AY306134	blaOXA-396	Amoxicillin;Ampicillin;Meropenem
+A19P6.fasta	NODE_10_length_251465_cov_327.787559	53131	53769	-	catB7_1	1-639/639	===============	0/0	100.00	99.53	resfinder	AF036933	catB7	Chloramphenicol
+A19P6.fasta	NODE_1_length_1067100_cov_330.589668	988282	989475	+	blaPAO_1	1-1194/1194	===============	0/0	100.00	99.67	resfinder	AY083595	blaPAO	Amoxicillin;Ampicillin;Cefepime;Ceftazidime
+A19P6.fasta	NODE_1_length_1067100_cov_330.589668	1001831	1002637	-	aph(3')-IIb_2	1-807/807	===============	0/0	100.00	99.75	resfinder	CP006832	aph(3')-IIb	
+A19P6.fasta	NODE_4_length_532308_cov_314.890726	221260	221667	+	fosA_4	1-408/408	===============	0/0	100.00	99.02	resfinder	ACWU01000146	fosA	Fosfomycin
+A19P6.fasta	NODE_6_length_404846_cov_343.069027	293976	297070	-	tmexD2_1	1-3095/3135	========/======	8/20	98.41	80.77	resfinder	MN175502	tmexD2	Doxycycline;Minocycline;Tetracycline;Tigecycline
+A19P6.fasta	NODE_9_length_261676_cov_411.532177	98854	99642	-	blaOXA-396_1	1-789/789	===============	0/0	100.00	99.75	resfinder	AY306134	blaOXA-396	Amoxicillin;Ampicillin;Meropenem
+A7P0.fasta	NODE_10_length_261770_cov_206.103285	162146	162934	+	blaOXA-486_1	1-789/789	===============	0/0	100.00	99.75	resfinder	AY597426	blaOXA-486	
+A7P0.fasta	NODE_14_length_181979_cov_164.479681	156168	156575	+	fosA_4	1-408/408	===============	0/0	100.00	98.78	resfinder	ACWU01000146	fosA	Fosfomycin
+A7P0.fasta	NODE_15_length_175747_cov_155.977942	52183	52821	-	catB7_1	1-639/639	===============	0/0	100.00	99.06	resfinder	AF036933	catB7	Chloramphenicol
+A7P0.fasta	NODE_16_length_174449_cov_182.082875	90374	91567	+	blaPAO_1	1-1194/1194	===============	0/0	100.00	99.50	resfinder	AY083595	blaPAO	Amoxicillin;Ampicillin;Cefepime;Ceftazidime
+A7P0.fasta	NODE_16_length_174449_cov_182.082875	103923	104726	-	aph(3')-IIb_2	1-807/807	========/======	1/3	99.63	99.01	resfinder	CP006832	aph(3')-IIb	
+A7P0.fasta	NODE_18_length_118344_cov_147.992111	80077	83171	-	tmexD2_1	1-3095/3135	========/======	8/20	98.41	80.71	resfinder	MN175502	tmexD2	Doxycycline;Minocycline;Tetracycline;Tigecycline
+A7P0.fasta	NODE_42_length_18899_cov_200.762512	9682	9879	-	crpP_1	1-198/198	===============	0/0	100.00	98.48	resfinder	HM560971	crpP	Ciprofloxacin
+A7P0.fasta	NODE_47_length_12712_cov_196.647250	10525	10722	-	crpP_1	1-198/198	===============	0/0	100.00	98.48	resfinder	HM560971	crpP	Ciprofloxacin
+A7P12.fasta	NODE_13_length_159608_cov_300.100350	132301	132708	+	fosA_4	1-408/408	===============	0/0	100.00	99.27	resfinder	ACWU01000146	fosA	Fosfomycin
+A7P12.fasta	NODE_1_length_923174_cov_360.926791	760246	761034	-	blaOXA-50_1	1-789/789	===============	0/0	100.00	99.87	resfinder	AY306130	blaOXA-50	Amoxicillin;Ampicillin
+A7P12.fasta	NODE_23_length_39172_cov_1088.189052	31479	32725	-	tet(A)_6	1-1247/1275	===============	0/0	97.80	100.00	resfinder	AF534183	tet(A)	Doxycycline;Tetracycline
+A7P12.fasta	NODE_23_length_39172_cov_1088.189052	36448	37248	+	blaOXA-10_1	1-801/801	===============	0/0	100.00	100.00	resfinder	J03427	blaOXA-10	Amoxicillin;Ampicillin;Aztreonam;Piperacillin;Piperacillin+Tazobactam
+A7P12.fasta	NODE_23_length_39172_cov_1088.189052	37245	38056	+	ant(3'')-Ia_1	161-972/972	..=============	0/0	83.54	99.75	resfinder	X02340	ant(3'')-Ia	Streptomycin
+A7P12.fasta	NODE_23_length_39172_cov_1088.189052	38122	38604	+	dfrA14_5	1-483/483	===============	0/0	100.00	99.59	resfinder	DQ388123	dfrA14	Trimethoprim
+A7P12.fasta	NODE_3_length_623449_cov_329.607064	25010	25816	+	aph(3')-IIb_2	1-807/807	===============	0/0	100.00	98.89	resfinder	CP006832	aph(3')-IIb	
+A7P12.fasta	NODE_3_length_623449_cov_329.607064	38159	39352	-	blaPAO_2	1-1194/1194	===============	0/0	100.00	99.58	resfinder	FJ666065	blaPAO	Amoxicillin;Ampicillin;Cefepime;Ceftazidime
+A7P12.fasta	NODE_6_length_396577_cov_317.403337	34650	37744	+	tmexD2_1	1-3095/3135	========/======	8/20	98.41	80.71	resfinder	MN175502	tmexD2	Doxycycline;Minocycline;Tetracycline;Tigecycline
+A7P12.fasta	NODE_9_length_291129_cov_315.456217	52197	52835	-	catB7_1	1-639/639	===============	0/0	100.00	98.75	resfinder	AF036933	catB7	Chloramphenicol
+P11P0.fasta	NODE_11_length_252983_cov_138.248677	52093	52731	-	catB7_1	1-639/639	===============	0/0	100.00	99.53	resfinder	AF036933	catB7	Chloramphenicol
+P11P0.fasta	NODE_1_length_963296_cov_140.974270	230214	230621	+	fosA_4	1-408/408	===============	0/0	100.00	99.51	resfinder	ACWU01000146	fosA	Fosfomycin
+P11P0.fasta	NODE_2_length_773179_cov_139.666360	694262	695455	+	blaPAO_2	1-1194/1194	===============	0/0	100.00	99.58	resfinder	FJ666065	blaPAO	Amoxicillin;Ampicillin;Cefepime;Ceftazidime
+P11P0.fasta	NODE_2_length_773179_cov_139.666360	707811	708617	-	aph(3')-IIb_2	1-807/807	===============	0/0	100.00	98.89	resfinder	CP006832	aph(3')-IIb	
+P11P0.fasta	NODE_6_length_389358_cov_135.047015	351287	354381	-	tmexD2_1	1-3095/3135	========/======	8/20	98.41	80.64	resfinder	MN175502	tmexD2	Doxycycline;Minocycline;Tetracycline;Tigecycline
+P11P0.fasta	NODE_9_length_280683_cov_170.430294	161919	162706	+	blaOXA-50_1	1-789/789	========/======	1/1	99.87	99.75	resfinder	AY306130	blaOXA-50	Amoxicillin;Ampicillin
+P11P12-1.fasta	NODE_10_length_251305_cov_565.314531	52913	53551	-	catB7_1	1-639/639	===============	0/0	100.00	97.81	resfinder	AF036933	catB7	Chloramphenicol
+P11P12-1.fasta	NODE_1_length_1182382_cov_547.539615	105733	106539	+	aph(3')-IIb_2	1-807/807	===============	0/0	100.00	99.50	resfinder	CP006832	aph(3')-IIb	
+P11P12-1.fasta	NODE_1_length_1182382_cov_547.539615	118895	120088	-	blaPAO_1	1-1194/1194	===============	0/0	100.00	99.58	resfinder	AY083595	blaPAO	Amoxicillin;Ampicillin;Cefepime;Ceftazidime
+P11P12-1.fasta	NODE_2_length_934676_cov_519.745040	230165	230572	+	fosA_4	1-408/408	===============	0/0	100.00	98.78	resfinder	ACWU01000146	fosA	Fosfomycin
+P11P12-1.fasta	NODE_7_length_434787_cov_694.641204	321682	322470	-	blaOXA-488_1	1-789/789	===============	0/0	100.00	99.37	resfinder	CP017969	blaOXA-488	
+P11P12-1.fasta	NODE_8_length_349709_cov_593.714566	313690	316784	-	tmexD2_1	1-3095/3135	========/======	8/20	98.41	80.81	resfinder	MN175502	tmexD2	Doxycycline;Minocycline;Tetracycline;Tigecycline
+P11P12-2.fasta	NODE_11_length_251305_cov_415.363148	197755	198393	+	catB7_1	1-639/639	===============	0/0	100.00	97.81	resfinder	AF036933	catB7	Chloramphenicol
+P11P12-2.fasta	NODE_1_length_934676_cov_387.792324	704105	704512	-	fosA_4	1-408/408	===============	0/0	100.00	98.78	resfinder	ACWU01000146	fosA	Fosfomycin
+P11P12-2.fasta	NODE_3_length_718140_cov_424.685277	105733	106539	+	aph(3')-IIb_2	1-807/807	===============	0/0	100.00	99.50	resfinder	CP006832	aph(3')-IIb	
+P11P12-2.fasta	NODE_3_length_718140_cov_424.685277	118895	120088	-	blaPAO_1	1-1194/1194	===============	0/0	100.00	99.58	resfinder	AY083595	blaPAO	Amoxicillin;Ampicillin;Cefepime;Ceftazidime
+P11P12-2.fasta	NODE_7_length_434787_cov_539.737664	321682	322470	-	blaOXA-488_1	1-789/789	===============	0/0	100.00	99.37	resfinder	CP017969	blaOXA-488	
+P11P12-2.fasta	NODE_8_length_414531_cov_440.723815	33048	36142	+	tmexD2_1	1-3095/3135	========/======	8/20	98.41	80.81	resfinder	MN175502	tmexD2	Doxycycline;Minocycline;Tetracycline;Tigecycline
+P11P6.fasta	NODE_11_length_251305_cov_203.275371	52913	53551	-	catB7_1	1-639/639	===============	0/0	100.00	97.81	resfinder	AF036933	catB7	Chloramphenicol
+P11P6.fasta	NODE_1_length_1182382_cov_221.106204	1062295	1063488	+	blaPAO_1	1-1194/1194	===============	0/0	100.00	99.58	resfinder	AY083595	blaPAO	Amoxicillin;Ampicillin;Cefepime;Ceftazidime
+P11P6.fasta	NODE_1_length_1182382_cov_221.106204	1075844	1076650	-	aph(3')-IIb_2	1-807/807	===============	0/0	100.00	99.50	resfinder	CP006832	aph(3')-IIb	
+P11P6.fasta	NODE_2_length_934676_cov_187.570059	230165	230572	+	fosA_4	1-408/408	===============	0/0	100.00	98.78	resfinder	ACWU01000146	fosA	Fosfomycin
+P11P6.fasta	NODE_7_length_434787_cov_269.737549	112318	113106	+	blaOXA-488_1	1-789/789	===============	0/0	100.00	99.37	resfinder	CP017969	blaOXA-488	
+P11P6.fasta	NODE_8_length_350588_cov_218.744510	33805	36899	+	tmexD2_1	1-3095/3135	========/======	8/20	98.41	80.81	resfinder	MN175502	tmexD2	Doxycycline;Minocycline;Tetracycline;Tigecycline
+P11P9.fasta	NODE_12_length_251265_cov_306.290376	52873	53511	-	catB7_1	1-639/639	===============	0/0	100.00	97.81	resfinder	AF036933	catB7	Chloramphenicol
+P11P9.fasta	NODE_1_length_1184760_cov_316.479424	1062261	1063454	+	blaPAO_1	1-1194/1194	===============	0/0	100.00	99.58	resfinder	AY083595	blaPAO	Amoxicillin;Ampicillin;Cefepime;Ceftazidime
+P11P9.fasta	NODE_1_length_1184760_cov_316.479424	1075810	1076616	-	aph(3')-IIb_2	1-807/807	===============	0/0	100.00	99.50	resfinder	CP006832	aph(3')-IIb	
+P11P9.fasta	NODE_7_length_434787_cov_411.215863	321682	322470	-	blaOXA-488_1	1-789/789	===============	0/0	100.00	99.37	resfinder	CP017969	blaOXA-488	
+P11P9.fasta	NODE_8_length_349827_cov_330.138302	313686	316780	-	tmexD2_1	1-3095/3135	========/======	8/20	98.41	80.81	resfinder	MN175502	tmexD2	Doxycycline;Minocycline;Tetracycline;Tigecycline
+P11P9.fasta	NODE_9_length_346831_cov_298.460814	229976	230383	+	fosA_4	1-408/408	===============	0/0	100.00	98.78	resfinder	ACWU01000146	fosA	Fosfomycin
+P3P0.fasta	NODE_10_length_346552_cov_115.364396	306690	307883	+	blaPAO_1	1-1194/1194	===============	0/0	100.00	99.41	resfinder	AY083595	blaPAO	Amoxicillin;Ampicillin;Cefepime;Ceftazidime
+P3P0.fasta	NODE_10_length_346552_cov_115.364396	320239	321045	-	aph(3')-IIb_2	1-807/807	===============	0/0	100.00	99.75	resfinder	CP006832	aph(3')-IIb	
+P3P0.fasta	NODE_12_length_211825_cov_111.235147	99491	102585	-	tmexD2_1	1-3095/3135	========/======	8/20	98.41	80.77	resfinder	MN175502	tmexD2	Doxycycline;Minocycline;Tetracycline;Tigecycline
+P3P0.fasta	NODE_13_length_164100_cov_94.331033	30992	31630	-	catB7_1	1-639/639	===============	0/0	100.00	99.06	resfinder	AF036933	catB7	Chloramphenicol
+P3P0.fasta	NODE_3_length_513216_cov_152.481199	162194	162982	+	blaOXA-50_1	1-789/789	===============	0/0	100.00	99.75	resfinder	AY306130	blaOXA-50	Amoxicillin;Ampicillin
+P3P0.fasta	NODE_5_length_491246_cov_101.031651	221262	221669	+	fosA_4	1-408/408	===============	0/0	100.00	99.02	resfinder	ACWU01000146	fosA	Fosfomycin
+P3P0.fasta	NODE_9_length_351220_cov_99.890851	312083	312280	+	crpP_1	1-198/198	===============	0/0	100.00	97.47	resfinder	HM560971	crpP	Ciprofloxacin
+P3P12.fasta	NODE_12_length_212022_cov_515.066857	109438	112532	+	tmexD2_1	1-3095/3135	========/======	8/20	98.41	80.77	resfinder	MN175502	tmexD2	Doxycycline;Minocycline;Tetracycline;Tigecycline
+P3P12.fasta	NODE_13_length_183624_cov_605.844209	25508	26314	+	aph(3')-IIb_2	1-807/807	===============	0/0	100.00	99.75	resfinder	CP006832	aph(3')-IIb	
+P3P12.fasta	NODE_13_length_183624_cov_605.844209	38670	39863	-	blaPAO_1	1-1194/1194	===============	0/0	100.00	99.41	resfinder	AY083595	blaPAO	Amoxicillin;Ampicillin;Cefepime;Ceftazidime
+P3P12.fasta	NODE_15_length_164102_cov_466.603128	132473	133111	+	catB7_1	1-639/639	===============	0/0	100.00	99.06	resfinder	AF036933	catB7	Chloramphenicol
+P3P12.fasta	NODE_2_length_515754_cov_643.150109	352773	353561	-	blaOXA-50_1	1-789/789	===============	0/0	100.00	99.75	resfinder	AY306130	blaOXA-50	Amoxicillin;Ampicillin
+P3P12.fasta	NODE_5_length_351220_cov_491.512091	312083	312280	+	crpP_1	1-198/198	===============	0/0	100.00	97.47	resfinder	HM560971	crpP	Ciprofloxacin
+P3P12.fasta	NODE_6_length_338467_cov_448.377508	221262	221669	+	fosA_4	1-408/408	===============	0/0	100.00	99.02	resfinder	ACWU01000146	fosA	Fosfomycin
+P3P6-1.fasta	NODE_13_length_212088_cov_405.936013	99545	102639	-	tmexD2_1	1-3095/3135	========/======	8/20	98.41	80.77	resfinder	MN175502	tmexD2	Doxycycline;Minocycline;Tetracycline;Tigecycline
+P3P6-1.fasta	NODE_15_length_164104_cov_377.829071	30992	31630	-	catB7_1	1-639/639	===============	0/0	100.00	99.06	resfinder	AF036933	catB7	Chloramphenicol
+P3P6-1.fasta	NODE_2_length_515757_cov_531.761876	352767	353555	-	blaOXA-50_1	1-789/789	===============	0/0	100.00	99.75	resfinder	AY306130	blaOXA-50	Amoxicillin;Ampicillin
+P3P6-1.fasta	NODE_3_length_491239_cov_375.811586	221261	221668	+	fosA_4	1-408/408	===============	0/0	100.00	99.02	resfinder	ACWU01000146	fosA	Fosfomycin
+P3P6-1.fasta	NODE_6_length_351220_cov_386.742265	38941	39138	-	crpP_1	1-198/198	===============	0/0	100.00	97.47	resfinder	HM560971	crpP	Ciprofloxacin
+P3P6-1.fasta	NODE_7_length_346670_cov_499.569157	306808	308001	+	blaPAO_1	1-1194/1194	===============	0/0	100.00	99.41	resfinder	AY083595	blaPAO	Amoxicillin;Ampicillin;Cefepime;Ceftazidime
+P3P6-1.fasta	NODE_7_length_346670_cov_499.569157	320357	321163	-	aph(3')-IIb_2	1-807/807	===============	0/0	100.00	99.75	resfinder	CP006832	aph(3')-IIb	
+P3P6-2.fasta	NODE_12_length_211867_cov_358.819996	109229	112323	+	tmexD2_1	1-3095/3135	========/======	8/20	98.41	80.77	resfinder	MN175502	tmexD2	Doxycycline;Minocycline;Tetracycline;Tigecycline
+P3P6-2.fasta	NODE_13_length_164102_cov_326.091870	132473	133111	+	catB7_1	1-639/639	===============	0/0	100.00	99.06	resfinder	AF036933	catB7	Chloramphenicol
+P3P6-2.fasta	NODE_1_length_751924_cov_444.337025	162320	163108	+	blaOXA-50_1	1-789/789	===============	0/0	100.00	99.75	resfinder	AY306130	blaOXA-50	Amoxicillin;Ampicillin
+P3P6-2.fasta	NODE_4_length_491246_cov_307.336053	221262	221669	+	fosA_4	1-408/408	===============	0/0	100.00	99.02	resfinder	ACWU01000146	fosA	Fosfomycin
+P3P6-2.fasta	NODE_8_length_351220_cov_342.613753	38941	39138	-	crpP_1	1-198/198	===============	0/0	100.00	97.47	resfinder	HM560971	crpP	Ciprofloxacin
+P3P6-2.fasta	NODE_9_length_346551_cov_411.147673	306689	307882	+	blaPAO_1	1-1194/1194	===============	0/0	100.00	99.41	resfinder	AY083595	blaPAO	Amoxicillin;Ampicillin;Cefepime;Ceftazidime
+P3P6-2.fasta	NODE_9_length_346551_cov_411.147673	320238	321044	-	aph(3')-IIb_2	1-807/807	===============	0/0	100.00	99.75	resfinder	CP006832	aph(3')-IIb	
+P3P9.fasta	NODE_13_length_211825_cov_357.598320	109241	112335	+	tmexD2_1	1-3095/3135	========/======	8/20	98.41	80.77	resfinder	MN175502	tmexD2	Doxycycline;Minocycline;Tetracycline;Tigecycline
+P3P9.fasta	NODE_15_length_164100_cov_338.363406	30992	31630	-	catB7_1	1-639/639	===============	0/0	100.00	99.06	resfinder	AF036933	catB7	Chloramphenicol
+P3P9.fasta	NODE_2_length_515748_cov_400.073611	162194	162982	+	blaOXA-50_1	1-789/789	===============	0/0	100.00	99.75	resfinder	AY306130	blaOXA-50	Amoxicillin;Ampicillin
+P3P9.fasta	NODE_4_length_491245_cov_332.894482	269578	269985	-	fosA_4	1-408/408	===============	0/0	100.00	99.02	resfinder	ACWU01000146	fosA	Fosfomycin
+P3P9.fasta	NODE_6_length_351220_cov_343.634781	38941	39138	-	crpP_1	1-198/198	===============	0/0	100.00	97.47	resfinder	HM560971	crpP	Ciprofloxacin
+P3P9.fasta	NODE_7_length_346552_cov_360.979531	306690	307883	+	blaPAO_1	1-1194/1194	===============	0/0	100.00	99.41	resfinder	AY083595	blaPAO	Amoxicillin;Ampicillin;Cefepime;Ceftazidime
+P3P9.fasta	NODE_7_length_346552_cov_360.979531	320239	321045	-	aph(3')-IIb_2	1-807/807	===============	0/0	100.00	99.75	resfinder	CP006832	aph(3')-IIb	
+P42P0-1.fasta	NODE_16_length_166308_cov_333.105985	129394	132488	-	tmexD2_1	1-3095/3135	========/======	8/20	98.41	80.81	resfinder	MN175502	tmexD2	Doxycycline;Minocycline;Tetracycline;Tigecycline
+P42P0-1.fasta	NODE_27_length_11150_cov_322.751197	3715	3912	+	crpP_1	1-198/198	===============	0/0	100.00	98.99	resfinder	HM560971	crpP	Ciprofloxacin
+P42P0-1.fasta	NODE_2_length_790078_cov_354.361575	162075	162863	+	blaOXA-488_1	1-789/789	===============	0/0	100.00	99.49	resfinder	CP017969	blaOXA-488	
+P42P0-1.fasta	NODE_6_length_397903_cov_317.796833	344803	345441	+	catB7_1	1-639/639	===============	0/0	100.00	99.53	resfinder	AF036933	catB7	Chloramphenicol
+P42P0-1.fasta	NODE_7_length_369457_cov_337.213650	248552	249745	+	blaPAO_2	1-1194/1194	===============	0/0	100.00	99.58	resfinder	FJ666065	blaPAO	Amoxicillin;Ampicillin;Cefepime;Ceftazidime
+P42P0-1.fasta	NODE_7_length_369457_cov_337.213650	262101	262907	-	aph(3')-IIb_2	1-807/807	===============	0/0	100.00	99.38	resfinder	CP006832	aph(3')-IIb	
+P42P0-1.fasta	NODE_9_length_305973_cov_300.702363	163086	163493	+	fosA_4	1-408/408	===============	0/0	100.00	99.51	resfinder	ACWU01000146	fosA	Fosfomycin
+P42P0-2.fasta	NODE_14_length_166068_cov_462.800441	33581	36675	+	tmexD2_1	1-3095/3135	========/======	8/20	98.41	80.81	resfinder	MN175502	tmexD2	Doxycycline;Minocycline;Tetracycline;Tigecycline
+P42P0-2.fasta	NODE_1_length_985758_cov_465.093376	864853	866046	+	blaPAO_2	1-1194/1194	===============	0/0	100.00	99.58	resfinder	FJ666065	blaPAO	Amoxicillin;Ampicillin;Cefepime;Ceftazidime
+P42P0-2.fasta	NODE_1_length_985758_cov_465.093376	878402	879208	-	aph(3')-IIb_2	1-807/807	===============	0/0	100.00	99.38	resfinder	CP006832	aph(3')-IIb	
+P42P0-2.fasta	NODE_21_length_11150_cov_447.479816	3715	3912	+	crpP_1	1-198/198	===============	0/0	100.00	98.99	resfinder	HM560971	crpP	Ciprofloxacin
+P42P0-2.fasta	NODE_2_length_966028_cov_532.244130	803012	803800	-	blaOXA-488_1	1-789/789	===============	0/0	100.00	99.49	resfinder	CP017969	blaOXA-488	
+P42P0-2.fasta	NODE_6_length_397686_cov_440.863856	52246	52884	-	catB7_1	1-639/639	===============	0/0	100.00	99.53	resfinder	AF036933	catB7	Chloramphenicol
+P42P0-2.fasta	NODE_9_length_305972_cov_405.547694	163086	163493	+	fosA_4	1-408/408	===============	0/0	100.00	99.51	resfinder	ACWU01000146	fosA	Fosfomycin
+P42P12.fasta	NODE_14_length_211015_cov_462.436835	106551	107357	+	aph(3')-IIb_2	1-807/807	===============	0/0	100.00	99.38	resfinder	CP006832	aph(3')-IIb	
+P42P12.fasta	NODE_14_length_211015_cov_462.436835	119713	120906	-	blaPAO_2	1-1194/1194	===============	0/0	100.00	99.58	resfinder	FJ666065	blaPAO	Amoxicillin;Ampicillin;Cefepime;Ceftazidime
+P42P12.fasta	NODE_16_length_166068_cov_368.541969	129394	132488	-	tmexD2_1	1-3095/3135	========/======	8/20	98.41	80.81	resfinder	MN175502	tmexD2	Doxycycline;Minocycline;Tetracycline;Tigecycline
+P42P12.fasta	NODE_25_length_11151_cov_354.578653	7240	7437	-	crpP_1	1-198/198	===============	0/0	100.00	98.99	resfinder	HM560971	crpP	Ciprofloxacin
+P42P12.fasta	NODE_5_length_457147_cov_499.957133	294285	295073	-	blaOXA-488_1	1-789/789	===============	0/0	100.00	99.49	resfinder	CP017969	blaOXA-488	
+P42P12.fasta	NODE_7_length_397689_cov_334.543180	344805	345443	+	catB7_1	1-639/639	===============	0/0	100.00	99.53	resfinder	AF036933	catB7	Chloramphenicol
+P42P12.fasta	NODE_9_length_305974_cov_307.713809	142480	142887	-	fosA_4	1-408/408	===============	0/0	100.00	99.51	resfinder	ACWU01000146	fosA	Fosfomycin

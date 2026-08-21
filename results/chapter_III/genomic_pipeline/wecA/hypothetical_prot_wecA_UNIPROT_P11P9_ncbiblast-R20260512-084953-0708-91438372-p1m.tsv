@@ -1,0 +1,251 @@
+Hit	DB	Accession	Description	Organism	Length	Score(Bits)	Identities(%)	Positives(%)	E()
+1	TR	A0A671UTF7	AT-rich interaction domain 1A OS=Sparus aurata OX=8175 GN=ARID1A PE=4 SV=1	Sparus aurata	2347	127	23.3	39.0	0.00019
+2	TR	A0ABY7J9M5	Toxin glutamine deamidase domain-containing protein OS=Streptomyces nigrescens OX=1920 GN=STRNI_005434 PE=4 SV=1	Streptomyces nigrescens	1952	116	21.8	35.1	0.0047
+3	TR	A0A8S1CSW8	BRCT domain-containing protein OS=Cloeon dipterum OX=197152 GN=CLODIP_2_CD07731 PE=3 SV=1	Cloeon dipterum	1969	116	21.6	40.8	0.0047
+4	TR	A0A8S1CWA5	BRCT domain-containing protein OS=Cloeon dipterum OX=197152 GN=CLODIP_2_CD07731 PE=3 SV=1	Cloeon dipterum	2257	116	21.6	40.8	0.0047
+5	TR	A0A8S1D5B2	BRCT domain-containing protein OS=Cloeon dipterum OX=197152 GN=CLODIP_2_CD07731 PE=3 SV=1	Cloeon dipterum	2265	116	21.6	40.8	0.0047
+6	TR	A0A8S1CR53	BRCT domain-containing protein OS=Cloeon dipterum OX=197152 GN=CLODIP_2_CD07731 PE=3 SV=1	Cloeon dipterum	2280	116	21.6	40.8	0.0047
+7	TR	U6GNF7	DnaJ domain-containing protein, putative OS=Eimeria praecox OX=51316 GN=EPH_0036680 PE=4 SV=1	Eimeria praecox	1995	115	22.6	42.8	0.0062
+8	TR	A0AAW0FD30	Uncharacterized protein OS=Novymonas esmeraldas OX=1808958 GN=NESM_000255600 PE=4 SV=1	Novymonas esmeraldas	3374	115	22.8	40.2	0.0064
+9	TR	U6MG58	Uncharacterized protein OS=Eimeria necatrix OX=51315 GN=ENH_00037280 PE=4 SV=1	Eimeria necatrix	891	114	21.8	38.2	0.0076
+10	TR	A0A8H6AP61	DUF6590 domain-containing protein OS=Botrytis fragariae OX=1964551 GN=Bfra_009369 PE=4 SV=1	Botrytis fragariae	2687	114	22.0	39.2	0.0085
+11	TR	A0A7M7R550	Uncharacterized protein OS=Nasonia vitripennis OX=7425 PE=4 SV=1	Nasonia vitripennis	317	110	18.4	41.5	0.02
+12	TR	A0A2V1AG45	Nuclear transport factor 2 OS=Candidozyma duobushaemuli OX=1231522 GN=CXQ87_004537 PE=4 SV=1	Candidozyma duobushaemuli	964	111	23.5	41.6	0.02
+13	TR	B4JUU2	GH17344 OS=Drosophila grimshawi OX=7222 GN=Dgri\GH17344 PE=4 SV=1	Drosophila grimshawi	505	109	18.8	37.7	0.03
+14	TR	A0A6A5CG72	Uncharacterized protein OS=Naegleria fowleri OX=5763 GN=FDP41_007515 PE=4 SV=1	Naegleria fowleri	749	109	25.0	35.9	0.03
+15	TR	A0ABR1U2P9	Uncharacterized protein OS=Apiospora rasikravindrae OX=990691 GN=PG993_003603 PE=4 SV=1	Apiospora rasikravindrae	2108	109	22.9	37.9	0.04
+16	TR	A0A671URF8	AT-rich interaction domain 1A OS=Sparus aurata OX=8175 GN=ARID1A PE=4 SV=1	Sparus aurata	2140	109	24.7	38.6	0.04
+17	TR	A0AA88QE49	Uncharacterized protein OS=Cirrhinus molitorella OX=172907 GN=Q8A67_001266 PE=4 SV=1	Cirrhinus molitorella	6600	109	21.8	42.5	0.04
+18	TR	A0ABW0E398	non-specific serine/threonine protein kinase OS=Streptomyces atrovirens OX=285556 GN=ACFPWV_31095 PE=4 SV=1	Streptomyces atrovirens	558	108	35.5	41.9	0.04
+19	TR	A0ABX8I901	Nuclear transport factor 2 OS=Candidozyma haemuli OX=45357 GN=CA3LBN_004099 PE=4 SV=1	Candidozyma haemuli	974	108	22.6	41.6	0.04
+20	TR	A0A9Q0BMU1	Uncharacterized protein OS=Drosophila gunungcola OX=103775 GN=M5D96_009792 PE=4 SV=1	Drosophila gunungcola	1259	108	21.1	34.7	0.05
+21	TR	A0ABQ7IHN9	DUF6590 domain-containing protein OS=Botrytis deweyae OX=2478750 GN=EAE98_007452 PE=4 SV=1	Botrytis deweyae	2034	108	19.7	35.4	0.05
+22	TR	A0A1I1YFX8	Outer membrane protein OmpA OS=Roseivivax sediminis OX=936889 GN=SAMN04515678_10721 PE=4 SV=1	Roseivivax sediminis	709	107	23.1	33.5	0.06
+23	TR	A0A0Q5VL63	Uncharacterized protein, isoform C OS=Drosophila erecta OX=7220 GN=Dere\GG20960 PE=4 SV=1	Drosophila erecta	1272	107	20.3	34.0	0.06
+24	TR	B3NK90	Uncharacterized protein, isoform A OS=Drosophila erecta OX=7220 GN=Dere\GG20960 PE=4 SV=1	Drosophila erecta	1272	107	20.3	34.0	0.06
+25	TR	A0A0Q5VKD8	Uncharacterized protein, isoform B OS=Drosophila erecta OX=7220 GN=Dere\GG20960 PE=4 SV=1	Drosophila erecta	1273	107	20.3	34.0	0.06
+26	TR	A0A8C6RMK2	Zinc finger and SCAN domain containing 18 OS=Nannospalax galili OX=1026970 GN=Zscan18 PE=4 SV=1	Nannospalax galili	794	106	18.4	39.5	0.08
+27	TR	A0A4Z1IET2	DUF6590 domain-containing protein OS=Botryotinia convoluta OX=54673 GN=BCON_0064g00400 PE=4 SV=1	Botryotinia convoluta	1958	106	20.5	36.0	0.08
+28	TR	A0A4Z1JQS7	DUF6590 domain-containing protein OS=Botrytis elliptica OX=278938 GN=BELL_0319g00010 PE=4 SV=1	Botrytis elliptica	2023	106	19.7	35.4	0.08
+29	TR	A0ABM1UJ43	Zinc finger and SCAN domain-containing protein 18 isoform X5 OS=Microtus ochrogaster OX=79684 GN=Zscan18 PE=4 SV=1	Microtus ochrogaster	686	105	20.3	40.1	0.1
+30	TR	A0A4Z2CGC2	DPY30 domain-containing protein 2 OS=Takifugu bimaculatus OX=433685 GN=fugu_000305 PE=3 SV=1	Takifugu bimaculatus	341	104	20.0	35.9	0.1
+31	TR	A0A9W9G2J2	Hpc2-related domain-containing protein OS=Penicillium argentinense OX=1131581 GN=N7532_001328 PE=4 SV=1	Penicillium argentinense	777	105	22.1	38.7	0.1
+32	TR	A0ABM1UJ42	Zinc finger and SCAN domain-containing protein 18 isoform X4 OS=Microtus ochrogaster OX=79684 GN=Zscan18 PE=4 SV=1	Microtus ochrogaster	839	105	20.3	40.1	0.1
+33	TR	A0ABM1UJ41	Zinc finger and SCAN domain-containing protein 18 isoform X3 OS=Microtus ochrogaster OX=79684 GN=Zscan18 PE=4 SV=1	Microtus ochrogaster	841	105	20.3	40.1	0.1
+34	TR	A0ABM1UJ40	Zinc finger and SCAN domain-containing protein 18 isoform X2 OS=Microtus ochrogaster OX=79684 GN=Zscan18 PE=4 SV=1	Microtus ochrogaster	846	105	19.0	40.7	0.1
+35	TR	A0ABM1UJ38	Zinc finger and SCAN domain-containing protein 18 isoform X1 OS=Microtus ochrogaster OX=79684 GN=Zscan18 PE=4 SV=1	Microtus ochrogaster	846	105	20.3	40.1	0.1
+36	TR	J3NEG9	Uncharacterized protein OS=Oryza brachyantha OX=4533 GN=LOC102717762 PE=4 SV=1	Oryza brachyantha	261	103	27.0	42.8	0.11
+37	TR	A0A9N9QIP3	Probable cytosolic iron-sulfur protein assembly protein Ciao1 OS=Ceutorhynchus assimilis OX=467358 GN=Ciao1 PE=3 SV=1	Ceutorhynchus assimilis	1697	105	22.6	36.2	0.11
+38	TR	A0A8S1CYA9	BRCT domain-containing protein OS=Cloeon dipterum OX=197152 GN=CLODIP_2_CD07731 PE=3 SV=1	Cloeon dipterum	2260	105	20.8	40.3	0.11
+39	TR	A0A918F3V6	non-specific serine/threonine protein kinase OS=Streptomyces pilosus OX=28893 GN=GCM10010280_62470 PE=4 SV=1	Streptomyces pilosus	564	104	34.5	44.8	0.12
+40	TR	U6KGT1	Macrophage migration inhibitory factor, putative OS=Eimeria mitis OX=44415 GN=EMH_0073570 PE=4 SV=1	Eimeria mitis	616	104	18.2	37.8	0.13
+41	TR	A0A101MFG9	SP-RING-type domain-containing protein OS=Penicillium freii OX=48697 GN=ACN42_g7501 PE=3 SV=1	Penicillium freii	810	104	21.2	41.2	0.13
+42	TR	J3NPG7	FAR1 domain-containing protein OS=Gaeumannomyces tritici (strain R3-111a-1) OX=644352 GN=20343633 PE=4 SV=1	Gaeumannomyces tritici (strain R3-111a-1)	851	104	18.1	38.4	0.14
+43	TR	D2V1P2	Erythrocyte membrane-associated giant protein antigen 332-like protein OS=Naegleria gruberi OX=5762 GN=NAEGRDRAFT_78159 PE=4 SV=1	Naegleria gruberi	1937	104	23.6	38.2	0.15
+44	TR	A0A6P7RDS8	Zinc finger and SCAN domain-containing protein 18 OS=Mus caroli OX=10089 GN=Zscan18 PE=4 SV=1	Mus caroli	884	103	20.2	40.4	0.18
+45	TR	U6GJ29	Uncharacterized protein OS=Eimeria praecox OX=51316 GN=EPH_0049410 PE=4 SV=1	Eimeria praecox	1179	103	19.7	37.2	0.19
+46	TR	A0A8D0BMK4	protein-serine/threonine phosphatase OS=Salvator merianae OX=96440 PE=3 SV=1	Salvator merianae	1398	103	22.6	38.1	0.19
+47	TR	A0A8D0BMT9	protein-serine/threonine phosphatase OS=Salvator merianae OX=96440 PE=3 SV=1	Salvator merianae	1425	103	22.6	38.1	0.19
+48	TR	A0A4Z1SKZ4	Uncharacterized protein OS=Giardia muris OX=5742 GN=GMRT_13360 PE=4 SV=1	Giardia muris	2331	103	24.4	40.1	0.2
+49	TR	A0A7M7R4S9	Uncharacterized protein OS=Nasonia vitripennis OX=7425 PE=4 SV=1	Nasonia vitripennis	473	102	19.0	41.0	0.21
+50	TR	A0ACC3NRA1	Eukaryotic translation initiation factor 4B OS=Vermiconidia calcicola OX=1690605 GN=TIF3_1 PE=4 SV=1	Vermiconidia calcicola	586	102	22.8	39.9	0.22
+51	TR	A0AAE1JVH7	Uncharacterized protein OS=Petrolisthes cinctipes OX=88211 GN=Pcinc_034516 PE=4 SV=1	Petrolisthes cinctipes	602	102	21.2	34.7	0.22
+52	TR	A0A834XUT4	HMG box domain-containing protein OS=Aphidius gifuensis OX=684658 GN=HCN44_011167 PE=4 SV=1	Aphidius gifuensis	720	102	22.7	38.9	0.23
+53	TR	A0A4Z1IDC0	Uncharacterized protein OS=Botryotinia narcissicola OX=278944 GN=BOTNAR_0261g00100 PE=4 SV=1	Botryotinia narcissicola	336	101	20.3	37.4	0.24
+54	TR	E9PUD6	Zinc finger and SCAN domain containing 18 OS=Mus musculus OX=10090 GN=Zscan18 PE=1 SV=1	Mus musculus	809	102	20.8	38.6	0.24
+55	TR	A0A9P6M6H0	Uncharacterized protein OS=Mortierella alpina OX=64518 GN=BGZ70_008773 PE=4 SV=1	Mortierella alpina	912	102	24.0	37.1	0.25
+56	TR	A0AA39R4S2	LIM-domain binding protein-domain-containing protein OS=Cladonia borealis OX=184061 GN=JMJ35_003537 PE=4 SV=1	Cladonia borealis	930	102	19.4	37.4	0.25
+57	TR	U6GYB5	Protein disulfide-isomerase, putative OS=Eimeria acervulina OX=5801 GN=EAH_00050350 PE=3 SV=1	Eimeria acervulina	990	102	20.6	35.3	0.25
+58	TR	A0A8J5QS31	SWI3 OS=[Candida] subhashii OX=561895 GN=J8A68_004617 PE=4 SV=1	[Candida] subhashii	1030	102	24.7	42.1	0.25
+59	TR	A0AAD8VBH3	Vacuolar import and degradation protein 21 OS=Colletotrichum navitas OX=681940 GN=LY79DRAFT_505271 PE=3 SV=1	Colletotrichum navitas	1723	102	22.4	36.0	0.26
+60	TR	U6GHB9	Uncharacterized protein OS=Eimeria acervulina OX=5801 GN=EAH_00028840 PE=4 SV=1	Eimeria acervulina	2044	102	21.3	35.7	0.27
+61	TR	A0A9P0DWT3	VWFC domain-containing protein OS=Phyllotreta striolata OX=444603 GN=PHYEVI_LOCUS11624 PE=4 SV=1	Phyllotreta striolata	2174	102	22.9	37.8	0.27
+62	TR	A0A8B1N7G6	Tox-PL domain-containing protein OS=Streptomyces auratus AGR0001 OX=1160718 GN=SU9_010315 PE=4 SV=1	Streptomyces auratus AGR0001	2398	102	21.7	33.6	0.27
+63	TR	A0A4Z1L500	DUF6590 domain-containing protein OS=Botrytis porri OX=87229 GN=BPOR_0023g00180 PE=4 SV=1	Botrytis porri	2540	102	19.7	37.7	0.27
+64	TR	A0ABQ2TZF5	non-specific serine/threonine protein kinase OS=Streptomyces variabilis OX=67372 GN=GCM10010287_34280 PE=4 SV=1	Streptomyces variabilis	552	101	32.6	43.0	0.29
+65	TR	A0ABN3XJ43	non-specific serine/threonine protein kinase OS=Streptomyces erythrogriseus OX=284027 GN=GCM10010478_62960 PE=4 SV=1	Streptomyces erythrogriseus	552	101	32.6	43.0	0.29
+66	TR	A0ABP7Y9S3	non-specific serine/threonine protein kinase OS=Streptomyces tunisiensis OX=948699 GN=GCM10022285_23970 PE=4 SV=1	Streptomyces tunisiensis	552	101	32.6	43.0	0.29
+67	TR	A0A9N8Z4I3	11761_t:CDS:1 OS=Dentiscutata erythropus OX=1348616 GN=DERYTH_LOCUS1545 PE=4 SV=1	Dentiscutata erythropus	631	101	20.7	40.2	0.3
+68	TR	G7YAC1	Periphilin-1 C-terminal domain-containing protein OS=Clonorchis sinensis OX=79923 GN=CLF_103764 PE=4 SV=1	Clonorchis sinensis	723	101	23.6	42.9	0.31
+69	TR	A0A9W7ZGW9	Uncharacterized protein (Fragment) OS=Mycoemilia scoparia OX=417184 GN=H4219_006473 PE=4 SV=1	Mycoemilia scoparia	350	100	21.6	39.4	0.32
+70	TR	A0ABR0YS11	Little elongation complex subunit 2-like isoform X2 OS=Huso huso OX=61971 GN=HHUSO_G24669 PE=4 SV=1	Huso huso	963	101	23.5	40.2	0.33
+71	TR	A0AAD8Q719	Glutamine repeat protein-1 OS=Colletotrichum navitas OX=681940 GN=LY79DRAFT_62990 PE=4 SV=1	Colletotrichum navitas	365	100	23.0	37.8	0.33
+72	TR	A0ABR2GP19	Uncharacterized protein OS=Tritrichomonas musculus OX=1915356 GN=M9Y10_006950 PE=4 SV=1	Tritrichomonas musculus	1404	101	21.6	39.2	0.35
+73	TR	A0ACC2QHT0	Uncharacterized protein OS=Mythimna loreyi OX=667449 GN=PYW08_005715 PE=4 SV=1	Mythimna loreyi	5398	101	19.7	35.8	0.37
+74	TR	A0ACC3MKU2	Eukaryotic translation initiation factor 4B OS=Vermiconidia calcicola OX=1690605 GN=TIF3_2 PE=4 SV=1	Vermiconidia calcicola	586	100	22.8	39.5	0.4
+75	TR	U6KF58	Acylamino-acid-releasing enzyme, putative OS=Eimeria mitis OX=44415 GN=EMH_0002910 PE=4 SV=1	Eimeria mitis	889	100	20.9	38.2	0.43
+76	TR	U6G8A6	Uncharacterized protein OS=Eimeria acervulina OX=5801 GN=EAH_00056140 PE=4 SV=1	Eimeria acervulina	958	100	20.1	40.2	0.44
+77	TR	A0AA38S7U0	Uncharacterized protein OS=Pleurostoma richardsiae OX=41990 GN=NKR23_g123 PE=4 SV=1	Pleurostoma richardsiae	1040	100	26.0	40.7	0.44
+78	TR	U6GEI6	Uncharacterized protein OS=Eimeria praecox OX=51316 GN=EPH_0048690 PE=4 SV=1	Eimeria praecox	1063	100	18.1	44.2	0.45
+79	TR	A0AAV2L2D3	Uncharacterized protein OS=Knipowitschia caucasica OX=637954 GN=KC01_LOCUS23389 PE=4 SV=1	Knipowitschia caucasica	1119	100	18.1	38.0	0.45
+80	TR	A0A0D2FRY6	Uncharacterized protein OS=Cladophialophora bantiana (strain ATCC 10958 / CBS 173.52 / CDC B-1940 / NIH 8579) OX=1442370 GN=Z519_10196 PE=4 SV=1	Cladophialophora bantiana (strain ATCC 10958 / CBS 173.52 / CDC B-1940 / NIH 8579)	1218	100	18.1	34.1	0.45
+81	TR	A0A9P8HYA6	Uncharacterized protein OS=Glutinoglossum americanum OX=1670608 GN=FGG08_005495 PE=4 SV=1	Glutinoglossum americanum	201	97	33.3	49.2	0.46
+82	TR	A0ABM1KV19	protein-serine/threonine phosphatase OS=Gekko japonicus OX=146911 GN=SSH2 PE=3 SV=1	Gekko japonicus	1327	100	22.2	38.5	0.46
+83	TR	A0ABM1KV18	protein-serine/threonine phosphatase OS=Gekko japonicus OX=146911 GN=SSH2 PE=3 SV=1	Gekko japonicus	1418	100	22.2	38.5	0.46
+84	TR	A0A2C5YHD0	SANT domain-containing protein OS=Ophiocordyceps australis OX=1399860 GN=CDD81_6539 PE=4 SV=1	Ophiocordyceps australis	2315	100	20.5	38.4	0.48
+85	TR	A0A642V5X6	Uncharacterized protein OS=Trichomonascus ciferrii OX=44093 GN=TRICI_002771 PE=4 SV=1	Trichomonascus ciferrii	2606	100	23.2	42.9	0.48
+86	TR	A0A267DKV2	Uncharacterized protein OS=Macrostomum lignano OX=282301 GN=BOX15_Mlig006684g1 PE=4 SV=1	Macrostomum lignano	505	99	19.0	34.7	0.51
+87	TR	A0A9X1Q5X7	non-specific serine/threonine protein kinase OS=Streptomyces muensis OX=1077944 GN=L0P92_30460 PE=4 SV=1	Streptomyces muensis	557	99	34.7	43.2	0.52
+88	TR	A0A3Q3WF34	TIMELESS-interacting protein OS=Mola mola OX=94237 PE=3 SV=1	Mola mola	303	98	24.2	37.6	0.53
+89	TR	A0A8J2MUL2	Ground-like domain-containing protein (Fragment) OS=Cercopithifilaria johnstoni OX=2874296 GN=CJOHNSTONI_LOCUS10031 PE=4 SV=1	Cercopithifilaria johnstoni	660	99	19.6	38.8	0.55
+90	TR	A0A1G4J141	LAME_0C04148g1_1 OS=Lachancea meyersii CBS 8951 OX=1266667 GN=LAME_0C04148G PE=4 SV=1	Lachancea meyersii CBS 8951	669	99	25.1	38.5	0.55
+91	TR	A0A9D3SDY4	Uncharacterized protein OS=Hemibagrus wyckioides OX=337641 GN=KOW79_016500 PE=4 SV=1	Hemibagrus wyckioides	235	97	17.9	35.9	0.56
+92	TR	A0A3B4ZH05	Methyl-CpG-binding protein 2 OS=Stegastes partitus OX=144197 GN=mecp2 PE=4 SV=1	Stegastes partitus	974	99	22.7	35.8	0.59
+93	TR	A0ABQ1ABR9	Cell surface glycoprotein 1 OS=Aspergillus udagawae OX=91492 GN=IFM53868_02312 PE=4 SV=1	Aspergillus udagawae	1184	99	22.6	33.9	0.6
+94	TR	A0A8H5BEY1	WW domain-containing protein OS=Psilocybe cf. subviscida OX=2480587 GN=D9619_001154 PE=4 SV=1	Psilocybe cf. subviscida	1419	99	21.5	38.6	0.61
+95	TR	A0A0C2ZVP7	Uncharacterized protein OS=Scleroderma citrinum Foug A OX=1036808 GN=SCLCIDRAFT_22726 PE=4 SV=1	Scleroderma citrinum Foug A	168	95	30.4	48.2	0.62
+96	TR	U6JXW8	Uncharacterized protein OS=Eimeria mitis OX=44415 GN=EMH_0040080 PE=4 SV=1	Eimeria mitis	2429	99	19.9	37.4	0.64
+97	TR	A0ABM5EQ22	Collagen alpha-1(I) chain-like OS=Pogona vitticeps OX=103695 GN=LOC110072196 PE=4 SV=1	Pogona vitticeps	489	98	23.8	33.9	0.67
+98	TR	A0ABX5ZYH9	non-specific serine/threonine protein kinase OS=Streptomyces tendae OX=1932 GN=F3L20_28145 PE=4 SV=1	Streptomyces tendae	545	98	35.2	44.0	0.69
+99	TR	A0A3N2Q7A5	Uncharacterized protein OS=Sodiomyces alkalinus (strain CBS 110278 / VKM F-3762 / F11) OX=1314773 GN=SODALDRAFT_326751 PE=4 SV=1	Sodiomyces alkalinus (strain CBS 110278 / VKM F-3762 / F11)	296	97	19.9	37.7	0.69
+100	TR	A0A7I8JBI7	Double-strand break repair protein OS=Spirodela intermedia OX=51605 GN=SI7747_10013949 PE=3 SV=1	Spirodela intermedia	722	98	24.7	39.8	0.74
+101	TR	A0A8H4EAT9	Nuclear localization protein OS=Aspergillus fumigatiaffinis OX=340414 GN=CNMCM6805_007985 PE=4 SV=1	Aspergillus fumigatiaffinis	727	98	27.5	38.3	0.74
+102	TR	A0ABR2ICJ4	Uncharacterized protein OS=Tritrichomonas musculus OX=1915356 GN=M9Y10_012434 PE=4 SV=1	Tritrichomonas musculus	769	98	20.6	41.7	0.75
+103	TR	A0ABQ5X909	Ribonuclease E OS=Dyella flagellata OX=1867833 GN=rne PE=3 SV=1	Dyella flagellata	1063	98	21.8	39.4	0.79
+104	TR	A0ABV1N1P3	Ribonuclease E OS=Halomonas pelophila OX=3151122 GN=rne PE=3 SV=1	Halomonas pelophila	1145	98	24.9	38.3	0.8
+105	TR	A0A839ILU6	Flagellar hook-length control protein-like C-terminal domain-containing protein OS=Oceanospirillum sediminis OX=2760088 GN=H4O21_03535 PE=4 SV=1	Oceanospirillum sediminis	1201	98	25.1	40.2	0.8
+106	TR	A0A4Q4SCM8	Septation protein OS=Alternaria arborescens OX=156630 GN=AA0113_g4524 PE=4 SV=1	Alternaria arborescens	1350	98	21.3	35.5	0.82
+107	TR	A0A9P6B8I6	Enhancer of mRNA-decapping protein 4 OS=Hydnum rufescens UP504 OX=1448309 GN=BS47DRAFT_168943 PE=3 SV=1	Hydnum rufescens UP504	1424	98	30.6	43.9	0.82
+108	TR	A0A4Q1QSQ1	Tox-PL domain-containing protein (Fragment) OS=Streptomyces sioyaensis OX=67364 GN=EST54_16560 PE=4 SV=1	Streptomyces sioyaensis	1530	98	21.0	33.8	0.83
+109	TR	A0A9R1SXT3	Chromodomain-helicase-DNA-binding protein 7 isoform X5 OS=Fopius arisanus OX=64838 GN=kis PE=4 SV=1	Fopius arisanus	4432	98	23.9	40.2	0.87
+110	TR	A0A9R1SYF4	Uncharacterized protein kis isoform X4 OS=Fopius arisanus OX=64838 GN=kis PE=4 SV=1	Fopius arisanus	4472	98	23.9	40.2	0.87
+111	TR	A0A9R1SY86	Chromodomain-helicase-DNA-binding protein 7 isoform X3 OS=Fopius arisanus OX=64838 GN=kis PE=4 SV=1	Fopius arisanus	4496	98	23.9	40.2	0.87
+112	TR	A0A9R1TX60	Chromodomain-helicase-DNA-binding protein 7 isoform X2 OS=Fopius arisanus OX=64838 GN=kis PE=4 SV=1	Fopius arisanus	4497	98	23.9	40.2	0.87
+113	TR	A0A9R1TWR3	Chromodomain-helicase-DNA-binding protein 7 isoform X1 OS=Fopius arisanus OX=64838 GN=kis PE=4 SV=1	Fopius arisanus	4499	98	23.9	40.2	0.87
+114	TR	A0ABW6GLP7	Toxin glutamine deamidase domain-containing protein OS=Kitasatospora phosalacinea OX=2065 GN=ACFW6T_16990 PE=4 SV=1	Kitasatospora phosalacinea	5080	98	24.7	34.6	0.88
+115	TR	A0ABQ7GDU9	GATA-type domain-containing protein OS=Dunaliella salina OX=3046 GN=DUNSADRAFT_11237 PE=4 SV=1	Dunaliella salina	5427	98	22.5	37.3	0.88
+116	TR	A0A2K6V5B9	Midasin OS=Saimiri boliviensis boliviensis OX=39432 GN=MDN1 PE=3 SV=1	Saimiri boliviensis boliviensis	5589	98	23.8	36.8	0.88
+117	TR	A0A7E4W3L9	Basic proline-rich protein OS=Panagrellus redivivus OX=6233 PE=4 SV=1	Panagrellus redivivus	518	97	28.4	45.7	0.91
+118	TR	A0ABP6R9J5	non-specific serine/threonine protein kinase OS=Streptomyces labedae OX=285569 GN=GCM10010469_68710 PE=4 SV=1	Streptomyces labedae	552	97	32.6	41.9	0.93
+119	TR	F2TZN6	Uncharacterized protein OS=Salpingoeca rosetta (strain ATCC 50818 / BSB-021) OX=946362 GN=PTSG_02028 PE=4 SV=1	Salpingoeca rosetta (strain ATCC 50818 / BSB-021)	719	97	21.8	39.4	0.99
+120	TR	U6KDB2	Uncharacterized protein OS=Eimeria mitis OX=44415 GN=EMH_0019390 PE=4 SV=1	Eimeria mitis	780	97	20.4	36.4	1.0
+121	TR	A0A0R1DXK4	Uncharacterized protein, isoform C OS=Drosophila yakuba OX=7245 GN=Dyak\GE13899 PE=4 SV=1	Drosophila yakuba	806	97	18.8	34.5	1.0
+122	TR	A0AAJ7W6E8	Chromatin modification-related protein eaf-1 isoform X2 OS=Cephus cinctus OX=211228 GN=LOC107272504 PE=4 SV=1	Cephus cinctus	823	97	22.0	40.9	1.0
+123	TR	A0AAJ7CAH1	Chromatin modification-related protein eaf-1 isoform X1 OS=Cephus cinctus OX=211228 GN=LOC107272504 PE=4 SV=1	Cephus cinctus	826	97	22.0	40.9	1.0
+124	TR	U6LIW8	Sybindin-like family domain-containing protein, putative OS=Eimeria brunetti OX=51314 GN=EBH_0078820 PE=4 SV=1	Eimeria brunetti	953	97	21.2	39.6	1.0
+125	TR	A0ABR0YW96	Little elongation complex subunit 2-like isoform X2 OS=Huso huso OX=61971 GN=HHUSO_G23212 PE=4 SV=1	Huso huso	964	97	26.1	41.7	1.0
+126	TR	A0ABP0L002	Midasin (Dynein-related AAA-ATPase mdn1) (MIDAS-containing protein) (Fragment) OS=Durusdinium trenchii OX=1381693 GN=SCF082_LOCUS19865 PE=4 SV=1	Durusdinium trenchii	1065	97	25.5	42.0	1.1
+127	TR	A0A0R1DXJ1	Uncharacterized protein, isoform B OS=Drosophila yakuba OX=7245 GN=Dyak\GE13899 PE=4 SV=1	Drosophila yakuba	1273	97	18.8	34.5	1.1
+128	TR	B4P4B5	Uncharacterized protein, isoform A OS=Drosophila yakuba OX=7245 GN=Dyak\GE13899 PE=4 SV=1	Drosophila yakuba	1273	97	18.8	34.5	1.1
+129	TR	A0A0R1DVU8	Uncharacterized protein, isoform D OS=Drosophila yakuba OX=7245 GN=Dyak\GE13899 PE=4 SV=1	Drosophila yakuba	1274	97	18.8	34.5	1.1
+130	TR	A0AAV6WI97	HMA domain-containing protein OS=Buddleja alternifolia OX=168488 GN=BUALT_Bualt14G0120100 PE=4 SV=1	Buddleja alternifolia	252	95	26.7	34.2	1.1
+131	TR	A0A8T2PRB6	Uncharacterized protein OS=Albula glossodonta OX=121402 GN=JZ751_012003 PE=4 SV=1	Albula glossodonta	1850	97	24.3	39.1	1.1
+132	TR	A0A8K0WTZ3	Outer kinetochore protein DAD1 OS=Stachybotrys elegans OX=80388 GN=B0I35DRAFT_428555 PE=4 SV=1	Stachybotrys elegans	2178	97	23.8	35.5	1.1
+133	TR	A0A914EJA3	Uncharacterized protein OS=Acrobeloides nanus OX=290746 PE=4 SV=1	Acrobeloides nanus	427	96	22.9	39.9	1.1
+134	TR	B4NB68	Rab3 interacting molecule OS=Drosophila willistoni OX=7260 GN=Dwil\GK11837 PE=4 SV=2	Drosophila willistoni	2618	97	22.0	36.6	1.1
+135	TR	A0AAX6RG89	Midasin OS=Heterocephalus glaber OX=10181 GN=Mdn1 PE=3 SV=1	Heterocephalus glaber	5596	97	22.5	36.8	1.2
+136	TR	A0AAX6RLX3	Midasin OS=Heterocephalus glaber OX=10181 GN=Mdn1 PE=3 SV=1	Heterocephalus glaber	5597	97	22.5	36.8	1.2
+137	TR	A0AAX6R411	Midasin OS=Heterocephalus glaber OX=10181 GN=Mdn1 PE=3 SV=1	Heterocephalus glaber	5597	97	22.5	36.8	1.2
+138	TR	A0AAX6RIW2	Midasin OS=Heterocephalus glaber OX=10181 GN=Mdn1 PE=3 SV=1	Heterocephalus glaber	5598	97	22.5	36.8	1.2
+139	TR	A0ABQ0ZUL3	SAP domain-containing protein OS=Aspergillus lentulus OX=293939 GN=IFM60648_01357 PE=4 SV=1	Aspergillus lentulus	501	96	20.1	39.3	1.2
+140	TR	A0AAN9VU29	Accessory gland protein OS=Gryllus longicercus OX=2509291 GN=R5R35_005556 PE=4 SV=1	Gryllus longicercus	515	96	20.8	40.4	1.2
+141	TR	A0ABY6PWD0	non-specific serine/threonine protein kinase OS=Streptomyces drozdowiczii OX=202862 GN=NEH16_19765 PE=4 SV=1	Streptomyces drozdowiczii	556	96	33.3	49.4	1.2
+142	TR	U6JZG8	Microneme protein, putative OS=Eimeria mitis OX=44415 GN=EMH_0005640 PE=4 SV=1	Eimeria mitis	809	96	19.8	35.3	1.3
+143	TR	A0E8P8	Uncharacterized protein OS=Paramecium tetraurelia OX=5888 GN=GSPATT00024394001 PE=4 SV=1	Paramecium tetraurelia	902	96	23.8	39.2	1.4
+144	TR	U6JW20	Ribosomal protein L7Ae/L30e/S12e/Gadd45 domain-containing protein OS=Eimeria mitis OX=44415 GN=EMH_0051190 PE=4 SV=1	Eimeria mitis	912	96	20.6	37.2	1.4
+145	TR	A0AA36NAB0	WW domain-containing protein OS=Effrenium voratum OX=2562239 GN=EVOR1521_LOCUS27326 PE=4 SV=1	Effrenium voratum	934	96	21.8	38.1	1.4
+146	TR	A0AAW1CQ53	Chitin-binding type-2 domain-containing protein OS=Rhynocoris fuscipes OX=488301 GN=O3M35_001790 PE=4 SV=1	Rhynocoris fuscipes	957	96	22.2	35.6	1.4
+147	TR	A0A8J1IT98	Titin-like OS=Xenopus tropicalis OX=8364 GN=LOC116406866 PE=4 SV=1	Xenopus tropicalis	1101	96	19.8	41.1	1.4
+148	TR	A0AAD8ECA1	Cell surface glycoprotein 1 (Fragment) OS=Diploptera punctata OX=6984 GN=L9F63_020874 PE=4 SV=1	Diploptera punctata	1125	96	20.6	37.8	1.4
+149	TR	A0A9N9UVZ5	[histone H3]-trimethyl-L-lysine(9) demethylase (Fragment) OS=Clonostachys byssicola OX=160290 GN=CBYS24578_00001762 PE=3 SV=1	Clonostachys byssicola	1461	96	26.3	40.6	1.5
+150	TR	A0A8H6NNT4	Vacuolar import and degradation protein 21 OS=Colletotrichum plurivorum OX=2175906 GN=CPLU01_01670 PE=3 SV=1	Colletotrichum plurivorum	1719	96	20.6	33.0	1.5
+151	TR	A0A4Z1EIZ6	DUF6590 domain-containing protein OS=Botrytis tulipae OX=87230 GN=BTUL_0088g00620 PE=4 SV=1	Botrytis tulipae	2033	96	20.5	39.7	1.5
+152	TR	A0A8C6KDY4	histone acetyltransferase OS=Nothobranchius furzeri OX=105023 GN=CREBBP PE=4 SV=1	Nothobranchius furzeri	2093	96	24.6	36.2	1.5
+153	TR	A0A8C6KFJ1	histone acetyltransferase OS=Nothobranchius furzeri OX=105023 GN=CREBBP PE=4 SV=1	Nothobranchius furzeri	2169	96	24.6	36.2	1.5
+154	TR	A0A8C6KGR7	histone acetyltransferase OS=Nothobranchius furzeri OX=105023 GN=CREBBP PE=4 SV=1	Nothobranchius furzeri	2173	96	24.6	36.2	1.5
+155	TR	A0A3R7QEY5	Putative trichohyalin-like OS=Penaeus vannamei OX=6689 GN=C7M84_016745 PE=4 SV=1	Penaeus vannamei	2181	96	22.2	37.9	1.5
+156	TR	A0ABQ2VII3	Tox-PL domain-containing protein OS=Streptomyces albospinus OX=285515 GN=GCM10010211_63810 PE=4 SV=1	Streptomyces albospinus	2311	96	24.4	35.4	1.5
+157	TR	A0A8C6KIG6	histone acetyltransferase OS=Nothobranchius furzeri OX=105023 GN=CREBBP PE=4 SV=1	Nothobranchius furzeri	2353	96	24.6	36.2	1.5
+158	TR	A0A8C6KF74	histone acetyltransferase OS=Nothobranchius furzeri OX=105023 GN=CREBBP PE=4 SV=1	Nothobranchius furzeri	2400	96	24.6	36.2	1.5
+159	TR	U6G297	Uncharacterized protein OS=Eimeria praecox OX=51316 GN=EPH_0033020 PE=4 SV=1	Eimeria praecox	497	95	19.3	36.8	1.6
+160	TR	A0ABR0IG06	Uncharacterized protein OS=Podospora pseudoanserina OX=2609844 GN=QC764_203330 PE=4 SV=1	Podospora pseudoanserina	543	95	17.9	34.1	1.6
+161	TR	A0ABR0HNN5	Uncharacterized protein OS=Podospora pseudopauciseta OX=2093780 GN=QC763_203330 PE=4 SV=1	Podospora pseudopauciseta	546	95	19.7	34.2	1.6
+162	TR	U6LTE6	Uncharacterized protein OS=Eimeria brunetti OX=51314 GN=EBH_0038840 PE=4 SV=1	Eimeria brunetti	582	95	20.9	37.4	1.7
+163	TR	A0ABS4T2J4	Serine protease PepD OS=Nesterenkonia lacusekhoensis OX=150832 GN=JOF45_001685 PE=3 SV=1	Nesterenkonia lacusekhoensis	625	95	22.8	35.1	1.7
+164	TR	A0A9W6EX80	Myb-like domain-containing protein OS=Pleodorina starrii OX=330485 GN=PLEST007459 PE=4 SV=1	Pleodorina starrii	632	95	23.8	37.9	1.7
+165	TR	A0A151RJK5	Sporozoite surface protein 2 OS=Cajanus cajan OX=3821 GN=KK1_035854 PE=4 SV=1	Cajanus cajan	686	95	29.3	42.4	1.7
+166	TR	A0A1J4MIA2	Uncharacterized protein OS=Cryptosporidium ubiquitum OX=857276 GN=cubi_02763 PE=4 SV=1	Cryptosporidium ubiquitum	721	95	21.5	37.3	1.8
+167	TR	A0A9P3BVM0	Nuclear localization protein OS=Aspergillus viridinutans OX=75553 GN=Aspvir_006889 PE=4 SV=1	Aspergillus viridinutans	727	95	28.0	38.0	1.8
+168	TR	A0A397G0Z6	Nuclear localization protein OS=Aspergillus thermomutatus OX=41047 GN=CDV56_102245 PE=4 SV=1	Aspergillus thermomutatus	731	95	26.8	37.6	1.8
+169	TR	A0ABR3Z9C8	Uncharacterized protein OS=Ceratocystis pirilliformis OX=259994 GN=Cpir12675_002594 PE=4 SV=1	Ceratocystis pirilliformis	747	95	18.4	40.8	1.8
+170	TR	A0A096LTJ4	SAM domain-containing protein OS=Poecilia formosa OX=48698 PE=4 SV=1	Poecilia formosa	886	95	21.9	37.1	1.8
+171	TR	A0A9P9J358	WW domain-containing protein OS=Dactylonectria estremocensis OX=1079267 GN=B0J13DRAFT_675894 PE=4 SV=1	Dactylonectria estremocensis	923	95	20.5	38.6	1.8
+172	TR	A0A674F5K4	Uncharacterized protein OS=Salmo trutta OX=8032 PE=4 SV=1	Salmo trutta	936	95	22.1	37.8	1.8
+173	TR	A0A0N1IJ13	Uncharacterized protein OS=Leptomonas seymouri OX=5684 GN=ABL78_5693 PE=4 SV=1	Leptomonas seymouri	1174	95	23.7	36.2	1.9
+174	TR	U6KMJ7	Uncharacterized protein OS=Eimeria mitis OX=44415 GN=EMH_0068240 PE=4 SV=1	Eimeria mitis	1287	95	22.8	37.0	1.9
+175	TR	A0A1E4T336	Mediator complex subunit 15 KIX domain-containing protein OS=[Candida] arabinofermentans NRRL YB-2248 OX=983967 GN=CANARDRAFT_127516 PE=4 SV=1	[Candida] arabinofermentans NRRL YB-2248	1376	95	22.0	35.9	1.9
+176	TR	A0AAD5K2Y2	Uncharacterized protein OS=Phascolomyces articulosus OX=60185 GN=BDA99DRAFT_574764 PE=4 SV=1	Phascolomyces articulosus	1379	95	23.6	35.6	1.9
+177	TR	A0ABR3X890	Uncharacterized protein OS=Diaporthe australafricana OX=127596 GN=Daus18300_004598 PE=4 SV=1	Diaporthe australafricana	1382	95	27.2	41.4	1.9
+178	TR	A0ABR4GHT4	Uncharacterized protein OS=Aspergillus keveii OX=714993 GN=BJX66DRAFT_333953 PE=4 SV=1	Aspergillus keveii	1385	95	24.2	38.6	1.9
+179	TR	A0AB40DGY9	Regulating synaptic membrane exocytosis protein 2 isoform X24 OS=Drosophila suzukii OX=28584 GN=Rim PE=4 SV=2	Drosophila suzukii	1392	95	20.2	35.1	1.9
+180	TR	A0AB40DH87	Regulating synaptic membrane exocytosis protein 2 isoform X22 OS=Drosophila suzukii OX=28584 GN=Rim PE=4 SV=2	Drosophila suzukii	1433	95	20.2	35.1	1.9
+181	TR	A0A8J2KS79	Uncharacterized protein OS=Allacma fusca OX=39272 GN=AFUS01_LOCUS30309 PE=4 SV=1	Allacma fusca	1460	95	23.9	40.1	1.9
+182	TR	G3TIN2	Mediator of DNA damage checkpoint protein 1 OS=Loxodonta africana OX=9785 GN=MDC1 PE=4 SV=1	Loxodonta africana	1632	95	25.5	38.2	2.0
+183	TR	A0AB40DF95	Regulating synaptic membrane exocytosis protein 2 isoform X21 OS=Drosophila suzukii OX=28584 GN=Rim PE=4 SV=2	Drosophila suzukii	1656	95	20.2	35.1	2.0
+184	TR	A0AB40DHC4	Regulating synaptic membrane exocytosis protein 2 isoform X20 OS=Drosophila suzukii OX=28584 GN=Rim PE=4 SV=2	Drosophila suzukii	1670	95	20.2	35.1	2.0
+185	TR	A0ABQ7NTQ5	Uncharacterized protein OS=Brassica rapa subsp. trilocularis OX=1813537 GN=A01p012200.1_BraROA PE=3 SV=1	Brassica rapa subsp. trilocularis	1805	95	19.6	35.6	2.0
+186	TR	A0AB40DES2	Rab-3-interacting molecule unc-10 isoform X19 OS=Drosophila suzukii OX=28584 GN=Rim PE=4 SV=2	Drosophila suzukii	1938	95	20.2	35.1	2.0
+187	TR	A0AB40DES9	Rab-3-interacting molecule unc-10 isoform X18 OS=Drosophila suzukii OX=28584 GN=Rim PE=4 SV=2	Drosophila suzukii	1939	95	20.2	35.1	2.0
+188	TR	A0AB40DF04	Regulating synaptic membrane exocytosis protein 2 isoform X17 OS=Drosophila suzukii OX=28584 GN=Rim PE=4 SV=2	Drosophila suzukii	1962	95	20.2	35.1	2.0
+189	TR	A0AB40DIA0	Regulating synaptic membrane exocytosis protein 2 isoform X16 OS=Drosophila suzukii OX=28584 GN=Rim PE=4 SV=2	Drosophila suzukii	1970	95	20.2	35.1	2.0
+190	TR	A0AB40DF48	Regulating synaptic membrane exocytosis protein 2 isoform X15 OS=Drosophila suzukii OX=28584 GN=Rim PE=4 SV=2	Drosophila suzukii	1976	95	20.2	35.1	2.0
+191	TR	A0AB40DJR7	Uncharacterized protein Rim isoform X14 OS=Drosophila suzukii OX=28584 GN=Rim PE=4 SV=2	Drosophila suzukii	1979	95	20.2	35.1	2.0
+192	TR	A0AB40DGX4	Uncharacterized protein Rim isoform X13 OS=Drosophila suzukii OX=28584 GN=Rim PE=4 SV=2	Drosophila suzukii	1980	95	20.2	35.1	2.0
+193	TR	A0AB40DJ51	Uncharacterized protein Rim isoform X12 OS=Drosophila suzukii OX=28584 GN=Rim PE=4 SV=2	Drosophila suzukii	2244	95	20.2	35.1	2.0
+194	TR	A0AB40DEQ4	Uncharacterized protein Rim isoform X11 OS=Drosophila suzukii OX=28584 GN=Rim PE=4 SV=2	Drosophila suzukii	2285	95	20.2	35.1	2.0
+195	TR	A0A1S3QAU3	histone acetyltransferase OS=Salmo salar OX=8030 GN=LOC106590442 PE=4 SV=2	Salmo salar	2301	95	24.7	35.6	2.0
+196	TR	A0A1S3QAH4	histone acetyltransferase OS=Salmo salar OX=8030 GN=LOC106590442 PE=4 SV=2	Salmo salar	2391	95	24.7	35.6	2.0
+197	TR	A0A1S3QAG7	histone acetyltransferase OS=Salmo salar OX=8030 GN=LOC106590442 PE=4 SV=2	Salmo salar	2411	95	24.7	35.6	2.0
+198	TR	A0A1S3QAF7	histone acetyltransferase OS=Salmo salar OX=8030 GN=LOC106590442 PE=4 SV=2	Salmo salar	2412	95	24.7	35.6	2.0
+199	TR	A0AB40DF77	Uncharacterized protein Rim isoform X10 OS=Drosophila suzukii OX=28584 GN=Rim PE=4 SV=2	Drosophila suzukii	2508	95	20.2	35.1	2.0
+200	TR	A0AB40DHA8	Uncharacterized protein Rim isoform X9 OS=Drosophila suzukii OX=28584 GN=Rim PE=4 SV=2	Drosophila suzukii	2522	95	20.2	35.1	2.0
+201	TR	A0AB40DEQ1	Uncharacterized protein Rim isoform X8 OS=Drosophila suzukii OX=28584 GN=Rim PE=4 SV=2	Drosophila suzukii	2523	95	20.2	35.1	2.0
+202	TR	A0AB40DER1	Uncharacterized protein Rim isoform X7 OS=Drosophila suzukii OX=28584 GN=Rim PE=4 SV=2	Drosophila suzukii	2725	95	20.2	35.1	2.0
+203	TR	U6M1V8	RNA-binding protein, putative OS=Eimeria maxima OX=5804 GN=EMWEY_00014390 PE=4 SV=1	Eimeria maxima	2757	95	19.6	37.8	2.0
+204	TR	A0AB40DEY9	Uncharacterized protein Rim isoform X6 OS=Drosophila suzukii OX=28584 GN=Rim PE=4 SV=2	Drosophila suzukii	2787	95	20.2	35.1	2.0
+205	TR	A0AB40DI86	Uncharacterized protein Rim isoform X5 OS=Drosophila suzukii OX=28584 GN=Rim PE=4 SV=2	Drosophila suzukii	2804	95	20.2	35.1	2.0
+206	TR	A0AB40DJQ2	Uncharacterized protein Rim isoform X3 OS=Drosophila suzukii OX=28584 GN=Rim PE=4 SV=2	Drosophila suzukii	2814	95	20.2	35.1	2.0
+207	TR	A0AB40DF29	Uncharacterized protein Rim isoform X4 OS=Drosophila suzukii OX=28584 GN=Rim PE=4 SV=2	Drosophila suzukii	2814	95	20.2	35.1	2.0
+208	TR	B4IBB7	GM15331 OS=Drosophila sechellia OX=7238 GN=Dsec\GM15331 PE=4 SV=1	Drosophila sechellia	2819	95	21.0	38.2	2.0
+209	TR	A0AB40ACT1	Uncharacterized protein Rim isoform X2 OS=Drosophila suzukii OX=28584 GN=Rim PE=4 SV=2	Drosophila suzukii	2822	95	20.2	35.1	2.0
+210	TR	A0AB40DGV8	Uncharacterized protein Rim isoform X1 OS=Drosophila suzukii OX=28584 GN=Rim PE=4 SV=2	Drosophila suzukii	2828	95	20.2	35.1	2.0
+211	TR	A0ACC0J7C9	Uncharacterized protein OS=Choristoneura fumiferana OX=7141 GN=MSG28_008592 PE=4 SV=1	Choristoneura fumiferana	5382	95	22.4	39.0	2.1
+212	TR	U6N875	Uncharacterized protein OS=Eimeria necatrix OX=51315 GN=ENH_00077320 PE=4 SV=1	Eimeria necatrix	461	94	18.8	38.5	2.1
+213	TR	A0A8H4USP8	Involucrin repeat protein OS=Fusarium zealandicum OX=1053134 GN=FZEAL_1836 PE=4 SV=1	Fusarium zealandicum	7540	95	24.7	42.0	2.1
+214	TR	A0ACB7FEZ9	Uncharacterized protein OS=Nibea albiflora OX=240163 GN=GBF38_003891 PE=4 SV=1	Nibea albiflora	483	94	21.2	39.7	2.1
+215	TR	A0A9N9XF47	Zasp-like motif domain-containing protein OS=Diabrotica balteata OX=107213 GN=DIABBA_LOCUS10015 PE=4 SV=1	Diabrotica balteata	515	94	20.6	38.1	2.2
+216	TR	A0ACC2FWP5	Uncharacterized protein OS=Dallia pectoralis OX=75939 GN=DPEC_G00248590 PE=4 SV=1	Dallia pectoralis	535	94	22.4	34.2	2.2
+217	TR	A0A9N9XD96	Zasp-like motif domain-containing protein OS=Diabrotica balteata OX=107213 GN=DIABBA_LOCUS10015 PE=4 SV=1	Diabrotica balteata	548	94	20.6	38.1	2.2
+218	TR	A0AAJ0FSR4	cAMP-dependent protein kinase (Fragment) OS=Conoideocrella luteorostrata OX=1105319 GN=TPK2_2 PE=4 SV=1	Conoideocrella luteorostrata	549	94	25.3	39.7	2.2
+219	TR	A0ABV4J7H1	non-specific serine/threonine protein kinase OS=Streptomyces pimonensis OX=2860288 GN=KYY02_30775 PE=4 SV=1	Streptomyces pimonensis	552	94	35.6	42.2	2.2
+220	TR	A0A940XR29	non-specific serine/threonine protein kinase OS=Streptomyces liliiviolaceus OX=2823109 GN=J8N05_10590 PE=4 SV=1	Streptomyces liliiviolaceus	565	94	35.9	46.7	2.2
+221	TR	A0A0G2K5E1	Proline rich 4 OS=Rattus norvegicus OX=10116 GN=Prr4 PE=4 SV=3	Rattus norvegicus	294	93	21.5	38.6	2.2
+222	TR	F2U708	Uncharacterized protein OS=Salpingoeca rosetta (strain ATCC 50818 / BSB-021) OX=946362 GN=PTSG_12141 PE=4 SV=1	Salpingoeca rosetta (strain ATCC 50818 / BSB-021)	602	94	22.3	37.9	2.3
+223	TR	A0ABQ7GB99	WW domain-containing protein OS=Dunaliella salina OX=3046 GN=DUNSADRAFT_12518 PE=4 SV=1	Dunaliella salina	608	94	18.9	38.9	2.3
+224	TR	A0A5N5WC04	non-specific serine/threonine protein kinase OS=Streptomyces mobaraensis OX=35621 GN=FRZ00_04095 PE=4 SV=1	Streptomyces mobaraensis	634	94	35.6	39.1	2.3
+225	TR	A0A1V6S952	non-specific serine/threonine protein kinase (Fragment) OS=Penicillium flavigenum OX=254877 GN=PENFLA_c091G05836 PE=4 SV=1	Penicillium flavigenum	707	94	23.3	36.2	2.3
+226	TR	A0A2A9PBD5	Rho-GAP domain-containing protein OS=Ophiocordyceps unilateralis OX=268505 GN=XA68_14115 PE=4 SV=1	Ophiocordyceps unilateralis	841	94	25.9	42.9	2.4
+227	TR	A0ABU0I6P2	Outer membrane protein OmpA-like peptidoglycan-associated protein OS=Rhizobium paknamense OX=1206817 GN=QO005_000197 PE=4 SV=1	Rhizobium paknamense	858	94	23.4	34.3	2.4
+228	TR	A0A168D2Z4	Vacuolar protein sorting-associated protein 27 OS=Ascosphaera apis ARSEF 7405 OX=392613 GN=AAP_00947 PE=3 SV=1	Ascosphaera apis ARSEF 7405	865	94	25.1	39.3	2.4
+229	TR	D3BAG0	Myb domain-containing protein OS=Heterostelium pallidum (strain ATCC 26659 / Pp 5 / PN500) OX=670386 GN=PPL_05536 PE=4 SV=1	Heterostelium pallidum (strain ATCC 26659 / Pp 5 / PN500)	873	94	21.3	40.9	2.4
+230	TR	A0A096M263	SAM domain-containing protein OS=Poecilia formosa OX=48698 PE=4 SV=1	Poecilia formosa	888	94	23.1	38.4	2.4
+231	TR	A0AAD1TL97	CREB-regulated transcription coactivator 2 OS=Pelobates cultripes OX=61616 GN=PECUL_23A046533 PE=4 SV=1	Pelobates cultripes	895	94	24.2	36.5	2.4
+232	TR	A0AAD1THQ1	CREB-regulated transcription coactivator 2 OS=Pelobates cultripes OX=61616 GN=PECUL_23A046533 PE=4 SV=1	Pelobates cultripes	906	94	24.2	36.5	2.4
+233	TR	A0ABN8B9N6	Uncharacterized protein OS=Chilo suppressalis OX=168631 GN=CHILSU_LOCUS7309 PE=4 SV=1	Chilo suppressalis	931	94	21.1	34.7	2.5
+234	TR	U6H1G2	K-box domain-containing protein OS=Eimeria praecox OX=51316 GN=EPH_0015170 PE=4 SV=1	Eimeria praecox	940	94	18.2	37.8	2.5
+235	TR	A0A409W0D0	Vacuolar protein sorting-associated protein 27 OS=Gymnopilus dilepis OX=231916 GN=CVT26_007170 PE=3 SV=1	Gymnopilus dilepis	967	94	25.9	39.5	2.5
+236	TR	A0A067QWA9	KHDC4/BBP-like KH-domain type I domain-containing protein OS=Zootermopsis nevadensis OX=136037 GN=L798_15733 PE=4 SV=1	Zootermopsis nevadensis	987	94	24.4	37.3	2.5
+237	TR	A0A418YCJ8	Ribonuclease E OS=Motilimonas pumila OX=2303987 GN=rne PE=3 SV=1	Motilimonas pumila	991	94	22.9	42.9	2.5
+238	TR	A0AAD1THM3	CREB-regulated transcription coactivator 2 OS=Pelobates cultripes OX=61616 GN=PECUL_23A046533 PE=4 SV=1	Pelobates cultripes	1011	94	24.2	36.5	2.5
+239	TR	A0A1I7ULH4	Retinitis pigmentosa 1-like 1 protein OS=Caenorhabditis tropicalis OX=1561998 PE=4 SV=1	Caenorhabditis tropicalis	1052	94	22.5	39.6	2.5
+240	TR	A0A8C8DEC5	C2H2-type domain-containing protein OS=Oryzias sinensis OX=183150 PE=4 SV=1	Oryzias sinensis	363	93	22.4	37.6	2.5
+241	TR	U6JZE4	Uncharacterized protein OS=Eimeria mitis OX=44415 GN=EMH_0055500 PE=4 SV=1	Eimeria mitis	1143	94	21.1	40.4	2.5
+242	TR	A0AAD1TLV6	CREB-regulated transcription coactivator 2 isoform X1 OS=Pelobates cultripes OX=61616 GN=PECUL_23A046533 PE=3 SV=1	Pelobates cultripes	1162	94	24.2	36.5	2.5
+243	TR	U6MSZ2	Uncharacterized protein (Fragment) OS=Eimeria necatrix OX=51315 GN=ENH_00007180 PE=4 SV=1	Eimeria necatrix	243	92	28.7	51.2	2.5
+244	TR	A1ZBB4	Uncharacterized protein, isoform B OS=Drosophila melanogaster OX=7227 GN=hnRNP U PE=1 SV=1	Drosophila melanogaster	1271	94	18.4	34.6	2.5
+245	TR	A8E6M1	GH01011p OS=Drosophila melanogaster OX=7227 GN=CG5477 PE=1 SV=1	Drosophila melanogaster	1271	94	18.4	34.6	2.5
+246	TR	E1JGL8	Uncharacterized protein, isoform C OS=Drosophila melanogaster OX=7227 GN=Dmel\CG30122 PE=1 SV=1	Drosophila melanogaster	1272	94	18.4	34.6	2.5
+247	TR	A0A267G828	BAT2_N domain-containing protein (Fragment) OS=Macrostomum lignano OX=282301 GN=BOX15_Mlig020516g1 PE=4 SV=1	Macrostomum lignano	1276	94	22.5	32.1	2.6
+248	TR	A0A4W5R9J2	BRCA2-interacting transcriptional repressor EMSY OS=Hucho hucho OX=62062 PE=4 SV=1	Hucho hucho	1280	94	23.1	38.2	2.6
+249	TR	A0A6P8K359	Regulating synaptic membrane exocytosis protein 2 isoform X17 OS=Drosophila mauritiana OX=7226 GN=LOC117142965 PE=4 SV=1	Drosophila mauritiana	1375	94	21.1	38.4	2.6
+250	TR	A0A6P8K2Z7	Regulating synaptic membrane exocytosis protein 2 isoform X15 OS=Drosophila mauritiana OX=7226 GN=LOC117142965 PE=4 SV=1	Drosophila mauritiana	1416	94	21.1	38.4	2.6

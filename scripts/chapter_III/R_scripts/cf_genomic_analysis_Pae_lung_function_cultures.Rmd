@@ -1,0 +1,549 @@
+---
+title: "cf_genomic_analysis_Pae_lung_function_cultures"
+author: "Natalia Bastón-Paz"
+date: '2026'
+output: html_document
+---
+
+# Set up
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+require("knitr")
+opts_knit$set(root.dir = "C:/RProjects/cf_genomic_analysis")
+```
+
+# Clean environments
+```{# r Clean environments, message=FALSE, warning=FALSE}
+rm(list = ls())
+```
+
+## General introduction
+
+Cystic fibrosis (CF) is a genetic disorder caused by pathogenic variants in the CFTR (Cystic Fibrosis Transmembrane Conductance Regulator) gene. CFTR dysfunction leads to impaired ion transport and the production of thick mucus, primarily affecting the lungs and gastrointestinal tract. People with CF (pwCF) commonly develop chronic airway infections, such as the chronic colonization by Pseudomonas aeruginosa.
+
+In recent years, CFTR modulator therapies—particularly the triple combination elexacaftor/tezacaftor/ivacaftor (ETI)—have markedly improved respiratory function.
+
+In this script, we analyze lung function from 5 people with CF (6–66 years) assessed before treatment (T0) and after 12 months of ETI (T12).
+
+*Main question:*
+
+-   *Have clinical variables changed after one year of ETI treatment?*
+
+## Libraries
+```{r Libraries, message=FALSE, warning=FALSE}
+library(here)
+library(readr)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(ggdist)
+library(purrr)
+library(stringr)
+library(patchwork)
+library(ggpubr)
+library(ggridges)
+library(ppcor)
+library(lme4)
+library(lmerTest)
+library(grid)
+library(stringr)
+library(forcats)
+library(scales)
+library(gtools)
+library(emmeans)
+library(tibble)
+library(broom.mixed)
+library(ggbreak)
+library(cowplot)
+library(lme4)
+library(lmerTest)
+```
+
+## Directories
+```{r Create directory, message=FALSE, warning=FALSE}
+dir.create(here("results"), showWarnings = FALSE)
+```
+
+#-------------------------------------------------------------------------------
+# Pseudomonas aeruginosa genomics group
+#-------------------------------------------------------------------------------
+
+## ppFEV1
+
+### Load in the data
+```{r Load in data Pae, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+df_paegen <- read_delim(here("data", "lung_function_Pae_genomic_group.csv"))
+```
+
+### Prepare the data
+```{r Prepare data Pae, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# Prepare data for dashed lines across missing intermediate times
+df_paegen <- df_paegen %>%
+  mutate(
+    Time = factor(Time, levels = c("T0", "T3", "T6", "T9", "T12")),
+    Time_id = c(1, 2, 3, 4, 5)[match(Time, c("T0", "T3", "T6", "T9", "T12"))]
+  )
+
+# Points actually observed
+df_points <- df_paegen %>%
+  filter(!is.na(ppFEV1))
+
+# Segments between consecutive observed points within each patient
+df_segments <- df_paegen %>%
+  filter(!is.na(ppFEV1)) %>%
+  group_by(PatientID) %>%
+  arrange(Time_id, .by_group = TRUE) %>%
+  mutate(
+    xend = lead(Time_id),
+    yend = lead(ppFEV1),
+    step = xend - Time_id,
+    segment_type = ifelse(step == 1, "Observed interval", "Missing intermediate time")
+  ) %>%
+  filter(!is.na(xend)) %>%
+  ungroup()
+```
+
+### Plot
+```{r Plot data Pae, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+p_lines <- ggplot() +
+  geom_segment(
+    data = df_segments,
+    aes(
+      x = Time_id, xend = xend,
+      y = ppFEV1, yend = yend,
+      color = PatientID,
+      linetype = segment_type
+    ),
+    linewidth = 1.1,
+    alpha = 0.9,
+    lineend = "round"
+  ) +
+  geom_point(
+    data = df_points,
+    aes(
+      x = Time_id,
+      y = ppFEV1,
+      color = PatientID,
+      fill = PatientID
+    ),
+    shape = 21,
+    size = 3,
+    stroke = 1,
+    alpha = 1
+  ) +
+  scale_x_continuous(
+    breaks = 1:5,
+    labels = c("T0", "T3", "T6", "T9", "T12")
+  ) +
+  scale_color_manual(values = c(
+    "#1B9E77", #A19
+    "#D95F02", #A7
+    "#7570B3", #P11
+    "#E7298A", #P3
+    "#66A61E"  #P42
+  )) +
+  scale_fill_manual(values = c(
+    "#E8F5F1",
+    "#FBEFE5",
+    "#F1F0F7",
+    "#FDE9F3",
+    "#EFF6E8"
+  ), guide = "none") +
+  scale_linetype_manual(values = c(
+    "Observed interval" = "solid",
+    "Missing intermediate time" = "dashed"
+  )) +
+  labs(
+    x = "Time",
+    y = "ppFEV1",
+    color = "Patient",
+    linetype = "Segment",
+    title = "Longitudinal evolution of ppFEV1 by participant"
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    plot.title = element_text(face = "plain", hjust = 0.5, size = 14),
+    axis.title = element_text(face = "plain", size = 12),
+    axis.text = element_text(face = "plain", size = 11, color = "black"),
+    legend.title = element_text(face = "plain", size = 12),
+    legend.text = element_text(face = "plain", size = 11),
+    panel.grid.minor = element_blank(),
+    panel.grid.major.x = element_line(color = "grey88", linewidth = 0.4),
+    panel.grid.major.y = element_line(color = "grey85", linewidth = 0.5),
+    axis.line = element_line(color = "black", linewidth = 0.4),
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA),
+    legend.position = "right"
+  )
+
+p_lines
+
+ggsave(filename = here("results", "lung_function_Pae_genomic_group.svg"),
+       plot = p_lines, width = 8, height = 4.5, dpi = 300)
+```
+
+### Mix-linear models
+1. Global question: “Did ppFEV1 change overall across time?
+2. Specific question vs baseline: “Which time points are different from T0?”
+
+#### Prepare data
+```{r Data, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# Keep only the variables needed for the mixed model
+# Remove rows with missing ppFEV1
+ppfev1_model_data <- df_paegen %>%
+  dplyr::select(PatientID, Time, ppFEV1) %>%
+  filter(!is.na(ppFEV1)) %>%
+  mutate(
+    PatientID = factor(PatientID),
+    Time = factor(Time, levels = c("T0", "T3", "T6", "T9", "T12"))
+  ) %>%
+  arrange(PatientID, Time)
+
+# OPTIONAL CHECK: Number of observations per patient
+ppfev1_observations_per_patient <- ppfev1_model_data %>%
+  count(PatientID, name = "n_observations")
+
+write_csv(
+  ppfev1_observations_per_patient,
+  here("results", "ppFEV1_observations_per_patient.csv")
+)
+```
+
+#### Fit mixed model
+Main question: Did ppFEV1 change over time across the follow-up period?
+-Fixed effect: Time
+-Random effect: PatientID
+This model uses all available observations and can handle missing time points.
+```{r Mix model, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+ppfev1_mixed_model <- lmer(
+  ppFEV1 ~ Time + (1 | PatientID),
+  data = ppfev1_model_data,
+  REML = TRUE
+)
+```
+
+##### Q1: Global effect of time
+This is the global test for Time in the mixed model.
+Type III ANOVA is used for the fixed effect of Time.
+Kenward-Roger is used for denominator degrees of freedom.
+```{r Effect of time, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+ppfev1_global_time_test <- anova(
+  ppfev1_mixed_model,
+  type = 3,
+  ddf = "Kenward-Roger"
+)
+
+ppfev1_global_time_test_df <- as.data.frame(ppfev1_global_time_test)
+ppfev1_global_time_test_df$term <- rownames(ppfev1_global_time_test_df)
+ppfev1_global_time_test_df <- ppfev1_global_time_test_df[, c("term", setdiff(names(ppfev1_global_time_test_df), "term"))]
+
+write_csv(
+  ppfev1_global_time_test_df,
+  here("results", "ppFEV1_global_time_test_type3_kenward_roger.csv")
+)
+```
+
+##### Q2: Which timepoints differ from T0
+```{r Timepoints differ from T0, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# Estimated marginal means for each time point
+ppfev1_emmeans <- emmeans(ppfev1_mixed_model, ~ Time)
+
+ppfev1_emmeans_df <- as.data.frame(
+  summary(ppfev1_emmeans, infer = c(TRUE, TRUE), level = 0.95)
+)
+
+write_csv(
+  ppfev1_emmeans_df,
+  here("results", "ppFEV1_emmeans_by_time.csv")
+)
+
+# Compare each follow-up time against T0
+# ref = 1 because T0 is the first factor level
+# Holm adjustment is used for multiple comparisons
+ppfev1_vs_T0 <- contrast(
+  ppfev1_emmeans,
+  method = "trt.vs.ctrl",
+  ref = 1,
+  adjust = "holm"
+)
+
+ppfev1_vs_T0_df <- as.data.frame(
+  summary(ppfev1_vs_T0, infer = c(TRUE, TRUE), level = 0.95)
+)
+
+write_csv(
+  ppfev1_vs_T0_df,
+  here("results", "ppFEV1_timepoints_vs_T0_holm.csv")
+)
+
+
+#--- FDR----
+# Same contrasts vs T0, but using Benjamini-Hochberg FDR adjustment
+ppfev1_vs_T0_fdr <- contrast(
+  ppfev1_emmeans,
+  method = "trt.vs.ctrl",
+  ref = 1,
+  adjust = "BH"
+)
+
+ppfev1_vs_T0_fdr_df <- as.data.frame(
+  summary(ppfev1_vs_T0_fdr, infer = c(TRUE, TRUE), level = 0.95)
+)
+
+write_csv(
+  ppfev1_vs_T0_fdr_df,
+  here("results", "ppFEV1_timepoints_vs_T0_fdr_BH.csv")
+)
+
+ppfev1_vs_T0_fdr_df
+```
+
+###### Model coefficients
+```{r Model coefficients, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# Save fixed-effect estimates from the mixed model
+ppfev1_fixed_effects_df <- broom.mixed::tidy(
+  ppfev1_mixed_model,
+  effects = "fixed",
+  conf.int = TRUE,
+  conf.level = 0.95
+)
+
+write_csv(
+  ppfev1_fixed_effects_df,
+  here("results", "ppFEV1_fixed_effects.csv")
+)
+```
+
+###### Random effects/variance components
+```{r Random effects, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# Save random-effect variance and standard deviation
+ppfev1_random_effects_df <- as.data.frame(VarCorr(ppfev1_mixed_model))
+
+write_csv(
+  ppfev1_random_effects_df,
+  here("results", "ppFEV1_random_effects.csv")
+)
+```
+
+###### Model fit statistics
+```{r Statistics, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# Save general model fit statistics
+ppfev1_model_fit_df <- broom.mixed::glance(ppfev1_mixed_model)
+
+write_csv(
+  ppfev1_model_fit_df,
+  here("results", "ppFEV1_model_fit_statistics.csv")
+)
+```
+
+####### Print results in console
+```{r Print results, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+ppfev1_global_time_test_df
+ppfev1_vs_T0_df
+ppfev1_emmeans_df
+ppfev1_fixed_effects_df
+ppfev1_random_effects_df
+ppfev1_model_fit_df
+summary(ppfev1_mixed_model)
+```
+
+#### Plot
+Plot observed data + model-based means
+```{r Plot, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+ppfev1_lmer_plot <- ggplot() +
+  # Individual observed trajectories
+  geom_line(
+    data = ppfev1_model_data,
+    aes(x = Time, y = ppFEV1, group = PatientID),
+    linewidth = 0.7,
+    alpha = 0.45,
+    color = "grey60" 
+  ) +
+  geom_point(
+    data = ppfev1_model_data,
+    aes(x = Time, y = ppFEV1, group = PatientID),
+    size = 2,
+    alpha = 0.6,
+    color = "grey50"
+  ) +
+  # Model-based 95% confidence intervals
+  geom_errorbar(
+    data = ppfev1_emmeans_df,
+    aes(x = Time, y = emmean, ymin = lower.CL, ymax = upper.CL),
+    width = 0.08,
+    linewidth = 0.8
+  ) +
+  # Model-based mean trend
+  geom_line(
+    data = ppfev1_emmeans_df,
+    aes(x = Time, y = emmean, group = 1),
+    linewidth = 1
+  ) +
+  geom_point(
+    data = ppfev1_emmeans_df,
+    aes(x = Time, y = emmean),
+    size = 3,
+    shape = 21,
+    fill = "white",
+    stroke = 1
+  ) +
+  labs(
+    x = "Time",
+    y = "ppFEV1",
+    title = "Observed ppFEV1 values and mixed-model estimated means"
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    plot.title = element_text(face = "plain", hjust = 0.5, size = 14),
+    axis.title = element_text(face = "plain", size = 12),
+    axis.text = element_text(face = "plain", size = 11, color = "black"),
+    legend.title = element_text(face = "plain", size = 12),
+    legend.text = element_text(face = "plain", size = 11),
+    panel.grid.minor = element_blank(),
+    panel.grid.major.x = element_line(color = "grey88", linewidth = 0.4),
+    panel.grid.major.y = element_line(color = "grey85", linewidth = 0.5),
+    axis.line = element_line(color = "black", linewidth = 0.4),
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA),
+    legend.position = "right"
+  )
+
+ppfev1_lmer_plot
+
+ggsave(filename = here("results", "ppFEV1_lmer_visualization.svg"),
+  plot = ppfev1_lmer_plot, width = 8, height = 4.5, dpi = 300)
+```
+
+#### Panel plots
+```{r Panel plots, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+panel_ppfev1_Pae_genom <- (p_lines) /
+                (ppfev1_lmer_plot) +
+  plot_layout(guides = "collect") & theme(legend.position = "bottom")
+
+panel_ppfev1_Pae_genom <- panel_ppfev1_Pae_genom + plot_annotation(tag_levels = "A")
+
+ggsave(here("results","panel_panel_ppfev1_Pae_genom.svg"), panel_ppfev1_Pae_genom, width = 6, height = 9, bg = "white")
+```
+
+
+#-------------------------------------------------------------------------------
+# Sputum cultures
+#-------------------------------------------------------------------------------
+
+### Load in the data
+```{r Load in data Pae, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+df_paecount <- read_delim(here("data", "cultures_Pae_genomic_group.csv"))
+```
+
+### Prepare the data
+```{r Prepare data Pae, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# Prepare data for dashed lines across missing intermediate times
+df_paecount <- df_paecount %>%
+  mutate(
+    Time = factor(Time, levels = c("T0", "T3", "T6", "T9", "T12")),
+    Time_id = c(1, 2, 3, 4, 5)[match(Time, c("T0", "T3", "T6", "T9", "T12"))],
+    log10_CFU_mL_plus1 = log10(Counts_CFU_mL + 1)
+  )
+
+# Points actually observed
+df_points <- df_paecount %>%
+  filter(!is.na(log10_CFU_mL_plus1))
+
+# Segments between consecutive observed points within each patient
+df_segments <- df_paecount %>%
+  filter(!is.na(log10_CFU_mL_plus1)) %>%
+  group_by(PatientID) %>%
+  arrange(Time_id, .by_group = TRUE) %>%
+  mutate(
+    xend = lead(Time_id),
+    yend = lead(log10_CFU_mL_plus1),
+    step = xend - Time_id,
+    segment_type = ifelse(step == 1, "Observed interval", "Missing intermediate time")
+  ) %>%
+  filter(!is.na(xend)) %>%
+  ungroup()
+```
+
+### Plot
+```{r Plot fancy data Pae, echo=TRUE, results='show', message=FALSE, warning=FALSE}
+p_lines_cult <- ggplot() +
+  geom_segment(
+    data = df_segments,
+    aes(
+      x = Time_id, xend = xend,
+      y = log10_CFU_mL_plus1, yend = yend,
+      color = PatientID,
+      linetype = segment_type
+    ),
+    linewidth = 1.1,
+    alpha = 0.9,
+    lineend = "round"
+  ) +
+  geom_point(
+    data = df_points,
+    aes(
+      x = Time_id,
+      y = log10_CFU_mL_plus1,
+      color = PatientID,
+      fill = PatientID
+    ),
+    shape = 21,
+    size = 3,
+    stroke = 1,
+    alpha = 1
+  ) +
+  scale_x_continuous(
+    breaks = 1:5,
+    labels = c("T0", "T3", "T6", "T9", "T12")
+  ) +
+  scale_color_manual(values = c(
+    "#1B9E77",
+    "#D95F02",
+    "#7570B3",
+    "#E7298A",
+    "#66A61E"
+  )) +
+  scale_fill_manual(values = c(
+    "#E8F5F1",
+    "#FBEFE5",
+    "#F1F0F7",
+    "#FDE9F3",
+    "#EFF6E8"
+  ), guide = "none") +
+  scale_linetype_manual(values = c(
+    "Observed interval" = "solid",
+    "Missing intermediate time" = "dashed"
+  )) +
+  labs(
+    x = "Time",
+    y = "log10(CFU/mL + 1)",
+    color = "Patient",
+    linetype = "Segment",
+    title = "Longitudinal evolution of log10(CFU/mL + 1) by participant"
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    plot.title = element_text(face = "plain", hjust = 0.5, size = 14),
+    axis.title = element_text(face = "plain", size = 12),
+    axis.text = element_text(face = "plain", size = 11, color = "black"),
+    legend.title = element_text(face = "plain", size = 12),
+    legend.text = element_text(face = "plain", size = 11),
+    panel.grid.minor = element_blank(),
+    panel.grid.major.x = element_line(color = "grey88", linewidth = 0.4),
+    panel.grid.major.y = element_line(color = "grey85", linewidth = 0.5),
+    axis.line = element_line(color = "black", linewidth = 0.4),
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA),
+    legend.position = "right"
+  )
+
+p_lines_cult
+
+ggsave(filename = here("results", "cultures_Pae_genomic_group.svg"),
+       plot = p_lines_cult, width = 8, height = 4.5, dpi = 300)
+```
+
+
+
+
+

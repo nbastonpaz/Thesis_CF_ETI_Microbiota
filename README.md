@@ -1,5 +1,5 @@
 # Thesis_CF_ETI_Microbiota
-_**“Impact of New Cystic Fibrosis Treatments on the Composition and Functionality of the Lung and Gut Microbiota”**_
+_**“Impact of New Cystic Fibrosis Treatments on the Composition and Functionality of Lung and Gut Microbiota”**_
 - Chapter I: Composition and functionality of the gut and airway microbiota after one year of elexacaftor-tezacaftor-ivacaftor.
 - Chapter II: Dietary intake, body composition, and fecal microbiome characterization in children and adolescents after one year of elexacaftor-tezacaftor-ivacaftor.
 - Chapter III: Longitudinal genomic dynamics of Pseudomonas aeruginosa after one year of elexacaftor-tezacaftor-ivacaftor.
@@ -77,16 +77,14 @@ Microbiome, metaproteomic, metabolomic, and ARG analysis were performed **separa
    - Characterization of variants in genes associated with chronic infection, virulence, biofilm formation, and antimicrobial resistance.
    - Analysis of antimicrobial resistance genes and β-lactamase variants.
 
-\* Due to GitHub file size limitations, the raw metaproteomic tables (proteins, peptides, and functions) could not be uploaded. This repository includes filtered versions of these files for reproducibility purposes. If you require access to the original raw files, please contact me at **natalia.baston.paz@gmail.com**.
-
 ## Limitations
 Please consider the **limitations** described in the **Discussion** section of the thesis, particularly those related to sample size and sputum sample quality.
 
 ## Recommended citation
-Bastón-Paz N. Impact of New Cystic Fibrosis Treatments on the Composition and Functionality of the Lung and Gut Microbiota. Doctoral thesis, Universidad Complutense de Madrid, 2026.
+Bastón-Paz N. Impact of New Cystic Fibrosis Treatments on the Composition and Functionality of Lung and Gut Microbiota. Doctoral thesis, Universidad Complutense de Madrid, 2026.
 
 ## Contact
 For any issues or questions, please contact: **natalia.baston.paz@gmail.com**.
 
 ### Affiliation
-This thesis was developed at the Department of Microbiology of Ramón y Cajal University Hospital, affiliated with the Ramón y Cajal Health Research Institute, as part of the Doctoral Programme in Microbiology and Parasitology at the Complutense University of Madrid.
+This thesis was mainly developed at the Department of Microbiology of Ramón y Cajal University Hospital, affiliated with the Ramón y Cajal Health Research Institute, as part of the Doctoral Programme in Microbiology and Parasitology at the Complutense University of Madrid.

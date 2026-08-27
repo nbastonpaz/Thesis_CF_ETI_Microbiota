@@ -1,13 +1,13 @@
 "taxon","var","n","rho","p","p_fdr"
 "Adlercreutzia_equolifaciens_delta","total_body_water_perc_delta",9,0.762821441573412,0.0168140142779086,0.100884085667451
 "Flavonifractor_plautii_delta","lean_mass_perc_delta",9,0.76601986835422,0.0160882057999274,0.100884085667451
-"Clostridium_SGB6179_delta","fat_mass_perc_delta",9,0.64416032843977,0.0611378549131365,0.244551419652546
-"Clostridium_SGB6179_delta","fat_mass_index_kgm2_delta",9,0.508547627715608,0.162108898941088,0.389061357458612
-"Flavonifractor_plautii_delta","fat_mass_index_kgm2_delta",9,-0.542450802896648,0.131318625258689,0.389061357458612
+"Clostridium_SGB6179_delta","fat_mass_perc_delta",9,0.64416032843977,0.0611378549131365,0.222274492538909
+"Flavonifractor_plautii_delta","fat_mass_index_kgm2_delta",9,-0.621327226553978,0.0740914975129696,0.222274492538909
+"Clostridium_SGB6179_delta","fat_mass_index_kgm2_delta",9,0.544725239718556,0.1293883233726,0.31053197609424
 "Flavonifractor_plautii_delta","fat_mass_perc_delta",9,-0.355983339400925,0.34708012239835,0.6941602447967
 "Adlercreutzia_equolifaciens_delta","lean_mass_perc_delta",9,0.31491927921229,0.409134531594876,0.701373482734073
 "Clostridium_SGB6179_delta","total_body_water_perc_delta",9,-0.254273813857804,0.509101514754861,0.763652272132291
 "Adlercreutzia_equolifaciens_delta","fat_mass_perc_delta",9,-0.169515875905203,0.662828040854944,0.813182026836653
 "Clostridium_SGB6179_delta","lean_mass_perc_delta",9,-0.161715305541446,0.677651689030544,0.813182026836653
-"Adlercreutzia_equolifaciens_delta","fat_mass_index_kgm2_delta",9,0.067806350362081,0.862394191836714,0.930999140566256
+"Adlercreutzia_equolifaciens_delta","fat_mass_index_kgm2_delta",9,0.102135982447229,0.793730582343696,0.865887908011305
 "Flavonifractor_plautii_delta","total_body_water_perc_delta",9,0.0339031751810405,0.930999140566256,0.930999140566256

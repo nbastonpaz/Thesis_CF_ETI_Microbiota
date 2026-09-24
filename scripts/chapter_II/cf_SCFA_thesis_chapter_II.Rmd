@@ -27,7 +27,7 @@ In this script, we analyze SCFA concentrations in 35 people with CF aged 6–66 
 
 *Main question:*
 
--   *Do fecal and sputum SCFA concentrations change after one year of ETI treatment?*
+-   *Do fecal SCFA concentrations change after one year of ETI treatment?*
 
 ## Libraries
 ```{r Libraries, message=FALSE, warning=FALSE}

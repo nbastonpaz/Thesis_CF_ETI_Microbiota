@@ -26,7 +26,7 @@ In this script, we analyse fecal metaproteomic data from pwCF before (T0) and af
 
 *Main question:*
 
-- *Has the functional profile of the gut and lung microbiota changed after one year of treatment with ETI?*
+- *Has the functional profile of the gut microbiota changed after one year of treatment with ETI?*
 
 
 ## Libraries

@@ -21,7 +21,7 @@ Cystic Fibrosis (CF) is a genetic disorder that primarily affects the respirator
 
 *Questions to be answered:*
 
--   *Have the gut and lung microbiota composition changed after one year of treatment with ETI?*
+-   *Have the gut microbiota composition changed after one year of treatment with ETI?*
 
 ## Libraries
 
